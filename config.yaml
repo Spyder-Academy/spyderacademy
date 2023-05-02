@@ -52,7 +52,7 @@ menus:
 
   buttons:
     - name: "Start Learning"
-      url: "/#pricing"
+      url: "/#services"
       weight: 5
       pre: "btn btn-primary text-light"
 

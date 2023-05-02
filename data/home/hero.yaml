@@ -7,9 +7,9 @@ content:
 
   buttonPrimary:
     label: "How We Teach"
-    url: "#"
+    url: "#mission"
 
   buttonSecondary:
     label: "Start Learning"
-    url: ""
+    url: "#services"
 
