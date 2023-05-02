@@ -1,0 +1,82 @@
+baseURL: "https://www.spyderacademy.com/"
+theme: "up-business-theme"
+languageCode: "en-us"
+
+title: "SPYDER ACADEMY"
+
+# googleAnalytics: ""
+
+summaryLength: 20
+
+params:
+  title: "Up Business"
+  description: "We specialize in providing education and training to up and coming traders."
+  images: 
+    - "images/hero-image.png"
+
+  logo: "arrow-up.png"
+
+  favicons:
+    themeColor: "#FFFFFF"
+    backgroundColor: "#FFFFFF"
+    faviconColor: "#000000"
+
+  social:
+    twitter: "https://www.twitter.com/spyderacademy"
+
+  copyright: "© 2023 SpyderAcademy, LLC"
+
+  postProcess: false
+
+menus:
+  main:
+    - name: "Home"
+      url: "/#hero"
+      weight: 1
+
+    - name: "How We Teach"
+      url: "/#"
+      weight: 2
+
+    - name: "Our Team"
+      url: "/#"
+      weight: 3
+
+    - name: "Pricing"
+      url: "/#"
+      weight: 4
+
+    - name: "Blog"
+      url: "/blog"
+      weight: 5
+
+  buttons:
+    - name: "Start Learning"
+      url: "/#"
+      weight: 5
+      pre: "btn btn-primary text-light"
+
+  footer:
+    - name: "Home"
+      url: "/#hero"
+      weight: 1
+
+    - name: "How we work"
+      url: "/#"
+      weight: 2
+
+    - name: "Our team"
+      url: "/#"
+      weight: 3
+
+    - name: "Pricing"
+      url: "/#"
+      weight: 4
+
+    - name: "Blog"
+      url: "/blog"
+      weight: 5
+
+taxonomies:
+  series: "series"
+  tags: "tags"

@@ -1,0 +1,15 @@
+enabled: true
+id: "hero"
+
+content:
+  title: For every **Trader**. Real Results.
+  text: "We're a team of traders with the mission to help new traders become successful enough to break their 9 to 5."
+
+  buttonPrimary:
+    label: "How We Teach"
+    url: "#"
+
+  buttonSecondary:
+    label: "Start Learning"
+    url: ""
+

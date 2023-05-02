@@ -1,0 +1,9 @@
+enabled: true
+id: "brands"
+
+content:
+  title: "Our traders work with multiple tools and services"
+  items:
+    - "images/brands-tradingview.png"
+    - "images/brands-bbs.png"
+    - "images/brands-rocketscooter.png"
