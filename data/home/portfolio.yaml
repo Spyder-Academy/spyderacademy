@@ -1,5 +1,5 @@
 enabled: true
-id: "portfolio"
+id: "mission"
 
 content:
   - image: "images/portfolio-mission.png"
@@ -9,7 +9,7 @@ content:
 
   
   - image: "images/portfolio-background.png"
-    pretitle: "Experience"
+    pretitle: "How We Teach"
     title: "Why Us?"
     text: "Our Discord community offers high-quality trading education for traders of all levels, with a supportive and collaborative environment. We provide a range of resources, including screenshares, market analysis, and expert insights, to help members stay informed and up-to-date on the latest trends and strategies. Our mentorship offers personalized guidance to help traders achieve their financial goals. Our community is education-focused and dedicated to providing value to our members. By joining our community, traders can learn from experienced traders, share insights, and grow their skills in a supportive environment that is committed to their success."
 

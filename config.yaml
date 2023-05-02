@@ -35,15 +35,15 @@ menus:
       weight: 1
 
     - name: "How We Teach"
-      url: "/#"
+      url: "/#mission"
       weight: 2
 
     - name: "Our Team"
-      url: "/#"
+      url: "/#teachers"
       weight: 3
 
     - name: "Pricing"
-      url: "/#"
+      url: "/#services"
       weight: 4
 
     - name: "Blog"
@@ -52,7 +52,7 @@ menus:
 
   buttons:
     - name: "Start Learning"
-      url: "/#"
+      url: "/#pricing"
       weight: 5
       pre: "btn btn-primary text-light"
 
@@ -61,16 +61,16 @@ menus:
       url: "/#hero"
       weight: 1
 
-    - name: "How we work"
-      url: "/#"
+    - name: "How We Teach"
+      url: "/#mission"
       weight: 2
 
     - name: "Our team"
-      url: "/#"
+      url: "/#teachers"
       weight: 3
 
     - name: "Pricing"
-      url: "/#"
+      url: "/#services"
       weight: 4
 
     - name: "Blog"
