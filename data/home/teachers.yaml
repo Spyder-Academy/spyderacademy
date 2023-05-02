@@ -7,13 +7,13 @@ content:
   cards:
 
     - image: "images/teachers-cash.jpeg"
-      title: "CASHMONEYTRADES"
+      title: "CASH MONEY TRADES"
       button:
         label: "FOLLOW"
         url: "https://twitter.com/CashMoneyTrades"
 
     - image: "images/teachers-gobi.jpeg"
-      title: "GOBI"
+      title: "GOBI CALLS"
       button:
         label: "FOLLOW"
         url: "https://twitter.com/GobiCalls"
