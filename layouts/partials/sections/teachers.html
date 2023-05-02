@@ -1,6 +1,6 @@
 <section id="{{ .id }}" class="section teachers py-5">
   <div class="container">
-    <div class="row justify-content-center pb-5">
+    <div class="row justify-content-center pb-5 ">
       <div class="col-12 col-xl-6">
         {{ with .content.title }}
           <h3 class="fs-1 fw-bold text-center text-primary pb-3">{{ . }}</h3>
@@ -10,19 +10,42 @@
         {{ end }}
       </div>
     </div>
-    <div class="row g-5">
-      {{ range .content.cards }}
-        <div class="col-12 col-xl-4">
-          <div class="card bg-blue-16 border-0 border-radius-34 p-4">
-            {{ with .image }}{{ partial "utilities/image-fluid.html" . }}{{ end }}
-            <div class="card-body text-center">
-              {{ with .title }}<h4 class="card-title text-center text-primary pb-4">{{ . }}</h4>{{ end }}
-              {{ with .text }}<p class="card-text text-black-61 pb-4">{{ . }}</p>{{ end }}
-              {{ with .button }}<a class="btn btn-outline-primary px-4" href="{{ .url }}">{{ .label }}</a>{{ end }}
+
+    <div class="container py-1 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        {{ range .content.cards }}
+        <div class="col-6 py-3 ">
+          <div class="card shadow border-0" style="border-radius: 15px;">
+            <div class="card-body p-4 ">
+              <div class="d-flex text-black">
+                <div class="flex-shrink-0">
+                  {{ with .image }}
+                    {{ with resources.Get . }}
+                      <img class="img-fluid" src="{{ .Permalink }}" alt="{{ .Title }}"  style="width: 180px; border-radius: 10px;" />
+                    {{ end }}
+                  {{ end }}
+                </div>
+                <div class="flex-grow-1 ms-3">
+                  <h5 class="mb-1">{{ .title }}</h5>
+                  <p class="mb-2 pb-1" style="color: #2b2a2a;">
+                  </p>
+                  <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
+                    style="background-color: #efefef;">
+                    <div>
+                      <p class="small text-muted mb-1">
+                        {{ with .text }} {{ . }} {{ end }}
+                      </p>
+                    </div>
+                  </div>
+                  <div class="d-flex pt-1">
+                    {{ with .button }}<a class="btn btn-primary" href="{{ .url }}" target="_blank">{{ .label }}</a>{{ end }}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      {{ end }}
+        {{ end }}
     </div>
   </div>
 </section>

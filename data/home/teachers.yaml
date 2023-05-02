@@ -7,33 +7,38 @@ content:
   cards:
 
     - image: "images/teachers-cash.jpeg"
-      title: "CASH MONEY TRADES"
+      title: "CashMoneyTrades"
+      text: "Trades the SORBET strategy (ORB and The System). $SPY and $TSLA."
       button:
-        label: "FOLLOW"
+        label: "Follow"
         url: "https://twitter.com/CashMoneyTrades"
 
     - image: "images/teachers-gobi.jpeg"
-      title: "GOBI CALLS"
+      title: "Cauliflower Calls"
+      text: "Trades with the SATY ribbons, usually scalping $SPY 0dte's."
       button:
-        label: "FOLLOW"
+        label: "Follow"
         url: "https://twitter.com/GobiCalls"
 
     - image: "images/teachers-linksnipes.jpeg"
-      title: "LINK SNIPES"
+      title: "Link Snipes"
+      text: "Scalps various tickers throughout the day."
       button:
-        label: "FOLLOW"
+        label: "Follow"
         url: "https://twitter.com/link_0002"
      
     - image: "images/teachers-pauldozer.jpeg"
-      title: "PAULDOZER"
+      title: "Pauldozer"
+      text: "Trades $TSLA"
       button:
-        label: "FOLLOW"
+        label: "Follow"
         url: "https://twitter.com/Pavldozer"
      
     - image: "images/teachers-sith.jpeg"
-      title: "SITH"
+      title: "Sith"
+      text: "Specializing in the dark art of the downside. $SPY $SPX $QQQ $ES $MES $NQ $TSLA"
       button:
-        label: "FOLLOW"
+        label: "Follow"
         url: "https://twitter.com/Sysadminsith"
      
  
