@@ -9,19 +9,19 @@ content:
       title: "The Library"
       text: "Join a community of fellow students where you can study together and learn on your own."
       button:
-        label: "Learn more"
+        label: "FREE"
         url: "#"
 
     - image: "images/services-web-development.png"
       title: "The Cafe"
       text: "Get trade alerts and educational content that you can follow at your own pace."
       button:
-        label: "Learn more"
+        label: "$20/mo"
         url: "#"
 
     - image: "images/services-web-development.png"
       title: "The Class Room"
       text: "Spend time with the teachers in realtime as they trade on Live Voice.  Get access to educational content, screen shares, and feedback on your trading."
       button:
-        label: "Learn more"
+        label: "$50/mo"
         url: "#"
