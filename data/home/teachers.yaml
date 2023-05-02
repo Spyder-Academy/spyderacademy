@@ -2,8 +2,8 @@ enabled: true
 id: "services"
 
 content:
-  title: "Our Teachers"
-  text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nec quam nibh elit pellentesque velit netus suspendisse. Sed enim, pretium, montes, in ut dolor urna."
+  title: "Your Teachers"
+  text: "Follow your teachers on Twitter and learn from the amazing content they put out!"
   cards:
 
     - image: "images/teachers-cash.jpeg"

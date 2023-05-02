@@ -3,25 +3,25 @@ id: "services"
 
 content:
   title: "Premium Discord Subscriptions"
-  text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nec quam nibh elit pellentesque velit netus suspendisse. Sed enim, pretium, montes, in ut dolor urna."
+  text: "All our plans come with a 7 day free trial."
   cards:
-    - image: "images/services-web-development.png"
+    - image: "images/services-library.png"
       title: "The Library"
-      text: "Join a community of fellow students where you can study together and learn on your own."
+      text: "Join a community of fellow students where you can study together and learn at your own pace."
       button:
         label: "FREE"
         url: "#"
 
-    - image: "images/services-web-development.png"
+    - image: "images/services-cafe.png"
       title: "The Cafe"
       text: "Get trade alerts and educational content that you can follow at your own pace."
       button:
         label: "$20/mo"
         url: "#"
 
-    - image: "images/services-web-development.png"
+    - image: "images/services-classroom.png"
       title: "The Class Room"
-      text: "Spend time with the teachers in realtime as they trade on Live Voice.  Get access to educational content, screen shares, and feedback on your trading."
+      text: "Spend time with the teachers in realtime as they trade on Live Voice.  Get access to education, screen shares, and feedback on your trading."
       button:
         label: "$50/mo"
         url: "#"

@@ -2,14 +2,14 @@ enabled: true
 id: "portfolio"
 
 content:
-  - image: "images/portfolio-ecommerce.png"
+  - image: "images/portfolio-mission.png"
     pretitle: "Mission"
     title: "Our Mission"
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sed euismod quis sit gravida pharetra sit. Cursus vel enim pretium vulputate semper sem elit magna neque. Aliquet adipisc."
+    text: "Our mission is to empower traders of all levels with the knowledge and skills they need to achieve their financial goals. We aim to provide a supportive community where traders can learn from each other, share insights, and stay up-to-date on the latest market trends and trading strategies. Our focus is on education, and we are committed to delivering high-quality resources, and expert guidance to help our members become more confident, disciplined, and successful traders. Whether you are a novice or an experienced trader, our discord is the place to be if you are passionate about trading and want to take your skills to the next level."
 
   
-  - image: "images/portfolio-ecommerce.png"
+  - image: "images/portfolio-background.png"
     pretitle: "Experience"
-    title: "Our Background"
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sed euismod quis sit gravida pharetra sit. Cursus vel enim pretium vulputate semper sem elit magna neque. Aliquet adipisc."
+    title: "Why Us?"
+    text: "Our Discord community offers high-quality trading education for traders of all levels, with a supportive and collaborative environment. We provide a range of resources, including screenshares, market analysis, and expert insights, to help members stay informed and up-to-date on the latest trends and strategies. Our mentorship offers personalized guidance to help traders achieve their financial goals. Our community is education-focused and dedicated to providing value to our members. By joining our community, traders can learn from experienced traders, share insights, and grow their skills in a supportive environment that is committed to their success."
 
