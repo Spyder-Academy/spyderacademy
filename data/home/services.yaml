@@ -13,7 +13,7 @@ content:
         url: "#"
 
     - image: "images/services-web-development.png"
-      title: "The Cafetaria"
+      title: "The Cafe"
       text: "Get trade alerts and educational content that you can follow at your own pace."
       button:
         label: "Learn more"
