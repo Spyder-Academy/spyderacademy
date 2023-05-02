@@ -1,0 +1,43 @@
+enabled: true
+id: "services"
+
+content:
+  title: "Our Teachers"
+  text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nec quam nibh elit pellentesque velit netus suspendisse. Sed enim, pretium, montes, in ut dolor urna."
+  cards:
+
+    - image: "images/teachers-cash.jpeg"
+      title: "CASHMONEYTRADES"
+      button:
+        label: "FOLLOW"
+        url: "https://twitter.com/CashMoneyTrades"
+
+    - image: "images/teachers-gobi.jpeg"
+      title: "GOBI"
+      button:
+        label: "FOLLOW"
+        url: "https://twitter.com/GobiCalls"
+
+    - image: "images/teachers-linksnipes.jpeg"
+      title: "LINK SNIPES"
+      button:
+        label: "FOLLOW"
+        url: "https://twitter.com/link_0002"
+     
+    - image: "images/teachers-pauldozer.jpeg"
+      title: "PAULDOZER"
+      button:
+        label: "FOLLOW"
+        url: "https://twitter.com/Pavldozer"
+     
+    - image: "images/teachers-sith.jpeg"
+      title: "SITH"
+      button:
+        label: "FOLLOW"
+        url: "https://twitter.com/Sysadminsith"
+     
+ 
+
+
+    
+
