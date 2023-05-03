@@ -1,0 +1,22 @@
+{{ define "main" }}
+
+<section class="section hero py-5">
+  <div class="container">
+    <div class="row flex-column flex-xl-row-reverse">
+      <div class="col-12 col-xl-6  d-flex flex-column justify-content-center hero-image">
+        {{ partial "utilities/image-fluid" "images/lost.jpeg" }}
+      </div>
+      <div class="col-12 col-xl-6 d-flex flex-column justify-content-center">
+          <h3 class="hero-title fw-bold display-1 text-primary text-center text-xl-start pb-4">Whoops!</h3>
+          <p class="text-center text-black-61 text-xl-start">Well this is embarrassing. You found a page that doesnt exist.</p>
+          <p class="text-center text-black-61 text-xl-start pb-4">But then, did it ever really exist?  Do any of us really exist?</p>
+        <div class="d-flex flex-column flex-xl-row">
+            <a class="btn btn-outline-primary px-4 my-1 ms-xl-4" href="/">Go Back Home<span class="ms-2">{{ partial "icons/arrow-right.html" }}</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{{ end }}

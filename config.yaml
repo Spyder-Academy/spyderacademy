@@ -4,6 +4,12 @@ languageCode: "en-us"
 
 title: "SPYDER ACADEMY"
 
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
+
 # googleAnalytics: ""
 
 summaryLength: 20
