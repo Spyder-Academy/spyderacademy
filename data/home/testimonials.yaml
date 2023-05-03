@@ -2,19 +2,23 @@ enabled: true
 id: "testimonials"
 
 content:
-  title: "Testimonials"
+  title: "Teacher Reviews"
 
   featured:
     image: "images/testimonials-awards.png"
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consectetur et pretium nunc, quis euismod et. Volutpat suspendisse sed in blandit condimentum. Sagittis nullam nec mauris, feugiat hendrerit aliquam cras. Dolor tortor gravida lobortis in ultricies enim vulputate non. Neque nibh donec quam lectus."
-    client: "Anonymous Customer"
+    text: "This subscription has been worth every Penny for me. You’re the man @CashMoneyTrades …. anyone on the fence feel free to reach out and DEFINITELY give the free trial a test run to see for yourself."
+    client: "@jmaini3"
+    link: "https://twitter.com/jmaini3/status/1638262100727418889?s=20"
 
   list:
-    - text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consectetur et pretium nunc, quis euismod et. Volutpat suspendisse sed in blandit condimentum. Sagittis nullam nec mauris, feugiat hendrerit aliquam cras. Dolor tortor gravida lobortis in ultricies enim vulputate non. Neque nibh donec quam lectus."
-      client: "Anonymous Customer"
+    - text: "Deez guys are really nutty!"
+      client: "Ligma Johnson"
+      image: "images/services-library.png"
 
-    - text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consectetur et pretium nunc, quis euismod et. Volutpat suspendisse sed in blandit condimentum. Sagittis nullam nec mauris, feugiat hendrerit aliquam cras. Dolor tortor gravida lobortis in ultricies enim vulputate non. Neque nibh donec quam lectus."
-      client: "Anonymous Customer"
+    - text: Dozer is an absolute animal with TSLA."
+      client: "Everyone"
+      image: "images/services-cafe.png"
 
-    - text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consectetur et pretium nunc, quis euismod et. Volutpat suspendisse sed in blandit condimentum. Sagittis nullam nec mauris, feugiat hendrerit aliquam cras. Dolor tortor gravida lobortis in ultricies enim vulputate non. Neque nibh donec quam lectus."
-      client: "Anonymous Customer"
+    - text: "I like butter chicken"
+      client: "Paul"
+      image: "images/services-classroom.png"

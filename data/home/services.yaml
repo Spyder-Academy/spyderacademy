@@ -7,21 +7,21 @@ content:
   cards:
     - image: "images/services-library.png"
       title: "The Library"
-      text: "Join a community of fellow students where you can study together and learn at your own pace."
+      text: "Join a community of fellow students where you can study together while learning at your own pace."
       button:
-        label: "FREE"
+        label: "Join Free"
         url: "#"
 
     - image: "images/services-cafe.png"
       title: "The Cafe"
-      text: "Get trade alerts and educational content that you can follow at your own pace."
+      text: "Trade Alerts and Educational Content that you can follow at your own pace, while sipping on your morning coffee."
       button:
-        label: "$20/mo"
+        label: "Purchase $20/mo"
         url: "#"
 
     - image: "images/services-classroom.png"
       title: "The Class Room"
-      text: "Spend time with the teachers in realtime as they trade on Live Voice.  Get access to education, screen shares, and feedback on your trading."
+      text: "Trade with your Teachers realtime with Live Voice, Education, Screen sharing, and Trade Reviews."
       button:
-        label: "$50/mo"
+        label: "Purchase $50/mo"
         url: "#"

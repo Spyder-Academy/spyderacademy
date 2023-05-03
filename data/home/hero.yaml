@@ -3,13 +3,13 @@ id: "hero"
 
 content:
   title: For every **Trader**. Real Results.
-  text: "We're a team of traders with the mission to help new traders become successful enough to break their 9 to 5."
+  text: "Imagine a time... When you make more money trading than you do at your job. When you have free time to do the things you really love. When you are making consistent gains. When you have conquered the mental side of trading."
 
   buttonPrimary:
     label: "How We Teach"
     url: "#mission"
 
   buttonSecondary:
-    label: "Start Learning"
+    label: "Start Improving Now"
     url: "#services"
 
