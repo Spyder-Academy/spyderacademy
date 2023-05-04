@@ -21,7 +21,7 @@ content:
 
     - image: "images/services-classroom.png"
       title: "The Class Room"
-      text: "Trade with your Teachers realtime with Live Voice Trading, Access to all Alerts, Private Education, Screen Sharing, and Trade Reviews."
+      text: "Trade with your Instructors realtime with Live Sessions, Access to all Alerts, Private Education, Screen Sharing, and Trade Reviews."
       button:
         label: "Start Your 7-Day Free Trial"
         url: "https://whop.com/checkout/plan_ymbLrGpd1lBtS/"
