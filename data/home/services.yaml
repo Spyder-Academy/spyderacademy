@@ -10,6 +10,7 @@ content:
       price: "0"
       features:
         - item: "Community Chat."
+        - item: "Algo Bot Alerts."
       button:
         label: "Join Free"
         url: "https://whop.com/checkout/plan_N7Bi5FZN4gpgD/"
@@ -19,6 +20,7 @@ content:
       price: "20"
       features:
         - item: "Instructor Trade Alerts."
+        - item: "Algo Bot Alerts."
         - item: "Educational Content."
         - item: "Community Chat."
       button:
@@ -31,6 +33,7 @@ content:
       features:
         - item: "Live Voice Sessions."
         - item: "Instructor Trade Alerts with Reasons for Entries/Exits."
+        - item: "Algo Bot Alerts."
         - item: "Private Educational Content."
         - item: "Screen Sharing."
         - item: "Trade Recaps."

@@ -30,7 +30,7 @@
             {{ $image := resources.Get .image }}
             <img src="{{ $image.RelPermalink }}" alt="" class="w-96" style="display: none">
 
-            <ul class="list-unstyled mb-5 position-relative" style="  height: 15em;">
+            <ul class="list-unstyled mb-5 position-relative" style="  height: 17em;">
               {{ range $e.features }}
                 <li>{{ .item}} </li>
               {{ end }}
