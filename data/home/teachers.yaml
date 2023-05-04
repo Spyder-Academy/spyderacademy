@@ -2,8 +2,8 @@ enabled: true
 id: "teachers"
 
 content:
-  title: "Your Teachers"
-  text: "Follow your teachers on Twitter and learn from the amazing content they put out!"
+  title: "Your Instructors"
+  text: "Follow your Instructors on Twitter and learn from the amazing content they put out!"
   cards:
 
     - image: "images/teachers-cash.png"

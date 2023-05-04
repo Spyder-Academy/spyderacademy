@@ -10,18 +10,18 @@ content:
       text: "Join a community of fellow students where you can study together while learning at your own pace."
       button:
         label: "Join Free"
-        url: "https://whop.com/checkout/plan_gE6BxucsfbTzS/"
+        url: "https://whop.com/checkout/plan_N7Bi5FZN4gpgD/"
 
     - image: "images/services-cafe.png"
       title: "The Cafe"
       text: "Trade Alerts and Educational Content that you can follow at your own pace, while sipping on your morning coffee."
       button:
         label: "Start Your 7-Day Free Trial"
-        url: "https://whop.com/checkout/plan_gE6BxucsfbTzS/"
+        url: "https://whop.com/checkout/plan_OfdpsSbuAuRba/"
 
     - image: "images/services-classroom.png"
       title: "The Class Room"
       text: "Trade with your Teachers realtime with Live Voice Trading, Access to all Alerts, Private Education, Screen Sharing, and Trade Reviews."
       button:
         label: "Start Your 7-Day Free Trial"
-        url: "https://whop.com/checkout/plan_gE6BxucsfbTzS/"
+        url: "https://whop.com/checkout/plan_ymbLrGpd1lBtS/"
