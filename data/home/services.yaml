@@ -7,21 +7,34 @@ content:
   cards:
     - image: "images/services-library.png"
       title: "The Library"
-      text: "Join a community of fellow students where you can study together while learning at your own pace."
+      price: "0"
+      features:
+        - item: "Community Chat."
       button:
         label: "Join Free"
         url: "https://whop.com/checkout/plan_N7Bi5FZN4gpgD/"
 
     - image: "images/services-cafe.png"
       title: "The Cafe"
-      text: "Trade Alerts and Educational Content that you can follow at your own pace, while sipping on your morning coffee."
+      price: "20"
+      features:
+        - item: "Instructor Trade Alerts."
+        - item: "Educational Content."
+        - item: "Community Chat."
       button:
         label: "Start Your 7-Day Free Trial"
         url: "https://whop.com/checkout/plan_OfdpsSbuAuRba/"
 
     - image: "images/services-classroom.png"
       title: "The Class Room"
-      text: "Trade with your Instructors realtime with Live Sessions, Access to all Alerts, Private Education, Screen Sharing, and Trade Reviews."
+      price: "50"
+      features:
+        - item: "Live Voice Sessions."
+        - item: "Instructor Trade Alerts with Reasons for Entries/Exits."
+        - item: "Private Educational Content."
+        - item: "Screen Sharing."
+        - item: "Trade Recaps."
+        - item: "Community Chat."
       button:
         label: "Start Your 7-Day Free Trial"
         url: "https://whop.com/checkout/plan_ymbLrGpd1lBtS/"
