@@ -2,7 +2,7 @@ enabled: true
 id: "testimonials"
 
 content:
-  title: "Teacher Reviews"
+  title: "Reviews"
 
   featured:
     image: "images/testimonials-awards.png"
