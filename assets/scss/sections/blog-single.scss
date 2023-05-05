@@ -7,4 +7,13 @@
       border-radius: 8px;
     }
   }
+
+  h2, h3, h4, h5{
+    padding-top: 1em;
+    font-weight: bold;
+  }
+
+  strong{
+    color: $danger
+  }
 }
