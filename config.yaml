@@ -14,7 +14,6 @@ markup:
 
 summaryLength: 20
 
-
 params:
   title: "Up Business"
   description: "We specialize in providing education and training to up and coming traders."
@@ -54,7 +53,7 @@ menus:
       weight: 4
 
     - name: "Blog"
-      url: "/blog"
+      url: "/education"
       weight: 5
 
   buttons:
