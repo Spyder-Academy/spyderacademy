@@ -16,11 +16,12 @@ content:
       image: "images/teachers-pauldozer.png"
       link: "https://twitter.com/SSKhabibi/status/1654133717710041089?s=20"
 
-    - text: "Took my first SORBET trades today on $SPX. First stopped out for a loss. Second made back losses and more. Loving your trading guide. Been following SORBET for a while."
-      client: "@footbag22"
-      image: "images/teachers-cash.png"
-      link: "https://twitter.com/footbag22/status/1641183549578690562?s=20"
-
     - text: "Just wanted to thank you personally!! The knowledge you shared changed everything for me. My eyes are now open and I see things a lot clearer. I've been struggling for two years and now I don't feel lost anymore. I have direction and setups I wait on.<br/><br/>Thanks!!"
       client: "ETAN"
       image: "images/teachers-pauldozer.png"
+
+    - text: "Cauliflower Calls transformed my trading from inconsistency as a new trader, to finding a successful rhythm in my trading.<br/><br/>The real value in this program was all the breakdowns that have a lot of thought and time to understand why a move happened rather than just simplifying to you see x candle and y indicator. You get both Macro and Micro out of this"
+      client: "lord_coco"
+      image: "images/teachers-gobi.png"
+
+
