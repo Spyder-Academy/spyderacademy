@@ -52,7 +52,7 @@ menus:
       url: "/#services"
       weight: 4
 
-    - name: "Blog"
+    - name: "Education"
       url: "/education"
       weight: 5
 
@@ -71,7 +71,7 @@ menus:
       url: "/#mission"
       weight: 2
 
-    - name: "Our team"
+    - name: "Our Team"
       url: "/#teachers"
       weight: 3
 
@@ -79,8 +79,16 @@ menus:
       url: "/#services"
       weight: 4
 
-    - name: "Blog"
-      url: "/blog"
+    - name: "Education"
+      url: "/education"
+      weight: 5
+
+    - name: "Terms of Use"
+      url: "/termsofuse"
+      weight: 5
+
+    - name: "Privacy Policy"
+      url: "/privacy"
       weight: 5
 
 taxonomies:
