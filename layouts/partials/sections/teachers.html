@@ -45,7 +45,7 @@
             <div class="card-body">
               <p class="card-text">{{ $e.text | safeHTML}}</p>
               <p class="card-text text-danger fw-semibold my-4">{{ $e.tickers | safeHTML}}</p>
-              {{ with $e.button }}<a class="btn btn-primary my-4" href="{{ .url }}" target="_blank">{{ .label }}</a>{{ end }}
+              {{ with $e.button }}<a class="btn btn-primary  my-4" href="{{ .url }}" target="_blank">{{ partial "icons/twitter.html" }}  {{ .label }}</a>{{ end }}
             </div>
           </div>
           {{ end }}

@@ -27,15 +27,15 @@
       {{ range $i, $e := .content.list }}
       <div class="col-md-4 mb-5 mb-md-0">
         <div class="card shadow border-0 testimonial-card" style="border-radius: 15px;">
-          {{ $colors := (slice "#000000" "#ffbd59" "#29741d") }}
+          {{ $colors := (slice  "#ffbd59" "#2d5772" "#29741d") }}
           <div class="card-up" style="background-color: {{ index $colors (mod $i 4) }}"></div>
           <div class="avatar mx-auto bg-white">
             <img src="{{ $e.image }}" class="rounded-circle img-fluid" />
           </div>
           <div class="card-body">
-            <h4 class="mb-4">{{ $e.text }}</h4>
+            <p class="card-text text-black-61 px-5 mb-4"  style="height: 7em" >{{ $e.text | safeHTML }}</p>
             <hr />
-            <p class="dark-grey-text mt-4"><i class="fas fa-quote-left pe-2"></i>{{ $e.client }}</p>
+            <p class="dark-grey-text mt-4"><i class="fas fa-quote-left pe-2"></i><a class="fw-bold text-primary text-nowrap text-decoration-none" href="{{ .link }}" target="_blank">{{ .client }}</a></p>
           </div>
         </div>
       </div>
