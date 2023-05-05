@@ -16,21 +16,20 @@
         {{ range .content.cards }}
         <div class="col-lg-6 col-sm-12 py-3 ">
           <div class="card shadow border-0" style="border-radius: 15px;">
-            <div class="card-body p-4 ">
-              <div class="d-flex text-black">
-                <div class="flex-shrink-0">
+            <div class="card-body p-4 container ">
+              <div class="d-flex text-black row">
+                <div class="col-4">
                   {{ with .image }}
                     {{ with resources.Get . }}
                       <img class="img-fluid" src="{{ .Permalink }}" alt="{{ .Title }}"  style="width: 180px; border-radius: 20px;" />
                     {{ end }}
                   {{ end }}
                 </div>
-                <div class="flex-grow-1 ms-3">
+                <div class="col-8 ">
                   <h5 class="mb-1">{{ .title }}</h5>
                   <p class="mb-2 pb-1" style="color: #2b2a2a;">
                   </p>
-                  <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
-                    style="background-color: #efefef;">
+                  <div class="d-flex justify-content-start rounded-3 p-2 mb-2" style="background-color: #efefef;">
                     <div>
                       <p class="small text-muted mb-1">
                         {{ with .text }} {{ . }} {{ end }}

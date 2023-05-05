@@ -14,7 +14,7 @@
       {{ range $i, $e := .content.cards }}
 
       {{ $colors := (slice "blue" "yellow" "green") }}
-      <div class="col-4  text-center princing-item {{ index $colors (mod $i 3) }}">
+      <div class="col-lg-4 col-sm-12 text-center princing-item {{ index $colors (mod $i 3) }}">
         <div class="pricing-divider " >
             <h3 class="text-light"> {{ .title }}</h3>
             <h4 class="my-0 display-2 text-light font-weight-normal mb-3"><span class="h3">$</span> {{ $e.price }} <span class="h5">/mo</span></h4>

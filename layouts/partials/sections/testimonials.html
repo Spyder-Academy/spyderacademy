@@ -9,7 +9,7 @@
     </div>
     <div class="row">
       {{ with .content.featured }}
-      <div class="col-12 col-xl-5 d-flex flex-column justify-content-center">
+      <div class="col-12 col-xl-5 d-none d-lg-block d-flex flex-column justify-content-center">
         {{ with .image }}
           {{ partial "utilities/image-fluid.html" . }}
         {{ end }}
