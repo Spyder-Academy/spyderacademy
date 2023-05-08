@@ -1,0 +1,31 @@
+<section id="{{ .id }}" class="section testimonial py-5">
+  <div class="container">
+    <div class="row pb-5">
+      <div class="col-12">
+        {{ with .content.title }}
+          <h3 class="fs-1 fw-bold text-center text-primary pb-3">{{ . }}</h3>
+        {{ end }}
+      </div>
+    </div>
+    <div class="row text-center">
+      {{ range $i, $e := .content.list }}
+      <div class="col-md-6 mb-5 mb-md-0">
+        <div class="card shadow border-0 testimonial-card" style="border-radius: 15px;">
+          {{ $colors := (slice  "#2d5772"  "#29741d" "#ffbd59" ) }}
+          <div class="card-up" style="background-color: {{ index $colors (mod $i 4) }}"></div>
+          <div class="avatar mx-auto bg-white">
+            {{ $image := resources.Get $e.image }}
+            <img src="{{ $image }}" class="rounded-circle img-fluid" />
+          </div>
+          <div class="card-body">
+            <p class="card-text text-black-61 px-5 mb-4"  style="height: 14em" >{{ $e.description | safeHTML }}</p>
+            <hr />
+            <p class="dark-grey-text mt-4"><i class="fas fa-quote-left pe-2"></i><a class="fw-bold text-primary text-nowrap text-decoration-none" href="{{ $e.button.url }}" target="_blank">{{ $e.button.label }}</a></p>
+          </div>
+        </div>
+      </div>
+       
+      {{ end }}
+    </div>
+  </div>
+</section>
