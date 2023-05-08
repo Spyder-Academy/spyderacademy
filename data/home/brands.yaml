@@ -4,6 +4,10 @@ id: "brands"
 content:
   title: "Our traders work with multiple tools and services"
   items:
-    - "images/brands-tradingview.png"
-    - "images/brands-bbs.png"
-    - "images/brands-rocketscooter.png"
+    - image: "images/brands-tradingview.png"
+      url: "https://www.tradingview.com/gopro/?share_your_love=amitgandhinz"
+    - image: "images/brands-bbs.png"
+      url: "http://staygreen.blackboxstocks.com/SHJG"
+    - image: "images/brands-rocketscooter.png"
+      url: "https://www.rocketscooter.com"
+      
