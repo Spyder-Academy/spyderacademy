@@ -5,15 +5,15 @@ content:
   title: "Premium Discord Subscriptions"
   text: "All our plans come with a 7 day free trial."
   cards:
-    - image: "images/services-library.png"
-      title: "The Library"
-      price: "0"
-      features:
-        - item: "Community Chat."
-        - item: "Algo Bot Alerts."
-      button:
-        label: "Join Free"
-        url: "https://whop.com/checkout/plan_N7Bi5FZN4gpgD/"
+    # - image: "images/services-library.png"
+    #   title: "The Library"
+    #   price: "0"
+    #   features:
+    #     - item: "Community Chat."
+    #     - item: "Algo Bot Alerts."
+    #   button:
+    #     label: "Join Free"
+    #     url: "https://whop.com/checkout/plan_N7Bi5FZN4gpgD/"
 
     - image: "images/services-cafe.png"
       title: "The Cafe"
@@ -28,6 +28,7 @@ content:
         url: "https://whop.com/checkout/plan_XuBbAvuAmpnrl/"
 
     - image: "images/services-classroom.png"
+      featured: true
       title: "The Class Room"
       price: "80"
       features:
