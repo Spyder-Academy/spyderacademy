@@ -25,3 +25,12 @@ content:
       image: "images/teachers-gobi.png"
 
 
+    - text: "@Pavldozer ... the best $TSLA trader on Twitter 🔥<br/><br/>Thanks boss!!"
+      client: "@RockyBTrades"
+      image: "images/teachers-pauldozer.png"
+      link: "https://twitter.com/RockyBTrades/status/1656411056858865664"
+
+    - text: "If you’re like me and looking for direction and a guide @CashMoneyTrades System and ORB indicators simplify things."
+      client: "@Wardo"
+      image: "images/teachers-cash.png"
+      link: "https://twitter.com/WardoMedina/status/1636736279437099008?s=20"

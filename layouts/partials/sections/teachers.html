@@ -14,7 +14,7 @@
 
     <div class="accordion container py-1 h-100 " id="instructorList">
       <div class="row d-flex justify-content-center align-items-top h-100">
-        <div class="col-md-8 py-3 ">
+        <div class="col-md-4 py-3 ">
 
           <div id="instructor_x" class="accordion-collapse collapse in show card shadow border-0 m-2 princing-item green" style="border-radius: 15px; min-height: 31em;">
             <div class="pricing-divider " >
@@ -52,8 +52,36 @@
         </div>
         <!-- Each Instructor -->
         <div class="col-md-4 py-3">
-          {{ range $i, $e := .content.cards }}
+          {{ $colsize := 4}}
+          {{ range $i, $e := first $colsize .content.cards }}
           <div class="accordion-item card shadow border-0 m-2" style="border-radius: 15px;" data-bs-toggle="collapse" data-bs-target="#instructor_{{ $i }}" aria-expanded="true" aria-controls="instructor_{{ $i }}">
+            <div class="container">
+              <div class="row">
+                <div class="col-3 p-2">
+                  {{ with $e.image }}
+                    {{ with resources.Get . }}
+                      <img class="img-fluid" src="{{ .Permalink }}" alt="{{ .Title }}"  style="border-radius: 20px;" />
+                    {{ end }}
+                  {{ end }}
+                </div>
+                <div class="col-8">
+                  <div class="card-body">
+                    <strong class="mb-1">{{ $e.name }}</strong>
+                    <p class="card-text">{{ $e.title }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{ end }}
+          <!-- Add more cards for other persons -->
+        </div>
+
+        <!-- Each Instructor -->
+        <div class="col-md-4 py-3">
+          {{ range $i, $e := after $colsize .content.cards }}
+          {{ $idx := add $i $colsize}}
+          <div class="accordion-item card shadow border-0 m-2" style="border-radius: 15px;" data-bs-toggle="collapse" data-bs-target="#instructor_{{ $idx }}" aria-expanded="true" aria-controls="instructor_{{ $idx }}">
             <div class="container">
               <div class="row">
                 <div class="col-3 p-2">

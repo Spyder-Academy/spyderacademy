@@ -17,7 +17,7 @@ That's why we trade. And we hope to teach you how to trade. Join us on this jour
 
     - image: "images/teachers-cash.png"
       name: "Cash Money Trades"
-      title: "Co-Founder"
+      title: "Co-Founder / Instructor"
       text: "Technical Analysis Trader with 15 years experience trading stocks, and 5 years trading options. Primarily trades using ORB Breakouts, The System (SORBET), and EMA's.<br/><br/>20 years of experience building Software and Coaching teams in Startups/Fortune 500 companies.<br/><br/>Creator of the Cash+ Indicators for Trading View."
       tickers: "Primarily Trades $SPY and $TSLA."
       button:
@@ -26,25 +26,16 @@ That's why we trade. And we hope to teach you how to trade. Join us on this jour
 
     - image: "images/teachers-gobi.png"
       name: "Cauliflower Calls"
-      title: "Co-Founder"
+      title: "Co-Founder / Instructor"
       text: "Technical Analysis Trader with 5 years of experience, primarily trading using SATY ATR Levels and Pivot Ribbons.<br/><br/>Trading Mentor/Educator with over 20 successful trading students."
       tickers: "Primarily Trades $SPY"
       button:
         label: "Follow on Twitter"
         url: "https://twitter.com/GobiCalls"
 
-    - image: "images/teachers-linksnipes.png"
-      name: "Link Snipes"
-      title: "Co-Founder"
-      text: "Technical analysis trader that specializes in volume price analysis, supply & demand, and relative weakness/strength. Primarily trades SPY/Mega Cap Tech Tickers.<br/><br/>8 Years of experience as an investor, and 4 years in option trading."
-      tickers: "Trades $SPY and Mega Cap Tech"
-      button:
-        label: "Follow on Twitter"
-        url: "https://twitter.com/link_0002"
-     
     - image: "images/teachers-pauldozer.png"
       name: "Pauldozer"
-      title: "Co-Founder"
+      title: "Co-Founder / Instructor"
       text: "Technical Analysis Trader that employs price action/volume to enhance the SORBET strategy for short term options trading. Long-term Investor for 10+ years and Options Trader for 4+ years.<br/><br/>12+ years of experience in the DoD contracting space in Contracts/Finance/Administration/Management/Analysis, wide general knowledge base."
       tickers: "Primarily trades $TSLA. Secondarily trades Large Caps."
       button:
@@ -53,15 +44,36 @@ That's why we trade. And we hope to teach you how to trade. Join us on this jour
      
     - image: "images/teachers-sith.png"
       name: "Sith"
-      title: "Co-Founder"
+      title: "Co-Founder / Instructor"
       text: "Full-Time Options with 4 Years Experience. <br/><br/>Primarily trades with Technical Analysis and Trends with an emphasis on preparation and Entry/Exit. <br/><br/>8+ Years Experience as an Investor. 20+ Years Experience building as an I.T. Systems and Cloud Infrastructure engineer."
       tickers: "Trades: $SPY $QQQ Mega Caps"
       button:
         label: "Follow on Twitter"
         url: "https://twitter.com/Sysadminsith"
-     
- 
 
+    - image: "images/teachers-linksnipes.png"
+      name: "Link Snipes"
+      title: "Mentor"
+      text: "Technical analysis trader that specializes in volume price analysis, supply & demand, and relative weakness/strength. Primarily trades SPY/Mega Cap Tech Tickers.<br/><br/>8 Years of experience as an investor, and 4 years in option trading."
+      tickers: "Trades $SPY and Mega Cap Tech"
+      button:
+        label: "Follow on Twitter"
+        url: "https://twitter.com/link_0002"
 
-    
+    # - image: "images/teachers-woody.png"
+    #   name: "Woody"
+    #   title: "Mentor"
+    #   text: "Technical analysis trader"
+    #   tickers: "Trades $SPY and Mega Cap Tech"
+    #   button:
+    #     label: "Follow on Twitter"
+    #     url: "https://twitter.com/cwood89"
 
+    # - image: "images/teachers-mrwoofers.png"
+    #   name: "Mr Woofers"
+    #   title: "Mentor"
+    #   text: "Technical analysis trader"
+    #   tickers: "Trades $SPY and Mega Cap Tech"
+    #   button:
+    #     label: "Follow on Twitter"
+    #     url: "https://twitter.com/mr_woofers"
