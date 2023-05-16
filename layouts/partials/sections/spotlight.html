@@ -9,7 +9,7 @@
     </div>
     <div class="row text-center">
       {{ range $i, $e := .content.list }}
-      <div class="col-md-6 mb-5 mb-md-0">
+      <div class="col-md-4 mb-5 mb-md-0">
         <div class="card shadow border-0 testimonial-card" style="border-radius: 15px;">
           {{ $colors := (slice  "#2d5772"  "#29741d" "#ffbd59" ) }}
           <div class="card-up" style="background-color: {{ index $colors (mod $i 4) }}"></div>

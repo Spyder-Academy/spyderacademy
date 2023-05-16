@@ -19,4 +19,11 @@ content:
         label: "▶️ Listen Now"
         url: "https://twitter.com/i/spaces/1lPJqBdwekwxb"
 
+    - image: "images/teachers-spiderman.png"
+      title: "Wolf Spaces"
+      description: "The team introduce themselves on <br/><br/><strong>WOLF Spaces</strong> "
+      button:
+        label: "▶️ Listen Now"
+        url: "https://t.co/MbtkjxlqUJ"
+
   
