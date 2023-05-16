@@ -1,6 +1,6 @@
 +++
 author = "Gobi Calls"
-title = "Introduction to the Stock Market"
+title = "Introduction to the Market: 0 to Hero"
 date = "2023-05-16"
 description = "Stock Market Intro"
 images = ["images/posts/tradingguide.png"]
