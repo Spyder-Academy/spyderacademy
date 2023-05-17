@@ -1,6 +1,6 @@
 +++
 author = "Gobi Calls"
-title = "2. Basic Terminology"
+title = "Basic Terminology"
 date = "2023-05-16"
 description = "Basic Terminology"
 images = ["images/posts/2_terminology.png"]
