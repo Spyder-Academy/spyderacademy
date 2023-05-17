@@ -10,5 +10,5 @@ tags = [
 ]
 +++
 
-<a class="btn btn-secondary px-4 my-1 ms-xl-4" href="https://docs.google.com/document/d/1KlpaM11my1rErp2hfOpdHZjlPG_Yub_Vna95eMo-pGE/edit#heading=h.nj23sjpj5u97" target="_blank">Download Your Copy</span></a>
-<iframe src="https://docs.google.com/document/d/1KlpaM11my1rErp2hfOpdHZjlPG_Yub_Vna95eMo-pGE/edit#heading=h.nj23sjpj5u97" width="600px" height="800px" allow="autoplay"></iframe>
+<a class="btn btn-secondary px-4 my-1 ms-xl-4" href="https://docs.google.com/document/d/1KlpaM11my1rErp2hfOpdHZjlPG_Yub_Vna95eMo-pGE/preview" target="_blank">Download Your Copy</span></a>
+<iframe src="https://docs.google.com/document/d/1KlpaM11my1rErp2hfOpdHZjlPG_Yub_Vna95eMo-pGE/preview" width="600px" height="800px" allow="autoplay"></iframe>
