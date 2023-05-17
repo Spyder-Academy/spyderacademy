@@ -2,7 +2,7 @@
 author = "Gobi Calls"
 title = "2. Basic Terminology"
 date = "2023-05-16"
-description = "Basic Terminology"
+description = "Learn the Vocabulary"
 images = ["images/posts/2_terminology.png"]
 tags = [
     "Education",
