@@ -2,7 +2,7 @@
 author = "Gobi Calls"
 title = "1. Intro to the Market"
 date = "2023-05-16"
-description = "Introduction Post"
+description = "Bare Bones Basics"
 images = ["images/posts/1_intro.png"]
 tags = [
     "Education",
