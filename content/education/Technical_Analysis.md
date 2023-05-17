@@ -5,7 +5,7 @@ date = "2023-05-16T05:00:00"
 description = "Technical Analysis"
 images = ["images/posts/5_ta.png"]
 tags = [
-    "Education",
+    "Getting Started",
 ]
 +++
 

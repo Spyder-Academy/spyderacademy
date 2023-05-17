@@ -5,7 +5,7 @@ date = "2023-05-16T08:00:00"
 description = "Risk Management"
 images = ["images/posts/8_risk.png"]
 tags = [
-    "Education",
+    "Getting Started",
 ]
 +++
 

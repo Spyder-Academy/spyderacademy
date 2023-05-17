@@ -5,7 +5,7 @@ date = "2023-05-02"
 description = "Free Trading Guide"
 images = ["images/posts/tradingguide.png"]
 tags = [
-    "Education",
+    "Getting Started",
     "Strategies",
 ]
 +++

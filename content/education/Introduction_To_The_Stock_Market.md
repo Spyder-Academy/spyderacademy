@@ -5,7 +5,7 @@ date = "2023-05-16T01:00:00"
 description = "Introduction to the Stock Market"
 images = ["images/posts/1_intro.png"]
 tags = [
-    "Education",
+    "Getting Started",
 ]
 +++
 

@@ -5,8 +5,7 @@ date = "2023-05-16T06:00:00"
 description = "Options Trading"
 images = ["images/posts/6_options.png"]
 tags = [
-    "Education",
-    "Strategies",
+    "Getting Started",
 ]
 +++
 
