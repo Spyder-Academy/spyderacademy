@@ -1,7 +1,7 @@
 +++
 author = "Gobi Calls"
-title = "5. Technical Analysis"
-date = "2023-05-16T0500"
+title = "Technical Analysis"
+date = "2023-05-16T05:00:00"
 description = "Technical Analysis"
 images = ["images/posts/5_ta.png"]
 tags = [

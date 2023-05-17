@@ -13,7 +13,7 @@ markup:
 # googleAnalytics: ""
 
 summaryLength: 20
-
+paginate: 50
 params:
   title: "Up Business"
   description: "We specialize in providing education and training to up and coming traders."

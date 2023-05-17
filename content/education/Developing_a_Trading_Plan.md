@@ -1,7 +1,7 @@
 +++
 author = "Gobi Calls"
 title = "Developing A Trading Plan"
-date = "2023-05-16T1000"
+date = "2023-05-16T10:00:00"
 description = "Developing a trading plan"
 images = ["images/posts/10_plan.png"]
 tags = [

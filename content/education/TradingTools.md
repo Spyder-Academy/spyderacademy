@@ -1,7 +1,7 @@
 +++
 author = "Gobi Calls"
 title = "Trading Resources"
-date = "2023-05-16T0900"
+date = "2023-05-16T09:00:00"
 description = "Trading Platforms, Tools, Resources"
 images = ["images/posts/9_tools.png"]
 tags = [

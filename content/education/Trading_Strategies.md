@@ -1,7 +1,7 @@
 +++
 author = "Gobi Calls"
 title = "Trading Strategies"
-date = "2023-05-16T0700"
+date = "2023-05-16T07:00:00"
 description = "Trading Strategies"
 images = ["images/posts/7_strats.png"]
 tags = [

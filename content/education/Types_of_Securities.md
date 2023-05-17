@@ -1,7 +1,7 @@
 +++
 author = "Gobi Calls"
 title = "Types of Securities"
-date = "2023-05-16T0300"
+date = "2023-05-16T03:00:00"
 description = "Types of Securities"
 images = ["images/posts/3_securities.png"]
 tags = [
