@@ -5,7 +5,7 @@ content:
   title: "Reviews"
 
   featured:
-    image: "images/testimonials-awards.png"
+    image: "images/testimonial_flex.png"
     text: "This subscription has been worth every Penny for me. You’re the man @CashMoneyTrades …. anyone on the fence feel free to reach out and DEFINITELY give the free trial a test run to see for yourself."
     client: "@jmaini3"
     link: "https://twitter.com/jmaini3/status/1638262100727418889?s=20"
@@ -34,3 +34,8 @@ content:
       client: "@Wardo"
       image: "images/teachers-cash.png"
       link: "https://twitter.com/WardoMedina/status/1636736279437099008?s=20"
+
+    - text: "Might cry today is my first bag on a play. <br/><br/>Shout out to @Pavldozer for the morning analysis this morning! <br/><br/>Also thank you to @CashMoneyTrades for the incredible SORBET system! The system WORKS, plain and simple!"
+      client: "@SSKhabibi"
+      image: "images/teachers-pauldozer.png"
+      link: "https://twitter.com/SSKhabibi/status/1661382122790088707?s=20"

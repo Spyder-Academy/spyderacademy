@@ -10,9 +10,13 @@
     <div class="row">
       {{ with .content.featured }}
       <div class="col-12 col-xl-5 d-none d-lg-block d-flex flex-column justify-content-center">
-        {{ with .image }}
-          {{ partial "utilities/image-fluid.html" . }}
-        {{ end }}
+        <div class="card shadow border-0 testimonial-card p-0" style="border-radius: 15px; background-image: url({{ .image }}); background-size: cover; background-position: center;">
+          <div class="card-body">
+            {{ with .image }}
+              {{ partial "utilities/image-fluid.html" . }}
+            {{ end }}
+          </div>
+        </div>
       </div>
       <div class="col-12 col-xl-7 d-flex flex-column justify-content-center">
         <div class="pb-4">{{ partial "utilities/image-third.html" "images/testimonials-left-quote.png" }}</div>
