@@ -16,6 +16,7 @@ content:
     #     url: "https://whop.com/checkout/plan_N7Bi5FZN4gpgD/"
 
     - image: "images/services-cafe.png"
+      img2: "images/cafe.png"
       title: "The Cafe"
       price: "50"
       features:
@@ -28,6 +29,7 @@ content:
         url: "https://whop.com/checkout/plan_XuBbAvuAmpnrl/"
 
     - image: "images/services-classroom.png"
+      img2: "images/classroom.png"
       featured: true
       title: "The Class Room"
       price: "80"
