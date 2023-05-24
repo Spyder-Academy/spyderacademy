@@ -14,8 +14,11 @@
           {{ $colors := (slice  "#2d5772"  "#29741d" "#ffbd59" ) }}
           <div class="card-up" style="background-color: {{ index $colors (mod $i 4) }}"></div>
           <div class="avatar mx-auto bg-white">
-            {{ $image := resources.Get $e.image }}
-            <img src="{{ $image }}" class="rounded-circle img-fluid" />
+            {{ with $e.image }}
+              {{ with resources.Get . }}
+                <img src="{{ .Permalink }}" class="rounded-circle img-fluid" />
+              {{ end }}
+            {{ end }}
           </div>
           <div class="card-body">
             <p class="card-text text-black-61 px-5 mb-4"  style="height: 14em" >{{ $e.description | safeHTML }}</p>
