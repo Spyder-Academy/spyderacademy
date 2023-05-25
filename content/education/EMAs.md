@@ -23,10 +23,10 @@ The 9 and 21 EMA are specific settings for exponential moving averages. The 9 EM
 
 Here is an example chart with the 9, 21, and 50 EMAs. 
 ![Chart setup with 9/21/50 EMAs](images/EMA_img3.png)
-- Blue line is the 9EMA, Pink line is the 21EMA, Yellow line is the 50EMA 
+- Blue line is the 9EMA, pink line is the 21EMA, yellow line is the 50EMA 
 - This is a textbook example of retracing back to the 9EMA before rejecting and continuing the move down. 
 - Entering after the testing candle closes and get the rejection that I am looking for and trim along the way down. (ALWAYS trim into strength)
 - In terms of stops, a close over the EMAs would invalidate the trade. 
 
 ## Risk Management
-While the 9, 21, and 50 EMA strategy can be a very powerful tool, it's important to remember that no strategy is perfect. There will always be false signals. Aways have a plan for managing ris, which should include setting stop-loss levels and deciding in advance how much you are willing to risk on any single trade. 
+While the 9, 21, and 50 EMA strategy can be a very powerful tool, it's important to remember that no strategy is perfect. There will always be false signals. Aways have a plan for managing risk, which should include setting stop-loss levels and deciding in advance how much you are willing to risk on any single trade. 
