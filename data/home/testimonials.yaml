@@ -5,10 +5,12 @@ content:
   title: "Reviews"
 
   featured:
+    text: "Might cry, today is my first bag on a play. <br/><br/>Shout out to @Pavldozer for the morning analysis this morning! <br/><br/>Also thank you to @CashMoneyTrades for the incredible SORBET system!  <br/><br/>The system WORKS, plain and simple!"
+    client: "@SSKhabibi"
     image: "images/testimonial_flex.png"
-    text: "This subscription has been worth every Penny for me. You’re the man @CashMoneyTrades …. anyone on the fence feel free to reach out and DEFINITELY give the free trial a test run to see for yourself."
-    client: "@jmaini3"
-    link: "https://twitter.com/jmaini3/status/1638262100727418889?s=20"
+    link: "https://twitter.com/SSKhabibi/status/1661382122790088707?s=20"
+    
+    
 
   list:
     - text: "The GOAT 🐐<br/><br/>Trading $TSLA with you is easily my favorite experience in the market brother."
@@ -24,10 +26,10 @@ content:
       client: "lord_coco"
       image: "images/teachers-gobi.png"
    
-    - text: "Might cry today is my first bag on a play. <br/><br/>Shout out to @Pavldozer for the morning analysis this morning! <br/><br/>Also thank you to @CashMoneyTrades for the incredible SORBET system! The system WORKS, plain and simple!"
-      client: "@SSKhabibi"
-      image: "images/teachers-pauldozer.png"
-      link: "https://twitter.com/SSKhabibi/status/1661382122790088707?s=20"
+    - text: "This subscription has been worth every Penny for me. You're the man @CashMoneyTrades …. anyone on the fence feel free to reach out and DEFINITELY give the free trial a test run to see for yourself."
+      client: "@jmaini3"
+      link: "https://twitter.com/jmaini3/status/1638262100727418889?s=20"
+      image: "images/teachers-cash.png"
 
     - text: "There's fookin up the market, then there's Link Snipes! 🔥 <br/><br/>Have a day man!"
       client: "@Moe_Mamba_"

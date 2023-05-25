@@ -21,7 +21,7 @@
       <div class="col-12 col-xl-7 d-flex flex-column justify-content-center">
         <div class="pb-4">{{ partial "utilities/image-third.html" "images/testimonials-left-quote.png" }}</div>
         <div class="card d-flex flex-row align-items-start border-0 shadow p-5">
-          <p class="card-text text-black-61 px-5">"{{ .text }}" <a class="fw-bold text-primary text-nowrap text-decoration-none" href="{{ .link }}" target="_blank">- {{ .client }}</a></p>
+          <p class="card-text text-black-61 px-5">"{{ .text | safeHTML  }}" <a class="fw-bold text-primary text-nowrap text-decoration-none" href="{{ .link }}" target="_blank">- {{ .client }}</a></p>
         </div>
         <div class="pt-4 text-end">{{ partial "utilities/image-third.html" "images/testimonials-right-quote.png" }}</div>
       </div>
