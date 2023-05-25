@@ -22,7 +22,7 @@ The 9 and 21 EMA are specific settings for exponential moving averages. The 9 EM
 - **Assessing Strength of the Trend**: The distance between the 9 and 21 EMA can indicate the strength of the trend. The wider the gap, the stronger the trend. A narrowing gap may suggest the trend is weakening, and a reversal might be imminent.
 
 Here is an example chart with the 9, 21, and 50 EMAs. 
-![Chart setup with 9/21/50 EMAs][images/EMA_img3.png]
+![Chart setup with 9/21/50 EMAs](images/EMA_img3.png)
 - Blue line is the 9EMA, Pink line is the 21EMA, Yellow line is the 50EMA 
 - This is a textbook example of retracing back to the 9EMA before rejecting and continuing the move down. 
 - Entering after the testing candle closes and get the rejection that I am looking for and trim along the way down. (ALWAYS trim into strength)
