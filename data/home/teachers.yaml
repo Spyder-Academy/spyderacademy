@@ -78,11 +78,11 @@ That's why we trade. And we hope to teach you how to trade. Join us on this jour
         label: "Follow on Twitter"
         url: "https://twitter.com/cwood89"
 
-    # - image: "images/teachers-mrwoofers.png"
-    #   name: "Mr Woofers"
-    #   title: "Mentor"
-    #   text: "Technical analysis trader"
-    #   tickers: "Trades $SPY and Mega Cap Tech"
-    #   button:
-    #     label: "Follow on Twitter"
-    #     url: "https://twitter.com/mr_woofers"
+    - image: "images/teachers-mrwoofers.png"
+      name: "Mr Woofers"
+      title: "Mentor"
+      text: "Technical analysis trader"
+      tickers: "Trades $SPY and Mega Cap Tech"
+      button:
+        label: "Follow on Twitter"
+        url: "https://twitter.com/mr_woofers"
