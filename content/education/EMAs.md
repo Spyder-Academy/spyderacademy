@@ -11,7 +11,7 @@ tags = [
 +++
 
 ## Introduction to Moving Averages 
-EMA stands for exponential moving average. This is really similar to an SMA (simple moving average) in the fact that it measures the trend direction over a certain period of time. An SMA calculates the average price of a set amount of candles over a certain period of time. An EMA does the same, however it places more weight on the most recent candles and responds more quickly to price changes; this makes it the preferred choice by many day traders.
+EMA stands for exponential moving average. This is really similar to an SMA (simple moving average) in the fact that it measures the trend direction over a certain period of time. An SMA calculates the average price of a set amount of candles over a certain period of time. An EMA does the same, however it places more weight on the most recent candles and responds more quickly to price changes; this makes it the preferred choice of many day traders.
 
 ## What Are the 9 and 21 EMA in Day Trading?
 The 9 and 21 EMA are specific settings for exponential moving averages. The 9 EMA represents the average price over the past 9 periods, while the 21 EMA represents the average over the past 21 periods. These specific settings are used because they are effective in identifying short-term price trends and potential reversal points.
