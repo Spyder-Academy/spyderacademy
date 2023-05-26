@@ -20,6 +20,9 @@ content:
       title: "The Cafe"
       price: "50"
       features:
+        - item: "-"
+        - item: "-"
+        - item: "-"
         - item: "Instructor Trade Alerts."
         - item: "Algo Bot Alerts."
         - item: "Educational Content."
@@ -35,11 +38,12 @@ content:
       price: "80"
       features:
         - item: "Live Voice Sessions."
+        - item: "Screen Sharing."
+        - item: "Trade Recaps."
         - item: "Instructor Trade Alerts with Reasons for Entries/Exits."
         - item: "Algo Bot Alerts."
         - item: "Private Educational Content."
-        - item: "Screen Sharing."
-        - item: "Trade Recaps."
+       
         - item: "Community Chat."
       button:
         label: "Start Your 7-Day Free Trial"
