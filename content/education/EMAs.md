@@ -6,7 +6,7 @@ description = "The 9/21/50 EMA Strategy"
 images = ["images/posts/EMA_trading.png"] 
 tags = [
    "Getting Started", 
-   "Trading Strategies", 
+   "Strategies", 
 ] 
 +++
 
