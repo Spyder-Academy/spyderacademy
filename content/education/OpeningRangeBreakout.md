@@ -10,11 +10,9 @@ tags = [
 +++
 
 
- The **Opening Range Breakout (ORB))** is a commonly used strategy where levels of support and resistance for the day are determined from the opening period. The direction for the day is often set at the opening bell - whether it is an uptrend or downtrend day.
+ The **Opening Range Breakout (ORB)** is a commonly used strategy where levels of support and resistance for the day are determined from the opening period. The direction for the day is often set at the opening bell - whether it is an uptrend, downtrend, or sideways day.
 
-I usually use the **15 minute ORB** (uses the High and Low from the first 15 minutes of the regular session 930am - 945am ET), but there are others who have successfully traded with a 5 minute ORB or even a 30 minute ORB strategy.
-
-<div style="clear: both" />
+The **15 minute ORB** is determined by using the High and Low from the first 15 minutes of the regular session (930am - 945am ET), but there are others who have successfully traded with a 5 minute ORB or even a 30 minute ORB strategy.
 
 What we have found is that the price of a security will tend to retest and bounce and breakout from these opening highs and lows.  You can take advantage of that price action by setting those levels on your charting software and triggering Calls or Puts when those levels cross with volume or are retested.
 
@@ -22,7 +20,7 @@ Whats more, the 50% and 100% levels from the ORB range also tend to attract the 
 
 #### Recommended ORB Indicator
 
-If you use [TradingView](https://www.tradingview.com/gopro/?share_your_love=amitgandhinz), you can integrate one of the best (and free) [ORB indicator](https://www.tradingview.com/script/ZpONAzhm-ORB-with-Price-Targets/) directly into your charts, created by CashMoneyTrades.  The ORB Indicator will automatically plot the high and low opening range lines (optionally shaded), and plot the Price Targets.
+If you use [TradingView](https://www.tradingview.com/gopro/?share_your_love=amitgandhinz), you can integrate one of the best (and free) [ORB indicator](https://www.tradingview.com/script/ZpONAzhm-ORB-with-Price-Targets/) directly into your charts, created by our very own CashMoneyTrades.  The ORB Indicator will automatically plot the high and low opening range lines (optionally shaded), and plot the Price Targets.
 
 
 Here are some examples of where ORB levels have played out beautifully.
