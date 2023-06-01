@@ -29,6 +29,7 @@ params:
 
   social:
     twitter: "https://www.twitter.com/spyderacademy"
+    instagram: "https://www.instagram.com/spyderacademy"
 
   copyright: "© 2023 SpyderAcademy, LLC"
 
@@ -47,7 +48,7 @@ menus:
     - name: "Our Team"
       url: "/#teachers"
       weight: 3
-      
+
     - name: "Pricing"
       url: "/#services"
       weight: 4
