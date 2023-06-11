@@ -53,9 +53,13 @@ menus:
       url: "/#services"
       weight: 4
 
+    - name: "Reviews"
+      url: "/#testimonials"
+      weight: 5
+
     - name: "Education"
       url: "/education"
-      weight: 5
+      weight: 6
 
   buttons:
     - name: "Start Learning"

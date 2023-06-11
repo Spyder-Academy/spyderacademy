@@ -5,6 +5,9 @@
         {{ with .content.title }}
           <h3 class="fs-1 fw-bold text-center text-primary pb-3">{{ . }}</h3>
         {{ end }}
+        {{ with .content.text }}
+          <p class="text-black-61 text-center pb-3">{{ . | safeHTML }}</p>
+        {{ end }}
       </div>
     </div>
     <div class="row">
