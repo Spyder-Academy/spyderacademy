@@ -3,7 +3,7 @@ author = "Gobi Calls"
 title = "Trading with EMAs" 
 date = "2023-05-25T10:00:00" 
 description = "The 9/21/50 EMA Strategy" 
-images = ["images/posts/EMA_trading.png"] 
+images = ["images/posts/moving_averages.jpg"] 
 tags = [
    "Getting Started", 
    "Strategies", 

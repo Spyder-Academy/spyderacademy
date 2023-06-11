@@ -3,7 +3,7 @@ author = "Gobi Calls"
 title = "Risk Management"
 date = "2023-05-16T08:00:00"
 description = "Risk Management"
-images = ["images/posts/8_risk.png"]
+images = ["images/posts/risk_management.jpg"]
 tags = [
     "Getting Started",
 ]

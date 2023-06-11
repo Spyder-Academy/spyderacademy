@@ -3,7 +3,7 @@ author = "Gobi Calls"
 title = "Basic Terminology"
 date = "2023-05-16T02:00:00"
 description = "Learn the Vocabulary"
-images = ["images/posts/2_terminology.png"]
+images = ["images/posts/basic_terminology.jpg"]
 tags = [
     "Getting Started",
 ]

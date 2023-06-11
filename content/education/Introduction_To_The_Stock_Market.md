@@ -3,7 +3,7 @@ author = "Gobi Calls"
 title = "Introduction to the Market"
 date = "2023-05-16T01:00:00"
 description = "Introduction to the Stock Market"
-images = ["images/posts/1_intro.png"]
+images = ["images/posts/introduction_to_the_market.jpg"]
 tags = [
     "Getting Started",
 ]

@@ -3,7 +3,7 @@ author = "Gobi Calls"
 title = "Fundamental Analysis"
 date = "2023-05-16T04:00:00"
 description = "Fundamental Analysis"
-images = ["images/posts/4_fundamentals.png"]
+images = ["images/posts/fundamental_analysis.jpg"]
 tags = [
     "Getting Started",
 ]

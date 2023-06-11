@@ -3,7 +3,7 @@ author = "Gobi Calls"
 title = "Options Trading"
 date = "2023-05-16T06:00:00"
 description = "Options Trading"
-images = ["images/posts/6_options.png"]
+images = ["images/posts/options_trading.jpg"]
 tags = [
     "Getting Started",
 ]
