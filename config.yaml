@@ -10,7 +10,7 @@ markup:
       unsafe: true
 
 
-# googleAnalytics: ""
+googleAnalytics: "G-FT7VJCMYJ5"
 
 summaryLength: 20
 paginate: 50
