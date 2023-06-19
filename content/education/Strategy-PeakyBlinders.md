@@ -13,7 +13,7 @@ The Peaky Blinders Strategy is waiting for the 9/30 EMA crossover (5m Regular Ho
 
 Once the 9EMA and 30EMA cross, wait for the [Break Hook and Go](/education/how-to-trade-the-break-hook-and-go/) off the 30 EMA.
 
-### How to Trade The 30 EMA Crossover
+### How to Trade The 9/30 EMA Crossover
 
 ![](/images/peaky.png)
 
