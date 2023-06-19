@@ -18,6 +18,9 @@ What we have found is that the price of a security will tend to retest and bounc
 
 Whats more, the 50% and 100% levels from the ORB range also tend to attract the price and become S/R levels themselves.  This gives you a good Profit Target area to guide when you should exit an options contract.
 
+{{< figure class="floatleft" src="/images/orb.png" >}}
+
+
 #### Recommended ORB Indicator
 
 If you use [TradingView](https://www.tradingview.com/gopro/?share_your_love=amitgandhinz), you can integrate one of the best (and free) [ORB indicator](https://www.tradingview.com/script/ZpONAzhm-ORB-with-Price-Targets/) directly into your charts, created by our very own CashMoneyTrades.  The ORB Indicator will automatically plot the high and low opening range lines (optionally shaded), and plot the Price Targets.
