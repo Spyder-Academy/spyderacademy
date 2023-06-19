@@ -13,11 +13,10 @@ The Dolphin Vomit Strategy is based on a strategy by [Saty Mahajan (SATY VOMY)](
 
 As the ribbon develops, it starts to look like a Dolphin.  You then wait for a break of the EMAs (specifically the 48ema).  This indicates a potential reversal developing (The Vomit), and you enter the trade.  It is important to take note of any major support/resistance levels nearby as that could invalidate the 48ema break, causing a fake out.
 
+Saty Mahajan has a great [write up](https://twitter.com/satymahajan/status/1648369109774614532?s=20) on how to trade the VOMY setup.  This strategy is traded frequently by Gobi Calls here at Spyder Academy.
 
-![](/images/vomy.png)
+![](/images/vomi.png)
 
 
-Saty Mahajan also has a great [write up](https://twitter.com/satymahajan/status/1648369109774614532?s=20) on how to trade the VOMY setup.
 
-{{< figure class="" src="/images/satyvomi.jpeg" link="https://twitter.com/satymahajan/status/1648369109774614532?s=20" >}}
 
