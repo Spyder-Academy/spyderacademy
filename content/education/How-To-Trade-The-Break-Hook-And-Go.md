@@ -11,7 +11,7 @@ tags = [
 
 The Break Hook and Go is also commonly known as a Breakout, Retest, and Bounce (BRB).
 
-![](/images/breakhookandgo.png)
+![](/images/breakouts.png)
 
 #### THE BREAKOUT (BREAK)
 The Break refers to the scenario where price action breaks through a key level you may have (THE BREAKOUT).  Although many traders will trade a breakout, there is inherent risk in doing so as price has moved away from the key support/resistance, thus reducing your risk to reward ratio as your stop will be further away from the entry price.  Also in the case of options, the breakout may have caused an IV spike, resulting in you paying a higher premium on the breakout.

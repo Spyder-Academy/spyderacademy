@@ -62,7 +62,7 @@ I used to trade ORB alone (before I learned about The System), and my biggest fr
 This strategy combines my two favorite techniques - ORB and The System.  Learn more about the [Opening Range Breakout](/education/openingrangebreakout/) strategy to find Entries and Exits.  By combining these two strategies, you can reduce the amount of fakeouts by determine the larger timeframe bias given by The System, with optimal day trading entries and exits using ORB.
 
 
-{{< figure class="floatleft" src="/images/SorbetStrategy.png" >}}
+{{< figure class="floatleft" src="/images/sorbet.png" >}}
 
 
 The following SORBET checklist is provided as an easy printout to confirm the rules have been met when taking an entry based on SORBET.
