@@ -18,9 +18,32 @@
         {{- if not (eq (len site.Taxonomies.tags) 0) }}
         <div class="row justify-content-center pb-5">
           <ul class="list-inline tag-list text-center">
-            <li class="list-inline-item m-1"><a href="/education/" class="text-decoration-none">EDUCATION</a></li>
+            <li class="list-inline-item m-1">
+              <div class="card shadow border-0 p-3" style="border-radius: 15px; background-color: #B3B3C8">
+                <div class="card-body">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <strong><a href="/education/" class="text-decoration-none">EDUCATION</a></strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            {{ $counter := 0 }}
             {{- range $name, $items := site.Taxonomies.tags }}
-            <li class="list-inline-item m-1"><a href="{{ "tags/" | relLangURL }}{{ $name | urlize | lower }}/" class="text-decoration-none">{{ $name | title | upper }}</a></li>
+            {{ $colors := (slice  "#E9E4D7" "#BFE1CF" "#DCA9D1"  ) }}
+            <li class="list-inline-item m-1">
+              <div class="card shadow border-0 p-3" style="border-radius: 15px; background-color: {{ index $colors (mod $counter 3) }}">
+                <div class="card-body">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <strong><a href="{{ "tags/" | relLangURL }}{{ $name | urlize | lower }}/" class="text-decoration-none text-black">{{ $name | title | upper }}</a></strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {{ $counter = add $counter 1}}
+            </li>
             {{- end }}
           </ul>
         </div>
