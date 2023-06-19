@@ -30,7 +30,7 @@ params:
   social:
     twitter: "https://www.twitter.com/spyderacademy"
     instagram: "https://www.instagram.com/spyderacademy"
-
+    
   copyright: "© 2023 SpyderAcademy, LLC"
 
   postProcess: false
