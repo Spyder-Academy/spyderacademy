@@ -15,7 +15,7 @@ Once the 9EMA and 30EMA cross, wait for the [Break Hook and Go](/education/how-t
 
 ### How to Trade The 9/30 EMA Crossover
 
-![](/images/peaky.png)
+![](/images/peakycross.png)
 
 
 ![](/images/peakyblinders.png)
