@@ -20,31 +20,65 @@
           <ul class="list-inline tag-list text-center">
             <li class="list-inline-item m-1">
               <div class="card shadow border-0 p-3" style="border-radius: 15px; background-color: #B3B3C8">
-                <div class="card-body">
-                  <div class="container-fluid">
-                    <div class="row">
-                      <strong><a href="/education/" class="text-decoration-none">EDUCATION</a></strong>
+                <div class="card-body p-0">
+                  <div class="container-fluid p-0 m-0">
+                    <div class="row  align-items-center ">
+                      <div class="col-3 p-0 m-0">
+                        <img src="/images/tradingeducation.png"/>
+                      </div>
+                      <div class="col-9 ">
+                        <p class="small p-0 m-0">See all of our</p>
+                        <strong><a href="/education/" class="text-decoration-none">TRADING EDUCATION</a></strong>
                     </div>
                   </div>
                 </div>
               </div>
             </li>
-            {{ $counter := 0 }}
-            {{- range $name, $items := site.Taxonomies.tags }}
-            {{ $colors := (slice  "#E9E4D7" "#BFE1CF" "#DCA9D1"  ) }}
             <li class="list-inline-item m-1">
-              <div class="card shadow border-0 p-3" style="border-radius: 15px; background-color: {{ index $colors (mod $counter 3) }}">
-                <div class="card-body">
+              <div class="card shadow border-0 p-3" style="border-radius: 15px; background-color: #BFE1CF">
+                <div class="card-body p-0">
                   <div class="container-fluid">
-                    <div class="row">
-                      <strong><a href="{{ "tags/" | relLangURL }}{{ $name | urlize | lower }}/" class="text-decoration-none text-black">{{ $name | title | upper }}</a></strong>
+                    <div class="row  align-items-center ">
+                        <div class="col-3 p-0 m-0">
+                          <img src="/images/gettingstarted.png"/>
+                        </div>
+                        <div class="col-9 ">
+                          <p class="small p-0 m-0">Learn how to trade the</p>
+                          <strong><a href="/tags/getting-started/" class="text-decoration-none">STOCK MARKET FOR BEGINNERS</a></strong>
+                        </div>
                     </div>
                   </div>
                 </div>
               </div>
-              {{ $counter = add $counter 1}}
             </li>
-            {{- end }}
+            <li class="list-inline-item m-1">
+              <div class="card shadow border-0 p-3" style="border-radius: 15px; background-color: #E9E4D7">
+                <div class="card-body p-0">
+                  <div class="container-fluid">
+                    <div class="row  align-items-center ">
+                      <div class="col-3 p-0 m-0">
+                        <img src="/images/tradingstrategies.png"/>
+                      </div>
+                      <div class="col-9 ">
+                        <p class="small p-0 m-0">Learn about our</p>
+                        <strong><a href="/tags/strategies/" class="text-decoration-none">TRADING STRATEGIES</a></strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <!-- <li class="list-inline-item m-1">
+              <div class="card shadow border-0 p-3" style="border-radius: 15px; background-color: #DCA9D1">
+                <div class="card-body">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <p class="small p-0 m-0">More ideas for</p>
+                      <strong><a href="/education/" class="text-decoration-none">TRADING EDUCATION</a></strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li> -->
           </ul>
         </div>
         {{- end }}
