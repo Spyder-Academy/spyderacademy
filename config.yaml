@@ -15,12 +15,12 @@ googleAnalytics: "G-FT7VJCMYJ5"
 summaryLength: 20
 paginate: 50
 params:
-  title: "Up Business"
-  description: "We specialize in providing education and training to up and coming traders."
+  title: "Spyder Academy"
+  description: "Spyder Academy specializes in providing education and training to up and coming traders learning to navigate the Stock Market."
   images: 
-    - "images/hero-image.png"
+    - "images/whitelogo.png"
 
-  logo: "arrow-up.png"
+  logo: "blacklogo.png"
 
   favicons:
     themeColor: "#FFFFFF"
