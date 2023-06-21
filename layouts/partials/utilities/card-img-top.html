@@ -1,0 +1,4 @@
+{{ . }}
+{{ with resources.GetMatch . }}
+  <img class="" src="{{ .RelPermalink }}" alt="{{ .Title }}" width="{{ .Width }}" height="{{ .Height }}">
+{{ end }}

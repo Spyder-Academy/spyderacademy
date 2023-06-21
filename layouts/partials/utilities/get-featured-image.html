@@ -1,0 +1,7 @@
+{{ $featured := "" }}
+{{ with .Params.images }}
+  {{ $image := index . 0 }}
+  {{ with resources.GetMatch (printf "**/%s" $image) }}
+    {{ return .RelPermalink }}
+  {{ end }}
+{{ end }}

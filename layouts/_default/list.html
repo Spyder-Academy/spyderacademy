@@ -86,8 +86,13 @@
         <div class="col-12 col-md-6 col-lg-4">
           <a class="card shadow border-0 p-4 text-decoration-none h-100" style="border-radius: 15px;" href="{{ .Permalink }}">
             <div class="aspect-ratio-full">
-              {{ with ( partial "utilities/get-featured-image.html" . ) }}
-                {{ partial "utilities/card-img-top" . }}
+              {{ with .Resources }}
+                  {{ with .GetMatch (printf "**/%s" "{cover.*}") }}
+                      {{ $cover := .Resize "600x" }}
+                      {{ with $cover }}
+                          <img class="" src="{{ .RelPermalink }}" alt="{{ .Title }}" width="{{ .Width }}" height="{{ .Height }}">
+                      {{ end }}
+                  {{ end }}
               {{ end }}
             </div>
             <div class="card-body">
