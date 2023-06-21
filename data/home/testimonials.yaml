@@ -6,18 +6,28 @@ content:
   text: "<a href='https://www.whop.com/spyder-academy/' target='_blank'>Leave a Review</a> or <a href='https://whop.com/checkout/plan_QiCwlm5hSTMgd/' target='_blank'>Buy us Coffee</a>"
 
   featured:
-    text: "Might cry, today is my first bag on a play. <br/><br/>Shout out to @Pavldozer for the morning analysis this morning! <br/><br/>Also thank you to @CashMoneyTrades for the incredible SORBET system!  <br/><br/>The system WORKS, plain and simple!"
-    client: "@SSKhabibi"
+    text: "As a new trader looking for a safe and constructive space to develop my skill, this has been, by far, the best group I have been apart of. Truly a safe space with genuine and honest people both as head traders and the traders in the classroom. Grateful to be apart of the team!"
+    client: "@coshjarlos"
     image: "images/testimonial_flex.png"
-    link: "https://twitter.com/SSKhabibi/status/1661382122790088707?s=20"
-    
+    link: "https://whop.com/spyder-academy"
     
 
   list:
-    - text: "The GOAT 🐐<br/><br/>Trading $TSLA with you is easily my favorite experience in the market brother."
-      client: "@SSKhabibi"
-      image: "images/teachers-pauldozer.png"
-      link: "https://twitter.com/SSKhabibi/status/1654133717710041089?s=20"
+    - text: "Known all of these guys in Discord for couple of years, they are super helpful for your conviction with DT trades"
+      client: "@BrunoSlacks"
+      image: "images/teachers-spiderman.png"
+      link: "https://whop.com/spyder-academy"
+
+    - text: "Huge fan of these guys. Incredibly transparent and are constantly providing grade-A education. Highly recommend checking them out!."
+      client: "@ashton"
+      image: "images/teachers-spiderman.png"
+      link: "https://whop.com/spyder-academy"
+
+
+    - text: "Amazing community with amazing mentors! This is by far my favorite group I’ve ever traded with! I look forward to my trading career with great optimism! "
+      client: "@Habib"
+      image: "images/teachers-spiderman.png"
+      link: "https://whop.com/spyder-academy"
 
     - text: "Just wanted to thank you personally!! The knowledge you shared changed everything for me. My eyes are now open and I see things a lot clearer. I've been struggling for two years and now I don't feel lost anymore. I have direction and setups I wait on.<br/><br/>Thanks!!"
       client: "ETAN"
@@ -31,6 +41,11 @@ content:
       client: "@jmaini3"
       link: "https://twitter.com/jmaini3/status/1638262100727418889?s=20"
       image: "images/teachers-cash.png"
+
+    - text: "Might cry, today is my first bag on a play. <br/><br/>Shout out to @Pavldozer for the morning analysis this morning! <br/><br/>Also thank you to @CashMoneyTrades for the incredible SORBET system!  <br/><br/>The system WORKS, plain and simple!"
+      client: "@SSKhabibi"
+      image: "images/testimonial_flex.png"
+      link: "https://twitter.com/SSKhabibi/status/1661382122790088707?s=20"
 
     - text: "There's fookin up the market, then there's Link Snipes! 🔥 <br/><br/>Have a day man!"
       client: "@Moe_Mamba_"

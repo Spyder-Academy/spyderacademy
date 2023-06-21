@@ -1,29 +1,32 @@
 <section id="{{ .id }}" class="section portfolio">
   <div class="container">
-    {{ range .content }}
-    <div class="row portfolio-feature">
-      <div class="col-md-6 col-sm-12  d-none d-lg-block d-flex flex-column justify-content-center">
-        {{ with .image }}
-          {{ partial "utilities/image-fluid.html" . }}
-        {{ end }}
-      </div>
-      <div class="col-md-6 col-sm-12 d-flex flex-column justify-content-center">
-        {{ with .pretitle }}
-          <p class="text-danger fw-semibold mb-2">{{ . }}</p>
-        {{ end }}
-        {{ with .title }}
-          <h3 class="fs-1 fw-bold text-primary pb-3">{{ . }}</h3>
-        {{ end }}
-        {{ with .text }}
-          <p class="text-black-61 pb-3">{{ . }}</p>
-        {{ end }}
-        <div class="">
-          {{ range .buttons }}
-            <a class="text-decoration-none me-3" href="{{ .url }}">{{ .label }}</a>
-          {{ end }}
+    <div class="row justify-content-center ">
+      {{ range .content }}
+      <div class="col-lg-5 col-sm-12 card shadow border-0 p-3 m-3" style="border-radius: 15px; background-color: #E9E4D7;">
+        <div class="card-body p-3">
+          <div class="container-fluid">
+            <div class="row  align-items-center ">
+              <div class="col-12">
+                {{ with .pretitle }}
+                  <p class="text-danger fw-semibold mb-2">{{ . }}</p>
+                {{ end }}
+                {{ with .title }}
+                  <h3 class="fs-1 fw-bold text-primary pb-3">{{ . }}</h3>
+                {{ end }}
+                {{ with .text }}
+                  <p class="text-black-61 pb-3">{{ . }}</p>
+                {{ end }}
+                <div class="">
+                  {{ range .buttons }}
+                    <a class="text-decoration-none me-3" href="{{ .url }}">{{ .label }}</a>
+                  {{ end }}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+      {{ end }}
     </div>
-    {{ end }}
   </div>
 </section>

@@ -33,12 +33,7 @@
           {{ end }}
         </div>
 
-        <div class="card-body bg-white mt-0 shadow" style="border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; background-image: url('{{.image}}'); background-size: 70%; background-position: center; background-repeat: no-repeat;">
-          {{ $image := resources.Get .image }}
-          {{ $img2 := resources.Get .img2 }}
-            <img src="{{ $image.RelPermalink }}" alt="" class="w-96" style="display: none">
-            <img src="{{ $img2.RelPermalink }}" alt="" class="w-96" style="display: none">
-
+        <div class="card-body bg-white mt-0 shadow" style="border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;  background-size: 70%; background-position: center; background-repeat: no-repeat;">
             <ul class="list-unstyled mb-5 position-relative" style="  height: 17em;">
               {{ range $e.features }}
                 <li>{{ .item}} </li>
