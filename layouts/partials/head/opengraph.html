@@ -3,19 +3,18 @@
 <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}" />
 <meta property="og:url" content="{{ .Permalink }}" />
 
-<meta name="twitter:card" content="summary_large_image"/>
-
   {{ with $.Resources }}
     {{ with .GetMatch (printf "**/%s" "{cover.*}") }}
         {{ $cover := .Resize "600x" }}
         {{ with $cover }}
-          <meta property="og:image" content="{{ .RelPermalink }}"/>
+          <meta property="og:image" content="{{ .Permalink }}"/>
         {{ end }}
     {{ end }}
   {{ end }}
 
   {{- if not .IsPage }}
-    <meta name="og:image" content="/images/cover.png">
+    {{ $defaultImage := "/images/cover.png" }}
+    <meta name="og:image" content="{{ $defaultImage | absURL }}">
   {{ end -}}
 
 {{- if .IsPage }}

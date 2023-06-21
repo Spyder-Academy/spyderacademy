@@ -4,13 +4,14 @@
     {{ with .GetMatch (printf "**/%s" "{cover.*}") }}
         {{ $cover := .Resize "600x" }}
         {{ with $cover }}
-          <meta name="twitter:image" content="{{ .RelPermalink }}">
+          <meta name="twitter:image" content="{{ .Permalink }}">
         {{ end }}
     {{ end }}
   {{ end }}
 
   {{- if not .IsPage }}
-    <meta name="twitter:image" content="/images/cover.png">
+    {{ $defaultImage := "/images/cover.png" }}
+    <meta name="twitter:image" content="{{ $defaultImage | absURL }}">
   {{ end -}}
 <meta name="twitter:title" content="{{ .Title }}"/>
 <meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end -}}"/>
