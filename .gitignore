@@ -1,0 +1,14 @@
+# ignore ALL .log files
+*.log
+*.lock
+
+# ignore ALL files in ANY directory named temp
+temp/
+
+# ignore ALL .dsStore
+.DS_Store
+*/.DS_Store
+
+# ignore PUBLIC
+public/
+resources/
