@@ -1,6 +1,6 @@
 +++
 aliases = ["posts", "post", "articles", "blog", "showcase", "docs"]
 title = "Education"
-author = "Spyder Monkeys"
+author = "Spyder Academy"
 tags = [""]
 +++
