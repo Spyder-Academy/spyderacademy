@@ -1,14 +1,17 @@
 # ignore ALL .log files
 *.log
-*.lock
+
+# Temporary lock file while building
+/.hugo_build.lock
 
 # ignore ALL files in ANY directory named temp
 temp/
 
-# ignore ALL .dsStore
+# ignore ALL .DS_Store
 .DS_Store
-*/.DS_Store
 
-# ignore PUBLIC
-public/
-resources/
+# Generated files by hugo
+/public/
+/resources/_gen/
+/assets/jsconfig.json
+hugo_stats.json
