@@ -88,7 +88,7 @@
             <div class="aspect-ratio-full">
               {{ with .Resources }}
                   {{ with .GetMatch (printf "**/%s" "{cover.*}") }}
-                      {{ $cover := .Resize "600x" }}
+                      {{ $cover := .Resize "1000x" }}
                       {{ with $cover }}
                           <img class="" src="{{ .RelPermalink }}" alt="{{ .Title }}" width="{{ .Width }}" height="{{ .Height }}">
                       {{ end }}

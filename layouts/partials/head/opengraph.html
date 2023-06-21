@@ -5,7 +5,7 @@
 
   {{ with $.Resources }}
     {{ with .GetMatch (printf "**/%s" "{cover.*}") }}
-        {{ $cover := .Resize "600x" }}
+        {{ $cover := .Resize "1000x" }}
         {{ with $cover }}
           <meta property="og:image" content="{{ .Permalink }}"/>
         {{ end }}
