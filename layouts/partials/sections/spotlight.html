@@ -11,18 +11,20 @@
       {{ range $i, $e := .content.list }}
       <div class="col-md-4 mb-5 mb-md-0">
         <div class="card shadow border-0 testimonial-card" style="border-radius: 15px;">
-          {{ $colors := (slice  "#2d5772"  "#29741d" "#ffbd59" ) }}
-          <div class="card-up" style="background-color: {{ index $colors (mod $i 4) }}"></div>
-          <div class="avatar mx-auto bg-white">
-            {{ with $e.image }}
-              {{ with resources.Get . }}
-                <img src="{{ .Permalink }}" class="rounded-circle img-fluid" />
-              {{ end }}
-            {{ end }}
+          {{ $colors := (slice  "#b3b3c8"  "#bfe1cf" "#e9e4d7" ) }}
+          <div class="card-up" style="background-color: {{ index $colors (mod $i 4) }}">
+            <div class="container-fluid p-0 m-0 h-100">
+              <div class="row align-items-center h-100 ">
+                <div class="col-12 text-uppercase">
+                  <strong>{{ $e.title }}</strong>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="card-body">
             <p class="card-text text-black-61 px-5 mb-4"  style="height: 14em" >{{ $e.description | safeHTML }}</p>
-            <hr />
+          </div>
+          <div class="card-footer">
             <p class="dark-grey-text mt-4"><i class="fas fa-quote-left pe-2"></i><a class="fw-bold text-primary text-nowrap text-decoration-none" href="{{ $e.button.url }}" target="_blank">{{ $e.button.label }}</a></p>
           </div>
         </div>

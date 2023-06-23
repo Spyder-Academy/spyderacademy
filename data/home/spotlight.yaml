@@ -6,23 +6,23 @@ content:
   text: "Our instructors have been showcased and featured by"
   list:
     - image: "images/teachers-pauldozer.png"
-      title: "The Paul Dozer Interview"
-      description: "On this episode of Trading Camp we interview Paul Dozer.<br/><br/>Paul talks about his early struggles as a trader, his $200,000 day, and how he made $100,000 in December shorting TSLA.<br/><br/><strong>Trading Camp - Investing Like Champions</strong> "
+      title: "Trading Camp - Investing Like Champions"
+      description: "On this episode of Trading Camp we interview Paul Dozer.<br/><br/>Paul talks about his early struggles as a trader, his $200,000 day, and how he made $100,000 in December shorting TSLA."
       button:
         label: "▶️ Listen Now"
         url: "https://open.spotify.com/episode/65VjH66l6g0CQGDnJJu5Dy"
 
     - image: "images/teachers-gobi.png"
       title: "Learning How To Trade"
-      description: "Cauliflower Calls discusses his strategy using Saty Ribbons and Saty ATR (Starting at 1:30:10)<br/><br/><strong>WOLF Spaces</strong> "
+      description: "Cauliflower Calls discusses his strategy using Saty Ribbons and Saty ATR (Starting at 1:30:10)"
       button:
         label: "▶️ Listen Now"
         url: "https://twitter.com/i/spaces/1lPJqBdwekwxb"
 
     - image: "images/teachers-spiderman.png"
       title: "Wolf Spaces"
-      description: "Wolf Spaces<br/><br/>
-      <strong>MAY 2023</strong><br/>
+      description: "
+        <strong>MAY 2023</strong><br/>
         <a href='https://twitter.com/i/spaces/1lPJqBdwekwxb'>The SATY Strategy (GobiCalls)</a><br/>
         <a href='https://t.co/MbtkjxlqUJ'>Team Intro (Sith, GobiCalls, Pauldozer)</a><br/>
         <a href='https://t.co/bhPiV6aivX'>Live Trading (Pauldozer)</a><br/>
