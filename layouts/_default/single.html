@@ -37,5 +37,18 @@
         </div>
       </div>
     </div>
+
+    <div class="pinterest-images d-none">
+        {{ $pinPath := "pins/**" }}
+        {{ $pinImages := .Page.Resources.Match $pinPath }}
+
+        {{ range $pinImages }}
+          {{ $pin := .Resize "1000x" }}
+          {{ with $pin }}
+             <img src="{{ .RelPermalink }}" alt="{{$.Description}}">
+          {{ end }}
+        {{ end }}
+    </div>
+
   </section>
 {{ end }}

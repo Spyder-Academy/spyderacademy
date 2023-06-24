@@ -6,6 +6,7 @@ description = "3 Critical Things To Know Before Trading 0DTE Options"
 tags = [
     "Trading Psychology",
 ]
+
 +++
 
 ## **THE FENTANYL OF TRADING**
