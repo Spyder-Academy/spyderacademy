@@ -2,14 +2,13 @@
 author = "Gobi Calls"
 title = "7 Ways to Manage your Risk When Trading"
 date = "2023-05-16T08:00:00"
-description = "Risk Management"
+description = "Risk management in trading refers to the identification, analysis, and acceptance or mitigation of trading risks. It is an essential component of your broader trading strategy, aimed at minimizing potential losses."
 tags = [
     "Getting Started",
     "Trading Psychology"
 ]
 +++
 
-Risk management in trading refers to the identification, analysis, and acceptance or mitigation of trading risks. It is an essential component of your broader trading strategy, aimed at minimizing potential losses.
 
 ## Set Your Trading Budget
 Decide how much of your overall financial resources you're willing to risk on trading. A common rule of thumb is to never risk more than 1-2% of your trading account on a single trade. This helps to ensure that even a single loss does not significantly impact your ability to continue trading.
