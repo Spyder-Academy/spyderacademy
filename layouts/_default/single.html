@@ -3,7 +3,7 @@
     <div class="container">
       {{ partial "shared/tags.html" }}
 
-      <div class="row justify-content-center pb-5">
+      <div class="row justify-content-center pb-0">
         <div class="col-12">
           {{ with .Title }}
             <h2 class="display-1 fw-bold text-center text-primary pb-3">{{ . }}</h2>
@@ -11,8 +11,18 @@
           {{ with .Params.description }}
             <p class="text-black-61 text-center pb-3">{{ . }}</p>
           {{ end }}
+
+
         </div>
       </div>
+
+      <div class="row justify-content-center pb-5">
+        <div class="col-12 d-flex justify-content-center">
+          {{ partial "shared/share-buttons" . }}
+        </div>
+
+      </div>
+
       <div class="row pb-5">
         <div class="col-12 d-flex justify-content-center">
           <div class="blog-content fs-5">

@@ -31,8 +31,15 @@ params:
     twitter: "https://www.twitter.com/spyderacademy"
     instagram: "https://www.instagram.com/spyderacademy"
     
+  shareButtons:
+     size: small
+     icon: solid
+     networks:
+        - facebook
+        - twitter
+        - pinterest
+        
   copyright: "© 2023 SpyderAcademy, LLC"
-
   postProcess: false
 
 menus:

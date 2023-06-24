@@ -1,6 +1,7 @@
 +++
 title = "Privacy"
 date = "2023-05-05"
+disableShare = true
 +++
 
 
