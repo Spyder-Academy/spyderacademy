@@ -6,8 +6,11 @@ content:
   items:
     - image: "images/brands-tradingview.png"
       url: "https://www.tradingview.com/gopro/?share_your_love=amitgandhinz"
+      name: "Trading View"
     - image: "images/brands-bbs.png"
       url: "http://staygreen.blackboxstocks.com/SHJG"
+      name: "Black Box Stocks"
     - image: "images/brands-rocketscooter.png"
       url: "https://www.rocketscooter.com"
+      name: "Rocket Scooter"
       

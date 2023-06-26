@@ -23,7 +23,7 @@
                   <div class="col-4 p-3 m-0">
                     {{ with $e.image }}
                       {{ with resources.Get . }}
-                        <img class="img-fluid" src="{{ .Permalink }}" alt="{{ .Title }}"  style="border-radius: 20px;" />
+                        <img class="img-fluid" src="{{ .Permalink }}" alt="{{ $e.name }}"  style="border-radius: 20px;" />
                       {{ end }}
                     {{ end }}
                   </div>
@@ -58,7 +58,7 @@
               <p class="card-text text-danger px-5 mb-4"  >{{ $e.tickers | safeHTML}}</p>
             </div>
             <div class="card-footer">
-              {{ with $e.button }}<a class="btn btn-primary my-4 mx-5" href="{{ .url }}" target="_blank">{{ partial "icons/twitter.html" }}  {{ .label }}</a>{{ end }}
+              {{ with $e.button }}<a class="btn btn-primary my-4 mx-5" href="{{ .url }}" title="Follow {{ $e.name }} on Twitter" target="_blank">{{ partial "icons/twitter.html" }}  {{ .label }}</a>{{ end }}
             </div>
           </div>
           {{ end }}

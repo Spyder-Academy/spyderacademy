@@ -42,7 +42,7 @@
         </div>
         <div class="footer text-center">
           {{ with $e.button }}
-            <a class="btn btn-lg btn-block btn-primary" style="border-radius: 0.5em"  href="{{ .url }}">{{ .label }}</a>
+            <a class="btn btn-lg btn-block btn-primary" style="border-radius: 0.5em"  href="{{ .url }}" title="{{ $e.title }} - {{ .label }}">{{ .label }}</a>
           {{ end }}
         </div>
       </div>

@@ -24,7 +24,7 @@
       <div class="col-12 col-xl-7 d-flex flex-column justify-content-center">
         <div class="pb-4">{{ partial "utilities/image-third.html" "images/testimonials-left-quote.png" }}</div>
         <div class="card d-flex flex-row align-items-start border-0 shadow p-5">
-          <p class="card-text text-black-61 px-5">"{{ .text | safeHTML  }}" <a class="fw-bold text-primary text-nowrap text-decoration-none" href="{{ .link }}" target="_blank">- {{ .client }}</a></p>
+          <p class="card-text text-black-61 px-5">"{{ .text | safeHTML  }}" <a class="fw-bold text-primary text-nowrap text-decoration-none" href="{{ .link }}" title="{{ .client }}" target="_blank">- {{ .client }}</a></p>
         </div>
         <div class="pt-4 text-end">{{ partial "utilities/image-third.html" "images/testimonials-right-quote.png" }}</div>
       </div>
@@ -41,13 +41,13 @@
                 {{ $colors := (slice  "#b3b3c8"  "#bfe1cf" "#e9e4d7" ) }}
                 <div class="card-up" style="background-color: {{ index $colors (mod $i 3) }}"></div>
                 <div class="avatar mx-auto bg-white">
-                  <img src="{{ $e.image }}" class="rounded-circle img-fluid" />
+                  <img src="{{ $e.image }}" alt="{{ $e.image }}" class="rounded-circle img-fluid" />
                 </div>
                 <div class="card-body">
                   <p class="card-text text-black-61 px-5 mb-4"  style="height: 18em" >{{ $e.text | safeHTML }}</p>
                 </div>
                 <div class="card-footer">
-                  <p class="dark-grey-text mt-4"><i class="fas fa-quote-left pe-2"></i><a class="fw-bold text-primary text-nowrap text-decoration-none" href="{{ .link }}" target="_blank">{{ .client }}</a></p>
+                  <p class="dark-grey-text mt-4"><i class="fas fa-quote-left pe-2"></i><a class="fw-bold text-primary text-nowrap text-decoration-none" href="{{ .link }}" title="{{ .client }}" target="_blank">{{ .client }}</a></p>
                 </div>
               </div>
             </div>
@@ -68,7 +68,7 @@
                   <p class="card-text text-black-61 px-5 mb-4"  style="height: 18em" >{{ $e.text | safeHTML }}</p>
                 </div>
                 <div class="card-footer">
-                  <p class="dark-grey-text mt-4"><i class="fas fa-quote-left pe-2"></i><a class="fw-bold text-primary text-nowrap text-decoration-none" href="{{ .link }}" target="_blank">{{ .client }}</a></p>
+                  <p class="dark-grey-text mt-4"><i class="fas fa-quote-left pe-2"></i><a class="fw-bold text-primary text-nowrap text-decoration-none" href="{{ .link }}" title="{{ .client }}" target="_blank">{{ .client }}</a></p>
                 </div>
               </div>
             </div>
@@ -89,7 +89,7 @@
                   <p class="card-text text-black-61 px-5 mb-4"  style="height: 18em" >{{ $e.text | safeHTML }}</p>
                 </div>
                 <div class="card-footer">
-                  <p class="dark-grey-text mt-4"><i class="fas fa-quote-left pe-2"></i><a class="fw-bold text-primary text-nowrap text-decoration-none" href="{{ .link }}" target="_blank">{{ .client }}</a></p>
+                  <p class="dark-grey-text mt-4"><i class="fas fa-quote-left pe-2"></i><a class="fw-bold text-primary text-nowrap text-decoration-none" href="{{ .link }}" title="{{ .client }}" target="_blank">{{ .client }}</a></p>
                 </div>
               </div>
             </div>

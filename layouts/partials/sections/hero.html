@@ -13,10 +13,10 @@
         {{ end }}
         <div class="d-flex flex-column flex-xl-row">
           {{ with .content.buttonPrimary }}
-            <a class="btn btn-primary text-light px-4 my-1" href="{{ .url }}">{{ .label }}</a>
+            <a class="btn btn-primary text-light px-4 my-1" href="{{ .url }}" title="{{ .label }}">{{ .label }}</a>
           {{ end }}
           {{ with .content.buttonSecondary }}
-            <a class="btn btn-outline-primary px-4 my-1 ms-xl-4" href="{{ .url }}">{{ .label }}<span class="ms-2">{{ partial "icons/arrow-right.html" }}</span></a>
+            <a class="btn btn-outline-primary px-4 my-1 ms-xl-4" href="{{ .url }}" title="{{ .label }}">{{ .label }}<span class="ms-2">{{ partial "icons/arrow-right.html" }}</span></a>
           {{ end }}
         </div>
       </div>

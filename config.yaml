@@ -15,8 +15,8 @@ googleAnalytics: "G-FT7VJCMYJ5"
 summaryLength: 20
 paginate: 50
 params:
-  title: "Spyder Academy"
-  description: "Spyder Academy specializes in providing education and training to up and coming traders learning to navigate the Stock Market."
+  title: "Spyder Academy | Learn How To Invest in Stocks and Options"
+  description: "Spyder Academy specializes in providing education and training to beginner traders learning how to trade in the Stock Market. Work from Home or Learn a side hustle with our trading strategies and investment tips to help you gain financial freedom."
   images: 
     - "images/whitelogo.png"
 
@@ -30,6 +30,7 @@ params:
   social:
     twitter: "https://www.twitter.com/spyderacademy"
     instagram: "https://www.instagram.com/spyderacademy"
+    pinterest: "https://www.pinterest.com/spyderacademy"
     
   shareButtons:
      size: small
