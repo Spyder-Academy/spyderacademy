@@ -14,7 +14,7 @@
       {{ range $i, $e := .content.cards }}
 
       {{ $colors := (slice "green" "yellow" ) }}
-      <div class="col-lg-5 col-sm-12 card shadow border-0 p-3 m-3" style="border-radius: 2em; background-image: url('/images/banner.png'); background-size: contain;">
+      <div class="col-lg-5 col-sm-12  card shadow border-0 p-3 m-3  {{ with $e.image }}d-none d-md-flex {{ end }}" style="border-radius: 2em; background-image: url('/images/banner.png'); background-size: contain;">
         {{ with $e.image }}
         <video autoplay muted loop style="border-radius: 1em" >
           <source src="/videos/SpyderAcademy.mp4" type="video/mp4" />
@@ -28,6 +28,11 @@
                   {{ with $e.title }}<h3 class="text-dark text-center"> {{ . }}</h3>{{ end }}
                   {{ with $e.price }}
                     <h4 class="my-0 display-2 text-dark  text-center font-weight-normal mb-3">$  {{ . }} <span class="h5">/mo</span></h4>
+                    {{ if $e.featured }}
+                    <div class="m-0">
+                      <span class="badge bg-white text-dark p-2">20% OFF YOUR FIRST MONTH<br/><br/>USE CODE "JULY4"</span>
+                    </div>
+                    {{ end }}
                     <hr/>
                   {{ end }}
                   <ul class="list-unstyled mb-5">
