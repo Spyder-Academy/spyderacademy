@@ -253,7 +253,7 @@ class Trades {
           legend: {
             show: false
           },
-          title: { },
+        title: { text: "DAILY PERFORMANCE"},
         };
   
         var chart = new ApexCharts(document.querySelector("#tradeHeatmap"), options);
@@ -418,9 +418,16 @@ class Trades {
                 zoom: {
                     type: 'xy'
                 },
-                toolbar: {show: false}
+                toolbar: {show: false},
+                events: {
+                    dataPointSelection: (event, chartContext, config) => {
+                        var dateClicked = seriesData[0].data[config.dataPointIndex].x
+                        self.getTodaysRecap(dateClicked)
+                    }
+                  }
             },
             dataLabels: { enabled: false },
+            title: { text: "GAINS vs LOSSES"},
             xaxis: {
                 type: 'datetime',
               },
@@ -441,6 +448,18 @@ class Trades {
             document.querySelector("#tradeGainsBubble"),
             options
           );
+
+            var self = this;
+
+        //   // Add an event listener to the ApexCharts instance
+        //     chart.addEventListener('dataPointSelection', function(event, chartContext, config) {
+        //         console.log(chartContext.series[config.seriesIndex])
+        //         const selectedDataPoint = chartContext.series[config.seriesIndex].data[config.dataPointIndex];
+        //         const selectedDate = new Date(config.xaxis.categories[config.dataPointIndex]);
+
+        //         // Call the getTodaysRecap() function with the selected date
+        //         self.getTodaysRecap(selectedDate.setHours(0,0,0,0));
+        //     });
           
           chart.render();
         });
