@@ -359,6 +359,93 @@ class Trades {
     }
 
 
+    getGainsBubble() {
+        const trades_query = this.firestore_db.collection("trades");
+        
+        return trades_query
+          .where('exit_date_max', '>=', new Date("05/22/2023"))
+          .get()
+          .then((querySnapshot) => {
+            const data = [];
+            
+            querySnapshot.forEach((doc) => {
+              const tradeData =  TradeRecord.from_dict(doc.data());
+              data.push({
+                userid: tradeData.userid,
+                username: tradeData.username,
+                exit_date: tradeData.exit_date_max.toDate(),
+                gain: Math.round(((tradeData.exit_price_max - tradeData.entry_price) / tradeData.entry_price) * 100, 0),
+              });
+            });
+            
+            return data;
+          });
+    }
+
+    renderGainsBubbleChart() {
+        this.getGainsBubble().then((tradesData) => {
+          const seriesData = [];
+          
+          // Group trades by userid
+          const tradesByUser = tradesData.reduce((acc, trade) => {
+            if (!acc[trade.userid]) {
+              acc[trade.userid] = [];
+            }
+            acc[trade.userid].push(trade);
+            return acc;
+          }, {});
+          
+          // Create series data for each username
+          for (const userid in tradesByUser) {
+
+            const trades = tradesByUser[userid];
+            const series = {
+              name: tradesData.find((data) => data.userid == userid).username,
+              data: trades.map((trade) => ({
+                x: trade.exit_date,
+                y: trade.gain, 
+              })),
+            };
+            seriesData.push(series);
+          }
+          
+
+          // Configure and render the Bubble Chart
+          const options = {
+            series: seriesData,
+            chart: {
+                type: 'scatter',
+                zoom: {
+                    type: 'xy'
+                },
+                toolbar: {show: false}
+            },
+            dataLabels: { enabled: false },
+            xaxis: {
+                type: 'datetime',
+              },
+            yaxis: {
+                min: -100,
+                tickAmount: 10,
+                forceNiceScale: true,
+                labels: {
+                    formatter: function (value) {
+                      return value + "%";
+                    }
+                  },
+            }
+            // Additional chart configurations...
+          };
+          
+          const chart = new ApexCharts(
+            document.querySelector("#tradeGainsBubble"),
+            options
+          );
+          
+          chart.render();
+        });
+    }
+
     renderTradeRecap(trades, recap_date){
         $('#tradeRecap').empty()
         
@@ -402,9 +489,7 @@ class Trades {
             dateString = new Date().setHours(0,0,0,0)
 
         var todayStart = new Date(dateString)
-        console.log("Get Recap: ", todayStart)
         this.getRecap(todayStart).then((tradesList) => {
-                console.log("TradesList", tradesList)
                 this.renderTradeRecap(tradesList, dateString)
             }
         );
