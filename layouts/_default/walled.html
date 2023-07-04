@@ -13,6 +13,38 @@
         </div>
       </div>
 
+      <div class="container py-0" id="instructorList">
+        <!-- Each Instructor -->
+        <div class="d-flex flex-row flex-nowrap pb-5 overflow-auto text-center" >
+            <div class="card shadow border-0 p-3 m-1" style="min-width: 9em; border-radius: 15px; background-color: #c00; ">
+                <div class="card-body p-0"> <strong><a href="#" onclick="signInWithDiscord();" class="text-decoration-none text-light">LOG IN</a></strong></div>
+            </div>
+            <div class="card shadow border-0 p-3 m-1" style="min-width: 9em; border-radius: 15px; background-color: #29741d; ">
+                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor('ALL');" class="text-decoration-none text-light">ALL MENTORS</a></strong></div>
+            </div>
+            <div class="card shadow border-0 p-3 m-1" style="min-width: 9em; border-radius: 15px; background-color: #B3B3C8; ">
+                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(751486945049444435)" class="text-decoration-none">PAULDOZER</a></strong></div>
+            </div>
+            <div class="card shadow border-0 p-3 m-1 " style="min-width: 9em; border-radius: 15px; background-color: #B3B3C8; ">
+                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(667468315668774944)" class="text-decoration-none">CASH MONEY</a></strong></div>
+            </div>
+            <div class="card shadow border-0 p-3 m-1 " style="min-width: 9em; border-radius: 15px; background-color: #B3B3C8; ">
+                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(530657179183874070)" class="text-decoration-none">SITH</a></strong></div>
+            </div>
+            <div class="card shadow border-0 p-3 m-1" style="min-width: 9em; border-radius: 15px; background-color: #B3B3C8; ">
+                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(572158547597590538)" class="text-decoration-none">GOBI</a></strong></div>
+            </div>
+            <div class="card shadow border-0 p-3 m-1" style="min-width: 9em; border-radius: 15px; background-color: #B3B3C8; ">
+                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(693307698229280818)" class="text-decoration-none">LINK SNIPES</a></strong></div>
+            </div>
+            <div class="card shadow border-0 p-3 m-1" style="min-width: 9em; border-radius: 15px; background-color: #B3B3C8; ">
+                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(958441217073483776)" class="text-decoration-none">MR WOOFERS</a></strong></div>
+            </div>
+            <div class="card shadow border-0 p-3 m-1" style="min-width: 9em; border-radius: 15px; background-color: #B3B3C8; ">
+                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(828445309885218886)" class="text-decoration-none">WOODY</a></strong></div>
+            </div>
+        </div>
+    </div>
       <!-- <div class="row justify-content-center pb-0">
         <div class="col-12">
             <button class="btn-primary" onclick="signInWithDiscord()">Sign in with Discord</button>
@@ -23,11 +55,17 @@
         <div class="row">
             <div class="col-lg-6 col-sm-12" id="tradeHeatmap"></div>
             <div class="col-lg-6 col-sm-12" id="tradeGainsBubble"></div>
-            <div class="col-lg-6 col-sm-12" id="tradeRecap"></div>
+            <div class="col-lg-12 col-sm-12">
+                <div class="container">
+                    <div class="row" id="tradeRecap">
+
+                    </div>
+                </div>
+            </div>
         </div>
       </div>
   
-      <div class="card shadow border-0 trade-card-template d-none m-1" style="border-radius: 1em;">
+      <div class="col-lg-6 col-sm-12 card shadow border-0 trade-card-template d-none mx-0 my-1" style="border-radius: 1em;">
         <div class="card-body p-1">
             <div class="container p-0">
                 <div class="row">
@@ -74,10 +112,24 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
     <script>
+       
+
         var trades = new Trades();
-        trades.getCalendar();
-        trades.getTodaysRecap();
-        trades.renderGainsBubbleChart();
+        updateCharts();
+
+        function selectInstructor(username){
+            if (username == "ALL")
+                username = null;
+
+            trades.selectUser(username);
+            this.updateCharts(username);
+        }
+
+        function updateCharts(){
+            trades.renderCalendar();
+            trades.renderRecap();
+            trades.renderGainsBubbleChart();
+        }
     </script>
 
   </section>
