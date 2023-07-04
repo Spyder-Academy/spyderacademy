@@ -403,6 +403,8 @@ class Trades {
     }
 
     renderGainsBubbleChart() {
+        self = this;
+        
         this.getGainsBubble().then((tradesData) => {
           const seriesData = [];
           
