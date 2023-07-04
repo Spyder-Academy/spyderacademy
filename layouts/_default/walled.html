@@ -46,19 +46,34 @@
         </div>
     </div>
      
-     <h1 class="m-3" id="titleUser">ALL MENTORS</h1>
+     
+
+      <div class="container">
+        <div class="row m-4">
+            <div class="col-5">
+                <h1 class="m-3" id="titleUser">ALL MENTORS</h1>
+            </div>
+            <div class="col-2">
+                <div class="card shadow border-0 p-3 m-1" style="border-radius: 15px; background-color: #BFE1CF; ">
+                    <p class="small p-0 m-0">WIN RATE</p>
+                    <h4 id="winRate">- %</h4>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="card shadow border-0 p-3 m-1" style="border-radius: 15px; background-color: #BFE1CF; ">
+                    <p class="small p-0 m-0">AVG GAIN</p>
+                    <h4 id="avgGain">- %</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
       <div class="container">
         <div class="row">
             <div class="col-lg-6 col-sm-12" id="tradeHeatmap"></div>
             <div class="col-lg-6 col-sm-12" id="tradeGainsBubble"></div>
-            <div class="col-lg-12 col-sm-12">
-                <div class="container">
-                    <div class="row" id="tradeRecap">
-
-                    </div>
-                </div>
-            </div>
+            <div class="col-lg-12 col-sm-12"><div class="container"><div class="row" id="tradeRecap"></div></div></div>
         </div>
       </div>
   
@@ -125,6 +140,7 @@
         }
 
         function updateCharts(){
+            trades.renderStats();
             trades.renderCalendar();
             trades.renderRecap();
             trades.renderGainsBubbleChart();

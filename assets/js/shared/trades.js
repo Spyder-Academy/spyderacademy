@@ -1,19 +1,3 @@
-// Reference to the Firestore database
-    
-// Fetch the first record from the database
-// db.collection("trades").limit(1).get()
-//   .then(function(querySnapshot) {
-//     // Access the data from the query snapshot
-//     querySnapshot.forEach(function(doc) {
-//       var data = doc.data();
-//       // Display the data on the page
-//       var dataContainer = document.getElementById('data-container');
-//       dataContainer.innerHTML = JSON.stringify(data);
-//     });
-//   })
-//   .catch(function(error) {
-//     console.error('Error fetching data:', error);
-//   });
 
 class TradeRecord {
     constructor(userid, username, ticker, strike, expiration, entry_price, entry_date, notes, exit_price_max, exit_date_max) {
@@ -27,63 +11,93 @@ class TradeRecord {
       this.notes = notes;
       this.exit_price_max = exit_price_max;
       this.exit_date_max = exit_date_max;
+
+      this.gainsString = "OPEN";
+      this.gainsValue = 0;
+      this.trims = "OPEN";
     }
   
     static from_dict(source) {
-      const trade = new TradeRecord(
-        source["userid"],
-        source["username"],
-        source["ticker"],
-        source["strike"],
-        source["expiration"],
-        source["entry_price"],
-        source["entry_date"],
-        source["notes"],
-        source["exit_price_max"],
-        source["exit_date_max"]
-      );
+        const trade = new TradeRecord(
+            source["userid"],
+            source["username"],
+            source["ticker"],
+            source["strike"],
+            source["expiration"],
+            source["entry_price"],
+            source["entry_date"],
+            source["notes"],
+            source["exit_price_max"],
+            source["exit_date_max"]
+        );
   
-      if ("userid" in source) {
-        trade.userid = source["userid"];
-      }
+        if ("userid" in source) {
+            trade.userid = source["userid"];
+        }
+    
+        if ("username" in source) {
+            trade.username = source["username"];
+        }
+    
+        if ("ticker" in source) {
+            trade.ticker = source["ticker"];
+        }
+    
+        if ("strike" in source) {
+            trade.strike = source["strike"];
+        }
+    
+        if ("expiration" in source) {
+            trade.expiration = source["expiration"];
+        }
+    
+        if ("entry_price" in source) {
+            trade.entry_price = source["entry_price"];
+        }
+    
+        if ("entry_date" in source) {
+            trade.entry_date = source["entry_date"];
+        }
+    
+        if ("notes" in source) {
+            trade.notes = source["notes"];
+        }
+    
+        if ("exit_price_max" in source) {
+            trade.exit_price_max = source["exit_price_max"];
+
+            if (trade.exit_price_max !== null){
+
+                trade.trims = trade.exit_price_max;
+
+                if (trade.ticker === "ES" || trade.ticker === "MES" || trade.ticker === "MNQ" || trade.ticker === "NQ") {
+                    if (trade.strike.toUpperCase().endsWith("LONG")) {
+                        trade.gainsValue = (trade.exit_price_max - trade.entry_price) ;
+                        trade.gains = trade.gainsValue.toFixed(0) + " pts"
+                    } 
+                    else if (trade.strike.toUpperCase().endsWith("SHORT")) {
+                        trade.gainsValue = (trade.entry_price - trade.exit_price_max);
+                        trade.gainsString = trade.gainsValue.toFixed(0) + " pts"
+                    }
+                } 
+                else {
+                    trade.gainsValue = Math.round(((trade.exit_price_max - trade.entry_price) / trade.entry_price) * 100)
+                    trade.gainsString = trade.gainsValue.toFixed(0) + "%"
+                }
+            }
+            else{
+                trade.gainsString = "OPEN"
+                trade.gainsValue = 0
+                trade.trims = "OPEN"
+            }
+        }
+      
   
-      if ("username" in source) {
-        trade.username = source["username"];
-      }
-  
-      if ("ticker" in source) {
-        trade.ticker = source["ticker"];
-      }
-  
-      if ("strike" in source) {
-        trade.strike = source["strike"];
-      }
-  
-      if ("expiration" in source) {
-        trade.expiration = source["expiration"];
-      }
-  
-      if ("entry_price" in source) {
-        trade.entry_price = source["entry_price"];
-      }
-  
-      if ("entry_date" in source) {
-        trade.entry_date = source["entry_date"];
-      }
-  
-      if ("notes" in source) {
-        trade.notes = source["notes"];
-      }
-  
-      if ("exit_price_max" in source) {
-        trade.exit_price_max = source["exit_price_max"];
-      }
-  
-      if ("exit_date_max" in source) {
-        trade.exit_date_max = source["exit_date_max"];
-      }
-  
-      return trade;
+        if ("exit_date_max" in source) {
+            trade.exit_date_max = source["exit_date_max"];
+        }
+    
+        return trade;
     }
   
     to_dict() {
@@ -173,7 +187,10 @@ class TradeRecord {
         entry_date=${this.entry_date},
         notes=${this.notes},
         exit_price_max=${this.exit_price_max},
-        exit_date_max=${this.exit_date_max}
+        exit_date_max=${this.exit_date_max},
+        gains=${this.gains},
+        gainsValue=${this.gainsValue},
+        trims=${this.trims}
       )`;
     }
   }
@@ -185,6 +202,7 @@ class Trades {
         // constructor
         this.firestore_db = firebase.firestore();
         this.filterByUser = null;
+        this.closedTrades = this._getAllClosedTrades();
 
         this.chartHeatmap = null;
         this.chartScatterGains = null;
@@ -192,6 +210,32 @@ class Trades {
 
     selectUser(username){
         this.filterByUser = username !== null ? username.toString() : null;
+        this.closedTrades = this._getAllClosedTrades();
+    }
+
+    renderStats(){
+        var self = this;
+        var seriesData = {};
+
+        // Execute the trades query
+        this.closedTrades.then(tradesData => {
+           
+            var numTrades = 0;
+            var numWins = 0;
+            var totalGains = 0;
+            tradesData.forEach(tradeEntry => {
+                numTrades += 1;
+                totalGains += tradeEntry.gainsValue;
+
+                if (tradeEntry.gainsValue > 0) numWins += 1;
+            });
+
+            winRate = Math.round((numWins / numTrades) * 100).toFixed(0)
+            avgGain = Math.round((totalGains / numTrades)).toFixed(0)
+
+            $('#winRate').text(winRate + "%")
+            $('#avgGain').text(avgGain + "%")
+        });
     }
 
     renderHeatmap(seriesData){
@@ -286,64 +330,46 @@ class Trades {
     }
 
     renderCalendar(){
-        // Query Firestore for trades collection
-        var tradesRef = this.firestore_db.collection('trades');
-        var self = this;
-        
-
-        // Retrieve trades where trades occurred
-        var tradesQuery = tradesRef.where('exit_date_max', '>=', new Date("05/22/2023"));
-
         // Create a map to store the count of winners and losers for each date
+        var self = this;
         var seriesData = {};
 
         // Execute the trades query
-        tradesQuery.get().then((querySnapshot) => {
-            // Iterate over the query snapshot
-            querySnapshot.forEach((doc) => {
-                var tradeEntry = TradeRecord.from_dict(doc.data());
-                var exitDate = tradeEntry.exit_date_max.toDate().setHours(0, 0, 0, 0);
-
-                var showTrade = self.filterByUser == null || tradeEntry.userid == self.filterByUser
-                if (showTrade){
-                    // Determine if the trade is a winner or loser
-                    var gain = ((tradeEntry.exit_price_max - tradeEntry.entry_price) / tradeEntry.entry_price) * 100
-                    var isWinner = gain >= 0;
-                    var isLoser = gain < 0;
-
-                    // Extract the month and date from the exit date
-                    var month = new Date(exitDate).toLocaleString('default', { month: 'short' });
-                    var date = new Date(exitDate).getDate();
-
+        this.closedTrades.then(tradesData => {
+            tradesData.forEach(tradeEntry => {
+                var isWinner = tradeEntry.gainsValue >= 0;
+                var isLoser = tradeEntry.gainsValue < 0;
+    
+                // Extract the month and date from the exit date
+                var month = tradeEntry.exit_date_max.toDate().toLocaleString('default', { month: 'short' });
+                var date = tradeEntry.exit_date_max.toDate().getDate();
+    
                 // Create a unique key for each date
-                    var monthKey = month;
-
-                // Update the series data for the specific month and date
-                    if (seriesData.hasOwnProperty(monthKey)) {
-                        var monthData = seriesData[monthKey];
-                
-                        // Find the index of the date in the monthData array
-                        var dateIndex = monthData.findIndex((data) => data.x === date);
-                
-                        if (dateIndex !== -1) {
-                            if (isWinner) {
-                                monthData[dateIndex].y += 1; // Increment winners count
-                            } 
-                            else if (isLoser) {
-                                monthData[dateIndex].y -= 1; // Decrement losers count
-                            }
+                var monthKey = month;
+    
+                // Update the Chart Series data for the specific month and date
+                if (seriesData.hasOwnProperty(monthKey)) {
+                    var monthData = seriesData[monthKey];
+            
+                    // Find the index of the date in the monthData array
+                    var dateIndex = monthData.findIndex((data) => data.x === date);
+            
+                    if (dateIndex !== -1) {
+                        if (isWinner) {
+                            monthData[dateIndex].y += 1; // Increment winners count
                         } 
-                        else {
-                            monthData.push({ x: date, y: isWinner ? 1 : -1 });
+                        else if (isLoser) {
+                            monthData[dateIndex].y -= 1; // Decrement losers count
                         }
                     } 
                     else {
-                        seriesData[monthKey] = [{ x: date, y: isWinner ? 1 : -1 }];
+                        monthData.push({ x: date, y: isWinner ? 1 : -1 });
                     }
+                } 
+                else {
+                    seriesData[monthKey] = [{ x: date, y: isWinner ? 1 : -1 }];
                 }
-            });
-            
-            
+            })
 
             // Add missing dates with a value of 0 for each month
             Object.values(seriesData).forEach((monthData) => {
@@ -369,44 +395,15 @@ class Trades {
             });
 
             this.renderHeatmap(series);
-
-        });
-
+        })
+        
     }
 
-
-    getGainsBubble() {
-        var self = this;
-        var trades_query = this.firestore_db.collection("trades");
-
-        return trades_query
-          .where('exit_date_max', '>=', new Date("05/22/2023"))
-          .get()
-          .then((querySnapshot) => {
-            const data = [];
-            
-            querySnapshot.forEach((doc) => {
-              const tradeData =  TradeRecord.from_dict(doc.data());
-
-              var showTrade = self.filterByUser == null || tradeData.userid == self.filterByUser
-              if (showTrade){
-                data.push({
-                    userid: tradeData.userid,
-                    username: tradeData.username,
-                    exit_date: tradeData.exit_date_max.toDate(),
-                    gain: Math.round(((tradeData.exit_price_max - tradeData.entry_price) / tradeData.entry_price) * 100, 0),
-                });
-                }
-            });
-            
-            return data;
-          });
-    }
 
     renderGainsBubbleChart() {
         self = this;
 
-        this.getGainsBubble().then((tradesData) => {
+        this.closedTrades.then(tradesData => {
           const seriesData = [];
           
           // Group trades by userid
@@ -425,13 +422,12 @@ class Trades {
             const series = {
               name: tradesData.find((data) => data.userid == userid).username,
               data: trades.map((trade) => ({
-                x: trade.exit_date,
-                y: trade.gain, 
+                x: trade.exit_date_max.toDate(),
+                y: trade.gainsValue, 
               })),
             };
             seriesData.push(series);
           }
-          
 
           // Configure and render the Bubble Chart
           const options = {
@@ -490,23 +486,14 @@ class Trades {
         
         // Create table rows for each trade
         trades.forEach(function(trade) {
-            var username = trade[0];
-            var ticker = trade[1];
-            var strike = trade[2];
-            var entryPrice = trade[3];
-            var expiration = trade[4];
-            var tradeGain = trade[5];
-            var exitPrices = trade[6];
-            var notes = trade[7];
-
             var tradeCardRow = tradeCard.clone()
             tradeCardRow.removeClass("d-none")
             tradeCardRow.removeClass("template")
-            tradeCardRow.find(".traderName").text(username)
-            tradeCardRow.find(".tradeContract").text(ticker + " " + strike)
-            tradeCardRow.find(".tradeGain").text(tradeGain)
-            tradeCardRow.find(".tradeNotes").text(notes)
-            tradeCardRow.find(".tradeLogo").attr("src", "https://www.getthatcashmoney.com/images/logos/" + ticker.toUpperCase() + ".png")
+            tradeCardRow.find(".traderName").text(trade.username)
+            tradeCardRow.find(".tradeContract").text(trade.ticker + " " + trade.strike)
+            tradeCardRow.find(".tradeGain").text(trade.gainsString)
+            tradeCardRow.find(".tradeNotes").text(trade.notes)
+            tradeCardRow.find(".tradeLogo").attr("src", "https://www.getthatcashmoney.com/images/logos/" + trade.ticker.toUpperCase() + ".png")
 
             $('#tradeRecap').append(tradeCardRow);
         });
@@ -522,18 +509,19 @@ class Trades {
             dateString = new Date().setHours(0,0,0,0)
 
         var todayStart = new Date(dateString)
-        this.getRecap(todayStart).then((tradesList) => {
+        this._getRecap(todayStart).then((tradesList) => {
                 this.renderTradeRecap(tradesList, dateString)
             }
         );
 
     }
 
-    getOpenTrades(recap_date){
+    _getOpenTrades(recap_date){
         var self = this;
         // Query for open trades
         var entryDate = new Date(recap_date);
         entryDate.setDate(entryDate.getDate() + 1);
+        console.log("Query Firebase - getOpenTrades", recap_date)
 
         var trades_query = this.firestore_db.collection("trades");
 
@@ -547,13 +535,11 @@ class Trades {
                     trades_snapshot.forEach(
                         function(doc) {
                             var tradeEntry = TradeRecord.from_dict(doc.data());
-                            var tradeGain = "OPEN";
-                            var exit_prices_str = "OPEN";
 
                             var showTrade = self.filterByUser == null || tradeEntry.userid == self.filterByUser
                             
                             if (!tradeEntry.isExpired(recap_date) && showTrade) {
-                                trades.push([tradeEntry.username, tradeEntry.ticker, tradeEntry.strike, tradeEntry.entry_price.toString(), tradeEntry.expiration, tradeGain, exit_prices_str, tradeEntry.notes]);
+                                trades.push(tradeEntry)
                             }
                         }
                     );
@@ -564,12 +550,12 @@ class Trades {
         });
     }
 
-    getClosedTrades(recap_date){
+    _getClosedTrades(recap_date){
         var self = this;
 
         // Query for exited trades
         var trades_query = this.firestore_db.collection("trades");
-    
+        console.log("Query Firebase - getClosedTrades", recap_date)
 
         var recapDateStart = new Date(recap_date);
         recapDateStart.setUTCHours(0, 0, 0, 0);
@@ -588,23 +574,10 @@ class Trades {
                     trades_snapshot.forEach(
                         function(doc) {
                             var tradeEntry = TradeRecord.from_dict(doc.data());
-                            var tradeGain, exit_prices_str;
-                
-                            if (tradeEntry.ticker === "ES" || tradeEntry.ticker === "MES" || tradeEntry.ticker === "MNQ" || tradeEntry.ticker === "NQ") {
-                                if (tradeEntry.strike.toUpperCase().endsWith("LONG")) {
-                                    tradeGain = (tradeEntry.exit_price_max - tradeEntry.entry_price) + " pts";
-                                } 
-                                else if (tradeEntry.strike.toUpperCase().endsWith("SHORT")) {
-                                    tradeGain = (tradeEntry.entry_price - tradeEntry.exit_price_max) + " pts";
-                                }
-                            } 
-                            else {
-                                tradeGain = (((tradeEntry.exit_price_max - tradeEntry.entry_price) / tradeEntry.entry_price) * 100).toFixed(0) + "%";
-                            }
 
                             var showTrade = self.filterByUser == null || tradeEntry.userid == self.filterByUser
                             if (showTrade){
-                                trades.push([tradeEntry.username, tradeEntry.ticker, tradeEntry.strike, tradeEntry.entry_price.toString(), tradeEntry.expiration, tradeGain, exit_prices_str, tradeEntry.notes]);
+                                trades.push(tradeEntry)
                             }
                         }
                     );
@@ -615,31 +588,49 @@ class Trades {
         });
     }
 
-    // get the daily recap for the given date
-    getRecap(recap_date) {
-        var todays_table = [];
-    
-        // if (user_id) {
-        //     trades_query = trades_query.where("userid", "==", user_id);
-        // }
+    _getAllClosedTrades(){
+        var self = this;
 
+        console.log("Query Firebase - getAllClosedTrades")
+        var trades_query = this.firestore_db.collection("trades");
+        return trades_query
+          .where('exit_date_max', '>=', new Date("05/22/2023"))
+          .get()
+          .then((querySnapshot) => {
+                const data = [];
+                
+                querySnapshot.forEach((doc) => {
+                    const tradeEntry =  TradeRecord.from_dict(doc.data());
+
+                    var showTrade = self.filterByUser == null || tradeEntry.userid == self.filterByUser
+                    if (showTrade){
+                        data.push(tradeEntry)
+                    }
+                });
+
+                return data;
+            });
+    }
+
+
+    // get the daily recap for the given date
+    _getRecap(recap_date) {
+        var todays_table = [];
         return new Promise((resolve) => {
             Promise.all([
-                this.getOpenTrades(recap_date),
-                this.getClosedTrades(recap_date)
+                this._getOpenTrades(recap_date),
+                this._getClosedTrades(recap_date)
             ]).then(([open_trades, closed_trades]) => {
                 todays_table = open_trades.concat(closed_trades);
                 
                 // Sort the results
                 todays_table = todays_table.sort(function(a, b) {
-                    return parseFloat(b[5].replace("%", "").replace(" pts", "").replace("OPEN", "0")) - parseFloat(a[5].replace("%", "").replace(" pts", "").replace("OPEN", "0"));
+                    return b.gainsValue - a.gainsValue
                 });
     
                 resolve(todays_table);
             });
         });
-        
-    
     } // end getRecap
 
 
