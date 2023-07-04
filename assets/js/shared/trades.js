@@ -224,7 +224,8 @@ class Trades {
               useFillColorAsStroke: false,
               reverseNegativeShade: true,
               colorScale: {
-                ranges: [{
+                ranges: [
+                  {
                     from: -30,
                     to: -1,
                     name: 'Red Day',
@@ -233,18 +234,18 @@ class Trades {
                   {
                     from: 0,
                     to: 0,
-                    name: 'No Trades',
+                    name: 'Even Day',
+                    color: '#ffbd59'
+                  },
+                  {
+                    from: 0.5,
+                    to: 0.5,
+                    name: 'No Trades Day',
                     color: '#FFFFFF'
                   },
                   {
                     from: 1,
-                    to: 29,
-                    name: 'Green Day',
-                    color: '#90EE90'
-                  },
-                  {
-                    from: 30,
-                    to: 55,
+                    to: 100,
                     name: 'Super Green Day',
                     color: '#29741d'
                   }
@@ -307,7 +308,7 @@ class Trades {
                 if (showTrade){
                     // Determine if the trade is a winner or loser
                     var gain = ((tradeEntry.exit_price_max - tradeEntry.entry_price) / tradeEntry.entry_price) * 100
-                    var isWinner = gain > 0;
+                    var isWinner = gain >= 0;
                     var isLoser = gain < 0;
 
                     // Extract the month and date from the exit date
@@ -351,7 +352,7 @@ class Trades {
                 var maxDate = 31;
                 for (var i = minDate; i <= maxDate; i++) {
                     if (!allDates.includes(i)) {
-                        monthData.push({ x: i, y: null });
+                        monthData.push({ x: i, y: 0.5 });
                     }
                 }
             });
@@ -404,7 +405,7 @@ class Trades {
 
     renderGainsBubbleChart() {
         self = this;
-        
+
         this.getGainsBubble().then((tradesData) => {
           const seriesData = [];
           
