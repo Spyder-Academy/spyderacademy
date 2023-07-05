@@ -271,7 +271,7 @@ class Trades {
                 ranges: [
                   {
                     from: -30,
-                    to: -1,
+                    to: 0,
                     name: 'Red Day',
                     color: '#cc0000'
                   },
@@ -288,7 +288,7 @@ class Trades {
                     color: '#FFFFFF'
                   },
                   {
-                    from: 1,
+                    from: 0.6,
                     to: 100,
                     name: 'Super Green Day',
                     color: '#29741d'
@@ -333,6 +333,23 @@ class Trades {
         // Create a map to store the count of winners and losers for each date
         var self = this;
         var seriesData = {};
+
+         // Initialize with at least the past 6 months
+        var currentDate = new Date();
+        for (var i = 0; i < 7; i++) {
+            var month = currentDate.toLocaleString('default', { month: 'short' });
+            var date = currentDate.getDate();
+            var monthKey = month;
+
+            if (!seriesData.hasOwnProperty(monthKey)) {
+            seriesData[monthKey] = [];
+            }
+            seriesData[monthKey].push({ x: date, y: 0.5 });
+
+            // Move to the previous month
+            currentDate.setMonth(currentDate.getMonth() - 1);
+        }
+
 
         // Execute the trades query
         this.closedTrades.then(tradesData => {
@@ -393,6 +410,8 @@ class Trades {
             series.forEach((seriesItem) => {
                 seriesItem.data.sort((a, b) => a.x - b.x);
             });
+
+            series.reverse();
 
             this.renderHeatmap(series);
         })
