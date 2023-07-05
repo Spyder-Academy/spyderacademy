@@ -230,8 +230,8 @@ class Trades {
                 if (tradeEntry.gainsValue > 0) numWins += 1;
             });
 
-            winRate = Math.round((numWins / numTrades) * 100).toFixed(0)
-            avgGain = Math.round((totalGains / numTrades)).toFixed(0)
+            var winRate = Math.round((numWins / numTrades) * 100).toFixed(0)
+            var avgGain = Math.round((totalGains / numTrades)).toFixed(0)
 
             $('#winRate').text(winRate + "%")
             $('#avgGain').text(avgGain + "%")
