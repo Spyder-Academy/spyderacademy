@@ -80,7 +80,7 @@
       <div class="col-lg-6 col-sm-12 card shadow border-0 trade-card-template d-none mx-0 my-1" style="border-radius: 1em;">
         <div class="card-body p-1">
             <div class="container p-0">
-                <div class="row">
+                <div class="row tradeRow" onclick="selectContract(this);">
                     <div class="col-2 m-0">
                         <img class="tradeLogo" src="https://www.getthatcashmoney.com/images/logos/TSLA.png" style="width: 3em; border-radius: 2em;" />
                     </div>
@@ -104,36 +104,19 @@
         </div>
       </div>
        
-      <!-- TradingView Widget BEGIN -->
-    <!-- <div class="tradingview-widget-container">
-        <div id="tradingview_eb9a3"></div>
-        <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-        <script type="text/javascript">
-            new TradingView.widget(
-            {
-                "autosize": false,
-                "symbol": "NASDAQ:AAPL",
-                "interval": "5",
-                "timezone": "Etc/UTC",
-                "theme": "dark",
-                "style": "1",
-                "locale": "en",
-                "toolbar_bg": "#f1f3f6",
-                "enable_publishing": false,
-                "allow_symbol_change": true,
-                "container_id": "tradingview_eb9a3",
-                "drawings_access": {
-                    "type": "black",
-                    "tools": [{ "name": "Annotation" }]
-                },
-                "custom_js_url": "https://yourdomain.com/your-custom-script.js" // Replace with your custom script URL
-            }
-            );
-        </script>
-    </div> -->
-    <!-- TradingView Widget END -->
-           
+      <div id="tvChartCard" class="col-lg-6 col-sm-6 card shadow border-0 m-3 d-none" style="border-radius: 2em;">
+        <div class="card-body p-3 m-3">
+            <div class="container p-0">
+                    <div id="tvChartHeader" class="card border-1 m-0 p-2"  style="border-radius: 1em;">
+                        
+                    </div>
+                </div>
+               
+            </div>
+            <div id="tv_chart_container" class="mx-3 p-3"></div>
+        </div>
+    </div>
+
 
       <div class="row pb-5">
         <div class="col-12 d-flex justify-content-center">
@@ -151,6 +134,9 @@
     <script>{{- $tradesJS.Content | safeJS -}}</script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+	<script type="text/javascript" src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
 
     <script>
        
@@ -174,6 +160,16 @@
             trades.renderRecap();
             trades.renderGainsBubbleChart();
         }
+
+        function selectContract(el){
+            $('#tvChartHeader').empty();
+            $('#tvChartHeader').append($(el).clone());
+            $('#tvChartCard').removeClass("d-none");
+            trades.renderTVChart($(el).attr("tradeid"));
+        }
+
+        
+       
     </script>
 
   </section>

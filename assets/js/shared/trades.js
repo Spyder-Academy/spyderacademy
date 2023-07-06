@@ -1,6 +1,7 @@
 
 class TradeRecord {
-    constructor(userid, username, ticker, strike, expiration, entry_price, entry_date, notes, exit_price_max, exit_date_max) {
+    constructor(tradeid, userid, username, ticker, strike, expiration, entry_price, entry_date, notes, exit_price_max, exit_date_max) {
+      this.tradeid = tradeid;
       this.userid = userid;
       this.username = username;
       this.ticker = ticker;
@@ -17,8 +18,9 @@ class TradeRecord {
       this.trims = "OPEN";
     }
   
-    static from_dict(source) {
+    static from_dict(id, source) {
         const trade = new TradeRecord(
+            id,
             source["userid"],
             source["username"],
             source["ticker"],
@@ -30,6 +32,8 @@ class TradeRecord {
             source["exit_price_max"],
             source["exit_date_max"]
         );
+
+        trade.tradeid = id;
   
         if ("userid" in source) {
             trade.userid = source["userid"];
@@ -102,6 +106,7 @@ class TradeRecord {
   
     to_dict() {
       const dest = {
+        tradeid: this.tradeid,
         userid: this.userid,
         username: this.username,
         ticker: this.ticker,
@@ -114,6 +119,10 @@ class TradeRecord {
         exit_date_max: this.exit_date_max,
       };
   
+      if (this.tradeid) {
+        dest.tradeid = this.tradeid;
+      }
+
       if (this.userid) {
         dest.userid = this.userid;
       }
@@ -178,6 +187,7 @@ class TradeRecord {
   
     toString() {
       return `TradeRecord(
+        tradeid=${this.tradeid},
         userid=${this.userid},
         username=${this.username},
         ticker=${this.ticker},
@@ -418,6 +428,157 @@ class Trades {
         
     }
 
+    renderTVChart(tradeid) {
+        var el = document.getElementById("tv_chart_container");
+        $(el).empty();
+    
+        var chart = LightweightCharts.createChart(el, {
+            width: 600,
+            height: 300,
+            rightPriceScale: {
+                visible: true,
+                borderColor: 'rgba(197, 203, 206, 1)',
+            },
+            leftPriceScale: {
+                visible: true,
+                borderColor: 'rgba(197, 203, 206, 1)',
+            },
+            timeScale: {
+                timeVisible: true,
+                borderColor: '#ffffff',
+            },
+            rightPriceScale: {
+                borderColor: '#ffffff',
+            },
+            layout: {
+                background: {
+                    type: 'solid',
+                    color: '#ffffff',
+                },
+                textColor: '#000',
+            },
+            grid: {
+                horzLines: {
+                    color: '#ffffff',
+                },
+                vertLines: {
+                    color: '#ffffff',
+                },
+            },
+        });
+    
+        var candleStickSeries = chart.addCandlestickSeries({
+            priceScaleId: 'right',
+            upColor: 'rgb(38,166,154)',
+            downColor: 'rgb(255,82,82)',
+            wickUpColor: 'rgb(38,166,154)',
+            wickDownColor: 'rgb(255,82,82)',
+            borderVisible: false,
+        });
+
+        var optionsSeries = chart.addLineSeries({
+            priceScaleId: 'left',
+            color: 'rgba(4, 111, 232, 1)',
+	        lineWidth: 2,
+        });
+    
+        // Get the candle data from the database
+        var candlesRef = this.firestore_db.collection("trades").doc(tradeid).collection("price_history").doc("underlying");
+        var optionsRef = this.firestore_db.collection("trades").doc(tradeid).collection("price_history").doc("options_price");
+    
+        candlesRef.get().then((doc) => {
+            var self = this;
+            var candleData = [];
+            var candles = doc.data().candles;
+    
+            candles.forEach((c) => {
+                // Parse the string into a Date object
+                var time = new Date(c.d);
+    
+                // Get the Unix timestamp in milliseconds
+                var offset = dayjs(c.d).utcOffset() / 60;
+                var timestamp = new Date(time).getTime() + (offset * 60 * 60 * 1000);
+                var timestampInSeconds = Math.floor(timestamp / 1000);
+    
+                candleData.push({
+                    time: timestampInSeconds,
+                    open: c.o,
+                    high: c.h,
+                    low: c.l,
+                    close: c.c
+                });
+            });
+    
+            candleStickSeries.setData(candleData);
+    
+            // Fetch options prices
+            optionsRef.get().then((optionsDoc) => {
+                var optionsData = optionsDoc.data().candles;
+                var optionsSeriesData = [];
+    
+                optionsData.forEach((c) => {
+                    // Parse the string into a Date object
+                    var time = new Date(c.d);
+    
+                    // Get the Unix timestamp in milliseconds
+                    var offset = dayjs(c.d).utcOffset() / 60;
+                    var timestamp = new Date(time).getTime() + (offset * 60 * 60 * 1000);
+                    var timestampInSeconds = Math.floor(timestamp / 1000);
+    
+                    optionsSeriesData.push({
+                        time: timestampInSeconds,
+                        value: c.c
+                    });
+                });
+    
+                // Add options series to the chart
+                optionsSeries.setData(optionsSeriesData);
+
+            }).catch((error) => {
+                console.error("Error fetching options prices:", error);
+            });
+        }).then(() => {
+            this.closedTrades.then(tradesData => {
+                var tradeEntry = tradesData.find((data) => data.tradeid == tradeid)
+    
+                if (tradeEntry !== undefined) {
+                    var markers = [];
+    
+                    var entryTime = Math.floor(tradeEntry.entry_date.toDate().getTime() / 1000)
+                    var exitTime = Math.floor(tradeEntry.exit_date_max.toDate().getTime() / 1000)
+    
+                    // Convert to EDT
+                    var offset = dayjs(tradeEntry.entry_date.toDate().toLocaleDateString()).utcOffset() / 60;
+                    entryTime = Math.floor(new Date(entryTime).getTime() + (offset * 60 * 60 * 1000) / 1000);
+                    exitTime = Math.floor(new Date(exitTime).getTime() + (offset * 60 * 60 * 1000) / 1000);
+    
+                    if (tradeEntry.exit_date_max != null) {
+                        markers.push({
+                            time: exitTime,
+                            position: 'aboveBar',
+                            color: '#e91e63',
+                            shape: 'arrowDown',
+                            text: 'Max Exit @ ' + tradeEntry.exit_price_max
+                        });
+                    }
+    
+                    if (tradeEntry.entry_price != null) {
+                        markers.push({
+                            time: entryTime,
+                            position: 'belowBar',
+                            color: '#2196F3',
+                            shape: 'arrowUp',
+                            text: 'Entered @ ' + tradeEntry.entry_price
+                        });
+                    }
+    
+                    candleStickSeries.setMarkers(markers);
+                }
+            });
+        })
+    }
+    
+
 
     renderGainsBubbleChart() {
         self = this;
@@ -514,6 +675,7 @@ class Trades {
             tradeCardRow.find(".tradeGain").text(trade.gainsString)
             tradeCardRow.find(".tradeNotes").text(trade.notes)
             tradeCardRow.find(".tradeLogo").attr("src", "https://www.getthatcashmoney.com/images/logos/" + trade.ticker.toUpperCase() + ".png")
+            tradeCardRow.find(".tradeRow").attr("tradeid", trade.tradeid)
 
             $('#tradeRecap').append(tradeCardRow);
         });
@@ -554,7 +716,7 @@ class Trades {
                     var trades = []
                     trades_snapshot.forEach(
                         function(doc) {
-                            var tradeEntry = TradeRecord.from_dict(doc.data());
+                            var tradeEntry = TradeRecord.from_dict(doc.id, doc.data());
 
                             var showTrade = self.filterByUser == null || tradeEntry.userid == self.filterByUser
                             
@@ -593,7 +755,7 @@ class Trades {
                     var trades = []
                     trades_snapshot.forEach(
                         function(doc) {
-                            var tradeEntry = TradeRecord.from_dict(doc.data());
+                            var tradeEntry = TradeRecord.from_dict(doc.id, doc.data());
 
                             var showTrade = self.filterByUser == null || tradeEntry.userid == self.filterByUser
                             if (showTrade){
@@ -620,7 +782,7 @@ class Trades {
                 const data = [];
                 
                 querySnapshot.forEach((doc) => {
-                    const tradeEntry =  TradeRecord.from_dict(doc.data());
+                    const tradeEntry =  TradeRecord.from_dict(doc.id, doc.data());
 
                     var showTrade = self.filterByUser == null || tradeEntry.userid == self.filterByUser
                     if (showTrade){
@@ -652,6 +814,8 @@ class Trades {
             });
         });
     } // end getRecap
+
+
 
 
 
