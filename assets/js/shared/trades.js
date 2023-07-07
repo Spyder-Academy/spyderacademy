@@ -428,12 +428,14 @@ class Trades {
         
     }
 
-    renderTVChart(tradeid) {
-        var el = document.getElementById("tv_chart_container");
-        $(el).empty();
+    renderTVChart(parentEl, tradeid) {
+        var el = $(parentEl).find(".tvChartHeader")[0]
+        $(el).empty()
+        $('.tvChartHeader').addClass("d-none"); // hide all other charts
+        $(el).removeClass("d-none");
     
         var chart = LightweightCharts.createChart(el, {
-            width: 600,
+            width: 500,
             height: 300,
             rightPriceScale: {
                 visible: true,
@@ -474,13 +476,23 @@ class Trades {
             wickUpColor: 'rgb(38,166,154)',
             wickDownColor: 'rgb(255,82,82)',
             borderVisible: false,
+            overlay: true,
         });
 
         var optionsSeries = chart.addLineSeries({
             priceScaleId: 'left',
             color: 'rgba(4, 111, 232, 1)',
 	        lineWidth: 2,
+            overlay: true,
         });
+
+        var histogramSeries = chart.addHistogramSeries({
+            priceScaleId: 'left',
+            color: 'rgba(255, 219, 88, 0.4)',
+            lineWidth: 2,
+            priceFormat: { type: "volume"},
+            overlay: true,
+        })
     
         // Get the candle data from the database
         var candlesRef = this.firestore_db.collection("trades").doc(tradeid).collection("price_history").doc("underlying");
@@ -571,8 +583,15 @@ class Trades {
                             text: 'Entered @ ' + tradeEntry.entry_price
                         });
                     }
+
+                    // Set the data for histogram series (vertical lines)
+                    var verticalLinesData = [
+                        { time: entryTime, value: Math.max(tradeEntry.entry_price, tradeEntry.exit_price_max) * 2},
+                        { time: exitTime,  value: Math.max(tradeEntry.entry_price, tradeEntry.exit_price_max) * 2},
+                    ];
     
                     candleStickSeries.setMarkers(markers);
+                    histogramSeries.setData(verticalLinesData);
                 }
             });
         })

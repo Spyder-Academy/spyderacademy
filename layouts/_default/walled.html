@@ -48,18 +48,18 @@
      
      
 
-      <div class="container">
+    <div class="container">
         <div class="row m-4">
-            <div class="col-5">
+            <div class="col-lg-5 col-sm-12">
                 <h1 class="m-3" id="titleUser">ALL MENTORS</h1>
             </div>
-            <div class="col-2">
+            <div class="col-lg-2 col-sm-6">
                 <div class="card shadow border-0 p-3 m-1" style="border-radius: 15px; background-color: #BFE1CF; ">
                     <p class="small p-0 m-0">WIN RATE</p>
                     <h4 id="winRate">- %</h4>
                 </div>
             </div>
-            <div class="col-2">
+            <div class="col-lg-2 col-sm-6">
                 <div class="card shadow border-0 p-3 m-1" style="border-radius: 15px; background-color: #BFE1CF; ">
                     <p class="small p-0 m-0">AVG GAIN</p>
                     <h4 id="avgGain">- %</h4>
@@ -69,63 +69,52 @@
     </div>
 
 
-      <div class="container">
+    <div class="container">
         <div class="row">
             <div class="col-lg-6 col-sm-12" id="tradeHeatmap"></div>
             <div class="col-lg-6 col-sm-12" id="tradeGainsBubble"></div>
-            <div class="col-lg-12 col-sm-12"><div class="container"><div class="row" id="tradeRecap"></div></div></div>
+            <div class="col-lg-12 col-sm-12">
+                <div class="container">
+                    <div class="row" id="tradeRecap">
+                        <!-- trade-card-template gets pasted into here -->
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+    </div>
   
-      <div class="col-lg-6 col-sm-12 card shadow border-0 trade-card-template d-none mx-0 my-1" style="border-radius: 1em;">
-        <div class="card-body p-1">
-            <div class="container p-0">
-                <div class="row tradeRow" onclick="selectContract(this);">
-                    <div class="col-2 m-0">
-                        <img class="tradeLogo" src="https://www.getthatcashmoney.com/images/logos/TSLA.png" style="width: 3em; border-radius: 2em;" />
+
+    <div class="col-lg-6 col-sm-12 trade-card-template d-none">
+        <div class="card shadow border-0  mx-0 my-1" style="border-radius: 1em;">
+            <div class="card-body p-1 tradeRow" onclick="selectContract(this);">
+                <div class="container p-0">
+                    <div class="row">
+                        <div class="col-2 m-0">
+                            <img class="tradeLogo" src="https://www.getthatcashmoney.com/images/logos/TSLA.png" style="width: 3em; border-radius: 2em;" />
+                        </div>
+                        <div class="col-10 px-3">
+                            <div class="row">
+                                <div class="col-8 small lh-1 fw-light text-uppercase traderName">Trader Name</div>
+                                <div class="col-4"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8 fs-3 lh-1 tradeContract">Contract</div>
+                                <div class="col-4 fs-3 lh-1 tradeGain text-end">Gains %</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8  small lh-1 tradeNotes" style="overflow: hidden; text-overflow: ellipses; white-space: nowrap;">Trade Notes</div>
+                                <div class="col-4"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-10 px-3">
-                        <div class="row">
-                            <div class="col-8 small lh-1 fw-light text-uppercase traderName">Trader Name</div>
-                            <div class="col-4"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-8 fs-3 lh-1 tradeContract">Contract</div>
-                            <div class="col-4 fs-3 lh-1 tradeGain text-end">Gains %</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-8  small lh-1 tradeNotes" style="overflow: hidden; text-overflow: ellipses; white-space: nowrap;">Trade Notes</div>
-                            <div class="col-4"></div>
-                        </div>
+                    <div class="tvChartHeader m-4 card shadow border-0 d-none" style="border-radius: 1em;">
+                            
                     </div>
                 </div>
-               
             </div>
         </div>
-      </div>
-       
-      <div id="tvChartCard" class="col-lg-6 col-sm-6 card shadow border-0 m-3 d-none" style="border-radius: 2em;">
-        <div class="card-body p-3 m-3">
-            <div class="container p-0">
-                    <div id="tvChartHeader" class="card border-1 m-0 p-2"  style="border-radius: 1em;">
-                        
-                    </div>
-                </div>
-               
-            </div>
-            <div id="tv_chart_container" class="mx-3 p-3"></div>
-        </div>
     </div>
-
-
-      <div class="row pb-5">
-        <div class="col-12 d-flex justify-content-center">
-          <div class="blog-content fs-5">
-            {{ .Content }}
-          </div>
-        </div>
-      </div>
-    </div>
+          
 
 
     <!-- Load Shared JS -->
@@ -162,10 +151,10 @@
         }
 
         function selectContract(el){
-            $('#tvChartHeader').empty();
-            $('#tvChartHeader').append($(el).clone());
-            $('#tvChartCard').removeClass("d-none");
-            trades.renderTVChart($(el).attr("tradeid"));
+            // $('#tvChartHeader').empty();
+            // $('#tvChartHeader').append($(el).clone());
+            // $('#tvChartCard').removeClass("d-none");
+            trades.renderTVChart($(el), $(el).attr("tradeid"));
         }
 
         
