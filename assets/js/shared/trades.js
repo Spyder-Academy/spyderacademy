@@ -497,6 +497,8 @@ class Trades {
         // Get the candle data from the database
         var candlesRef = this.firestore_db.collection("trades").doc(tradeid).collection("price_history").doc("underlying").collection("candles");
         var optionsRef = this.firestore_db.collection("trades").doc(tradeid).collection("price_history").doc("options_price").collection("candles");
+        var entriesRef = this.firestore_db.collection("trades").doc(tradeid).collection("entries");
+        var exitsRef = this.firestore_db.collection("trades").doc(tradeid).collection("exits");
     
         candlesRef.get().then((querySnapshot) => {
             var self = this;
@@ -523,83 +525,169 @@ class Trades {
             });
     
             candleStickSeries.setData(candleData);
+        });
     
-            // Fetch options prices
-            optionsRef.get().then((querySnapshot) => {
-                // var optionsData = optionsDoc.data().candles;
+        // Fetch options prices
+        optionsRef.get().then((querySnapshot) => {
+            // var optionsData = optionsDoc.data().candles;
 
-                var optionsSeriesData = [];
-    
-                querySnapshot.forEach((doc) => {
-                    // Parse the string into a Date object
-                    var c = doc.data();
-                    var time = new Date(c.d);
-    
-                    // Get the Unix timestamp in milliseconds
-                    var offset = dayjs(c.d).utcOffset() / 60;
-                    var timestamp = new Date(time).getTime() + (offset * 60 * 60 * 1000);
-                    var timestampInSeconds = Math.floor(timestamp / 1000);
-    
-                    optionsSeriesData.push({
-                        time: timestampInSeconds,
-                        value: c.c
-                    });
+            var optionsSeriesData = [];
+
+            querySnapshot.forEach((doc) => {
+                // Parse the string into a Date object
+                var c = doc.data();
+                var time = new Date(c.d);
+
+                // Get the Unix timestamp in milliseconds
+                var offset = dayjs(c.d).utcOffset() / 60;
+                var timestamp = new Date(time).getTime() + (offset * 60 * 60 * 1000);
+                var timestampInSeconds = Math.floor(timestamp / 1000);
+
+                optionsSeriesData.push({
+                    time: timestampInSeconds,
+                    value: c.c
                 });
-    
-                // Add options series to the chart
-                optionsSeries.setData(optionsSeriesData);
+            });
 
-            }).catch((error) => {
-                console.error("Error fetching options prices:", error);
+            // Add options series to the chart
+            optionsSeries.setData(optionsSeriesData);
+
+        });
+
+        var markers = [];
+        var entryExitNotes = [];
+
+        // Fetch entries data
+        entriesRef.get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                var entryData = doc.data();
+                var entryTime = Math.floor(entryData["date_time"].toDate().getTime() / 1000);
+                var entryPrice = entryData["price"]; 
+                var entryNotes = entryData["notes"];
+                entryData["action"] = "ADDED"
+
+                var offset = dayjs(entryData["date_time"].toDate().toLocaleDateString()).utcOffset() / 60;
+
+                // Convert to EDT
+                entryTime = Math.floor(entryTime + (offset * 60 * 60 * 1000) / 1000);
+
+                // Create entry marker object
+                var entryMarker = {
+                    time: entryTime,
+                    position: 'belowBar',
+                    color: '#2196F3',
+                    shape: 'arrowUp',
+                    text: parseFloat(entryPrice).toFixed(2)
+                };
+                markers.push(entryMarker);
+                entryExitNotes.push(entryData)
             });
         }).then(() => {
-            this.closedTrades.then(tradesData => {
-                var tradeEntry = tradesData.find((data) => data.tradeid == tradeid)
-    
-                if (tradeEntry !== undefined) {
-                    var markers = [];
-    
-                    var entryTime = Math.floor(tradeEntry.entry_date.toDate().getTime() / 1000)
-                    var exitTime = Math.floor(tradeEntry.exit_date_max.toDate().getTime() / 1000)
-    
+            // Fetch exits data
+            exitsRef.get().then((querySnapshot) => {
+                // var exitMarkers = [];
+                querySnapshot.forEach((doc) => {
+                    var exitData = doc.data();
+                    var exitTime = Math.floor(exitData["date_time"].toDate().getTime() / 1000);
+                    var exitPrice = exitData["price"]; 
+                    var exitNotes = exitData["notes"];
+                    exitData["action"] = "TRIMMED"
+
+                    var offset = dayjs(exitData["date_time"].toDate().toLocaleDateString()).utcOffset() / 60;
+
                     // Convert to EDT
-                    var offset = dayjs(tradeEntry.entry_date.toDate().toLocaleDateString()).utcOffset() / 60;
-                    entryTime = Math.floor(new Date(entryTime).getTime() + (offset * 60 * 60 * 1000) / 1000);
-                    exitTime = Math.floor(new Date(exitTime).getTime() + (offset * 60 * 60 * 1000) / 1000);
-    
-                    if (tradeEntry.exit_date_max != null) {
-                        markers.push({
-                            time: exitTime,
-                            position: 'aboveBar',
-                            color: '#e91e63',
-                            shape: 'arrowDown',
-                            text: 'Max Exit @ ' + tradeEntry.exit_price_max
-                        });
-                    }
-    
-                    if (tradeEntry.entry_price != null) {
-                        markers.push({
-                            time: entryTime,
-                            position: 'belowBar',
-                            color: '#2196F3',
-                            shape: 'arrowUp',
-                            text: 'Entered @ ' + tradeEntry.entry_price
-                        });
-                    }
+                    exitTime = Math.floor(exitTime + (offset * 60 * 60 * 1000) / 1000);
 
-                    // Set the data for histogram series (vertical lines)
-                    var verticalLinesData = [
-                        { time: entryTime, value: Math.max(tradeEntry.entry_price, tradeEntry.exit_price_max) * 2},
-                        { time: exitTime,  value: Math.max(tradeEntry.entry_price, tradeEntry.exit_price_max) * 2},
-                    ];
-    
-                    candleStickSeries.setMarkers(markers);
-                    histogramSeries.setData(verticalLinesData);
+                    // Create exit marker object
+                    var exitMarker = {
+                        time: exitTime,
+                        position: 'aboveBar',
+                        color: '#e91e63',
+                        shape: 'arrowDown',
+                        text: parseFloat(exitPrice).toFixed(2) 
+                    };
 
-                    chart.timeScale().fitContent();
-                }
+                    markers.push(exitMarker);
+                    entryExitNotes.push(exitData)
+                });
+            }).then(() => {
+                candleStickSeries.setMarkers(markers);
+                chart.timeScale().fitContent();
+
+                var entryNotesEl = $(parentEl).find(".entryExitNotes")
+                entryNotesEl.removeClass("d-none");
+
+                entryExitNotes = entryExitNotes.sort(function(a, b) {
+                    return a["date_time"].toDate() - b["date_time"].toDate() 
+                });
+
+                entryNotesEl.empty();
+                entryNotesEl.append("<h4>TRADE HISTORY</h4>")
+                entryExitNotes.forEach((t) => {
+                    var direction = t["action"]
+                    entryNotesEl.append("<p><strong>" + t["date_time"].toDate().toLocaleString() + "</strong><br/>" + direction + " at $" + parseFloat(t.price).toFixed(2) + " | " + t.notes + "</p>")
+                })
+    
             });
+
+            // // Set the data for histogram series (vertical lines)
+            // var verticalLinesData = [
+            //     { time: markers[0].time, value: Math.max(tradeEntry.entry_price, tradeEntry.exit_price_max) * 2},
+            //     { time:tradeEntry.exit_date_max,  value: Math.max(tradeEntry.entry_price, tradeEntry.exit_price_max) * 2},
+            // ];
+
+            // histogramSeries.setData(verticalLinesData);
+
         })
+
+        
+        
+        // this.closedTrades.then(tradesData => {
+        //     var tradeEntry = tradesData.find((data) => data.tradeid == tradeid)
+
+        //     if (tradeEntry !== undefined) {
+        //         var markers = [];
+
+        //         var entryTime = Math.floor(tradeEntry.entry_date.toDate().getTime() / 1000)
+        //         var exitTime = Math.floor(tradeEntry.exit_date_max.toDate().getTime() / 1000)
+
+        //         // Convert to EDT
+        //         var offset = dayjs(tradeEntry.entry_date.toDate().toLocaleDateString()).utcOffset() / 60;
+        //         entryTime = Math.floor(new Date(entryTime).getTime() + (offset * 60 * 60 * 1000) / 1000);
+        //         exitTime = Math.floor(new Date(exitTime).getTime() + (offset * 60 * 60 * 1000) / 1000);
+
+        //         if (tradeEntry.exit_date_max != null) {
+        //             markers.push({
+        //                 time: exitTime,
+        //                 position: 'aboveBar',
+        //                 color: '#e91e63',
+        //                 shape: 'arrowDown',
+        //                 text: 'Max Exit @ ' + tradeEntry.exit_price_max
+        //             });
+        //         }
+
+        //         if (tradeEntry.entry_price != null) {
+        //             markers.push({
+        //                 time: entryTime,
+        //                 position: 'belowBar',
+        //                 color: '#2196F3',
+        //                 shape: 'arrowUp',
+        //                 text: 'Entered @ ' + tradeEntry.entry_price
+        //             });
+        //         }
+
+        //         // Set the data for histogram series (vertical lines)
+        //         var verticalLinesData = [
+        //             { time: entryTime, value: Math.max(tradeEntry.entry_price, tradeEntry.exit_price_max) * 2},
+        //             { time: exitTime,  value: Math.max(tradeEntry.entry_price, tradeEntry.exit_price_max) * 2},
+        //         ];
+
+        //         candleStickSeries.setMarkers(markers);
+        //         histogramSeries.setData(verticalLinesData);
+
+        //         chart.timeScale().fitContent();
+        //     }
+        // });
     }
     
 
