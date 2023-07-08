@@ -495,15 +495,16 @@ class Trades {
         })
     
         // Get the candle data from the database
-        var candlesRef = this.firestore_db.collection("trades").doc(tradeid).collection("price_history").doc("underlying");
-        var optionsRef = this.firestore_db.collection("trades").doc(tradeid).collection("price_history").doc("options_price");
+        var candlesRef = this.firestore_db.collection("trades").doc(tradeid).collection("price_history").doc("underlying").collection("candles");
+        var optionsRef = this.firestore_db.collection("trades").doc(tradeid).collection("price_history").doc("options_price").collection("candles");
     
-        candlesRef.get().then((doc) => {
+        candlesRef.get().then((querySnapshot) => {
             var self = this;
             var candleData = [];
-            var candles = doc.data().candles;
+            // var candles = doc.data().candles;
     
-            candles.forEach((c) => {
+            querySnapshot.forEach((doc) => {
+                var c = doc.data();
                 // Parse the string into a Date object
                 var time = new Date(c.d);
     
@@ -524,12 +525,14 @@ class Trades {
             candleStickSeries.setData(candleData);
     
             // Fetch options prices
-            optionsRef.get().then((optionsDoc) => {
-                var optionsData = optionsDoc.data().candles;
+            optionsRef.get().then((querySnapshot) => {
+                // var optionsData = optionsDoc.data().candles;
+
                 var optionsSeriesData = [];
     
-                optionsData.forEach((c) => {
+                querySnapshot.forEach((doc) => {
                     // Parse the string into a Date object
+                    var c = doc.data();
                     var time = new Date(c.d);
     
                     // Get the Unix timestamp in milliseconds
@@ -592,6 +595,8 @@ class Trades {
     
                     candleStickSeries.setMarkers(markers);
                     histogramSeries.setData(verticalLinesData);
+
+                    chart.timeScale().fitContent();
                 }
             });
         })
