@@ -56,20 +56,26 @@
      
 
     <div class="container">
-        <div class="row m-4">
-            <div class="col-lg-5 col-sm-12">
+        <div class="row m-4 sparkboxes">
+            <div class="col-lg-6 col-sm-12">
                 <h1 class="m-3" id="titleUser">ALL MENTORS</h1>
             </div>
-            <div class="col-lg-2 col-sm-6">
-                <div class="card shadow border-0 p-3 m-1" style="border-radius: 15px; background-color: #BFE1CF; ">
-                    <p class="small p-0 m-0">WIN RATE</p>
-                    <h4 id="winRate">- %</h4>
+            <div class="col-lg-3 col-sm-6">
+                <div class="card shadow border-0 p-3" style="background-color: #BFE1CF; ">
+                    <div class="details">
+                        <p class="small p-0 m-0">WIN RATE</p>
+                        <h4 id="winRate">- %</h4>
+                    </div>
+                    <div id="winRateChart"></div>
                 </div>
             </div>
-            <div class="col-lg-2 col-sm-6">
-                <div class="card shadow border-0 p-3 m-1" style="border-radius: 15px; background-color: #BFE1CF; ">
-                    <p class="small p-0 m-0">AVG GAIN</p>
-                    <h4 id="avgGain">- %</h4>
+            <div class="col-lg-3 col-sm-6">
+                <div class="card shadow border-0 p-3" style="background-color: #BFE1CF; ">
+                    <div class="details">
+                        <p class="small p-0 m-0">AVG GAIN</p>
+                        <h4 id="avgGain">- %</h4>
+                    </div>
+                    <div id="avgGainChart" class="text-end"></div>
                 </div>
             </div>
         </div>
@@ -115,7 +121,6 @@
                         </div>
                     </div>
                     <div class="tvChartHeader m-4 card shadow border-0 d-none" style="border-radius: 1em;"> </div>
-
                     <div class="entryExitNotes small lh-1 m-4 p-3 card shadow border-0 d-none" style="border-radius: 1em; background-color: #BFE1CF;"></div>
                 </div>
             </div>

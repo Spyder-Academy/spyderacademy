@@ -216,6 +216,8 @@ class Trades {
 
         this.chartHeatmap = null;
         this.chartScatterGains = null;
+        this.chartAvgGains = null;
+        this.chartWinRate = null;
     }
 
     selectUser(username){
@@ -230,21 +232,106 @@ class Trades {
         // Execute the trades query
         this.closedTrades.then(tradesData => {
            
-            var numTrades = 0;
-            var numWins = 0;
-            var totalGains = 0;
-            tradesData.forEach(tradeEntry => {
-                numTrades += 1;
-                totalGains += tradeEntry.gainsValue;
+            var numTrades = tradesData.length;
+            var numWins = tradesData.filter(tradeEntry => tradeEntry.gainsValue >= 0).length;
+            var numLosses = tradesData.filter(tradeEntry => tradeEntry.gainsValue < 0).length;
+            var totalGains = tradesData.reduce((acc, tradeEntry) => acc + tradeEntry.gainsValue, 0);
+            var avgGain = Math.round((totalGains / numTrades)).toFixed(0);
 
-                if (tradeEntry.gainsValue > 0) numWins += 1;
-            });
+            var winRate = `${Math.round((numWins / numTrades) * 100)}%`
+            var avgGain = `${avgGain}%`
 
-            var winRate = Math.round((numWins / numTrades) * 100).toFixed(0)
-            var avgGain = Math.round((totalGains / numTrades)).toFixed(0)
+            $("#winRate").text(winRate);
+            $("#avgGain").text(avgGain);
 
-            $('#winRate').text(winRate + "%")
-            $('#avgGain').text(avgGain + "%")
+
+            var winRateChartOptions = {
+                chart: {
+                  id: 'winRateChart',
+                  group: 'sparks',
+                  type: 'donut',
+                  height: 70,
+                  sparkline: {
+                    enabled: true
+                  }
+                },
+                series: [numWins, numLosses],
+                labels: ['Wins', 'Losses'],
+                colors: ['#4caf50', '#f44336'],
+              }
+
+            if (this.chartWinRate != null) this.chartWinRate.destroy();
+            this.chartWinRate = new ApexCharts(document.querySelector("#winRateChart"), winRateChartOptions);
+            this.chartWinRate.render();
+
+            // Calculate rolling average data for average gain chart
+            var rollingAvgData = [];
+            var rollingSum = 0;
+            for (var i = 0; i < tradesData.length; i++) {
+                if (i > 20){
+                    rollingSum += tradesData[i].gainsValue;
+                    var rollingAvg = rollingSum / (i + 1 - 20);
+                    rollingAvgData.push(rollingAvg.toFixed(0));
+                }
+            }
+
+            var avgGainsChartOptions = {
+                chart: {
+                  id: 'avgGainChart',
+                  group: 'sparks',
+                  type: 'line',
+                  height: 80,
+                  sparkline: {
+                    enabled: true
+                  },
+                  dropShadow: {
+                    enabled: true,
+                    top: 1,
+                    left: 1,
+                    blur: 2,
+                    opacity: 0.2,
+                  }
+                },
+                series: [
+                    {
+                      name: 'Average Gain',
+                      data: rollingAvgData,
+                    },
+                ],
+                stroke: {
+                  curve: 'smooth',
+                  width: 3,
+                },
+                markers: {
+                  size: 0
+                },
+                grid: {
+                  padding: {
+                    top: 20,
+                    bottom: 10,
+                    left: 110
+                  }
+                },
+                colors: ['#fff'],
+                tooltip: {
+                  x: {
+                    show: false
+                  },
+                  y: {
+                    title: {
+                      formatter: function formatter(val) {
+                        return val + '%';
+                      }
+                    }
+                  }
+                }
+              }
+
+            if (this.chartAvgGains != null) this.chartAvgGains.destroy();
+            this.chartAvgGains = new ApexCharts(document.querySelector("#avgGainChart"), avgGainsChartOptions);
+            this.chartAvgGains.render();
+        
+            
         });
     }
 
@@ -501,9 +588,12 @@ class Trades {
             overlay: true,
         });
 
-        var optionsSeries = chart.addLineSeries({
+        var optionsSeries = chart.addCandlestickSeries({
             priceScaleId: 'left',
-            color: 'rgba(4, 111, 232, 1)',
+            upColor: 'blue',
+            downColor: 'blue',
+            wickUpColor: 'blue',
+            wickDownColor: 'blue',
 	        lineWidth: 2,
             overlay: true,
         });
@@ -559,7 +649,10 @@ class Trades {
 
                 optionsSeriesData.push({
                     time: timestampInSeconds,
-                    value: c.c
+                    open: c.o,
+                    high: c.h,
+                    low: c.l,
+                    close: c.c
                 });
             });
 
