@@ -218,6 +218,7 @@ class Trades {
         this.chartScatterGains = null;
         this.chartAvgGains = null;
         this.chartWinRate = null;
+        this.tradeGainsDOWRadar = null;
     }
 
     selectUser(username){
@@ -346,6 +347,103 @@ class Trades {
             this.chartAvgGains = new ApexCharts(document.querySelector("#avgGainChart"), avgGainsChartOptions);
             this.chartAvgGains.render();
         
+            // Calculate the win percentages by the day of the week
+            var winPercentages = [0, 0, 0, 0, 0]; // Initialize an array to hold the win percentages for each weekday (Monday to Friday)
+            var totalTradesByDay = [0, 0, 0, 0, 0]; // Initialize an array to hold the total trades for each weekday
+
+            // Iterate through each trade
+            tradesData.forEach(function(trade) {
+                var exitDate = trade.exit_date_max.toDate();
+                var dayOfWeek = exitDate.getDay(); // Get the day of the week (0-6, where 0 is Sunday)
+                
+                // Exclude Sunday (0) and Saturday (6)
+                if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+                    dayOfWeek--; // Adjust the index to start from 0 for Monday
+                    totalTradesByDay[dayOfWeek]++; // Increment the total trades for the corresponding day
+                    
+                    if (trade.gainsValue >= 0) {
+                        winPercentages[dayOfWeek]++; // Increment the win count for the corresponding day
+                    }
+                }
+            });
+
+            // Calculate win percentages
+            var tradeWinPercentages = [];
+            for (var i = 0; i < winPercentages.length; i++) {
+                var totalTrades = totalTradesByDay[i];
+                var winCount = winPercentages[i];
+                var winPercentage = Math.round((winCount / totalTrades) * 100, 1) || 0; // Calculate the win percentage (handle divide by zero case)
+                tradeWinPercentages.push(winPercentage);
+            }
+
+            // remove the first and last entries from the array (Sun, and Sat)
+
+            // Radar plot configuration
+            var radarChartOptions = {
+                series: [{
+                    name: 'Win Percentage',
+                    data: tradeWinPercentages,
+                }],
+                chart: {
+                    height: 350,
+                    type: 'radar',
+                    toolbar: {
+                        show: false,
+                    }
+                },
+              dataLabels: {
+                enabled: true
+              },
+              plotOptions: {
+                radar: {
+                  size: 140,
+                  polygons: {
+                    strokeColors: '#e9e9e9',
+                    fill: {
+                      colors: ['#f8f8f8', '#fff']
+                    }
+                  }
+                }
+              },
+              title: {
+                text: 'WIN RATE BY DAY OF THE WEEK'
+              },
+              colors: ['#FF4560'],
+              markers: {
+                size: 4,
+                colors: ['#fff'],
+                strokeColor: '#FF4560',
+                strokeWidth: 2,
+              },
+              tooltip: {
+                y: {
+                  formatter: function(val) {
+                    return val + "%"
+                  }
+                }
+              },
+              xaxis: {
+                categories: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+              },
+              yaxis: {
+                tickAmount: 7,
+                labels: {
+                  formatter: function(val, i) {
+                    if (i % 2 === 0) {
+                      return val
+                    } else {
+                      return ''
+                    }
+                  }
+                }
+              }
+              };
+
+            // Create the radar chart
+            if (this.tradeGainsDOWRadar != null) this.tradeGainsDOWRadar.destroy();
+            var tradeGainsDOWRadar = new ApexCharts(document.querySelector("#tradeGainsDOWRadar"), radarChartOptions);
+            tradeGainsDOWRadar.render();
+
             
         });
     }
