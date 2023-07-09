@@ -430,41 +430,64 @@ class Trades {
 
     renderTVChart(parentEl, tradeid) {
         var el = $(parentEl).find(".tvChartHeader")[0]
+       
+        if (!$(el).hasClass("d-none")){
+            // chart is currently visible, so ignore the redraw
+            return;
+        }
+
+        // otherwise continue to show this chart
         $(el).empty()
         $('.tvChartHeader').addClass("d-none"); // hide all other charts
+        $('.entryExitNotes').addClass("d-none"); // hide all other charts
         $(el).removeClass("d-none");
+
     
         var chart = LightweightCharts.createChart(el, {
-            width: 500,
+            // width: 500,
             height: 300,
             rightPriceScale: {
                 visible: true,
-                borderColor: 'rgba(197, 203, 206, 1)',
+                borderVisible: false,
             },
             leftPriceScale: {
                 visible: true,
-                borderColor: 'rgba(197, 203, 206, 1)',
+                borderColor: '#ffffff',
             },
             timeScale: {
                 timeVisible: true,
-                borderColor: '#ffffff',
+                borderVisible: false,
             },
             rightPriceScale: {
-                borderColor: '#ffffff',
+                borderVisible: false,
             },
             layout: {
                 background: {
                     type: 'solid',
-                    color: '#ffffff',
+                    color: 'white',
                 },
-                textColor: '#000',
+                textColor: 'black',
             },
-            grid: {
-                horzLines: {
-                    color: '#ffffff',
+            crosshair: {
+                horzLine: {
+                    visible: false,
+                    labelVisible: false,
                 },
+                vertLine: {
+                    visible: true,
+                    style: 0,
+                    width: 2,
+                    color: 'rgba(32, 38, 46, 0.1)',
+                    labelVisible: false,
+                },
+            },
+            // hide the grid lines
+            grid: {
                 vertLines: {
-                    color: '#ffffff',
+                    visible: false,
+                },
+                horzLines: {
+                    visible: false,
                 },
             },
         });
@@ -499,6 +522,8 @@ class Trades {
         var optionsRef = this.firestore_db.collection("trades").doc(tradeid).collection("price_history").doc("options_price").collection("candles");
         var entriesRef = this.firestore_db.collection("trades").doc(tradeid).collection("entries");
         var exitsRef = this.firestore_db.collection("trades").doc(tradeid).collection("exits");
+
+
     
         candlesRef.get().then((querySnapshot) => {
             var self = this;
@@ -556,6 +581,7 @@ class Trades {
 
         var markers = [];
         var entryExitNotes = [];
+        var offset = 0;
 
         // Fetch entries data
         entriesRef.get().then((querySnapshot) => {
@@ -566,7 +592,7 @@ class Trades {
                 var entryNotes = entryData["notes"];
                 entryData["action"] = "ADDED"
 
-                var offset = dayjs(entryData["date_time"].toDate().toLocaleDateString()).utcOffset() / 60;
+                offset = dayjs(entryData["date_time"].toDate().toLocaleDateString()).utcOffset() / 60;
 
                 // Convert to EDT
                 entryTime = Math.floor(entryTime + (offset * 60 * 60 * 1000) / 1000);
@@ -593,7 +619,7 @@ class Trades {
                     var exitNotes = exitData["notes"];
                     exitData["action"] = "TRIMMED"
 
-                    var offset = dayjs(exitData["date_time"].toDate().toLocaleDateString()).utcOffset() / 60;
+                    offset = dayjs(exitData["date_time"].toDate().toLocaleDateString()).utcOffset() / 60;
 
                     // Convert to EDT
                     exitTime = Math.floor(exitTime + (offset * 60 * 60 * 1000) / 1000);
@@ -611,7 +637,58 @@ class Trades {
                     entryExitNotes.push(exitData)
                 });
             }).then(() => {
-                candleStickSeries.setMarkers(markers);
+                optionsSeries.setMarkers(markers);
+
+                const toolTipWidth = 106;
+                // Create and style the tooltip html element
+                const toolTip = document.createElement('div');
+                toolTip.style = `width: ${toolTipWidth}px; height: 300px; position: absolute; display: none; padding: 8px; box-sizing: border-box; font-size: 12px; text-align: left; z-index: 1000; top: 12px; left: 12px; pointer-events: none; border-radius: 4px 4px 0px 0px; border-bottom: none; box-shadow: 0 2px 5px 0 rgba(117, 134, 150, 0.45);font-family: -apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;`;
+                toolTip.style.background = `rgba(${'255, 255, 255'}, 0.25)`;
+                toolTip.style.color = 'black';
+                toolTip.style.borderColor = 'rgba( 239, 83, 80, 1)';
+                el.appendChild(toolTip);
+
+                // update tooltip
+                chart.subscribeCrosshairMove(param => {
+                    if (
+                        param.point === undefined ||
+                        !param.time ||
+                        param.point.x < 0 ||
+                        param.point.x > el.clientWidth ||
+                        param.point.y < 0 ||
+                        param.point.y > el.clientHeight
+                    ) {
+                        toolTip.style.display = 'none';
+                    } else {
+                        // time will be in the same format that we supplied to setData.
+                        // thus it will be YYYY-MM-DD
+                        const dateStr = new Date((param.time * 1000) - (offset * 60 * 60 * 1000)).toLocaleString();
+                        toolTip.style.display = 'block';
+                        const stockData = param.seriesData.get(candleStickSeries);
+                        const stockPrice = stockData.value !== undefined ? stockData.value : stockData.close;
+                        const optionsData = param.seriesData.get(optionsSeries);
+                        const optionsPrice = optionsData.value !== undefined ? optionsData.value : optionsData.close;
+                        const ticker = $(parentEl).find('.tradeContract').text()
+                        toolTip.innerHTML = `<div class="h6 nowrap" style="color: ${'rgba( 239, 83, 80, 1)'}">`+ ticker + `</div>` + 
+                            `<div style="font-size: 20px; margin: 4px 0px; color: ${'black'}">$ ${(Math.round(100 * stockPrice) / 100).toFixed(2)}</div>` +
+                            `<div style="font-size: 20px; margin: 4px 0px; color: ${'blue'}">$ ${(Math.round(100 * optionsPrice) / 100).toFixed(2)}</div>` +
+                            `<div style="color: ${'black'}">${dateStr}</div>`;
+                            
+                            
+
+                        let left = param.point.x; // relative to timeScale
+                        const timeScaleWidth = chart.timeScale().width();
+                        const priceScaleWidth = chart.priceScale('left').width();
+                        const halfTooltipWidth = toolTipWidth / 2;
+                        left += priceScaleWidth - halfTooltipWidth;
+                        left = Math.min(left, priceScaleWidth + timeScaleWidth - toolTipWidth);
+                        left = Math.max(left, priceScaleWidth);
+
+                        toolTip.style.left = left + 'px';
+                        toolTip.style.top = 0 + 'px';
+                    }
+                });
+
                 chart.timeScale().fitContent();
 
                 var entryNotesEl = $(parentEl).find(".entryExitNotes")
