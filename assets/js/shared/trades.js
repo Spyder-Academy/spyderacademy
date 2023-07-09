@@ -236,15 +236,27 @@ class Trades {
             var numWins = tradesData.filter(tradeEntry => tradeEntry.gainsValue >= 0).length;
             var numLosses = tradesData.filter(tradeEntry => tradeEntry.gainsValue < 0).length;
             var totalGains = tradesData.reduce((acc, tradeEntry) => acc + tradeEntry.gainsValue, 0);
+
+            var totalGainsFromWins = tradesData
+                .filter(tradeEntry => tradeEntry.gainsValue >= 0)
+                .reduce((acc, tradeEntry) => acc + 1, 0);
+
+            var totalLossFromLosses = tradesData
+                .filter(tradeEntry => tradeEntry.gainsValue < 0)
+                .reduce((acc, tradeEntry) => acc + 1, 0);
+           
+            var profitFactor = (totalGainsFromWins / totalLossFromLosses).toFixed(1)
+            
             var avgGain = Math.round((totalGains / numTrades)).toFixed(0);
 
-            var winRate = `${Math.round((numWins / numTrades) * 100)}%`
+            var winRate = `${Math.round((numWins / numTrades) * 100)}`
             var avgGain = `${avgGain}%`
 
-            $("#winRate").text(winRate);
+            $("#winRate").text(winRate + "%");
             $("#avgGain").text(avgGain);
+            $("#profitFactor").text(profitFactor);
 
-
+            // show the donut of the wins vs losses
             var winRateChartOptions = {
                 chart: {
                   id: 'winRateChart',
@@ -253,16 +265,19 @@ class Trades {
                   height: 70,
                   sparkline: {
                     enabled: true
-                  }
+                  },
+                  offsetX: 130 // Adjust the value as needed
                 },
                 series: [numWins, numLosses],
                 labels: ['Wins', 'Losses'],
                 colors: ['#4caf50', '#f44336'],
+                
               }
 
             if (this.chartWinRate != null) this.chartWinRate.destroy();
             this.chartWinRate = new ApexCharts(document.querySelector("#winRateChart"), winRateChartOptions);
             this.chartWinRate.render();
+
 
             // Calculate rolling average data for average gain chart
             var rollingAvgData = [];
@@ -307,9 +322,9 @@ class Trades {
                 },
                 grid: {
                   padding: {
-                    top: 20,
+                    top: 10,
                     bottom: 10,
-                    left: 110
+                    left: 65
                   }
                 },
                 colors: ['#fff'],
