@@ -444,7 +444,6 @@ class Trades {
 
     
         var chart = LightweightCharts.createChart(el, {
-            // width: 500,
             height: 300,
             rightPriceScale: {
                 visible: true,
@@ -509,21 +508,11 @@ class Trades {
             overlay: true,
         });
 
-        var histogramSeries = chart.addHistogramSeries({
-            priceScaleId: 'left',
-            color: 'rgba(255, 219, 88, 0.4)',
-            lineWidth: 2,
-            priceFormat: { type: "volume"},
-            overlay: true,
-        })
-    
         // Get the candle data from the database
         var candlesRef = this.firestore_db.collection("trades").doc(tradeid).collection("price_history").doc("underlying").collection("candles");
         var optionsRef = this.firestore_db.collection("trades").doc(tradeid).collection("price_history").doc("options_price").collection("candles");
         var entriesRef = this.firestore_db.collection("trades").doc(tradeid).collection("entries");
         var exitsRef = this.firestore_db.collection("trades").doc(tradeid).collection("exits");
-
-
     
         candlesRef.get().then((querySnapshot) => {
             var self = this;
@@ -706,65 +695,34 @@ class Trades {
                 })
     
             });
-
-            // // Set the data for histogram series (vertical lines)
-            // var verticalLinesData = [
-            //     { time: markers[0].time, value: Math.max(tradeEntry.entry_price, tradeEntry.exit_price_max) * 2},
-            //     { time:tradeEntry.exit_date_max,  value: Math.max(tradeEntry.entry_price, tradeEntry.exit_price_max) * 2},
-            // ];
-
-            // histogramSeries.setData(verticalLinesData);
-
         })
 
-        
-        
-        // this.closedTrades.then(tradesData => {
-        //     var tradeEntry = tradesData.find((data) => data.tradeid == tradeid)
+        var chartWidth = chart.width
 
-        //     if (tradeEntry !== undefined) {
-        //         var markers = [];
+        // Append the fullscreen button
+        var fullscreenButton = $('<button>', {
+            class: 'btn fullscreen_button m-1 text-end',
+            click: toggleFullscreen
+        });
 
-        //         var entryTime = Math.floor(tradeEntry.entry_date.toDate().getTime() / 1000)
-        //         var exitTime = Math.floor(tradeEntry.exit_date_max.toDate().getTime() / 1000)
+        fullscreenButton.append($('<i/>').addClass('fa fa-expand'));
+       
+        $('.tvChartHeader').append(fullscreenButton);
 
-        //         // Convert to EDT
-        //         var offset = dayjs(tradeEntry.entry_date.toDate().toLocaleDateString()).utcOffset() / 60;
-        //         entryTime = Math.floor(new Date(entryTime).getTime() + (offset * 60 * 60 * 1000) / 1000);
-        //         exitTime = Math.floor(new Date(exitTime).getTime() + (offset * 60 * 60 * 1000) / 1000);
+        // Function to toggle fullscreen
+        function toggleFullscreen() {
+            $('.tvChartHeader').toggleClass('fullscreen');
 
-        //         if (tradeEntry.exit_date_max != null) {
-        //             markers.push({
-        //                 time: exitTime,
-        //                 position: 'aboveBar',
-        //                 color: '#e91e63',
-        //                 shape: 'arrowDown',
-        //                 text: 'Max Exit @ ' + tradeEntry.exit_price_max
-        //             });
-        //         }
-
-        //         if (tradeEntry.entry_price != null) {
-        //             markers.push({
-        //                 time: entryTime,
-        //                 position: 'belowBar',
-        //                 color: '#2196F3',
-        //                 shape: 'arrowUp',
-        //                 text: 'Entered @ ' + tradeEntry.entry_price
-        //             });
-        //         }
-
-        //         // Set the data for histogram series (vertical lines)
-        //         var verticalLinesData = [
-        //             { time: entryTime, value: Math.max(tradeEntry.entry_price, tradeEntry.exit_price_max) * 2},
-        //             { time: exitTime,  value: Math.max(tradeEntry.entry_price, tradeEntry.exit_price_max) * 2},
-        //         ];
-
-        //         candleStickSeries.setMarkers(markers);
-        //         histogramSeries.setData(verticalLinesData);
-
-        //         chart.timeScale().fitContent();
-        //     }
-        // });
+            // Update the chart size after toggling fullscreen
+            if ($('.tvChartHeader').hasClass('fullscreen')) {
+                chart.resize(window.innerWidth * 0.9, window.innerHeight * 0.9);
+                chart.timeScale().fitContent();
+            } else {
+                $(el).empty()
+                $('.tvChartHeader').addClass("d-none"); // hide all other charts
+                $('.entryExitNotes').addClass("d-none"); // hide all other charts
+            }
+        }
     }
     
 

@@ -230,3 +230,12 @@ ul li {
   width: 100%;
   margin: 2em;
 }
+
+.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 97vw;
+  height: 97vh;
+  z-index: 9999;
+}
