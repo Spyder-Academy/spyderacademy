@@ -17,6 +17,9 @@
         <div id="userName"></div>
         <div id="signOutButton"></div>
       </div>
+      <div id="firebaseui-auth-container"></div>
+        <div id="loader">Loading...</div>
+
       <div class="container py-0" id="instructorList">
         <!-- Each Instructor -->
         <div class="d-flex flex-row flex-nowrap pb-5 overflow-auto text-center" >
@@ -185,63 +188,92 @@
             var userName = document.querySelector('#userName');
             var userProfilePic = document.querySelector('#userProfilePic');
 
+            var uiConfig = {
+                callbacks: {
+                    signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+                        // User successfully signed in.
+                        // Return type determines whether we continue the redirect automatically
+                        // or whether we leave that to developer to handle.
+                        return true;
+                    },
+                    uiShown: function() {
+                        // The widget is rendered.
+                        // Hide the loader.
+                        document.getElementById('loader').style.display = 'none';
+                    }
+                },
+                // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+                signInFlow: 'popup',
+                signInSuccessUrl: '<url-to-redirect-to-on-success>',
+                signInOptions: [
+                    // Leave the lines as is for the providers you want to offer your users.
+                    firebase.auth.EmailAuthProvider.PROVIDER_ID,
+                ],
+                // Terms of service url.
+                tosUrl: '<your-tos-url>',
+                // Privacy policy url.
+                privacyPolicyUrl: '<your-privacy-policy-url>'
+                };
 
+
+            // The start method will wait until the DOM is loaded.
+            ui.start('#firebaseui-auth-container', uiConfig);
             
             
-            // Track user login status, Update UI elements upon changes in login state
-            auth.onAuthStateChanged(function(user) {
-                var currentPath = window.location.pathname;
-                if (user) {
-                    console.log('User logged in');
-                    signInButton.style.display = "none";
-                    signOutButton.style.display = "block";
+            // // Track user login status, Update UI elements upon changes in login state
+            // auth.onAuthStateChanged(function(user) {
+            //     var currentPath = window.location.pathname;
+            //     if (user) {
+            //         console.log('User logged in');
+            //         signInButton.style.display = "none";
+            //         signOutButton.style.display = "block";
 
-                    if (userName !== null) {
-                        userName.innerHTML = 'Hi, ' + user.displayName;
-                    }
+            //         if (userName !== null) {
+            //             userName.innerHTML = 'Hi, ' + user.displayName;
+            //         }
 
-                    if (userProfilePic !== null) {
-                        userProfilePic.src = user.photoURL;
-                    }
+            //         if (userProfilePic !== null) {
+            //             userProfilePic.src = user.photoURL;
+            //         }
 
-                    if ('/profile' != currentPath) {
-                        location.href = '/profile';
-                    }
-                } else {
-                    console.log('User not logged in');
-                    signOutButton.style.display = "none";
-                    signInButton.style.display = "block";
-                }
-            });
+            //         if ('/profile' != currentPath) {
+            //             location.href = '/profile';
+            //         }
+            //     } else {
+            //         console.log('User not logged in');
+            //         signOutButton.style.display = "none";
+            //         signInButton.style.display = "block";
+            //     }
+            // });
 
-            // Sign out the user
-            var signout = function() {
-                auth.signOut();
-            };
+            // // Sign out the user
+            // var signout = function() {
+            //     auth.signOut();
+            // };
 
-            // Sign up the user
-            var signup = function() {
-                console.log("user clicked to sign in")
-                var provider = new firebase.auth.EmailAuthProvider();
-                console.log("lets pop up the provider login page")
-                firebase.auth().signInWithPopup(provider)
-                    .then(function(result) {
-                        // Handle successful login
-                        console.log("handle successful login")
-                        var user = result.user;
-                        console.log('User signed in:', user);
-                    })
-                    .catch(function(error) {
-                        // Handle login error
-                        var errorCode = error.code;
-                        var errorMessage = error.message;
-                        console.error('Login error:', errorCode, errorMessage);
-                    });
-            };
+            // // Sign up the user
+            // var signup = function() {
+            //     console.log("user clicked to sign in")
+            //     var provider = new firebase.auth.EmailAuthProvider();
+            //     console.log("lets pop up the provider login page")
+            //     firebase.auth().signInWithEmailAndPassword(auth, "amit@gandhi.co.nz", "test123")
+            //         .then(function(result) {
+            //             // Handle successful login
+            //             console.log("handle successful login")
+            //             var user = result.user;
+            //             console.log('User signed in:', user);
+            //         })
+            //         .catch(function(error) {
+            //             // Handle login error
+            //             var errorCode = error.code;
+            //             var errorMessage = error.message;
+            //             console.error('Login error:', errorCode, errorMessage);
+            //         });
+            // };
 
-            // Add event listeners to buttons
-            signInButton.addEventListener('click', signup);
-            signOutButton.addEventListener('click', signout);
+            // // Add event listeners to buttons
+            // signInButton.addEventListener('click', signup);
+            // signOutButton.addEventListener('click', signout);
         });
        
     </script>
