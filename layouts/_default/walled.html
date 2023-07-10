@@ -191,81 +191,65 @@
         }
 
 
-        $( document ).ready(function() {
-            //  Reference to Webflow UI ements
-            const signInButton = document.querySelector('#signInButton');
-            const signOutButton = document.querySelector('#signOutButton');
-            const userName = document.querySelector('#userName');
-            const userProfilePic = document.querySelector('#userProfilePic');
-            // const loader = document.querySelector('#loader');
-            
-            
+         // Wait for the DOM to be loaded
+        document.addEventListener("DOMContentLoaded", function() {
+            // Reference UI elements
+            var signInButton = document.querySelector('#signInButton');
+            var signOutButton = document.querySelector('#signOutButton');
+            var userName = document.querySelector('#userName');
+            var userProfilePic = document.querySelector('#userProfilePic');
 
-            //  Track user login status , Update UI element upon changes on login state
-            auth = firebase.auth();
+            // Track user login status, Update UI elements upon changes in login state
+            auth.onAuthStateChanged(function(user) {
+            var currentPath = window.location.pathname;
+            if (user) {
+                console.log('User logged in');
+                signInButton.style.display = "none";
+                signOutButton.style.display = "block";
 
-            auth.onAuthStateChanged(user => {
-                    var currentPath = window.location.pathname;
-                    if (user) {
-                        console.log('user logged in');
-                        signInButton.style.display = "none";
-                        signOutButton.style.display = "block";
-                        
-                        if (userName !== null) {
-                            userName.innerHTML = 'Hi, ' + user.displayName;
-                        }
-                        
-                        if (userProfilePic !== null) {
-                            userProfilePic.src = user.photoURL;
-                        }
-                        
-                        if ('/profile' != currentPath) {
-                            location.href = '/profile';
-                        }
-                        
-                        // loader.style.display = 'none';
-                    } else {
-                        console.log('user not logged in');
-                        signOutButton.style.display = "none";
-                        signInButton.style.display = "block";
-                        // if ('/' != currentPath) { location.href = '/'; }
-                        // loader.style.display = 'none';
-                    }
-                })
-                //  SignUp and Signout Fuctions
-                const signout = () => {
-                    auth.signOut();
+                if (userName !== null) {
+                userName.innerHTML = 'Hi, ' + user.displayName;
                 }
-                var provider = new firebase.auth.EmailAuthProvider();
-                const signup = () => {
-                    firebase.auth().signInWithPopup(provider);
-                    firebase.auth()
-                        .getRedirectResult()
-                        .then((result) => {
-                            if (result.credential) {
-                                /** @type {firebase.auth.OAuthCredential} */
-                                var credential = result.credential;
-                                // This gives you a Google Access Token. You can use it to access the Google API.
-                                var token = credential.accessToken;
-                                // ...
-                            }
-                            // The signed-in user info.
-                            var user = result.user;
-                        }).catch((error) => {
-                            // Handle Errors here.
-                            var errorCode = error.code;
-                            var errorMessage = error.message;
-                            // The email of the user's account used.
-                            var email = error.email;
-                            // The firebase.auth.AuthCredential type that was used.
-                            var credential = error.credential;
-                            // ...
-                        });
-                };
-                //  Add event listeners to buttons
-                signInButton.addEventListener('click', signup);
-                signOutButton.addEventListener('click', signout);
 
+                if (userProfilePic !== null) {
+                userProfilePic.src = user.photoURL;
+                }
+
+                if ('/profile' != currentPath) {
+                location.href = '/profile';
+                }
+            } else {
+                console.log('User not logged in');
+                signOutButton.style.display = "none";
+                signInButton.style.display = "block";
+            }
+            });
+
+            // Sign out the user
+            var signout = function() {
+            auth.signOut();
+            };
+
+            // Sign up the user
+            var signup = function() {
+            var provider = new firebase.auth.EmailAuthProvider();
+            firebase.auth().signInWithPopup(provider)
+                .then(function(result) {
+                // Handle successful login
+                var user = result.user;
+                console.log('User signed in:', user);
+                })
+                .catch(function(error) {
+                // Handle login error
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.error('Login error:', errorCode, errorMessage);
+                });
+            };
+
+            // Add event listeners to buttons
+            signInButton.addEventListener('click', signup);
+            signOutButton.addEventListener('click', signout);
         });
        
     </script>
