@@ -347,6 +347,8 @@ class Trades {
             this.chartAvgGains = new ApexCharts(document.querySelector("#avgGainChart"), avgGainsChartOptions);
             this.chartAvgGains.render();
         
+
+
             // Calculate the win percentages by the day of the week
             var winPercentages = [0, 0, 0, 0, 0]; // Initialize an array to hold the win percentages for each weekday (Monday to Friday)
             var totalTradesByDay = [0, 0, 0, 0, 0]; // Initialize an array to hold the total trades for each weekday
@@ -438,9 +440,10 @@ class Trades {
               };
 
             // Create the radar chart
+            console.log("Draw Radar", this.closedTrades, this.filterByUser)
             if (this.tradeGainsDOWRadar != null) this.tradeGainsDOWRadar.destroy();
-            var tradeGainsDOWRadar = new ApexCharts(document.querySelector("#tradeGainsDOWRadar"), radarChartOptions);
-            tradeGainsDOWRadar.render();
+            this.tradeGainsDOWRadar = new ApexCharts(document.querySelector("#tradeGainsDOWRadar"), radarChartOptions);
+            this.tradeGainsDOWRadar.render();
 
             
         });

@@ -178,6 +178,12 @@
         // Example code for logging in using OpenID provider (Discord)
         function loginWithDiscord() {
             const provider = new firebase.auth.OAuthProvider('oidc.discord');
+            provider.setCustomParameters({
+            prompt: 'consent',
+            issuer: 'https://discord.com/api',
+            scopes: ['identify', 'email'], // Add any additional required scopes
+            });
+
             auth.signInWithRedirect(provider);
         }
 
