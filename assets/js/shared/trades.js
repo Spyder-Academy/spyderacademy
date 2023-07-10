@@ -226,6 +226,13 @@ class Trades {
         this.closedTrades = this._getAllClosedTrades();
     }
 
+    updateCharts(){
+        this.renderStats();
+        this.renderCalendar();
+        this.renderRecap();
+        this.renderGainsBubbleChart();
+    }
+
     renderStats(){
         var self = this;
         var seriesData = {};

@@ -23,14 +23,6 @@
             <div class="card shadow border-0 p-3 m-1" style="min-width: 9em; border-radius: 15px; background-color: #c00; ">
                 <div class="card-body p-0"> <strong><a href="#" id="signInButton" class="text-decoration-none text-light">LOG IN</a></strong></div>
             </div>
-            
-            <!-- <div id="loginModal" class="modal">
-                <div class="modal-content">
-                    <div id="firebaseui-auth-container"></div>
-                    <div id="loader">Loading...</div>
-                    <button id="closeModalButton">Close</button>
-                </div>
-            </div> -->
 
             <div class="card shadow border-0 p-3 m-1" style="min-width: 9em; border-radius: 15px; background-color: #29741d; ">
                 <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor('ALL', 'ALL MENTORS');" class="text-decoration-none text-light">ALL MENTORS</a></strong></div>
@@ -153,8 +145,8 @@
 
     <!-- Load Shared JS -->
     {{- $tradesJS := resources.Get "js/shared/trades.js" -}}
+    <script src="{{ $tradesJS.Permalink }}" ></script>
 
-    <script>{{- $tradesJS.Content | safeJS -}}</script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
@@ -163,12 +155,9 @@
 
     <script>
        
+        var trades = null;
+
         // Firebase configuration
-
-        var trades = new Trades();
-        updateCharts();
-
-
         function selectInstructor(userid, title){
             if (userid == "ALL")
                 userid = null;
@@ -176,15 +165,9 @@
             $('#titleUser').text(title);
 
             trades.selectUser(userid);
-            this.updateCharts(userid);
+            trades.updateCharts(userid);
         }
 
-        function updateCharts(){
-            trades.renderStats();
-            trades.renderCalendar();
-            trades.renderRecap();
-            trades.renderGainsBubbleChart();
-        }
 
         function selectContract(el){
             trades.renderTVChart($(el), $(el).attr("tradeid"));
@@ -193,58 +176,67 @@
 
          // Wait for the DOM to be loaded
         document.addEventListener("DOMContentLoaded", function() {
+            trades = new Trades();
+            trades.updateCharts();
+
             // Reference UI elements
             var signInButton = document.querySelector('#signInButton');
             var signOutButton = document.querySelector('#signOutButton');
             var userName = document.querySelector('#userName');
             var userProfilePic = document.querySelector('#userProfilePic');
 
+
+            
+            
             // Track user login status, Update UI elements upon changes in login state
             auth.onAuthStateChanged(function(user) {
-            var currentPath = window.location.pathname;
-            if (user) {
-                console.log('User logged in');
-                signInButton.style.display = "none";
-                signOutButton.style.display = "block";
+                var currentPath = window.location.pathname;
+                if (user) {
+                    console.log('User logged in');
+                    signInButton.style.display = "none";
+                    signOutButton.style.display = "block";
 
-                if (userName !== null) {
-                userName.innerHTML = 'Hi, ' + user.displayName;
-                }
+                    if (userName !== null) {
+                        userName.innerHTML = 'Hi, ' + user.displayName;
+                    }
 
-                if (userProfilePic !== null) {
-                userProfilePic.src = user.photoURL;
-                }
+                    if (userProfilePic !== null) {
+                        userProfilePic.src = user.photoURL;
+                    }
 
-                if ('/profile' != currentPath) {
-                location.href = '/profile';
+                    if ('/profile' != currentPath) {
+                        location.href = '/profile';
+                    }
+                } else {
+                    console.log('User not logged in');
+                    signOutButton.style.display = "none";
+                    signInButton.style.display = "block";
                 }
-            } else {
-                console.log('User not logged in');
-                signOutButton.style.display = "none";
-                signInButton.style.display = "block";
-            }
             });
 
             // Sign out the user
             var signout = function() {
-            auth.signOut();
+                auth.signOut();
             };
 
             // Sign up the user
             var signup = function() {
-            var provider = new firebase.auth.EmailAuthProvider();
-            firebase.auth().signInWithPopup(provider)
-                .then(function(result) {
-                // Handle successful login
-                var user = result.user;
-                console.log('User signed in:', user);
-                })
-                .catch(function(error) {
-                // Handle login error
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                console.error('Login error:', errorCode, errorMessage);
-                });
+                console.log("user clicked to sign in")
+                var provider = new firebase.auth.EmailAuthProvider();
+                console.log("lets pop up the provider login page")
+                firebase.auth().signInWithPopup(provider)
+                    .then(function(result) {
+                        // Handle successful login
+                        console.log("handle successful login")
+                        var user = result.user;
+                        console.log('User signed in:', user);
+                    })
+                    .catch(function(error) {
+                        // Handle login error
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        console.error('Login error:', errorCode, errorMessage);
+                    });
             };
 
             // Add event listeners to buttons
