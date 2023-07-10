@@ -13,12 +13,25 @@
         </div>
       </div>
 
+      <div>
+        <div id="userName">Welcome XYZ</div>
+        <div id="signOutButton">SIGN OUT</div>
+      </div>
       <div class="container py-0" id="instructorList">
         <!-- Each Instructor -->
         <div class="d-flex flex-row flex-nowrap pb-5 overflow-auto text-center" >
             <div class="card shadow border-0 p-3 m-1" style="min-width: 9em; border-radius: 15px; background-color: #c00; ">
-                <div class="card-body p-0"> <strong><a href="#" onclick="loginWithDiscord();" class="text-decoration-none text-light">LOG IN</a></strong></div>
+                <div class="card-body p-0"> <strong><a href="#" id="signInButton" class="text-decoration-none text-light">LOG IN</a></strong></div>
             </div>
+            
+            <!-- <div id="loginModal" class="modal">
+                <div class="modal-content">
+                    <div id="firebaseui-auth-container"></div>
+                    <div id="loader">Loading...</div>
+                    <button id="closeModalButton">Close</button>
+                </div>
+            </div> -->
+
             <div class="card shadow border-0 p-3 m-1" style="min-width: 9em; border-radius: 15px; background-color: #29741d; ">
                 <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor('ALL', 'ALL MENTORS');" class="text-decoration-none text-light">ALL MENTORS</a></strong></div>
             </div>
@@ -150,9 +163,11 @@
 
     <script>
        
+        // Firebase configuration
 
         var trades = new Trades();
         updateCharts();
+
 
         function selectInstructor(userid, title){
             if (userid == "ALL")
@@ -175,18 +190,83 @@
             trades.renderTVChart($(el), $(el).attr("tradeid"));
         }
 
-        // Example code for logging in using OpenID provider (Discord)
-        function loginWithDiscord() {
-            const provider = new firebase.auth.OAuthProvider('oidc.discord');
-            provider.setCustomParameters({
-            prompt: 'consent',
-            issuer: 'https://discord.com/api',
-            scopes: ['identify', 'email'], // Add any additional required scopes
-            });
 
-            auth.signInWithRedirect(provider);
-        }
+        $( document ).ready(function() {
+            //  Reference to Webflow UI ements
+            const signInButton = document.querySelector('#signInButton');
+            const signOutButton = document.querySelector('#signOutButton');
+            const userName = document.querySelector('#userName');
+            const userProfilePic = document.querySelector('#userProfilePic');
+            // const loader = document.querySelector('#loader');
+            
+            
 
+            //  Track user login status , Update UI element upon changes on login state
+            auth = firebase.auth();
+
+            auth.onAuthStateChanged(user => {
+                    var currentPath = window.location.pathname;
+                    if (user) {
+                        console.log('user logged in');
+                        signInButton.style.display = "none";
+                        signOutButton.style.display = "block";
+                        
+                        if (userName !== null) {
+                            userName.innerHTML = 'Hi, ' + user.displayName;
+                        }
+                        
+                        if (userProfilePic !== null) {
+                            userProfilePic.src = user.photoURL;
+                        }
+                        
+                        if ('/profile' != currentPath) {
+                            location.href = '/profile';
+                        }
+                        
+                        // loader.style.display = 'none';
+                    } else {
+                        console.log('user not logged in');
+                        signOutButton.style.display = "none";
+                        signInButton.style.display = "block";
+                        // if ('/' != currentPath) { location.href = '/'; }
+                        // loader.style.display = 'none';
+                    }
+                })
+                //  SignUp and Signout Fuctions
+                const signout = () => {
+                    auth.signOut();
+                }
+                var provider = new firebase.auth.EmailAuthProvider();
+                const signup = () => {
+                    firebase.auth().signInWithPopup(provider);
+                    firebase.auth()
+                        .getRedirectResult()
+                        .then((result) => {
+                            if (result.credential) {
+                                /** @type {firebase.auth.OAuthCredential} */
+                                var credential = result.credential;
+                                // This gives you a Google Access Token. You can use it to access the Google API.
+                                var token = credential.accessToken;
+                                // ...
+                            }
+                            // The signed-in user info.
+                            var user = result.user;
+                        }).catch((error) => {
+                            // Handle Errors here.
+                            var errorCode = error.code;
+                            var errorMessage = error.message;
+                            // The email of the user's account used.
+                            var email = error.email;
+                            // The firebase.auth.AuthCredential type that was used.
+                            var credential = error.credential;
+                            // ...
+                        });
+                };
+                //  Add event listeners to buttons
+                signInButton.addEventListener('click', signup);
+                signOutButton.addEventListener('click', signout);
+
+        });
        
     </script>
 

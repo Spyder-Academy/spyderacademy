@@ -440,7 +440,6 @@ class Trades {
               };
 
             // Create the radar chart
-            console.log("Draw Radar", this.closedTrades, this.filterByUser)
             if (this.tradeGainsDOWRadar != null) this.tradeGainsDOWRadar.destroy();
             this.tradeGainsDOWRadar = new ApexCharts(document.querySelector("#tradeGainsDOWRadar"), radarChartOptions);
             this.tradeGainsDOWRadar.render();
