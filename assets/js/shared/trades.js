@@ -376,8 +376,6 @@ class Trades {
                 tradeWinPercentages.push(winPercentage);
             }
 
-            // remove the first and last entries from the array (Sun, and Sat)
-
             // Radar plot configuration
             var radarChartOptions = {
                 series: [{
