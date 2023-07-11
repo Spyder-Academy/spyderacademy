@@ -964,7 +964,7 @@ class Trades {
               data: trades.map((trade) => ({
                 x: trade.exit_date_max.toDate(),
                 y: trade.gainsValue, 
-                fillColor: self.filterByUser ? (trade.gainsValue < 0 ? '#FF0000' : "#BFE1CF") : null
+                fillColor: trade.gainsValue < 0 ? '#FF0000' : ( trade.gainsValue >= 100  ? "GOLD"  : "#BFE1CF" )
               })),
             };
             seriesData.push(series);
