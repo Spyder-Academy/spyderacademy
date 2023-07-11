@@ -30,7 +30,7 @@
                     <h4 class="my-0 display-2 text-dark  text-center font-weight-normal mb-3">$  {{ . }} <span class="h5">/mo</span></h4>
                     {{ if $e.featured }}
                     <div class="m-0">
-                      <span class="badge bg-white text-dark p-2">20% OFF YOUR FIRST MONTH<br/><br/>USE CODE "JULY4"</span>
+                      <span class="badge bg-white text-dark p-2">{{ $e.promotion | safeHTML }}</span>
                     </div>
                     {{ end }}
                     <hr/>

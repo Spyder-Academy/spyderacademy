@@ -18,6 +18,7 @@ content:
     - featured: true
       title: "The Class Room"
       price: "80"
+      promotion: 
       features:
         - item: "Live Voice."
         - item: "A Team of Seven Amazing Instructors."
