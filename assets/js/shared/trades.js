@@ -219,6 +219,7 @@ class Trades {
         this.chartAvgGains = null;
         this.chartWinRate = null;
         this.tradeGainsDOWRadar = null;
+
     }
 
     selectUser(username){
@@ -227,6 +228,7 @@ class Trades {
     }
 
     updateCharts(){
+        this.userLoggedIn = firebase.auth().currentUser;
         this.renderStats();
         this.renderCalendar();
         this.renderRecap();
@@ -986,6 +988,7 @@ class Trades {
                   }
             },
             dataLabels: { enabled: false },
+            legend: { show: false },
             title: { text: "GAINS vs LOSSES"},
             xaxis: {
                 type: 'datetime',
@@ -1046,8 +1049,10 @@ class Trades {
     renderRecap(dateString = null){
         var self = this;
 
-        if (dateString === null)
+        if (dateString === null){
+            // use today
             dateString = new Date().setHours(0,0,0,0)
+        }
 
         var todayStart = new Date(dateString)
         this._getRecap(todayStart).then((tradesList) => {
@@ -1062,6 +1067,7 @@ class Trades {
         // Query for open trades
         var entryDate = new Date(recap_date);
         entryDate.setDate(entryDate.getDate() + 1);
+
         console.log("Query Firebase - getOpenTrades", recap_date)
 
         var trades_query = this.firestore_db.collection("trades");
@@ -1156,12 +1162,19 @@ class Trades {
 
     // get the daily recap for the given date
     _getRecap(recap_date) {
+
+        if (!this.userLoggedIn && recap_date.getDate() == (new Date()).getDate()){
+          return new Promise((resolve) => { $(".membersOnly").show(); resolve([]) });
+        }
+
         var todays_table = [];
         return new Promise((resolve) => {
             Promise.all([
                 this._getOpenTrades(recap_date),
                 this._getClosedTrades(recap_date)
             ]).then(([open_trades, closed_trades]) => {
+
+                $(".membersOnly").hide();
                 todays_table = open_trades.concat(closed_trades);
                 
                 // Sort the results

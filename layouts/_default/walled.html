@@ -46,34 +46,34 @@
             
 
             <div class="card shadow border-0 p-3 m-1" style="min-width: 8em; border-radius: 15px; background-color: #29741d; ">
-                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor('ALL', 'ALL MENTORS');" class="text-decoration-none text-light">TEAM</a></strong></div>
+                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor('ALL', 'ALL MENTORS');" class="text-decoration-none text-light">VIEW TEAM</a></strong></div>
             </div>
-            <div class="card shadow border-0 p-3 m-1 " style="min-width: 8em; border-radius: 15px; background-color: #B3B3C8; ">
+            <div class="mentor card shadow border-0 p-3 m-1 " style="min-width: 8em; border-radius: 15px; background-color: #B3B3C8; ">
                 <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(530657179183874070, 'SITH')" class="text-decoration-none">SITH</a></strong></div>
             </div>
 
-            <div class="card shadow border-0 p-3 m-1 " style="min-width: 8em; border-radius: 15px; background-color: #B3B3C8; ">
+            <div class="mentor card shadow border-0 p-3 m-1 " style="min-width: 8em; border-radius: 15px; background-color: #B3B3C8; ">
                 <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(667468315668774944, 'CASH MONEY TRADES')" class="text-decoration-none">CASH</a></strong></div>
             </div>
 
-            <div class="card shadow border-0 p-3 m-1" style="min-width: 8em; border-radius: 15px; background-color: #B3B3C8; ">
+            <div class="mentor card shadow border-0 p-3 m-1" style="min-width: 8em; border-radius: 15px; background-color: #B3B3C8; ">
                 <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(693307698229280818, 'LINK SNIPES')" class="text-decoration-none">LINK</a></strong></div>
             </div>
 
-            <div class="card shadow border-0 p-3 m-1" style="min-width: 8em; border-radius: 15px; background-color: #B3B3C8; ">
+            <div class="mentor card shadow border-0 p-3 m-1" style="min-width: 8em; border-radius: 15px; background-color: #B3B3C8; ">
                 <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(572158547597590538, 'GOBI')" class="text-decoration-none">GOBI</a></strong></div>
             </div>
 
-            <div class="card shadow border-0 p-3 m-1" style="min-width: 8em; border-radius: 15px; background-color: #B3B3C8; ">
+            <div class="mentor card shadow border-0 p-3 m-1" style="min-width: 8em; border-radius: 15px; background-color: #B3B3C8; ">
                 <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(958441217073483776, 'MR WOOFERS')" class="text-decoration-none">WOOFERS</a></strong></div>
             </div>
 
-            <div class="card shadow border-0 p-3 m-1" style="min-width: 8em; border-radius: 15px; background-color: #B3B3C8; ">
+            <div class="mentor card shadow border-0 p-3 m-1" style="min-width: 8em; border-radius: 15px; background-color: #B3B3C8; ">
                 <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(751486945049444435, 'PAULDOZER')" class="text-decoration-none">PAULDOZER</a></strong></div>
             </div>
             
            
-            <div class="card shadow border-0 p-3 m-1" style="min-width: 8em; border-radius: 15px; background-color: #B3B3C8; ">
+            <div class="mentor card shadow border-0 p-3 m-1" style="min-width: 8em; border-radius: 15px; background-color: #B3B3C8; ">
                 <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(828445309885218886, 'WOODY')" class="text-decoration-none">WOODY</a></strong></div>
             </div>
 
@@ -130,6 +130,9 @@
                     <div class="row" id="tradeRecap">
                         <!-- trade-card-template gets pasted into here -->
                     </div>
+                    <div class="membersOnly card shadow border-0 p-3 justify-content-center" style="display: none; border-radius: 15px; ">
+                        <img src="/images/membersonly.png" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -179,6 +182,8 @@
 
     <script>
        
+       var userTrades = null;
+
        function showLogin() {
         $('#loginModal').show();
        }
@@ -210,6 +215,8 @@
         });
 
         firebase.auth().onAuthStateChanged((user) => {
+            userTrades = new Trades();
+
             if (user) {
                 // User is logged in, retrieve the email address
                 const email = user.email;
@@ -217,14 +224,22 @@
                 $("#loginButton").text(email.split("@")[0].toUpperCase())
                 $("#loginButton").off("click");
                 $("#btnSignOut").show();
+                $(".mentor").show();
+                selectInstructor("ALL", "ALL MENTORS");
+                userTrades.updateCharts();
+
 
             } else {
                 // User is not logged in
+                console.log("not logged in")
                 $("#loginButton").text("LOG IN")
                 $("#loginButton").on("click", () => {
                     showLogin()
                 });
                 $("#btnSignOut").hide();
+                $(".mentor").hide();
+                selectInstructor("ALL", "ALL MENTORS");
+                userTrades.updateCharts();
 
             }
         });
@@ -265,7 +280,7 @@
 
 
        
-        var userTrades = null;
+        
 
         // Firebase configuration
         function selectInstructor(userid, title){
@@ -282,13 +297,6 @@
         function selectContract(el){
             userTrades.renderTVChart($(el), $(el).attr("tradeid"));
         }
-
-
-         // Wait for the DOM to be loaded
-        document.addEventListener("DOMContentLoaded", function() {
-            userTrades = new Trades();
-            userTrades.updateCharts();
-         });
 
        
     </script>
