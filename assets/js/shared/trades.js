@@ -941,7 +941,7 @@ class Trades {
 
 
     renderGainsBubbleChart() {
-        self = this;
+        var self = this;
 
         this.closedTrades.then(tradesData => {
           const seriesData = [];

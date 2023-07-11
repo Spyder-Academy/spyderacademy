@@ -13,19 +13,40 @@
         </div>
       </div>
 
-      <div>
-        <div id="userName"></div>
-        <div id="signOutButton"></div>
-      </div>
-      <div id="firebaseui-auth-container"></div>
-        <div id="loader">Loading...</div>
-
       <div class="container py-0" id="instructorList">
         <!-- Each Instructor -->
         <div class="d-flex flex-row flex-nowrap pb-5 overflow-auto text-center" >
             <div class="card shadow border-0 p-3 m-1" style="min-width: 9em; border-radius: 15px; background-color: #c00; ">
-                <div class="card-body p-0"> <strong><a href="#" id="signInButton" class="text-decoration-none text-light">LOG IN</a></strong></div>
+                <div class="card-body p-0"> <strong><a href="#" id="loginButton" onclick="showLogin()" class="text-decoration-none text-light">LOG IN</a></strong></div>
             </div>
+            
+            <div id="loginModal" class="modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Log In</h5>
+                            <button type="button" class="close" onclick="$('#loginModal').hide()">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" id="txtEmail" placeholder="Enter your email">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" id="txtPassword" placeholder="Enter your password">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" onclick="$('#loginModal').hide()">Close</button>
+                            <button type="button" class="btn btn-primary" id="submitLogin">Log In</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
 
             <div class="card shadow border-0 p-3 m-1" style="min-width: 9em; border-radius: 15px; background-color: #29741d; ">
                 <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor('ALL', 'ALL MENTORS');" class="text-decoration-none text-light">ALL MENTORS</a></strong></div>
@@ -148,9 +169,8 @@
 
     <!-- Load Shared JS -->
     {{- $tradesJS := resources.Get "js/shared/trades.js" -}}
-    <script src="{{ $tradesJS.Permalink }}" ></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>{{- $tradesJS.Content | safeJS -}}</script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 	<script type="text/javascript" src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
@@ -158,7 +178,36 @@
 
     <script>
        
-        var trades = null;
+       function showLogin() {
+        $('#loginModal').show();
+       }
+
+         // Sign in with email and password when the submit button is clicked
+        const submitLogin = document.getElementById('submitLogin');
+        submitLogin.addEventListener('click', () => {
+            var username = $("#txtEmail").val();
+            var pwd = $("#txtPassword").val();
+
+            console.log(username, pwd)
+
+            firebase.auth().signInWithEmailAndPassword(username, pwd)
+                .then((userCredential) => {
+                    // Handle successful login
+                    const user = userCredential.user;
+                    console.log("User logged in:", user);
+                    // Hide the modal
+                    const loginModal = document.getElementById('loginModal');
+                    loginModal.style.display = 'none';
+                })
+                .catch((error) => {
+                    // Handle login error
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error("Login error:", errorCode, errorMessage);
+                });
+        });
+       
+        var userTrades = null;
 
         // Firebase configuration
         function selectInstructor(userid, title){
@@ -167,114 +216,22 @@
 
             $('#titleUser').text(title);
 
-            trades.selectUser(userid);
-            trades.updateCharts(userid);
+            userTrades.selectUser(userid);
+            userTrades.updateCharts(userid);
         }
 
 
         function selectContract(el){
-            trades.renderTVChart($(el), $(el).attr("tradeid"));
+            userTrades.renderTVChart($(el), $(el).attr("tradeid"));
         }
 
 
          // Wait for the DOM to be loaded
         document.addEventListener("DOMContentLoaded", function() {
-            trades = new Trades();
-            trades.updateCharts();
+            userTrades = new Trades();
+            userTrades.updateCharts();
+         });
 
-            // Reference UI elements
-            var signInButton = document.querySelector('#signInButton');
-            var signOutButton = document.querySelector('#signOutButton');
-            var userName = document.querySelector('#userName');
-            var userProfilePic = document.querySelector('#userProfilePic');
-
-            var uiConfig = {
-                callbacks: {
-                    signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-                        // User successfully signed in.
-                        // Return type determines whether we continue the redirect automatically
-                        // or whether we leave that to developer to handle.
-                        return true;
-                    },
-                    uiShown: function() {
-                        // The widget is rendered.
-                        // Hide the loader.
-                        document.getElementById('loader').style.display = 'none';
-                    }
-                },
-                // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
-                signInFlow: 'popup',
-                signInSuccessUrl: '<url-to-redirect-to-on-success>',
-                signInOptions: [
-                    // Leave the lines as is for the providers you want to offer your users.
-                    firebase.auth.EmailAuthProvider.PROVIDER_ID,
-                ],
-                // Terms of service url.
-                tosUrl: '<your-tos-url>',
-                // Privacy policy url.
-                privacyPolicyUrl: '<your-privacy-policy-url>'
-                };
-
-
-            // The start method will wait until the DOM is loaded.
-            ui.start('#firebaseui-auth-container', uiConfig);
-            
-            
-            // // Track user login status, Update UI elements upon changes in login state
-            // auth.onAuthStateChanged(function(user) {
-            //     var currentPath = window.location.pathname;
-            //     if (user) {
-            //         console.log('User logged in');
-            //         signInButton.style.display = "none";
-            //         signOutButton.style.display = "block";
-
-            //         if (userName !== null) {
-            //             userName.innerHTML = 'Hi, ' + user.displayName;
-            //         }
-
-            //         if (userProfilePic !== null) {
-            //             userProfilePic.src = user.photoURL;
-            //         }
-
-            //         if ('/profile' != currentPath) {
-            //             location.href = '/profile';
-            //         }
-            //     } else {
-            //         console.log('User not logged in');
-            //         signOutButton.style.display = "none";
-            //         signInButton.style.display = "block";
-            //     }
-            // });
-
-            // // Sign out the user
-            // var signout = function() {
-            //     auth.signOut();
-            // };
-
-            // // Sign up the user
-            // var signup = function() {
-            //     console.log("user clicked to sign in")
-            //     var provider = new firebase.auth.EmailAuthProvider();
-            //     console.log("lets pop up the provider login page")
-            //     firebase.auth().signInWithEmailAndPassword(auth, "amit@gandhi.co.nz", "test123")
-            //         .then(function(result) {
-            //             // Handle successful login
-            //             console.log("handle successful login")
-            //             var user = result.user;
-            //             console.log('User signed in:', user);
-            //         })
-            //         .catch(function(error) {
-            //             // Handle login error
-            //             var errorCode = error.code;
-            //             var errorMessage = error.message;
-            //             console.error('Login error:', errorCode, errorMessage);
-            //         });
-            // };
-
-            // // Add event listeners to buttons
-            // signInButton.addEventListener('click', signup);
-            // signOutButton.addEventListener('click', signout);
-        });
        
     </script>
 
