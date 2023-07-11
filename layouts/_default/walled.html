@@ -2,22 +2,11 @@
   <section class="section blog-single py-5">
     <div class="container">
 
-      <div class="row justify-content-center pb-0">
-        <div class="col-12">
-          {{ with .Title }}
-            <h2 class="display-1 fw-bold text-center text-primary pb-3">{{ . }}</h2>
-          {{ end }}
-          {{ with .Params.description }}
-            <p class="text-black-61 text-center pb-3">{{ . }}</p>
-          {{ end }}
-        </div>
-      </div>
-
       <div class="container py-0" id="instructorList">
         <!-- Each Instructor -->
-        <div class="d-flex flex-row flex-nowrap pb-5 overflow-auto text-center" >
+        <div class="d-flex flex-row flex-nowrap pb-5 overflow-auto justify-content-center text-center" >
             <div class="card shadow border-0 p-3 m-1" style="min-width: 9em; border-radius: 15px; background-color: #c00; ">
-                <div class="card-body p-0"> <strong><a href="#" id="loginButton" onclick="showLogin()" class="text-decoration-none text-light">LOG IN</a></strong></div>
+                <div class="card-body p-0"> <strong><a href="#" id="loginButton" class="text-decoration-none text-light">LOG IN</a></strong></div>
             </div>
             
             <div id="loginModal" class="modal">
@@ -31,53 +20,65 @@
                         </div>
                         <div class="modal-body">
                             <form>
+                                <div id="loginErrorMessage" class="alert alert-danger small" role="alert" style="display: none">
+                                    Invalid Credentials!
+                                  </div>
                                 <div class="form-group">
                                     <input type="email" class="form-control" id="txtEmail" placeholder="Enter your email">
                                 </div>
                                 <div class="form-group">
                                     <input type="password" class="form-control" id="txtPassword" placeholder="Enter your password">
                                 </div>
+                                <div class="form-group">
+                                </div>
                             </form>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" onclick="$('#loginModal').hide()">Close</button>
-                            <button type="button" class="btn btn-primary" id="submitLogin">Log In</button>
+                        <div class="modal-footer justify-content-center">
+                            <button type="button" class="btn btn-secondary" id="submitLogin">Log In</button>
+                            <p class="small">
+                                <a href="/#services">Not a member? Sign up here!</a><br/>
+                                <a href="#" onclick="sendPasswordResetEmail()" class="text-decoration-none">Reset Password</a>
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
             
 
-            <div class="card shadow border-0 p-3 m-1" style="min-width: 9em; border-radius: 15px; background-color: #29741d; ">
-                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor('ALL', 'ALL MENTORS');" class="text-decoration-none text-light">ALL MENTORS</a></strong></div>
+            <div class="card shadow border-0 p-3 m-1" style="min-width: 6em; border-radius: 15px; background-color: #29741d; ">
+                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor('ALL', 'ALL MENTORS');" class="text-decoration-none text-light">TEAM</a></strong></div>
             </div>
-            <div class="card shadow border-0 p-3 m-1 " style="min-width: 9em; border-radius: 15px; background-color: #B3B3C8; ">
+            <div class="card shadow border-0 p-3 m-1 " style="min-width: 6em; border-radius: 15px; background-color: #B3B3C8; ">
                 <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(530657179183874070, 'SITH')" class="text-decoration-none">SITH</a></strong></div>
             </div>
 
-            <div class="card shadow border-0 p-3 m-1 " style="min-width: 9em; border-radius: 15px; background-color: #B3B3C8; ">
-                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(667468315668774944, 'CASH MONEY TRADES')" class="text-decoration-none">CASH MONEY</a></strong></div>
+            <div class="card shadow border-0 p-3 m-1 " style="min-width: 6em; border-radius: 15px; background-color: #B3B3C8; ">
+                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(667468315668774944, 'CASH MONEY TRADES')" class="text-decoration-none">CASH</a></strong></div>
             </div>
 
-            <div class="card shadow border-0 p-3 m-1" style="min-width: 9em; border-radius: 15px; background-color: #B3B3C8; ">
-                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(693307698229280818, 'LINK SNIPES')" class="text-decoration-none">LINK SNIPES</a></strong></div>
+            <div class="card shadow border-0 p-3 m-1" style="min-width: 6em; border-radius: 15px; background-color: #B3B3C8; ">
+                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(693307698229280818, 'LINK SNIPES')" class="text-decoration-none">LINK</a></strong></div>
             </div>
 
-            <div class="card shadow border-0 p-3 m-1" style="min-width: 9em; border-radius: 15px; background-color: #B3B3C8; ">
+            <div class="card shadow border-0 p-3 m-1" style="min-width: 6em; border-radius: 15px; background-color: #B3B3C8; ">
                 <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(572158547597590538, 'GOBI')" class="text-decoration-none">GOBI</a></strong></div>
             </div>
 
-            <div class="card shadow border-0 p-3 m-1" style="min-width: 9em; border-radius: 15px; background-color: #B3B3C8; ">
-                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(958441217073483776, 'MR WOOFERS')" class="text-decoration-none">MR WOOFERS</a></strong></div>
+            <div class="card shadow border-0 p-3 m-1" style="min-width: 6em; border-radius: 15px; background-color: #B3B3C8; ">
+                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(958441217073483776, 'MR WOOFERS')" class="text-decoration-none">WOOFERS</a></strong></div>
             </div>
 
-            <div class="card shadow border-0 p-3 m-1" style="min-width: 9em; border-radius: 15px; background-color: #B3B3C8; ">
+            <div class="card shadow border-0 p-3 m-1" style="min-width: 6em; border-radius: 15px; background-color: #B3B3C8; ">
                 <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(751486945049444435, 'PAULDOZER')" class="text-decoration-none">PAULDOZER</a></strong></div>
             </div>
             
            
-            <div class="card shadow border-0 p-3 m-1" style="min-width: 9em; border-radius: 15px; background-color: #B3B3C8; ">
+            <div class="card shadow border-0 p-3 m-1" style="min-width: 6em; border-radius: 15px; background-color: #B3B3C8; ">
                 <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(828445309885218886, 'WOODY')" class="text-decoration-none">WOODY</a></strong></div>
+            </div>
+
+            <div id="btnSignOut" class="card shadow border-0 p-3 m-1" style="min-width: 9em; border-radius: 15px; background-color: #c00; display: none;">
+                <div class="card-body p-0"> <strong><a href="#" onclick="signOut()" class="text-decoration-none  text-light">SIGN OUT</a></strong></div>
             </div>
         </div>
     </div>
@@ -188,8 +189,6 @@
             var username = $("#txtEmail").val();
             var pwd = $("#txtPassword").val();
 
-            console.log(username, pwd)
-
             firebase.auth().signInWithEmailAndPassword(username, pwd)
                 .then((userCredential) => {
                     // Handle successful login
@@ -203,9 +202,68 @@
                     // Handle login error
                     const errorCode = error.code;
                     const errorMessage = error.message;
+
+                    $('#loginErrorMessage').show()
+                    $('#loginErrorMessage').text("Log in failed")
                     console.error("Login error:", errorCode, errorMessage);
                 });
         });
+
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                // User is logged in, retrieve the email address
+                const email = user.email;
+                // Display the welcome message with the user's email
+                $("#loginButton").text(email.split("@")[0].toUpperCase())
+                $("#loginButton").off("click");
+                $("#btnSignOut").show();
+
+            } else {
+                // User is not logged in
+                $("#loginButton").text("LOG IN")
+                $("#loginButton").on("click", () => {
+                    showLogin()
+                });
+                $("#btnSignOut").hide();
+
+            }
+        });
+
+        function signOut(){
+            firebase.auth().signOut()
+                .then(() => {
+                // Sign-out successful
+                    console.log("User signed out");
+                })
+                .catch((error) => {
+                // An error occurred
+                    console.error("Sign-out error:", error);
+                });
+        }
+
+        function sendPasswordResetEmail() {
+            var email = $("#txtEmail").val();
+
+            firebase.auth().sendPasswordResetEmail(email)
+                .then(() => {
+                    // Password reset email sent successfully
+                    console.log("Password reset email sent to", email);
+                    // Display a success message to the user
+                    $('#loginErrorMessage').text("Password reset email sent to " + email);
+                    $('#loginErrorMessage').show();
+                })
+                .catch((error) => {
+                    // An error occurred
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error("Password reset email error:", errorCode, errorMessage);
+                    // Display an error message to the user
+                    $('#loginErrorMessage').text("Failed to send password reset email");
+                    $('#loginErrorMessage').show();
+                });
+            }
+
+
        
         var userTrades = null;
 
