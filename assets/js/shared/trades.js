@@ -244,6 +244,7 @@ class Trades {
             var numWins = tradesData.filter(tradeEntry => tradeEntry.gainsValue >= 0).length;
             var numLosses = tradesData.filter(tradeEntry => tradeEntry.gainsValue < 0).length;
             var totalGains = tradesData.reduce((acc, tradeEntry) => acc + tradeEntry.gainsValue, 0);
+            var numBags = tradesData.filter(tradeEntry => tradeEntry.gainsValue >= 100).length;
 
             var totalGainsFromWins = tradesData
                 .filter(tradeEntry => tradeEntry.gainsValue >= 0)
@@ -262,7 +263,7 @@ class Trades {
 
             $("#winRate").text(winRate + "%");
             $("#avgGain").text(avgGain);
-            $("#profitFactor").text(profitFactor);
+            $("#profitFactor").text(profitFactor + " (" + numBags + "💰)");
 
             // show the donut of the wins vs losses
             var winRateChartOptions = {
@@ -274,12 +275,10 @@ class Trades {
                   sparkline: {
                     enabled: true
                   },
-                  offsetX: 130 // Adjust the value as needed
                 },
                 series: [numWins, numLosses],
                 labels: ['Wins', 'Losses'],
                 colors: ['#4caf50', '#f44336'],
-                
               }
 
             if (this.chartWinRate != null) this.chartWinRate.destroy();
