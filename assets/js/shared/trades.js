@@ -460,7 +460,7 @@ class Trades {
         var options = {
           series: seriesData,
           chart: {
-                height: 350,
+                height: 400,
                 type: 'heatmap',
                 toolbar: {
                     show: false,
