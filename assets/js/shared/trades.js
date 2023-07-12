@@ -212,7 +212,7 @@ class Trades {
         // constructor
         this.firestore_db = firebase.firestore();
         this.filterByUser = null;
-        this.closedTrades = this._getAllClosedTrades();
+        // this.closedTrades = this._getAllClosedTrades();
 
         this.chartHeatmap = null;
         this.chartScatterGains = null;
@@ -229,6 +229,8 @@ class Trades {
 
     updateCharts(){
         this.userLoggedIn = firebase.auth().currentUser;
+        this.clearRecommendations();
+
         this.renderStats();
         this.renderCalendar();
         this.renderRecap();
@@ -250,15 +252,17 @@ class Trades {
 
             var totalGainsFromWins = tradesData
                 .filter(tradeEntry => tradeEntry.gainsValue >= 0)
-                .reduce((acc, tradeEntry) => acc + 1, 0);
+                .reduce((acc, tradeEntry) => acc + tradeEntry.gainsValue, 0);
 
             var totalLossFromLosses = tradesData
                 .filter(tradeEntry => tradeEntry.gainsValue < 0)
-                .reduce((acc, tradeEntry) => acc + 1, 0);
+                .reduce((acc, tradeEntry) => acc + tradeEntry.gainsValue, 0);
            
-            var profitFactor = (totalGainsFromWins / totalLossFromLosses).toFixed(1)
+            var profitFactor = (numWins / numLosses).toFixed(1)
             
             var avgGain = Math.round((totalGains / numTrades)).toFixed(0);
+            var avgLoss = Math.round((totalLossFromLosses / numLosses)).toFixed(0);
+            var avgWin = Math.round((totalGainsFromWins / numWins)).toFixed(0);
 
             var winRate = `${Math.round((numWins / numTrades) * 100)}`
             var avgGain = `${avgGain}%`
@@ -452,7 +456,48 @@ class Trades {
             this.tradeGainsDOWRadar = new ApexCharts(document.querySelector("#tradeGainsDOWRadar"), radarChartOptions);
             this.tradeGainsDOWRadar.render();
 
+            // add ai recommendations
+            var weakestDayIndex = 0;
+            var weakestDayPercentage = tradeWinPercentages[0];
+
+            for (var i = 1; i < tradeWinPercentages.length; i++) {
+              if (tradeWinPercentages[i] < weakestDayPercentage) {
+                weakestDayIndex = i;
+                weakestDayPercentage = tradeWinPercentages[i];
+              }
+            }
             
+            var weakestDayOfWeek;
+            switch (weakestDayIndex) {
+              case 0:
+                weakestDayOfWeek = "Monday";
+                break;
+              case 1:
+                weakestDayOfWeek = "Tuesday";
+                break;
+              case 2:
+                weakestDayOfWeek = "Wednesday";
+                break;
+              case 3:
+                weakestDayOfWeek = "Thursday";
+                break;
+              case 4:
+                weakestDayOfWeek = "Friday";
+                break;
+              default:
+                weakestDayOfWeek = "Unknown";
+            }
+            
+            this.addRecommendation("🤖" + weakestDayOfWeek + " is your weakest day of the week.  Consider trading lighter on that day.")
+
+
+            // check if avg loss is > avg win
+            if (Math.abs(avgLoss) > Math.abs(avgWin)){
+              this.addRecommendation("🤖 Your avg loss (" + Math.abs(avgLoss) + "%) is greater than your avg win (" + avgWin + "%).  Try cutting losers faster.")
+            }
+            else{
+              this.addRecommendation("✅ Nice! Your avg loss (" + Math.abs(avgLoss) + "%) is less than your avg win (" + avgWin + "%).")
+            }
         });
     }
 
@@ -543,8 +588,32 @@ class Trades {
             // Call the getTodaysRecap() function with the selected date
             self.renderRecap(selectedDate.setHours(0,0,0,0));
         });
-        
+      
         this.chartHeatmap.render();
+
+        
+    }
+
+    clearRecommendations() {
+      $("#aiRecommendations").empty();
+
+      if (!firebase.auth().currentUser){
+        $(".membersAI").show();
+        $("#aiRecommendations").hide()
+      }else{
+        $(".membersAI").hide();
+        $("#aiRecommendations").show()
+      }
+
+    }
+
+    addRecommendation(notes){
+      if (firebase.auth().currentUser){
+        var newItem = $("<li>")
+        newItem.text(notes)
+        
+        $("#aiRecommendations").append(newItem);
+      }
     }
 
     renderCalendar(){
