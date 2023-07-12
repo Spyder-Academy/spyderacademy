@@ -971,6 +971,15 @@ class Trades {
             seriesData.push(series);
           }
 
+          let maxYValue = Number.NEGATIVE_INFINITY;
+          for (const series of seriesData) {
+            for (const dataPoint of series.data) {
+              if (dataPoint.y > maxYValue) {
+                maxYValue = dataPoint.y;
+              }
+            }
+          }
+
           // Configure and render the Bubble Chart
           const options = {
             series: seriesData,
@@ -982,7 +991,7 @@ class Trades {
                 toolbar: {show: false},
                 events: {
                     dataPointSelection: (event, chartContext, config) => {
-                        var dateClicked = seriesData[0].data[config.dataPointIndex].x
+                        var dateClicked = seriesData[config.seriesIndex].data[config.dataPointIndex].x
                         self.renderRecap(dateClicked)
                     }
                   }
@@ -995,8 +1004,9 @@ class Trades {
               },
             yaxis: {
                 min: -100,
-                tickAmount: 10,
-                forceNiceScale: true,
+                max: Math.ceil(Math.min(1000, maxYValue) / 100) * 100,
+                tickAmount: 20,
+                forceNiceScale: false,
                 labels: {
                     formatter: function (value) {
                       return value + "%";
@@ -1162,7 +1172,7 @@ class Trades {
 
     // get the daily recap for the given date
     _getRecap(recap_date) {
-
+      console.log("Get Recap For", new Date(recap_date))
         if (!this.userLoggedIn && recap_date.getDate() == (new Date()).getDate()){
           return new Promise((resolve) => { $(".membersOnly").show(); resolve([]) });
         }
