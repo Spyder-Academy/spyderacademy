@@ -9,7 +9,7 @@ tags = [
 
 +++
 
-We talked about ultra high net worth millionaires in our previous article, so how do they make their money?
+We previously talked about [ultra high net worth millionaires](../6-characteristics-of-millionaires/), so how do they make their money?
 
 🏦 Inheritance 
 
