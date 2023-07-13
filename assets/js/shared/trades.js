@@ -609,8 +609,10 @@ class Trades {
 
     addRecommendation(notes){
       if (firebase.auth().currentUser){
-        var newItem = $("<li>")
+        var newItem = $(".ai-template").clone()
         newItem.text(notes)
+        newItem.removeClass("d-none")
+        newItem.removeClass("ai-template")
         
         $("#aiRecommendations").append(newItem);
       }

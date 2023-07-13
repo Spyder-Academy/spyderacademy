@@ -1,0 +1,136 @@
+{{ define "main" }}
+<section class="section py-5">
+  <div class="container">
+    <div class="row pb-5">
+      <div class="col-12 d-flex justify-content-center">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-6 col-sm-12 my-1">
+              <div id="invalidActionCard" class="card shadow border-0 m-4 p-5 text-center" style="display: block; border-radius: 15px;">
+                <div id="resetForm" class="card-body">
+                  Your code has expired.  Please try again.
+
+                  <a href="/members" class="btn btn-secondary m-3">Back to Members Page</a>
+                </div>
+              </div>
+              <div id="resetPasswordCard" class="card shadow border-0" style="display: none">
+                <div id="resetForm" class="card-body">
+                  <form>
+                    <div id="loginErrorMessage" class="alert alert-danger small" role="alert" style="display: none">
+                      Invalid Credentials!
+                    </div>
+                    <div class="form-group">
+                      <input type="password" class="form-control" id="txtPassword" placeholder="Enter your new password">
+                    </div>
+                  </form>
+                </div>
+                <div class="card-footer text-center">
+                  <button type="button" class="btn btn-secondary m-3" id="submitReset">Reset Password</button>
+                  <p class="small">
+                    <a href="/#services">Not a member? Sign up here!</a><br/>
+                    <a href="#" onclick="sendPasswordResetEmail()" class="text-decoration-none">Send Reset Email Again</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Get the action to complete.
+      const urlParams = new URLSearchParams(window.location.search);
+      const mode = urlParams.get('mode');
+      // Get the one-time code from the query parameter.
+      const actionCode = urlParams.get('oobCode');
+      // (Optional) Get the continue URL from the query parameter if available.
+      const continueUrl = urlParams.get('continueUrl');
+      // (Optional) Get the language code if available.
+      const lang = urlParams.get('lang') || 'en';
+
+      // Handle the user management action.
+      switch (mode) {
+        case 'resetPassword':
+          // Display reset password handler and UI.
+          handleResetPassword(actionCode, continueUrl, lang);
+          break;
+        default:
+          // Error: invalid mode.
+          break;
+      }
+    });
+
+    function handleResetPassword(actionCode, continueUrl, lang) {
+      // Verify the password reset code is valid.
+      firebase.auth().verifyPasswordResetCode(actionCode)
+        .then((email) => {
+          var accountEmail = email;
+
+          // Show the reset password card
+          $("#resetPasswordCard").show();
+
+          // Reset password button click event
+          $("#submitReset").click(() => {
+            var newPassword = $("#txtPassword").val();
+            console.log("submit reset clicked", newPassword)
+
+             // Validate the password using a regular expression
+              var strongPasswordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-@$!%*?&])[A-Za-z\d-@$!%*?&]{8,}$/;
+              if (!strongPasswordRegex.test(newPassword)) {
+                // Password does not meet the criteria for a strong password
+                $("#loginErrorMessage").text("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.");
+                $("#loginErrorMessage").show();
+                console.log("Not a strong password", newPassword)
+
+                return;
+              }
+              else{
+                $("#loginErrorMessage").hide();
+              }
+
+            // Save the new password.
+            firebase.auth().confirmPasswordReset(actionCode, newPassword)
+              .then(() => {
+                // Password reset has been confirmed and new password updated.
+                console.log("New Password Set")
+                // Sign in the user with the new password
+                firebase.auth().signInWithEmailAndPassword(accountEmail, newPassword)
+                  .then(() => {
+                    // Handle successful login
+                    console.log("User logged in successfully.");
+                    // Redirect the user to the specified continue URL
+                    if (continueUrl) {
+                      window.location.href = continueUrl;
+                    }
+                    else{
+                      window.location.href = "/members/"
+                    }
+                  })
+                  .catch((error) => {
+                    // Handle login error
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error("Login error:", errorCode, errorMessage);
+                  });
+              })
+              .catch((error) => {
+                // Error occurred during confirmation. The code might have expired or the password is too weak.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.error("Confirmation error:", errorCode, errorMessage);
+              });
+            });
+        })
+        .catch((error) => {
+          // Invalid or expired action code. Ask the user to try resetting the password again.
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.error("Action code error:", errorCode, errorMessage);
+        });
+    }
+  </script>
+</section>
+{{ end }}
