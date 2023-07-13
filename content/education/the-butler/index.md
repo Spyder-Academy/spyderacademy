@@ -4,9 +4,10 @@ title = "Trading The Butler"
 date = "2023-07-12T00:00:00"
 description = "How to trade The Butler 9ema bullish reversal pattern"
 tags = [
-    "Setups"
+    "Setup",
     "Chart patterns",
     "Setup Breakdowns",
+    "TA",
 ]
 +++
 
