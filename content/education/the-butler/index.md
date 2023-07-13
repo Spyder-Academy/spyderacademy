@@ -32,7 +32,9 @@ The Butler is a bullish reversal of a 9ema rejection and should signal support o
 
 **Example 1 - AMD**
 ![The Butler Setup - AMD](images/example1.png)
+
 When exiting the position, look for a test and fail of the 9ema, after forming a resistance zone above. Determining the correct exit depends on a number of factors including, news, market conditions, volume, and overall volatility.
+
 ![The Butler Exit - AMD](images/example1a.png)
 **Example 2 - MSFT**
 ![Example 2 - MSFT](images/example2.png)
