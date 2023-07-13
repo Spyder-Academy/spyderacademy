@@ -11,8 +11,6 @@ tags = [
 ]
 +++
 
-# Trading The Butler #
-## 9EMA BULLISH REVERSAL STRATEGY ##
 The Butler is a bullish reversal of a 9ema rejection and should signal support of the 9ema and move for a leg higher. This setup provides a support zone below entry that acts as a stop and invalidates the trade. A bullish reversal with support provides a solid Risk:Reward ratio(R:R) on these setups. Typically traded on the 5-minute chart, The Butler is also valid on other timeframes.
 
 ![](images/cover.png)
