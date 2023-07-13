@@ -6,7 +6,7 @@
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-6 col-sm-12 my-1">
-              <div id="invalidActionCard" class="card shadow border-0 m-4 p-5 text-center" style="display: block; border-radius: 15px;">
+              <div id="invalidActionCard" class="card shadow border-0 m-4 p-5 text-center" style="display: none; border-radius: 15px;">
                 <div id="resetForm" class="card-body">
                   Your code has expired.  Please try again.
 
@@ -59,6 +59,7 @@
           break;
         default:
           // Error: invalid mode.
+          $("#invalidActionCard").show();
           break;
       }
     });
@@ -70,6 +71,7 @@
           var accountEmail = email;
 
           // Show the reset password card
+          $("#invalidActionCard").hide();
           $("#resetPasswordCard").show();
 
           // Reset password button click event
@@ -129,6 +131,8 @@
           const errorCode = error.code;
           const errorMessage = error.message;
           console.error("Action code error:", errorCode, errorMessage);
+
+          $("#invalidActionCard").show();
         });
     }
   </script>
