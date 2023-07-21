@@ -49,25 +49,31 @@ menus:
       url: "/#hero"
       weight: 1
 
-    - name: "Our Team"
-      url: "/#teachers"
-      weight: 3
+    # - name: "Our Team"
+    #   url: "/#teachers"
+    #   weight: 3
 
     - name: "Pricing"
       url: "/#services"
-      weight: 4
+      weight: 2
 
     - name: "Reviews"
       url: "/#testimonials"
-      weight: 5
-
-    - name: "Education"
-      url: "/education"
-      weight: 6
+      weight: 3
 
     - name: "Buy Us Coffee"
       url: "https://whop.com/checkout/plan_QiCwlm5hSTMgd/"
+      weight: 4
+
+    - name: "Education"
+      url: "/education"
+      weight: 5
+
+    - name: "Analytics"
+      url: "/members"
       weight: 6
+
+   
 
   buttons:
     - name: "Start Learning"
