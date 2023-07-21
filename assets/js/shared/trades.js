@@ -986,13 +986,19 @@ class Trades {
 
         // Append the fullscreen button
         var fullscreenButton = $('<button>', {
-            class: 'btn fullscreen_button m-1 text-end',
+            class: 'btn fullscreen_button text-end',
+            style: "width: 2em;",
             click: toggleFullscreen
         });
 
         fullscreenButton.append($('<i/>').addClass('fa fa-expand'));
        
-        $('.tvChartHeader').append(fullscreenButton);
+        // Append the contianer for the  buttons
+        var buttons = $("<div class='p-3' style='display: flex; justify-content: space-between;'>");
+        buttons.append("<a href='/attribution/' class='text-muted text-decoration-none small' style='width: 20em;'>Powered by TradingView</a>");
+        buttons.append(fullscreenButton);
+
+        $('.tvChartHeader').append(buttons);
 
         // Function to toggle fullscreen
         function toggleFullscreen() {
