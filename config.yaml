@@ -69,7 +69,7 @@ menus:
       url: "/education"
       weight: 5
 
-    - name: "Analytics"
+    - name: "SpyderWeb"
       url: "/members"
       weight: 6
 
