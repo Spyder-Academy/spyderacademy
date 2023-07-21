@@ -14,7 +14,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Log In</h5>
-                            <button type="button" class="close" onclick="$('#loginModal').hide()">
+                            <button type="button" class="close" onclick="hideLogin();">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -37,7 +37,8 @@
                             <button type="button" class="btn btn-secondary" id="submitLogin">Log In</button>
                             <p class="small">
                                 <a href="/#services">Not a member? Sign up here!</a><br/>
-                                <a href="#" onclick="sendPasswordResetEmail()" class="text-decoration-none">Reset Password</a>
+                                <a href="#" onclick="sendPasswordResetEmail()" class="text-decoration-none">Forgot Password</a> | 
+                                <a href="#" onclick="sendPasswordResetEmail()" class="text-decoration-none">First Time Login</a>
                             </p>
                         </div>
                     </div>
@@ -222,6 +223,11 @@
         $('#loginModal').show();
        }
 
+       function hideLogin(){
+        $('#loginErrorMessage').hide()
+        $('#loginModal').hide();
+       }
+
          // Sign in with email and password when the submit button is clicked
         const submitLogin = document.getElementById('submitLogin');
         submitLogin.addEventListener('click', () => {
@@ -291,23 +297,29 @@
         function sendPasswordResetEmail() {
             var email = $("#txtEmail").val();
 
-            firebase.auth().sendPasswordResetEmail(email)
-                .then(() => {
-                    // Password reset email sent successfully
-                    console.log("Password reset email sent to", email);
-                    // Display a success message to the user
-                    $('#loginErrorMessage').text("Password reset email sent to " + email);
-                    $('#loginErrorMessage').show();
-                })
-                .catch((error) => {
-                    // An error occurred
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.error("Password reset email error:", errorCode, errorMessage);
-                    // Display an error message to the user
-                    $('#loginErrorMessage').text("Failed to send password reset email");
-                    $('#loginErrorMessage').show();
-                });
+            if (email == ""){
+                $('#loginErrorMessage').text("Please enter the email address you signed up with on Whop.com");
+                $('#loginErrorMessage').show();
+            }
+            else{
+                firebase.auth().sendPasswordResetEmail(email)
+                    .then(() => {
+                        // Password reset email sent successfully
+                        console.log("Password reset email sent to", email);
+                        // Display a success message to the user
+                        $('#loginErrorMessage').text("Password reset email sent to " + email);
+                        $('#loginErrorMessage').show();
+                    })
+                    .catch((error) => {
+                        // An error occurred
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        console.error("Password reset email error:", errorCode, errorMessage);
+                        // Display an error message to the user
+                        $('#loginErrorMessage').text("Failed to send password reset email");
+                        $('#loginErrorMessage').show();
+                    });
+                }
             }
 
 
