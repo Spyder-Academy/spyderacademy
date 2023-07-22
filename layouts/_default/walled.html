@@ -248,8 +248,24 @@
                     const errorCode = error.code;
                     const errorMessage = error.message;
 
-                    $('#loginErrorMessage').show()
-                    $('#loginErrorMessage').text("Log in failed")
+                     // Display an error message to the user
+                    var displayErrorMessage = "Log in failed"
+                    if (errorCode == "auth/user-not-found"){
+                        displayErrorMessage = "Please use the email address used when subscribing in whop.com"
+                    }
+                    else if (errorCode == "auth/invalid-email"){
+                        displayErrorMessage = "Please enter a valid email address."
+                    }
+                    else if (errorCode == "auth/missing-password"){
+                        displayErrorMessage = "Please enter a password."
+                    }
+                    else if (errorCode == "auth/wrong-password"){
+                        displayErrorMessage = "Please enter a valid password."
+                    }
+
+                    $('#loginErrorMessage').text(displayErrorMessage);
+                    $('#loginErrorMessage').show();
+
                     console.error("Login error:", errorCode, errorMessage);
                 });
         });
@@ -315,8 +331,17 @@
                         const errorCode = error.code;
                         const errorMessage = error.message;
                         console.error("Password reset email error:", errorCode, errorMessage);
+
                         // Display an error message to the user
-                        $('#loginErrorMessage').text("Failed to send password reset email");
+                        var displayErrorMessage = "Failed to send password reset email"
+                        if (errorCode == "auth/user-not-found"){
+                            displayErrorMessage = "The email address entered is not a verified member."
+                        }
+                        else if (errorCode == "auth/invalid-email"){
+                            displayErrorMessage = "Please enter a valid email address."
+                        }
+
+                        $('#loginErrorMessage').text(displayErrorMessage);
                         $('#loginErrorMessage').show();
                     });
                 }
