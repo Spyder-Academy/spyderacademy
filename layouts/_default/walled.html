@@ -242,6 +242,7 @@
                     // Hide the modal
                     const loginModal = document.getElementById('loginModal');
                     loginModal.style.display = 'none';
+                    $("#loginErrorMessage").hide();
                 })
                 .catch((error) => {
                     // Handle login error
