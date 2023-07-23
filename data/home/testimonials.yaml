@@ -2,13 +2,12 @@ enabled: true
 id: "testimonials"
 
 content:
-  title: "Reviews"
+  title: "Hear what our Students say about us"
   text: "<a href='https://www.whop.com/spyder-academy/' target='_blank'>Leave a Review</a> or <a href='https://whop.com/checkout/plan_QiCwlm5hSTMgd/' target='_blank'>Buy us Coffee</a>"
 
   featured:
     text: "As a new trader looking for a safe and constructive space to develop my skill, this has been, by far, the best group I have been apart of. Truly a safe space with genuine and honest people both as head traders and the traders in the classroom. Grateful to be apart of the team!"
     client: "@coshjarlos"
-    image: "images/testimonial_flex.png"
     link: "https://whop.com/spyder-academy"
     
 
@@ -29,6 +28,16 @@ content:
       image: "images/teachers-spiderman.png"
       link: "https://whop.com/spyder-academy"
 
+    - text: "I've been trading for a while but just kinda buying here and buying there--not really locking in my style. These guys really help you to understand your personal psychology when trading in the market, setting the expectation for trading cadence, etc. If you're looking for a group to help you be a better trader, this is the place!"
+      client: "@Toddes"
+      image: "images/teachers-spiderman.png"
+      link: "https://whop.com/spyder-academy"
+
+    - text: "Genuine room of great traders that are committed to providing a space to learn, grow, have some laughs, and grab some BAGS."
+      client: "@Lord Von Vincent"
+      link: "https://whop.com/spyder-academy"
+      image: "images/teachers-spiderman.png"
+
     - text: "Just wanted to thank you personally!! The knowledge you shared changed everything for me. My eyes are now open and I see things a lot clearer. I've been struggling for two years and now I don't feel lost anymore. I have direction and setups I wait on.<br/><br/>Thanks!!"
       client: "ETAN"
       image: "images/teachers-pauldozer.png"
@@ -36,11 +45,6 @@ content:
     - text: "Cauliflower Calls transformed my trading from inconsistency as a new trader, to finding a successful rhythm in my trading.<br/><br/>The real value in this program was all the breakdowns that have a lot of thought and time to understand why a move happened rather than just simplifying to you see x candle and y indicator. You get both Macro and Micro out of this"
       client: "lord_coco"
       image: "images/teachers-gobi.png"
-   
-    - text: "This subscription has been worth every Penny for me. You're the man @CashMoneyTrades …. anyone on the fence feel free to reach out and DEFINITELY give the free trial a test run to see for yourself."
-      client: "@jmaini3"
-      link: "https://twitter.com/jmaini3/status/1638262100727418889?s=20"
-      image: "images/teachers-cash.png"
 
     - text: "Might cry, today is my first bag on a play. <br/><br/>Shout out to @Pavldozer for the morning analysis this morning! <br/><br/>Also thank you to @CashMoneyTrades for the incredible SORBET system!  <br/><br/>The system WORKS, plain and simple!"
       client: "@Habib"
@@ -56,8 +60,3 @@ content:
       client: "@Wardo"
       image: "images/teachers-cash.png"
       link: "https://twitter.com/WardoMedina/status/1636736279437099008?s=20"
-
-    - text: "@Pavldozer ... the best $TSLA trader on Twitter 🔥<br/><br/>Thanks boss!!"
-      client: "@RockyBTrades"
-      image: "images/teachers-pauldozer.png"
-      link: "https://twitter.com/RockyBTrades/status/1656411056858865664"

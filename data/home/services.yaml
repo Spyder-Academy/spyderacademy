@@ -3,7 +3,7 @@ id: "services"
 
 content:
   title: "Student Registration"
-  text: "Our plans come with a 7 day free trial."
+  text: "Our pricing is simple and all inclusive, and comes with a 7 day free trial."
   cards:
     # - image: "images/services-library.png"
     #   title: "The Library"
@@ -19,23 +19,10 @@ content:
       title: "The Class Room"
       price: "80"
       promotion: 
-      features:
-        - item: "Live Voice."
-        - item: "A Team of Seven Amazing Instructors."
-        - item: "Screen Sharing."
-        - item: "Trade Recaps."
-        - item: "Instructor Trade Alerts with Reasons for Entries/Exits."
-        - item: "Algo Bot Alerts."
-        - item: "Amazing Educational Content."
-       
-        - item: "Premium Community Chat."
+      
       button:
         label: "Start Your 7-Day Free Trial"
         url: "https://whop.com/checkout/plan_n9NbbxfFeIW95/"
 
-    - image: "videos/SpyderAcademy.pm4"
-      button:
-        label: "Start Your 7-Day Free Trial"
-        url: "https://whop.com/checkout/plan_n9NbbxfFeIW95/"
-      
+  
     

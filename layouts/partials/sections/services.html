@@ -14,13 +14,7 @@
       {{ range $i, $e := .content.cards }}
 
       {{ $colors := (slice "green" "yellow" ) }}
-      <div class="col-lg-5 col-sm-12  card shadow border-0 p-3 m-3  {{ with $e.image }}d-none d-md-flex {{ end }}" style="border-radius: 2em; background-image: url('/images/banner.png'); background-size: contain;">
-        {{ with $e.image }}
-        <video autoplay muted loop style="border-radius: 1em" >
-          <source src="/videos/SpyderAcademy.mp4" type="video/mp4" />
-        </video>
-
-        {{ end }}
+      <div class="col-lg-5 col-sm-12  card shadow border-0 p-3 m-3  {{ with $e.image }}d-none d-md-flex {{ end }}" style="border-radius: 2em; background-color: #bfe1cf;">
         <div class="card-body p-3">
           <div class="container-fluid p-0 m-0">
             <div class="row  align-items-center ">
@@ -33,7 +27,6 @@
                       <span class="badge bg-white text-dark p-2">{{ $e.promotion | safeHTML }}</span>
                     </div>
                     {{ end }}
-                    <hr/>
                   {{ end }}
                   <ul class="list-unstyled mb-5">
                     {{ range $e.features }}

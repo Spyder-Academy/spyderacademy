@@ -2,7 +2,7 @@ enabled: true
 id: "spotlight"
 
 content:
-  title: "Spotlight"
+  title: "Hear from our Team Directly"
   text: "Our instructors have been showcased and featured by"
   list:
     - image: "images/teachers-pauldozer.png"

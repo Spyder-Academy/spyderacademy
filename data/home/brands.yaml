@@ -2,7 +2,6 @@ enabled: true
 id: "brands"
 
 content:
-  title: "Our traders work with multiple tools and services"
   items:
     - image: "images/brands-tradingview.png"
       url: "https://www.tradingview.com/gopro/?share_your_love=amitgandhinz"
@@ -10,6 +9,9 @@ content:
     - image: "images/brands-bbs.png"
       url: "http://staygreen.blackboxstocks.com/SHJG"
       name: "Black Box Stocks"
+    - image: "images/brands-unusualwhales.png"
+      url: "https://www.unusualwhales.com"
+      name: "Unusual Whales"
     - image: "images/brands-rocketscooter.png"
       url: "https://www.rocketscooter.com"
       name: "Rocket Scooter"
