@@ -14,7 +14,7 @@ content:
       tickers: "Primarily Trades $SPY and $TSLA."
       button:
         label: "Follow on Twitter"
-        url: "https://twitter.com/CashMoneyTrades"
+        url: "https://x.com/CashMoneyTrades"
 
     - image: "images/teachers-gobi.png"
       name: "Cauliflower Calls"
@@ -23,7 +23,7 @@ content:
       tickers: "Primarily Trades $SPY"
       button:
         label: "Follow on Twitter"
-        url: "https://twitter.com/GobiCalls"
+        url: "https://x.com/GobiCalls"
 
     - image: "images/teachers-pauldozer.png"
       name: "Pauldozer"
@@ -32,7 +32,7 @@ content:
       tickers: "Primarily trades $TSLA. Secondarily trades Large Caps."
       button:
         label: "Follow on Twitter"
-        url: "https://twitter.com/Pavldozer"
+        url: "https://x.com/Pavldozer"
      
     - image: "images/teachers-sith.png"
       name: "Sith"
@@ -41,7 +41,7 @@ content:
       tickers: "Trades: $SPY $QQQ Mega Caps"
       button:
         label: "Follow on Twitter"
-        url: "https://twitter.com/Sysadminsith"
+        url: "https://x.com/Sysadminsith"
 
     - image: "images/teachers-linksnipes.png"
       name: "Link Snipes"
@@ -50,7 +50,7 @@ content:
       tickers: "Trades $SPY and Mega Cap Tech"
       button:
         label: "Follow on Twitter"
-        url: "https://twitter.com/link_0002"
+        url: "https://x.com/link_0002"
 
     - image: "images/teachers-woody.png"
       name: "Woody"
@@ -59,7 +59,7 @@ content:
       tickers: "Trades SPY, TSLA, QQQ and Mega Caps"
       button:
         label: "Follow on Twitter"
-        url: "https://twitter.com/cwood89"
+        url: "https://x.com/cwood89"
 
     - image: "images/teachers-mrwoofers.png"
       name: "Mr Woofers"
@@ -68,7 +68,7 @@ content:
       tickers: "Trades SPY/SPX and Mega Cap Tech"
       button:
         label: "Follow on Twitter"
-        url: "https://twitter.com/mr_woofers"
+        url: "https://x.com/mr_woofers"
 
     - image: "images/teachers-spiderman.png"
       name: "Spyder Academy"
@@ -82,4 +82,4 @@ Imagine a time when you're making more money from trading than from your current
 That's why we trade. And we hope to teach you how to trade. Join us on this journey, and we look forward to helping you achieve your goals."
       button:
         label: "Follow on Twitter"
-        url: "https://twitter.com/SpyderAcademy"
+        url: "https://x.com/SpyderAcademy"
