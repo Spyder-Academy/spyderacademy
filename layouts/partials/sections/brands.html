@@ -9,7 +9,7 @@
     </div>
     <div class="row align-items-center justify-content-center">
       {{ range .content.items }}
-      <div class="col-3 px-3 my-2 text-center">
+      <div class="col-md-3 d-none d-lg-block px-3 my-2 text-center">
         <a href="{{.url}}" target="_blank" title="{{ .name }}">{{ partial "utilities/image-fluid.html" .image }}</a>
       </div>
       {{ end }}
