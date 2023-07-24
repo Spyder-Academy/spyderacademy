@@ -30,20 +30,9 @@
           </div>
         </div>
       </div>
-      <div class="row pb-5">
-        <div class="col-12 row justify-content-center">
-          <div class="blog-content fs-5">
-            <div class="card shadow border-0" style="border-radius: 15px; background-image: url(/images/banner.png);">
-              <div class="card-body">
-                <div class="container-fluid">
-                  <div class="row">
-                    <div class="col-lg-9 col-sm-12"><p class="card-text text-white px-5 text-center" >LEARN AND EARN WITH SPYDER ACADEMY</p></div>
-                    <div class="col-lg-3 col-sm-12"> <a class="btn btn-primary px-4 d-flex justify-content-center" href="https://whop.com/checkout/plan_n9NbbxfFeIW95/" target="_blank">FREE TRIAL</a></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div class="row justify-content-center">
+        <div class="col-lg-6 col-sm-12">
+          <a class="btn btn-lg btn-block btn-primary" style="border-radius: 0.5em"  href="https://whop.com/checkout/plan_n9NbbxfFeIW95/" >Try Spyder Academy For Free</a>
         </div>
       </div>
     </div>
@@ -61,4 +50,8 @@
     </div>
 
   </section>
+
+  {{ with .Site.Data.home.benefits }}{{ partial "sections/benefits.html" . }}{{ end }}
+  {{ with .Site.Data.home.trades }}{{ partial "sections/trades.html" . }}{{ end }}
+
 {{ end }}
