@@ -15,7 +15,7 @@
     </div>
     <div class="row justify-content-center mb-3">
       {{ with .content.featured }}
-      <div class="col-8 d-flex flex-column ">
+      <div class="col-lg-8 col-sm-12 d-flex flex-column ">
         <div class="card d-flex flex-row align-items-start border-0 shadow p-5">
           <p class="card-text text-black-61 px-5">"{{ .text | safeHTML  }}" <a class="fw-bold text-primary text-nowrap text-decoration-none" href="{{ .link }}" title="{{ .client }}" target="_blank">- {{ .client }}</a></p>
         </div>
