@@ -1,5 +1,5 @@
 ---
-author: "CashMoneyTrades"
+author: "Gobi"
 title: "How to Trade The Dolphin Vomy Strategy"
 date: 2023-06-11T00:00:00-04:00
 description: "Learn how to trade The Dolphin Vomit Strategy (aka SATY VOMY)"
