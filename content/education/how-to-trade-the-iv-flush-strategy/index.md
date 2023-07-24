@@ -29,7 +29,7 @@ First step is to find out if the stocks actual move is within the implied move o
 
 Example - If the implied move is  &#177;8% and the actual is +9%, this is not something I would want to play. But if the actual is +2%, we would move onto the next step as a possible IV flush candidate. 
 
-I typically go on marketchameleon.com to see the implied move vs actual move. 
+I typically go on [marketchameleon.com](https://marketchameleon.com) to see the implied move vs actual move. 
 
 We can use NIO as our example moving forward, NIO had an actual move well within the implied move. 
 
@@ -46,7 +46,7 @@ There are a couple of things I keep in mind when plotting zones:
 - Recent price action takes priority over older price action.
 - Mark out areas that see multiple rejections and/or bounces
 - Mark zones that had a big impulsive move in either direction
-- Zones that have been Break Hook & Go are also good areas to have
+- Zones that have been [Break Hook & Go](/education/how-to-trade-the-break-hook-and-go) are also good areas to have
 
 ![](images/rejections.png)
 
