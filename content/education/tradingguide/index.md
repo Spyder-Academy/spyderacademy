@@ -14,5 +14,11 @@ Over 100 pages of useful Trading Psychology, and Technical Strategies to get you
 
 This book is great for novice and experienced traders alike.
 
-<a class="btn btn-secondary px-4 my-1 ms-xl-4" href="https://drive.google.com/file/d/1hAiQp-Mk51b8qppnxvt5noCQ1GvjLKPE/preview" target="_blank">Download Your Copy</span></a>
-<iframe src="https://drive.google.com/file/d/1hAiQp-Mk51b8qppnxvt5noCQ1GvjLKPE/preview" width="600px" height="800px" allow="autoplay"></iframe>
+<div class="row justify-content-center">
+    <div class="col-lg-4 col-sm-12 text-center">
+        <a class="btn btn-primary px-4 my-4" href="https://drive.google.com/file/d/1hAiQp-Mk51b8qppnxvt5noCQ1GvjLKPE/preview" target="_blank">Download Your Copy</span></a>
+    </div>
+    <div class="col-12 text-center">
+        <iframe src="https://drive.google.com/file/d/1hAiQp-Mk51b8qppnxvt5noCQ1GvjLKPE/preview" width="80%" height="800px" allow="autoplay"></iframe>
+    </div>
+</div>
