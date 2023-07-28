@@ -145,13 +145,22 @@
 
             <div class="col-lg-6 col-sm-12 my-1">
                 <div class="card shadow border-0 p-3" style="border-radius: 15px; ">
-                    <h4>SPYDER AI</h4>
-                    
+                    <div class="membersOnlyFiller card shadow border-0 p-3 justify-content-center" style="border-radius: 15px; display: none">
+                        <img src="/images/membersonly.png" />
+                    </div>
+                    <div class="membersOnlyContent" id="tradeTrims"></div>
+                </div>
+            </div>
 
-                    <div id="aiRecommendations">
-                        <div class="membersOnly card shadow border-0 p-3 justify-content-center" style="border-radius: 15px; ">
-                            <img src="/images/membersonly.png" />
-                        </div>
+            <div class="col-lg-6 col-sm-12 my-1">
+                <div class="card shadow border-0 p-3" style="border-radius: 15px; ">
+
+                    <div class="membersAI card shadow border-0 p-3 justify-content-center" style="border-radius: 15px; display: none">
+                        <img src="/images/memberAI.png" />
+                    </div>
+                    <div class="membersOnlyContent" id="aiRecommendations">
+                        <h4>SPYDER AI</h4>
+ 
                     </div>
                     <div class="ai-template card shadow border-0 p-3 my-2 justify-content-center d-none" style="border-radius: 15px; "></div>
                 </div>
@@ -161,10 +170,10 @@
 
             <div class="col-lg-12 col-sm-12 my-1">
                 <div class="card shadow border-0 p-3" style="border-radius: 15px; ">
-                    <div class="row" id="tradeRecap">
+                    <div class="row membersOnlyContent" id="tradeRecap">
                         <!-- trade-card-template gets pasted into here -->
                     </div>
-                    <div class="membersOnly card shadow border-0 p-3 justify-content-center" style="display: none; border-radius: 15px; ">
+                    <div class="membersOnlyFiller card shadow border-0 p-3 justify-content-center" style="border-radius: 15px; display: none">
                         <img src="/images/membersonly.png" />
                     </div>
                 </div>
@@ -196,9 +205,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tvChartHeader m-4 card shadow border-0 d-none" style="border-radius: 1em;"> </div>
-                    <div class="entryExitNotes small lh-1 m-4 p-3 card shadow border-0 d-none" style="border-radius: 1em; background-color: #BFE1CF;"></div>
-                    <div class="membersRecap card shadow border-0 p-3 justify-content-center" style="border-radius: 15px; display: none"> <img src="/images/memberRecaps.png" /> </div>
+                    <div class="membersOnlyContent">
+                        <div class="tvChartHeader m-4 card shadow border-0 d-none" style="border-radius: 1em;"> </div>
+                        <div class="entryExitNotes small lh-1 m-4 p-3 card shadow border-0 d-none" style="border-radius: 1em; background-color: #BFE1CF;"></div>
+                    </div>
+                    <div class="membersOnlyFiller card shadow border-0 p-3 justify-content-center" style="border-radius: 15px; display: none"> <img src="/images/memberRecaps.png" /> </div>
                 </div>
             </div>
         </div>
@@ -366,12 +377,15 @@
 
         function selectContract(el){
             if (firebase.auth().currentUser){
+                console.log("is logged in, show tv")
                 userTrades.renderTVChart($(el), $(el).attr("tradeid"));
-                $(".membersRecap").hide();
+                $(el).find(".membersOnlyContent").show();
+                $(el).find(".membersOnlyFiller").hide();
             }
             else{
-                $(".membersRecap").hide();
-                $(el).find(".membersRecap").show();
+                console.log("not logged in, show filler")
+                $(el).find(".membersOnlyContent").hide();
+                $(el).find(".membersOnlyFiller").show();
             }
         }
 

@@ -219,6 +219,7 @@ class Trades {
         this.chartAvgGains = null;
         this.chartWinRate = null;
         this.tradeGainsDOWRadar = null;
+        this.chartTrims = null;
 
     }
 
@@ -233,8 +234,8 @@ class Trades {
 
         this.renderStats();
         this.renderCalendar();
-        this.renderRecap();
         this.renderGainsBubbleChart();
+        this.renderRecap();
     }
 
     renderStats(){
@@ -593,6 +594,130 @@ class Trades {
 
         
     }
+
+
+    isDataExpired(timestamp) {
+      const now = new Date().getTime();
+      return now - timestamp > 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+    }
+
+    async renderTrims(trades) {
+      var self = this;
+      var tradeData = [];
+      var exitPriceCache = {}; // In-memory cache for exit prices
+
+      
+      for (const trade of trades) {
+        var tradeId = trade.tradeid;
+        var entryPrice = trade.entry_price;
+    
+        var exitsRef = this.firestore_db.collection("trades").doc(tradeId).collection("exits");
+    
+        if (trade.exit_price_max != null)
+        {
+          try {
+
+            // Check if exit prices are already cached for this trade
+            var exitPrices = null;
+            let cachedData = localStorage.getItem(tradeId);
+            if (cachedData) {
+              cachedData = JSON.parse(cachedData);
+              if (!self.isDataExpired(cachedData.timestamp)) {
+                // Use cached data if it's still valid
+                exitPrices = cachedData.exitPrices;
+              } else {
+                // Fetch exit prices from Firebase and update the cache
+                const querySnapshot = await exitsRef.get();
+                exitPrices = querySnapshot.docs.map(doc => doc.data()["price"]).sort();
+                
+                const cachedData = { exitPrices: exitPrices, timestamp: new Date().getTime() };
+                localStorage.setItem(tradeId, JSON.stringify(cachedData));
+              }
+            } else {
+              // Fetch exit prices from Firebase and cache them with timestamp
+              const querySnapshot = await exitsRef.get();
+              exitPrices = querySnapshot.docs.map(doc => doc.data()["price"]).sort();
+              
+              const cachedData = { exitPrices: exitPrices, timestamp: new Date().getTime() };
+              localStorage.setItem(tradeId, JSON.stringify(cachedData));
+            }
+
+            console.log(exitPrices)
+            
+            // Calculate statistics for the trade
+            const percentageGainLoss = exitPrices.map(trimPrice => Math.round(((trimPrice - entryPrice) / entryPrice * 100)));
+
+            // Add value 0 to the dataset
+            percentageGainLoss.push(0);
+
+            const sortedValues = percentageGainLoss.slice().sort((a, b) => a - b);
+
+            // len will always be 2+ (since one real trim, and we injected a 0)
+            const len = sortedValues.length;
+            
+            const q1Val =  sortedValues[1] // second trim
+            const medianVal =  sortedValues[Math.ceil((len - 1)/2)]; // middle trim
+            const q3Val =  len > 2 ? sortedValues[len - 2] : sortedValues[len - 1] // second to last trim, or last if only one trim
+            
+            const minVal =  (sortedValues[0]);
+            var maxVal =  (sortedValues[len - 1]);
+
+            if (maxVal == 0){
+              maxVal = 0.001
+            }
+      
+            tradeData.push({
+              x: trade.username + " " + trade.ticker + " " + trade.strike,
+              y: [minVal, q1Val, medianVal, q3Val, maxVal],
+            });
+
+          } catch (error) {
+            console.error("Error fetching exit data for trade:", tradeId, error);
+          }
+        }
+      }
+
+      var options = {
+        title: { text: "TRIM LEVELS"},
+        chart: {
+          type: "boxPlot",
+          height: 400,
+          toolbar: {show: false},
+        },
+        plotOptions: {
+          bar: {
+            horizontal: true,
+            barHeight: '50%'
+          },
+          boxPlot: {
+            colors: {
+              upper: '#e9ecef',
+              lower: '#f8f9fa'
+            }
+          }
+        },
+        stroke: {
+          colors: ['#6c757d']
+        },
+        series: [
+          {
+            data: tradeData
+          }
+        ],
+        yaxis: {
+          min: -100,
+          forceNiceScale: true,
+        }
+      };
+    
+      if (this.chartTrims != null) {
+        this.chartTrims.destroy();
+      }
+    
+      this.chartTrims = new ApexCharts(document.querySelector("#tradeTrims"), options);
+      this.chartTrims.render();
+    }
+    
 
     clearRecommendations() {
       $("#aiRecommendations").empty();
@@ -1128,6 +1253,8 @@ class Trades {
 
             $('#tradeRecap').append(tradeCardRow);
         });
+
+        this.renderTrims(trades)
     
     }
     
@@ -1251,7 +1378,12 @@ class Trades {
     _getRecap(recap_date) {
       console.log("Get Recap For", new Date(recap_date))
         if (!this.userLoggedIn && recap_date.getDate() == (new Date()).getDate()){
-          return new Promise((resolve) => { $(".membersOnly").show(); resolve([]) });
+          return new Promise((resolve) => { 
+            $(".membersOnlyContent").hide();
+            $(".membersOnlyFiller").show();
+            
+            resolve([])
+           });
         }
 
         var todays_table = [];
@@ -1261,7 +1393,8 @@ class Trades {
                 this._getClosedTrades(recap_date)
             ]).then(([open_trades, closed_trades]) => {
 
-                $(".membersOnly").hide();
+                $(".membersOnlyContent").show();
+                $(".membersOnlyFiller").hide();
                 todays_table = open_trades.concat(closed_trades);
                 
                 // Sort the results
