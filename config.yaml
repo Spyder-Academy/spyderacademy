@@ -31,6 +31,7 @@ params:
     twitter: "https://x.com/spyderacademy"
     instagram: "https://www.instagram.com/spyderacademy"
     pinterest: "https://www.pinterest.com/spyderacademy"
+    substack: "https://spyderacademy.substack.com"
     
   shareButtons:
      size: small
@@ -104,11 +105,15 @@ menus:
 
     - name: "Terms of Use"
       url: "/termsofuse"
-      weight: 5
+      weight: 6
 
     - name: "Privacy Policy"
       url: "/privacy"
-      weight: 5
+      weight: 7
+
+    - name: "Get our Free Newsletter"
+      url: "https://spyderacademy.substack.com"
+      weight: 8
 
 
 
