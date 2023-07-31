@@ -1,0 +1,55 @@
+<!-- Sidebar with newsletter signup form -->
+  <div class="sidebar" id="sidebar">
+    <div class="newsletter-form text-center">
+      <div class="close-button" onclick="closeSidebar()">&times;</div>
+      
+      <!-- Substance iframe form goes here -->
+      <!-- Replace the "your-substance-iframe-url" with the actual URL of your Substance iframe form -->
+      <div class="container ">
+        <div class="row align-items-center">
+            <div class="col-12 text-center">
+                <h2 class="text-danger">Unlock Your Trading Potential!</h2>
+                <p>Are you ready to elevate your trading game and gain a competitive edge in the markets?</p>
+            </div>
+            <div class="d-none d-lg-block">
+                <ul class="text-danger list-unstyled">
+                    <li>Get Free Market Insights</li>
+                    <li>Profitable Trade Recaps</li>
+                    <li>Actionable Watchlists</li>
+                    <li>Top-notch Learning</li>
+                </ul>
+                <p>Sign up now and elevate your trading journey!</p>
+            </div>
+            </div>
+            <div class="col-12 justify-content-center">
+                <a class="btn btn-lg btn-block btn-primary mt-1" style="border-radius: 0.5em; width: 200px"  href="https://spyderacademy.substack.com" target="_blank">Free Newsletter</a>
+                <a class="btn btn-lg btn-block btn-secondary mt-1" style="border-radius: 0.5em; width: 200px"  href="https://whop.com/checkout/plan_n9NbbxfFeIW95/" >Free Trial</a>
+            </div>
+        </div>
+    </div>
+    </div>
+  </div>
+
+
+  <script>
+    // Function to toggle the sidebar
+    $('iframe').css('background', '#F6FBFF');
+
+    
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.style.bottom = sidebar.style.bottom === '0px' ? '-50%' : '0px';
+    }
+
+    // Function to close the sidebar
+    function closeSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.style.bottom = '-50%';
+    }
+
+    // Delayed sliding of the sidebar after 3 seconds
+    setTimeout(function() {
+        toggleSidebar();
+    }, 3000);
+
+  </script>
