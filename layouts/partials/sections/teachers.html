@@ -58,7 +58,12 @@
               <p class="card-text text-danger px-5 mb-4"  >{{ $e.tickers | safeHTML}}</p>
             </div>
             <div class="card-footer">
-              {{ with $e.button }}<a class="btn btn-primary my-4 mx-5" href="{{ .url }}" title="Follow {{ $e.name }} on Twitter" target="_blank">{{ partial "icons/twitter.html" }}  {{ .label }}</a>{{ end }}
+              {{ with $e.button }}
+                <a class="btn btn-primary my-4 mx-5" href="{{ .url }}" title="Follow {{ $e.name }} on Twitter" target="_blank">
+                  <span class="p-2" style="color: #fff;">{{ partial "icons/x.html" }}</span> 
+                  <span>{{ .label }}</span>
+                </a>
+              {{ end }}
             </div>
           </div>
           {{ end }}
