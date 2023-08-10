@@ -77,7 +77,7 @@ class TradeRecord {
                 if (trade.ticker === "ES" || trade.ticker === "MES" || trade.ticker === "MNQ" || trade.ticker === "NQ") {
                     if (trade.strike.toUpperCase().endsWith("LONG")) {
                         trade.gainsValue = (trade.exit_price_max - trade.entry_price) ;
-                        trade.gains = trade.gainsValue.toFixed(0) + " pts"
+                        trade.gainsString = trade.gainsValue.toFixed(0) + " pts"
                     } 
                     else if (trade.strike.toUpperCase().endsWith("SHORT")) {
                         trade.gainsValue = (trade.entry_price - trade.exit_price_max);
@@ -502,7 +502,12 @@ class Trades {
         });
     }
 
+
     renderHeatmap(seriesData){
+
+        // console.log("Daily Performance", JSON.stringify(seriesData, null, 2));
+
+
         var options = {
           series: seriesData,
           chart: {
@@ -642,7 +647,7 @@ class Trades {
               localStorage.setItem(tradeId, JSON.stringify(cachedData));
             }
 
-            console.log(exitPrices)
+            // console.log(exitPrices)
             
             // Calculate statistics for the trade
             const percentageGainLoss = exitPrices.map(trimPrice => Math.round(((trimPrice - entryPrice) / entryPrice * 100)));
@@ -1148,6 +1153,7 @@ class Trades {
 
         this.closedTrades.then(tradesData => {
           const seriesData = [];
+
           
           // Group trades by userid
           const tradesByUser = tradesData.reduce((acc, trade) => {
@@ -1181,6 +1187,11 @@ class Trades {
               }
             }
           }
+
+          // console.log("Gains vs Losses", JSON.stringify(seriesData, null, 2));
+
+
+
 
           // Configure and render the Bubble Chart
           const options = {
