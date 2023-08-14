@@ -1331,12 +1331,13 @@ class Trades {
 
         var recapDateStart = new Date(recap_date);
         recapDateStart.setUTCHours(0, 0, 0, 0);
-        recapDateStart.setHours(recapDateStart.getHours() - 4);
+        // recapDateStart.setHours(recapDateStart.getHours() - 4);
 
         var recapDateEnd = new Date(recap_date);
         recapDateEnd.setUTCHours(23, 59, 59, 999);
-        recapDateEnd.setHours(recapDateEnd.getHours() - 4);
+        // recapDateEnd.setHours(recapDateEnd.getHours() - 4);
         var trades_query_filter = trades_query.where("exit_date_max", ">=", new Date(recapDateStart)).where("exit_date_max", "<=", new Date(recapDateEnd));
+        // console.log(recapDateEnd)
 
         return new Promise((resolve, reject) => {
             trades_query_filter.get().then(
