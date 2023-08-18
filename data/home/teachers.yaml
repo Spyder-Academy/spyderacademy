@@ -21,14 +21,7 @@ That's why we trade. And we hope to teach you how to trade. Join us on this jour
         label: "Follow on Twitter"
         url: "https://x.com/SpyderAcademy"
 
-    - image: "images/teachers-cash.png"
-      name: "Cash Money Trades"
-      title: "Co-Founder / Instructor"
-      text: "Technical Analysis Trader with 15 years experience trading stocks, and 5 years trading options. Primarily trades using ORB Breakouts, The System (SORBET), and EMA's.<br/><br/>20 years of experience building Software and Coaching teams in Startups/Fortune 500 companies.<br/><br/>Creator of the Cash+ Indicators for Trading View."
-      tickers: "Primarily Trades $SPY and $TSLA."
-      button:
-        label: "Follow on Twitter"
-        url: "https://x.com/CashMoneyTrades"
+    
 
     - image: "images/teachers-gobi.png"
       name: "Cauliflower Calls"
@@ -56,6 +49,15 @@ That's why we trade. And we hope to teach you how to trade. Join us on this jour
       button:
         label: "Follow on Twitter"
         url: "https://x.com/Sysadminsith"
+
+    - image: "images/teachers-cash.png"
+      name: "Cash Money Trades"
+      title: "Co-Founder / Instructor"
+      text: "Technical Analysis Trader with 15 years experience trading stocks, and 5 years trading options. Primarily trades using ORB Breakouts, The System (SORBET), and EMA's.<br/><br/>20 years of experience building Software and Coaching teams in Startups/Fortune 500 companies.<br/><br/>Creator of the Cash+ Indicators for Trading View."
+      tickers: "Primarily Trades $SPY and $TSLA."
+      button:
+        label: "Follow on Twitter"
+        url: "https://x.com/CashMoneyTrades"
 
     - image: "images/teachers-linksnipes.png"
       name: "Link Snipes"
