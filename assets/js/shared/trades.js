@@ -265,12 +265,20 @@ class Trades {
             var avgLoss = Math.round((totalLossFromLosses / numLosses)).toFixed(0);
             var avgWin = Math.round((totalGainsFromWins / numWins)).toFixed(0);
 
-            var winRate = `${Math.round((numWins / numTrades) * 100)}`
-            var avgGain = `${avgGain}%`
+            var winRate = numTrades > 0 ? `${Math.round((numWins / numTrades) * 100)}%` : '-'
+            var winFactor = numLosses > 0 ? profitFactor : "-"
+            var avgGain = numTrades > 0 ? `${avgGain}%` : "-"
 
-            $("#winRate").text(winRate + "%");
+            $("#winRate").text(winRate);
             $("#avgGain").text(avgGain);
-            $("#profitFactor").text(profitFactor + " (" + numBags + "💰)");
+            $("#profitFactor").text(winFactor + " (" + numBags + "💰)");
+
+            if (numTrades == 0){
+              $("#tradeAnalytics").hide()
+            }
+            else{
+              $("#tradeAnalytics").show()
+            }
 
             // show the donut of the wins vs losses
             var winRateChartOptions = {
@@ -454,9 +462,11 @@ class Trades {
 
             // Create the radar chart
             if (this.tradeGainsDOWRadar != null) this.tradeGainsDOWRadar.destroy();
+            
             this.tradeGainsDOWRadar = new ApexCharts(document.querySelector("#tradeGainsDOWRadar"), radarChartOptions);
+            
             this.tradeGainsDOWRadar.render();
-
+            
             // add ai recommendations
             var weakestDayIndex = 0;
             var weakestDayPercentage = tradeWinPercentages[0];
@@ -499,6 +509,7 @@ class Trades {
             else{
               this.addRecommendation("✅ Nice! Your avg loss (" + Math.abs(avgLoss) + "%) is less than your avg win (" + avgWin + "%).")
             }
+          
         });
     }
 
@@ -1246,7 +1257,18 @@ class Trades {
         
         var date = new Date(recap_date);
         var formattedDate = date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
-        $('#tradeRecap').append("<h2 class='text-uppercase p-3'>" + formattedDate + "</h2>");        
+        
+        var recapRow = $("<div class='row'></div>")
+ 
+        var recapHeader = $("<div class='col-10'><h2 class='text-uppercase p-3'>" + formattedDate + "</h2></div>")
+        recapRow.append(recapHeader);
+
+        if (this.filterByUser !== null && this.filterByUser.toLowerCase() == this.userLoggedIn.email.toLowerCase()){
+          var recapButton = $("<div class='col-2 d-flex justify-content-center align-items-center'><button class='btn btn-primary btn-circle' title='Coming Soon'>+</button></div>")
+          recapRow.append(recapButton)
+        }
+
+        $('#tradeRecap').append(recapRow);        
 
         var tradeCard = $('.trade-card-template');
         

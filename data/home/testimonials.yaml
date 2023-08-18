@@ -6,8 +6,8 @@ content:
   text: "<a href='https://www.whop.com/spyder-academy/' target='_blank'>Leave a Review</a> or <a href='https://whop.com/checkout/plan_QiCwlm5hSTMgd/' target='_blank'>Buy us Coffee</a>"
 
   featured:
-    text: "As a new trader looking for a safe and constructive space to develop my skill, this has been, by far, the best group I have been apart of. Truly a safe space with genuine and honest people both as head traders and the traders in the classroom. Grateful to be apart of the team!"
-    client: "@coshjarlos"
+    text: "I have been following some of the mentors for sometime and being able to interact with them via voice and text takes learning to higher level. All of the mentors bring great knowledge and expertise to the table and are always available to clarify things when something is not understood.<br/><br/>The environment they created makes traders of all levels feel comfortable and respected. I really appreciate their approach as it pertains to the psychological part of trading as it can be a very tough hurdle to overcome."
+    client: "@wardo"
     link: "https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_n9NbbxfFeIW95&accessPassId=prod_45GZIGs1lRCGs&a=spyderacademy"
     
 
@@ -38,25 +38,22 @@ content:
       link: "https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_n9NbbxfFeIW95&accessPassId=prod_45GZIGs1lRCGs&a=spyderacademy"
       image: "images/teachers-spiderman.png"
 
-    - text: "Just wanted to thank you personally!! The knowledge you shared changed everything for me. My eyes are now open and I see things a lot clearer. I've been struggling for two years and now I don't feel lost anymore. I have direction and setups I wait on.<br/><br/>Thanks!!"
-      client: "ETAN"
-      image: "images/teachers-pauldozer.png"
-
-    - text: "Cauliflower Calls transformed my trading from inconsistency as a new trader, to finding a successful rhythm in my trading.<br/><br/>The real value in this program was all the breakdowns that have a lot of thought and time to understand why a move happened rather than just simplifying to you see x candle and y indicator. You get both Macro and Micro out of this"
-      client: "lord_coco"
-      image: "images/teachers-gobi.png"
+    - text: "I knew of these guys from an old discord group. Incredible group of smart, generous, supportive people. No bad vibes here. Having a community like this in the world of options trading is highly invaluable. I cannot stress that enough."
+      client: "@MattTheCat"
+      link: "https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_n9NbbxfFeIW95&accessPassId=prod_45GZIGs1lRCGs&a=spyderacademy"
+      image: "images/teachers-spiderman.png"
 
     - text: "Might cry, today is my first bag on a play. <br/><br/>Shout out to @Pavldozer for the morning analysis this morning! <br/><br/>Also thank you to @CashMoneyTrades for the incredible SORBET system!  <br/><br/>The system WORKS, plain and simple!"
       client: "@Habib"
-      image: "images/teachers-pauldozer.png"
+      image: "images/teachers-spiderman.png"
       link: "https://twitter.com/SSKhabibi/status/1661382122790088707?s=20"
 
-    - text: "There's fookin up the market, then there's Link Snipes! 🔥 <br/><br/>Have a day man!"
-      client: "@Moe_Mamba_"
-      image: "images/teachers-linksnipes.png"
-      link: "https://twitter.com/Moe_Mamba_/status/1661401996665012226?s=20"
+    - text: "As a new trader looking for a safe and constructive space to develop my skill, this has been, by far, the best group I have been apart of. Truly a safe space with genuine and honest people both as head traders and the traders in the classroom. Grateful to be apart of the team!"
+      client: "@CoshJarlos"
+      image: "images/teachers-spiderman.png"
+      link: "https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_n9NbbxfFeIW95&accessPassId=prod_45GZIGs1lRCGs&a=spyderacademy"
 
-    - text: "If you're like me and looking for direction and a guide @CashMoneyTrades System and ORB indicators simplify things."
-      client: "@Wardo"
-      image: "images/teachers-cash.png"
-      link: "https://twitter.com/WardoMedina/status/1636736279437099008?s=20"
+    - text: "Really great community. Education and teaching you to fish are the focus but some great call outs along the way too. Someone is on voice all day so you’re never out there on your own. Can’t say enough good stuff about this group, leaders and fellow members."
+      client: "@Coolian"
+      image: "images/teachers-spiderman.png"
+      link: "https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_n9NbbxfFeIW95&accessPassId=prod_45GZIGs1lRCGs&a=spyderacademy"

@@ -124,7 +124,7 @@
 
 
     <div class="container">
-        <div class="row">
+        <div class="row" id="tradeAnalytics" style="display: none">
             <div class="col-lg-6 col-sm-12 my-1">
                 <div class="card shadow border-0 p-3" style="border-radius: 15px; ">
                     <div  id="tradeHeatmap"></div>
@@ -166,8 +166,8 @@
                 </div>
 
             </div>
-
-
+        </div>
+        <div class="row">
             <div class="col-lg-12 col-sm-12 my-1">
                 <div class="card shadow border-0 p-3" style="border-radius: 15px; ">
                     <div class="row membersOnlyContent" id="tradeRecap">
@@ -289,8 +289,12 @@
                 // User is logged in, retrieve the email address
                 const email = user.email;
                 // Display the welcome message with the user's email
-                $("#loginButton").text(email.split("@")[0].toUpperCase())
-                $("#loginButton").off("click");
+                nickname = email.split("@")[0].toUpperCase()
+                $("#loginButton").text(nickname)
+                $("#loginButton").on("click", () => {
+                    selectInstructor(user.email, nickname.toUpperCase())
+                });
+
                 $("#btnSignOut").show();
                 $(".mentor").show();
                 selectInstructor("ALL", "ALL MENTORS");
