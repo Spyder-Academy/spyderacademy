@@ -1,6 +1,6 @@
 
 class TradeRecord {
-    constructor(tradeid, userid, username, ticker, strike, expiration, entry_price, entry_date, notes, exit_price_max, exit_date_max) {
+    constructor(tradeid, userid, username, ticker, strike, expiration, entry_price, entry_date, notes, exit_price_max, exit_date_max, drawdown_max) {
       this.tradeid = tradeid;
       this.userid = userid;
       this.username = username;
@@ -12,10 +12,12 @@ class TradeRecord {
       this.notes = notes;
       this.exit_price_max = exit_price_max;
       this.exit_date_max = exit_date_max;
-
+      this.drawdown_max = drawdown_max;
       this.gainsString = "OPEN";
       this.gainsValue = 0;
       this.trims = "OPEN";
+      this.drawdownValue = "";
+      this.drawdown_max_percentage = 0;
     }
   
     static from_dict(id, source) {
@@ -30,7 +32,8 @@ class TradeRecord {
             source["entry_date"],
             source["notes"],
             source["exit_price_max"],
-            source["exit_date_max"]
+            source["exit_date_max"],
+            source["drawdown_max"]
         );
 
         trade.tradeid = id;
@@ -65,6 +68,18 @@ class TradeRecord {
     
         if ("notes" in source) {
             trade.notes = source["notes"];
+        }
+
+        if ("drawdown_max" in source) {
+          trade.drawdown_max = source["drawdown_max"];
+          if (trade.drawdown_max) {
+            trade.drawdown_max_percentage = Math.round(((trade.drawdown_max - trade.entry_price) / trade.entry_price) * 100)
+            trade.drawdownValue = trade.drawdown_max_percentage.toFixed(0) + "% ($" + trade.drawdown_max.toFixed(2) + ")"
+          }
+          else{
+            trade.drawdown_max_percentage = 0;
+            trade.drawdownValue = "";
+          }
         }
     
         if ("exit_price_max" in source) {
@@ -117,6 +132,7 @@ class TradeRecord {
         notes: this.notes,
         exit_price_max: this.exit_price_max,
         exit_date_max: this.exit_date_max,
+        drawdown_max: this.drawdown_max
       };
   
       if (this.tradeid) {
@@ -162,6 +178,10 @@ class TradeRecord {
       if (this.exit_date_max) {
         dest.exit_date_max = this.exit_date_max;
       }
+
+      if (this.drawdown_max) {
+        dest.drawdown_max = this.drawdown_max;
+      }
   
       return dest;
     }
@@ -201,6 +221,7 @@ class TradeRecord {
         gains=${this.gains},
         gainsValue=${this.gainsValue},
         trims=${this.trims}
+        drawdown_max=${this.drawdown_max}
       )`;
     }
   }
@@ -620,6 +641,7 @@ class Trades {
     async renderTrims(trades) {
       var self = this;
       var tradeData = [];
+      var tradeMaxLoss = [];
       var exitPriceCache = {}; // In-memory cache for exit prices
 
       
@@ -687,6 +709,8 @@ class Trades {
               y: [minVal, q1Val, medianVal, q3Val, maxVal],
             });
 
+           
+
           } catch (error) {
             console.error("Error fetching exit data for trade:", tradeId, error);
           }
@@ -718,7 +742,7 @@ class Trades {
         series: [
           {
             data: tradeData
-          }
+          },
         ],
         yaxis: {
           min: -100,
@@ -932,11 +956,14 @@ class Trades {
         });
 
         // Get the candle data from the database
+        var tradeRef = this.firestore_db.collection("trades").doc(tradeid);
         var candlesRef = this.firestore_db.collection("trades").doc(tradeid).collection("price_history").doc("underlying").collection("candles");
         var optionsRef = this.firestore_db.collection("trades").doc(tradeid).collection("price_history").doc("options_price").collection("candles");
         var entriesRef = this.firestore_db.collection("trades").doc(tradeid).collection("entries");
         var exitsRef = this.firestore_db.collection("trades").doc(tradeid).collection("exits");
     
+       
+        
         candlesRef.get().then((querySnapshot) => {
             var self = this;
             var candleData = [];
@@ -1113,12 +1140,24 @@ class Trades {
                     return a["date_time"].toDate() - b["date_time"].toDate() 
                 });
 
-                entryNotesEl.empty();
-                entryNotesEl.append("<h4>TRADE HISTORY</h4>")
-                entryExitNotes.forEach((t) => {
-                    var direction = t["action"]
-                    entryNotesEl.append("<p><strong>" + t["date_time"].toDate().toLocaleString() + "</strong><br/>" + direction + " at $" + parseFloat(t.price).toFixed(2) + " | " + t.notes + "</p>")
-                })
+                tradeRef.get().then((doc) => {
+                  var tradeEntry = TradeRecord.from_dict(doc.id, doc.data());
+
+                  entryNotesEl.empty();
+                  entryNotesEl.append("<h4>TRADE HISTORY</h4>")
+                  entryExitNotes.forEach((t) => {
+                      var direction = t["action"]
+                      entryNotesEl.append("<p><strong>" + t["date_time"].toDate().toLocaleString() + "</strong><br/>" + direction + " at $" + parseFloat(t.price).toFixed(2) + " | " + t.notes + "</p>")
+                  })
+
+                  // append a line for max drawdown informaton
+                  if (tradeEntry.drawdownValue != ""){
+                    entryNotesEl.append("<p><strong>" + "Max Drawdown" + "</strong><br/>" + tradeEntry.drawdownValue + "</p>")
+                  }
+                  
+                });
+
+                
     
             });
         })
