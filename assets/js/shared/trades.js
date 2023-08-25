@@ -73,7 +73,12 @@ class TradeRecord {
         if ("drawdown_max" in source) {
           trade.drawdown_max = source["drawdown_max"];
           if (trade.drawdown_max) {
+
             trade.drawdown_max_percentage = Math.round(((trade.drawdown_max - trade.entry_price) / trade.entry_price) * 100)
+            if (trade.drawdown_max_percentage > 0){
+              trade.drawdown_max_percentage = 0;
+            }
+
             trade.drawdownValue = trade.drawdown_max_percentage.toFixed(0) + "% ($" + trade.drawdown_max.toFixed(2) + ")"
           }
           else{
@@ -241,6 +246,7 @@ class Trades {
         this.chartWinRate = null;
         this.tradeGainsDOWRadar = null;
         this.chartTrims = null;
+        this.chartDrawdowns = null;
 
     }
 
@@ -257,6 +263,7 @@ class Trades {
         this.renderCalendar();
         this.renderGainsBubbleChart();
         this.renderRecap();
+        this.renderDrawDowns();
     }
 
     renderStats(){
@@ -530,8 +537,113 @@ class Trades {
             else{
               this.addRecommendation("✅ Nice! Your avg loss (" + Math.abs(avgLoss) + "%) is less than your avg win (" + avgWin + "%).")
             }
+
+
+            // what is the average drawdown on losing trades?
+
           
         });
+    }
+
+    renderDrawDowns(trades){
+      this.closedTrades.then(tradesData => {
+
+          // get the counts of winning trades/losing trades based on range of drawdown.
+
+          // Categorize drawdowns
+          var drawdownWinCategories = {
+            "0%": 0,
+            "1-10%": 0,
+            "11-20%": 0,
+            "21-30%": 0,
+            "31-50%": 0,
+            "51%+": 0,
+            // Add more categories here...
+          };
+
+          var drawdownLossCategories = {
+            "0%": 0,
+            "1-10%": 0,
+            "11-20%": 0,
+            "21-30%": 0,
+            "31-50%": 0,
+            "51%+": 0,
+            // Add more categories here...
+          };
+
+          // Iterate through trade records
+          $.each(tradesData, function(index, trade) {
+            var drawdown = trade.drawdown_max_percentage;
+
+            if (trade.gainsValue >= 0){
+              if (trade.drawdown_max && drawdown >= 0) {
+                drawdownWinCategories["0%"]++;
+              } else if (drawdown < -1 && drawdown >= -10) {
+                drawdownWinCategories["1-10%"]++;
+              } else if (drawdown < -10  && drawdown >= -20) {
+                drawdownWinCategories["11-20%"]++;
+              } else if (drawdown < -20  && drawdown >= -30) {
+                drawdownWinCategories["21-30%"]++;
+              } else if (drawdown < -30  && drawdown >= -50) {
+                drawdownWinCategories["31-50%"]++;
+              } else if (drawdown < -50) {
+                drawdownWinCategories["51%+"]++;
+              }
+              // Add more conditions for other categories...
+            }
+
+            else if (trade.gainsValue < 0){
+              if (trade.drawdown_max && drawdown >= 0) {
+                drawdownLossCategories["0%"]++;
+              } else if (drawdown < -1 && drawdown >= -10) {
+                drawdownLossCategories["1-10%"]++;
+              } else if (drawdown < -10  && drawdown >= -20) {
+                drawdownLossCategories["11-20%"]++;
+              } else if (drawdown < -20  && drawdown >= -30) {
+                drawdownLossCategories["21-30%"]++;
+              } else if (drawdown < -30  && drawdown >= -50) {
+                drawdownLossCategories["31-50%"]++;
+              } else if (drawdown < -50) {
+                drawdownLossCategories["51%+"]++;
+              }
+              // Add more conditions for other categories...
+            }
+          });
+
+          // Prepare data for ApexCharts
+          var chartData = {
+            chart: {
+              type: 'bar',
+              height: 350,
+              toolbar: {
+                show: false,
+              }
+            },
+            series: [
+              {
+                name: 'Trades that went green',
+                data: Object.values(drawdownWinCategories),
+              },
+              {
+                name: 'Trades that were cut red',
+                data: Object.values(drawdownLossCategories),
+              }
+            ],
+            xaxis: {
+              categories: Object.keys(drawdownWinCategories),
+            },
+            colors: [ "#BFE1CF", "#cc0000"],
+            title: { text: "WINS AFTER A DRAWDOWN"},
+          };
+
+          // Render the bar chart
+          if (this.chartDrawdowns != null) this.chartDrawdowns.destroy();
+
+          this.chartDrawdowns = new ApexCharts(document.querySelector("#tradeDrawdowns"), chartData);
+          this.chartDrawdowns.render();
+
+
+      });
     }
 
 
@@ -962,7 +1074,7 @@ class Trades {
         var entriesRef = this.firestore_db.collection("trades").doc(tradeid).collection("entries");
         var exitsRef = this.firestore_db.collection("trades").doc(tradeid).collection("exits");
     
-       
+        var hasData = false;
         
         candlesRef.get().then((querySnapshot) => {
             var self = this;
@@ -986,6 +1098,8 @@ class Trades {
                     low: c.l,
                     close: c.c
                 });
+
+                hasData = true;
             });
     
             candleStickSeries.setData(candleData);
@@ -1014,6 +1128,8 @@ class Trades {
                     low: c.l,
                     close: c.c
                 });
+
+                hasData = true;
             });
 
             // Add options series to the chart
@@ -1133,6 +1249,10 @@ class Trades {
 
                 chart.timeScale().fitContent();
 
+                if (hasData == false){
+                  $(el).hide();
+                }
+
                 var entryNotesEl = $(parentEl).find(".entryExitNotes")
                 entryNotesEl.removeClass("d-none");
 
@@ -1147,7 +1267,16 @@ class Trades {
                   entryNotesEl.append("<h4>TRADE HISTORY</h4>")
                   entryExitNotes.forEach((t) => {
                       var direction = t["action"]
-                      entryNotesEl.append("<p><strong>" + t["date_time"].toDate().toLocaleString() + "</strong><br/>" + direction + " at $" + parseFloat(t.price).toFixed(2) + " | " + t.notes + "</p>")
+                      var entryNotes = "<strong>" + t["date_time"].toDate().toLocaleString() + "</strong><br/>" + direction + " at $" + parseFloat(t.price).toFixed(2)
+                      var entryReason = " | " + t.notes
+                      if (t.notes == null){
+                        entryReason = ""
+                      }
+
+                      var entryNotesP = $("<p>")
+                      entryNotesP.append(entryNotes)
+                      entryNotesP.append(entryReason)
+                      entryNotesEl.append(entryNotesP)
                   })
 
                   // append a line for max drawdown informaton
