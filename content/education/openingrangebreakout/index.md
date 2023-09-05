@@ -1,6 +1,6 @@
 +++
 author = "CashMoneyTrades"
-title = "How to Trade the Opening Range Breakout Strategy"
+title = "How to Trade the Opening Range Breakout (ORB) Strategy"
 date = "2023-05-29T09:00:00"
 description = "Learn how to Trade the Opening Range Breakout (ORB) Strategy"
 tags = [
@@ -9,9 +9,9 @@ tags = [
 +++
 
 
- The **Opening Range Breakout (ORB)** is a commonly used strategy where levels of support and resistance for the day are determined from the opening period. The direction for the day is often set at the opening bell - whether it is an uptrend, downtrend, or sideways day.
+ The **Opening Range Breakout (ORB) Strategy** is a commonly used strategy where levels of support and resistance for the day are determined from the opening period. The direction for the day is often set at the opening bell - whether it is an uptrend, downtrend, or sideways day.
 
-The **15 minute ORB** is determined by using the High and Low from the first 15 minutes of the regular session (930am - 945am ET), but there are others who have successfully traded with a 5 minute ORB or even a 30 minute ORB strategy.
+The **15 minute ORB Strategy** is determined by using the High and Low from the first 15 minutes of the regular session (930am - 945am ET), but there are others who have successfully traded with a 5 minute ORB or even a 30 minute ORB strategy.
 
 What we have found is that the price of a security will tend to retest and bounce and breakout from these opening highs and lows.  You can take advantage of that price action by setting those levels on your charting software and triggering Calls or Puts when those levels cross with volume or are retested.
 
@@ -20,9 +20,9 @@ Whats more, the 50% and 100% levels from the ORB range also tend to attract the 
 {{< figure class="floatleft" src="images/orb.png" >}}
 
 
-#### Recommended ORB Indicator
+#### Recommended ORB Strategy Indicator
 
-If you use [TradingView](https://www.tradingview.com/gopro/?share_your_love=amitgandhinz), you can integrate one of the best (and free) [ORB indicator](https://www.tradingview.com/script/ZpONAzhm-ORB-with-Price-Targets/) directly into your charts, created by our very own CashMoneyTrades.  The ORB Indicator will automatically plot the high and low opening range lines (optionally shaded), and plot the Price Targets.
+If you use [TradingView](https://www.tradingview.com/gopro/?share_your_love=amitgandhinz), you can integrate the best (and free) [ORB indicator](https://www.tradingview.com/script/ZpONAzhm-ORB-with-Price-Targets/) directly into your charts, created by our very own CashMoneyTrades.  The ORB Strategy Indicator will automatically plot the high and low opening range lines (optionally shaded), and plot the Price Targets.
 
 
 Here are some examples of where ORB levels have played out beautifully.
@@ -30,7 +30,7 @@ Here are some examples of where ORB levels have played out beautifully.
 ![TSLA ORB High Breakout](images/ORB_TESLA.png)
 ![TSLA ORB Break Hook and Go](images/ORB_TESLA_BHG.png)
 
-#### How to Trade the Opening Range
+#### How to Trade the Opening Range Breakout Strategy
 
 In these examples, I will be referring to the 15 minute opening range.  But you can apply these same principles to any of the other time ranges (5min, 15min, 30min).
 
@@ -68,13 +68,13 @@ Just because a candle wicks above your ORB High level, you should NOT consider t
 
 The last thing you want is for the candle to wick above your level, only to be rejected back down.  A closed candle has higher conviction that the level will hold.
 
-#### How to Short with ORB
+#### How to Short with The ORB Strategy
 
-The Opening Range Breakout is not just for CALLS.  In the examples above I referenced the ORB High level and getting into CALLs above that level.  Likewise, the ORB Low level can be used to allow you to play PUTs.  
+The Opening Range Breakout strategy is not just for CALLS.  In the examples above I referenced the ORB High level and getting into CALLs above that level.  Likewise, the ORB Low level can be used to allow you to play PUTs.  
 
 The advantage of this is you dont need to hold a market bias going into a trade.  If its below the ORB Low level, and the market is looking weak, then its a good indicator to short the stock by buying PUTs.
 
-#### What other indicators work well with ORB
+#### What other indicators work well with the ORB Strategy
 
 I will usually overlay the 9 ema (on the 5m chart) and VWAP alongside the ORB indicator.  The 9ema is great to use as support when in CALLs and as resistance when in PUTs.  If getting into CALLs and price is below the 9ema (5m chart), then its a no entry sign.  
 
@@ -82,7 +82,7 @@ Likewise VWAP should also support your trade as another level of support/resista
 
 #### When to Exit the trade
 
-The ORB indicator for Trading View will give you price targets based on the 50% and 100% of the opening range.  Price tends to reject at these levels and so are good profit target areas to start trimming your position.  
+The ORB Strategy indicator for Trading View will give you price targets based on the 50% and 100% of the opening range.  Price tends to reject at these levels and so are good profit target areas to start trimming your position.  
 
 Likewise the 5m 9ema is another great moving average to keep you in a trade while the price stays above it.  You can exit when the price crosses the 5m 9ema.  
 

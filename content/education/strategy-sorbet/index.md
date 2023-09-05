@@ -9,16 +9,16 @@ tags:
 ---
 
 
-The SORBET strategy combines two already great strategies - [Opening Range Breakout (ORB)](/education/openingrangebreakout/), and [The System](/education/strategy-thesystem/)], to give consistent A+ setups.
+The SORBET strategy combines two already great strategies - [Opening Range Breakout (ORB) Strategy](/education/openingrangebreakout/), and [The System Strategy](/education/strategy-thesystem/)], to give consistent A+ setups.
 
-The System dictates the directional trend of the higher time frame chart, while ORB dictates when you should enter and exit a trade based on the ORB levels set in the first 15 minutes of the day.
+The System dictates the directional trend of the higher time frame chart, while the ORB Strategy dictates when you should enter and exit a trade based on the ORB levels set in the first 15 minutes of the day.
 
 When you combine the two strategies, you end up taking Opening Range Breakout trades in the direction of the higher time frame trends, thus giving you a significantly higher probability of being in the right direction.
 
-SORBET works best on SPX/SPY and TSLA.
+The SORBET Strategy works best on SPX/SPY and TSLA.
 
 
-#### WHY SORBET?
+#### WHY THE SORBET STRATEGY?
 
 ##### PATIENCE
 Patience is key for being a successful day trader.  For me, SORBET's clear rules for when to enter a trade allows me to patiently wait for that setup to occur.  If I don't get it, then I may not even make a trade that day.  Other days I get the setup early on in the morning and I am done trading by 11am ET.  As I have traded SORBET for many months now, I've come to realize that I am most successful when I wait for the set up.
@@ -45,12 +45,12 @@ Generally, that means if you are trading above the 10/50sma cloud on the 30min t
 
 
 ##### THE OPENING RANGE BREAKOUT
-The second part of SORBET is the ORB.  The Opening Range Breakout works by taking the high and low of the first 15 minutes of regular session (so 9:30am - 9:45am ET).  After 9:45am, if price breaks and holds above the ORB High level, then that is a Bullish move, and you want to look for longs.  Likewise, if price breaks and holds below the ORB Low Level, then that is a Bearish move, and you want to look for shorts.
+The second part of SORBET is the ORB Strategy.  The [Opening Range Breakout (ORB) Strategy](/education/openingrangebreakout/) works by taking the high and low of the first 15 minutes of regular session (so 9:30am - 9:45am ET).  After 9:45am, if price breaks and holds above the ORB High level, then that is a Bullish move, and you want to look for longs.  Likewise, if price breaks and holds below the ORB Low Level, then that is a Bearish move, and you want to look for shorts.
 
 ##### SORBET - THE A+ STRATEGY
 SORBET becomes an A+ strategy when you combine the above two concepts.  The higher timeframe trend from The System tells you the way the market is moving.  While the ORB tells you the way the market wants to move on the particular day.  When both of these align, you get a higher conviction trade in the direction of the trend.  So, get long when above the cloud AND above ORB.  Get short when below the cloud AND below ORB. Avoid trading while inside the ORB range and inside the System Cloud.
 
-I used to trade ORB alone (before I learned about The System), and my biggest frustration was getting the fake breakouts, or getting chopped up on sideways days where the ORB levels would break, but there would be no continuation.  Once I learned about The System, I was able to avoid chop days, and move the probability of winning trades in my direction by trading the trend.
+I used to trade the [Opening Range Breakout (ORB) Strategy](/education/openingrangebreakout/) alone (before I learned about The System), and my biggest frustration was getting the fake breakouts, or getting chopped up on sideways days where the ORB levels would break, but there would be no continuation.  Once I learned about The System, I was able to avoid chop days, and move the probability of winning trades in my direction by trading the trend.
 
 
 
