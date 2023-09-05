@@ -2,19 +2,19 @@
 author: "CashMoneyTrades"
 title: "How to Trade The System Strategy"
 date:  2023-06-11T00:00:00-04:00
-description: "Learn how to trade The System strategy and improve your win rate by knowing the market direction!"
+description: "Learn how to trade The System strategy using the 10/50 SMA Moving Average Crossover, and improve your win rate by knowing the market direction!"
 tags:
   - "Strategies"
 
 ---
 
 
-The System Strategy is trading based on the 10 SMA and 50 SMA crossover on the higher timeframe 30min and hourly charts.  
+The System Strategy is trading based on the 10 SMA and 50 SMA moving average crossover on the higher timeframe 30min and hourly charts.  
 
 It was created by [@TraderBJones](https://twitter.com/MasterBJones).
 
 
-Regardless of your trading style, The System allows you to have a slighly higher macro direction in mind while you trade on your shorter 5m or 1m timeframes.  When all timeframes line up in direction, 
+Regardless of your trading style, The System allows you to have a higher macro direction in mind while you trade on your shorter 5m or 1m timeframes.  When all timeframes line up in direction, you get a powerful A+ strategy.
 
 #### How to Trade The System Strategy
 
