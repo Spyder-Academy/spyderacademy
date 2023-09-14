@@ -62,10 +62,6 @@ menus:
       url: "/#testimonials"
       weight: 3
 
-    - name: "Buy Us Coffee"
-      url: "https://whop.com/checkout/plan_QiCwlm5hSTMgd/"
-      weight: 4
-
     - name: "Education"
       url: "/education"
       weight: 5
