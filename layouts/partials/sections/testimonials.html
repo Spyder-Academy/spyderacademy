@@ -1,6 +1,6 @@
 <section id="{{ .id }}" class="section testimonials py-5">
   <div class="container">
-    <div class="row pb-5">
+    <div class="row pb-1">
       <div class="col-12">
         {{ with .content.title }}
           <h3 class="fs-1 fw-bold text-center text-primary pb-3">{{ . }}</h3>
@@ -9,114 +9,23 @@
           <p class="text-black-61 text-center pb-3">{{ . | safeHTML }}</p>
         {{ end }}
       </div>
-      <div class="col-12 text-center" style="color: gold">
-        {{ partial "shared/rating.html" }}
-      </div>
     </div>
-    <div class="row justify-content-center mb-3">
-      {{ with .content.featured }}
-      <div class="col-lg-8 col-sm-12 d-flex flex-column ">
-        <div class="card d-flex flex-row align-items-start border-0 shadow p-5">
-          <p class="card-text text-black-61 px-5">"{{ .text | safeHTML  }}" <a class="fw-bold text-primary text-nowrap text-decoration-none" href="{{ .link }}" title="{{ .client }}" target="_blank">- {{ .client }}</a></p>
+
+    <div class="row text-center">
+      {{ range $i, $e := first 50 (after 0 .content.list) }}
+      <div class="col-md-4 mb-5 mb-md-4 d-flex">
+        <div class="card shadow border-0 testimonial-card d-flex" style="border-radius: 15px;">
+          <div class="card-header">
+            <p class="dark-grey-text mt-4 text-lowercase"><a class="fw-bold text-primary  text-nowrap text-decoration-none" href="{{ .link }}" title="{{ .client }}" target="_blank">{{ .client }}</a><br/>{{ partial "shared/rating.html" }}</p>
+          </div>
+          <div class="card-body">
+            <p class="card-text text-black-61 px-5 mb-4 text-justify"  >{{ $e.text | safeHTML }}</p>
+          </div>
         </div>
       </div>
       {{ end }}
     </div>
 
-    <div id="carouselReviews" class="carousel slide d-none d-lg-block carousel-dark" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active p-5" data-bs-interval="5000">
-          <div class="row text-center">
-            {{ range $i, $e := first 3 (after 0 .content.list) }}
-            <div class="col-md-4 mb-5 mb-md-0 d-flex">
-              <div class="card shadow border-0 testimonial-card d-flex" style="border-radius: 15px;">
-                {{ $colors := (slice  "#b3b3c8"  "#bfe1cf" "#e9e4d7" ) }}
-                <div class="card-up" style="background-color: {{ index $colors (mod $i 3) }}"></div>
-                <div class="avatar mx-auto bg-white">
-                  <img src="{{ $e.image }}" alt="{{ $e.image }}" class="rounded-circle img-fluid" />
-                </div>
-                <div class="card-body">
-                  <p class="card-text text-black-61 px-5 mb-4"  >{{ $e.text | safeHTML }}</p>
-                </div>
-                <div class="card-footer">
-                  <p class="dark-grey-text mt-4">{{ partial "shared/rating.html" }}<br/><a class="fw-bold text-primary text-nowrap text-decoration-none" href="{{ .link }}" title="{{ .client }}" target="_blank">{{ .client }}</a></p>
-                </div>
-              </div>
-            </div>
-            {{ end }}
-          </div>
-        </div>
-        <div class="carousel-item p-5">
-          <div class="row text-center d-flex">
-            {{ range $i, $e := first 3 (after 3 .content.list) }}
-            <div class="col-md-4 mb-5 mb-md-0 d-flex">
-              <div class="card shadow border-0 testimonial-card d-flex" style="border-radius: 15px;">
-                {{ $colors := (slice  "#b3b3c8"  "#bfe1cf" "#e9e4d7" ) }}
-                <div class="card-up" style="background-color: {{ index $colors (mod $i 4) }}"></div>
-                <div class="avatar mx-auto bg-white">
-                  <img src="{{ $e.image }}" class="rounded-circle img-fluid" />
-                </div>
-                <div class="card-body">
-                  <p class="card-text text-black-61 px-5 mb-4" >{{ $e.text | safeHTML }}</p>
-                </div>
-                <div class="card-footer">
-                  <p class="dark-grey-text mt-4">{{ partial "shared/rating.html" }}<br/><a class="fw-bold text-primary text-nowrap text-decoration-none" href="{{ .link }}" title="{{ .client }}" target="_blank">{{ .client }}</a></p>
-                </div>
-              </div>
-            </div>
-            {{ end }}
-          </div>
-        </div>
-        <div class="carousel-item p-5">
-          <div class="row text-center d-flex">
-            {{ range $i, $e := first 3 (after 6 .content.list) }}
-            <div class="col-md-4 mb-5 mb-md-0 d-flex">
-              <div class="card shadow border-0 testimonial-card  d-flex" style="border-radius: 15px;">
-                {{ $colors := (slice  "#b3b3c8"  "#bfe1cf" "#e9e4d7" ) }}
-                <div class="card-up" style="background-color: {{ index $colors (mod $i 4) }}"></div>
-                <div class="avatar mx-auto bg-white">
-                  <img src="{{ $e.image }}" class="rounded-circle img-fluid" />
-                </div>
-                <div class="card-body">
-                  <p class="card-text text-black-61 px-5 mb-4" >{{ $e.text | safeHTML }}</p>
-                </div>
-                <div class="card-footer">
-                  <p class="dark-grey-text mt-4">{{ partial "shared/rating.html" }}<br/><a class="fw-bold text-primary text-nowrap text-decoration-none" href="{{ .link }}" title="{{ .client }}" target="_blank">{{ .client }}</a></p>
-                </div>
-              </div>
-            </div>
-            {{ end }}
-          </div>
-        </div>
-        
-      </div>
-    </div>
-
-    <div id="carouselReviewsSmall" class="carousel slide d-sm-block d-md-none" data-bs-ride="carousel">
-      <div class="carousel-inner">
-          {{ range $i, $e := .content.list }}
-          <div class="carousel-item {{ if eq $i  0 }} active {{ end }}" data-bs-interval="5000">
-            <div class="row text-center d-flex">
-              <div class="col-md-4 mb-5 mb-md-0 d-flex">
-                <div class="card shadow border-0 testimonial-card" style="border-radius: 15px;">
-                  {{ $colors := (slice  "#ffbd59" "#2d5772" "#29741d" "#ffbd59" "#2d5772" "#29741d" "#ffbd59" "#2d5772" "#29741d") }}
-                  <div class="card-up" style="background-color: {{ index $colors (mod $i 3) }}"></div>
-                  <div class="avatar mx-auto bg-white">
-                    <img src="{{ $e.image }}" class="rounded-circle img-fluid" />
-                  </div>
-                  <div class="card-body">
-                    <p class="card-text text-black-61 px-5 mb-4"  style="height: 18em" >{{ $e.text | safeHTML }}</p>
-                  </div>
-                  <div class="card-footer">
-                    <p class="dark-grey-text mt-4"><i class="fas fa-quote-left pe-2"></i><a class="fw-bold text-primary text-nowrap text-decoration-none" href="{{ .link }}" target="_blank">{{ .client }}</a></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        {{ end }}
-      </div>
-    </div>
 
     <div class="row justify-content-center">
       <div class="col-lg-3 col-sm-12">

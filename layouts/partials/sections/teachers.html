@@ -1,104 +1,51 @@
 <section id="{{ .id }}" class="section teachers py-5 bg-blue-light">
   <div class="container">
     <div class="row justify-content-center pb-5 ">
-      <div class="col-12 col-xl-6">
+      <div class="col-12">
         {{ with .content.title }}
           <h3 class="fs-1 fw-bold text-center text-primary pb-3">{{ . }}</h3>
         {{ end }}
         {{ with .content.text }}
           <p class="text-black-61 text-center pb-3">{{ . }}</p>
         {{ end }}
-      </div>
-    </div>
-
-
-    <div class="accordion container py-0" id="instructorList">
-      <!-- Each Instructor -->
-      <div class="d-flex flex-row flex-nowrap pb-1 overflow-auto" >
-        {{ range $i, $e := .content.cards }}
-        <div class="card shadow border-0 p-3 m-3" style="border-radius: 2em; background-color: #B3B3C8; width: 20em; min-width: 300px;" data-bs-toggle="collapse" data-bs-target="#instructor_{{ $i }}" aria-expanded="true" aria-controls="instructor_{{ $i }}">
-          <div class="card-body p-0">
-              <div class="container-fluid p-0 m-0">
-              <div class="row  align-items-center ">
-                  <div class="col-4 p-3 m-0">
-                    {{ with $e.image }}
-                      {{ with resources.Get . }}
-                        <img class="img-fluid" src="{{ .Permalink }}" alt="{{ $e.name }}"  style="border-radius: 20px;" />
-                      {{ end }}
-                    {{ end }}
-                  </div>
-                  <div class="col-8">
-                  <p class="small p-0 m-0">{{ $e.title }}</p>
-                  <strong>{{ $e.name }}</strong>
-                  </div>
-              </div>
-              </div>
+        {{ with .content.description }}
+        <div class="card shadow border-0 testimonial-card d-flex" style="border-radius: 15px;">
+          <div class="card-body">
+          <p class="card-text text-black-61 text-justify p-5">{{ . | safeHTML }}</p>
           </div>
         </div>
+
         {{ end }}
       </div>
-
-      <div class="row d-flex justify-content-center align-items-top ">
-        <div class="col-12 py-0 ">
-          <!-- Each Instructor Blurb -->
-          {{ range $i, $e := .content.cards }}
-          <div id="instructor_{{ $i }}" class=" collapse card shadow border-0 m-2 princing-item testimonial-card {{ if (eq $i 7) }} show {{ end }}" style="border-radius: 2em;" aria-labelledby="instructor_{{ $i }}" data-bs-parent="#instructorList">
-            <div class="card-up" style="background-color: #B3B3C8;">
-              <div class="container-fluid p-0 m-0 h-100">
-                <div class="row align-items-center h-100 ">
-                  <div class="col-12 text-center">
-                    <p class="small p-0 m-0">{{ $e.title }}</p>
-                    <strong class="text-uppercase">{{ $e.name }}</strong>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card-body">
-              <p class="card-text text-black-61 px-5 mb-4"  >{{ $e.text | safeHTML}}</p>
-              <p class="card-text text-danger px-5 mb-4"  >{{ $e.tickers | safeHTML}}</p>
-            </div>
-            <div class="card-footer">
-              {{ with $e.button }}
-                <a class="btn btn-primary my-4 mx-5" href="{{ .url }}" title="Follow {{ $e.name }} on Twitter" target="_blank">
-                  <span class="p-2" style="color: #fff;">{{ partial "icons/x.html" }}</span> 
-                  <span>{{ .label }}</span>
-                </a>
-              {{ end }}
-            </div>
-          </div>
-          {{ end }}
-        </div>
-      </div>
-      
-
-        <!-- <div class="col-12 py-3">
-          {{ range $i, $e := .content.cards }}
-          {{ $idx := add $i 1}}
-          <div class="accordion-item card shadow border-0 m-2" style="border-radius: 2em; width: 20em;" data-bs-toggle="collapse" data-bs-target="#instructor_{{ $idx }}" aria-expanded="true" aria-controls="instructor_{{ $idx }}">
-            <div class="container">
-              <div class="row">
-                <div class="col-3 p-2">
-                  {{ with $e.image }}
-                    {{ with resources.Get . }}
-                      <img class="img-fluid" src="{{ .Permalink }}" alt="{{ .Title }}"  style="border-radius: 20px;" />
-                    {{ end }}
-                  {{ end }}
-                </div>
-                <div class="col-8">
-                  <div class="card-body">
-                    <strong class="mb-1">{{ $e.name }}</strong>
-                    <p class="card-text">{{ $e.title }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          {{ end }} -->
-          <!-- Add more cards for other persons -->
-        </div>
-        
-      </div>
     </div>
-    
+
+    <div class="row">
+      {{ range $i, $e := .content.cards }}
+      <!-- column  -->
+      <div class="col-lg-3 mb-4">
+        <!-- Row -->
+        <div class="row">
+          <div class="col-md-12">
+            {{ with $e.image }}
+              {{ with resources.Get . }}
+                <img class="img-fluid rounded-circle" src="{{ .Permalink }}" alt="{{ $e.name }}"  style="border-radius: 20px;" />
+              {{ end }}
+            {{ end }}
+          </div>
+          <div class="col-md-12 text-center">
+            <div class="pt-2">
+              <h5 class="mt-4 font-weight-medium mb-0">{{ $e.name }}</h5>
+              <h6 class="subtitle mb-3 font-weight-bold">{{ $e.title }}</h6>
+              <p class="small font-weight-light">{{ $e.text | safeHTML}}</p>
+            </div>
+          </div>
+        </div>
+        <!-- Row -->
+      </div>
+      <!-- column  -->
+      {{ end }}
+
+    </div>
+
   </div>
 </section>

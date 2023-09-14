@@ -2,31 +2,22 @@ enabled: true
 id: "teachers"
 
 content:
-  title: "Our Team"
-  text: "Follow our Team on Twitter and learn from the amazing content they put out!"
-
-  cards:
-
-    - image: "images/teachers-spiderman.png"
-      name: "Spyder Academy"
-      title: ""
-      text: "Spyder Academy was born out of frustration with the low-quality of trading education available today. Our community is purely focused on education. We understand the pain of new traders - losses, mental fatigue, and almost giving up. Having overcome these obstacles, we pay it forward by helping serious traders at a deeply personal level.
+  title: "Experienced & Professional Team"
+  text: "Rely on our amazing Team of Instructors every day to guide you with the markets."
+  description: "Spyder Academy was born out of frustration with the low-quality of trading education available today. Our community is purely focused on education. We understand the pain of new traders - losses, mental fatigue, and almost giving up. Having overcome these obstacles, we pay it forward by helping serious traders at a deeply personal level.
 <br/><br/>
 Our instructors come from various backgrounds, having mentored 200+ people at Fortune 500 companies. We have traders covering different trading styles. What unites us is our shared desire to teach. We teach our strategies, why we enter and exit trades, and the rules you need to trade successfully.
 <br/><br/>
 Imagine a time when you're making more money from trading than from your current job. A time when you're free to do the things that truly make you happy. A time when you're consistently gaining profits and have conquered the mental side of trading.
 <br/><br/>
 That's why we trade. And we hope to teach you how to trade. Join us on this journey, and we look forward to helping you achieve your goals."
-      button:
-        label: "Follow on Twitter"
-        url: "https://x.com/SpyderAcademy"
 
-    
+  cards:
 
     - image: "images/teachers-gobi.png"
       name: "Cauliflower Calls"
       title: "Co-Founder / Instructor"
-      text: "Technical Analysis Trader with 5 years of experience, primarily trading using SATY ATR Levels and Pivot Ribbons.<br/><br/>Trading Mentor/Educator with over 20 successful trading students."
+      text: "Trader with 5 years of experience, primarily trading using SATY ATR Levels and Pivot Ribbons."
       tickers: "Primarily Trades $SPY"
       button:
         label: "Follow on Twitter"
@@ -35,7 +26,7 @@ That's why we trade. And we hope to teach you how to trade. Join us on this jour
     - image: "images/teachers-pauldozer.png"
       name: "Pauldozer"
       title: "Co-Founder / Instructor"
-      text: "Technical Analysis Trader that employs price action/volume to enhance the SORBET strategy for short term options trading. Long-term Investor for 10+ years and Options Trader for 4+ years.<br/><br/>12+ years of experience in the DoD contracting space in Contracts/Finance/Administration/Management/Analysis, wide general knowledge base."
+      text: "Employs price action/volume to enhance the SORBET strategy for short term options trading."
       tickers: "Primarily trades $TSLA. Secondarily trades Large Caps."
       button:
         label: "Follow on Twitter"
@@ -44,7 +35,7 @@ That's why we trade. And we hope to teach you how to trade. Join us on this jour
     - image: "images/teachers-sith.png"
       name: "Sith"
       title: "Co-Founder / Instructor"
-      text: "Full-Time Options with 4 Years Experience.<br/><br/>Primarily trades with Technical Analysis and trends with an emphasis on preparation and entry/exit with specializations in macroeconomics and turning around losing traders.<br/><br/>8+ Years Experience as an Investor. Previously spent 20+ years as an I.T. Systems and Cloud Infrastructure Engineer."
+      text: "Primarily trades with Technical Analysis and Trends with an emphasis on trade plans and improving struggling traders."
       tickers: "Trades: $SPY $QQQ Mega Caps"
       button:
         label: "Follow on Twitter"
@@ -53,7 +44,7 @@ That's why we trade. And we hope to teach you how to trade. Join us on this jour
     - image: "images/teachers-cash.png"
       name: "Cash Money Trades"
       title: "Co-Founder / Instructor"
-      text: "Technical Analysis Trader with 15 years experience trading stocks, and 5 years trading options. Primarily trades using ORB Breakouts, The System (SORBET), and EMA's.<br/><br/>20 years of experience building Software and Coaching teams in Startups/Fortune 500 companies.<br/><br/>Creator of the Cash+ Indicators for Trading View."
+      text: "Primarily trades using ORB Breakouts, The System (SORBET), and EMA's with a focus on data driven decision making."
       tickers: "Primarily Trades $SPY and $TSLA."
       button:
         label: "Follow on Twitter"
@@ -62,7 +53,7 @@ That's why we trade. And we hope to teach you how to trade. Join us on this jour
     - image: "images/teachers-linksnipes.png"
       name: "Link Snipes"
       title: "Mentor"
-      text: "Technical analysis trader that specializes in volume price analysis, supply & demand, and relative weakness/strength. Primarily trades SPY/Mega Cap Tech Tickers.<br/><br/>8 Years of experience as an investor, and 4 years in option trading."
+      text: "Technical Analysis Trader specializing in volume price analysis, supply & demand, and relative weakness/strength."
       tickers: "Trades $SPY and Mega Cap Tech"
       button:
         label: "Follow on Twitter"
@@ -71,7 +62,7 @@ That's why we trade. And we hope to teach you how to trade. Join us on this jour
     - image: "images/teachers-woody.png"
       name: "Woody"
       title: "Mentor"
-      text: "Technical Analysis Trader for the past 4 years.  Spent three years focusing on small caps, swing trades and theta gang options strategies.<br/><br/>Now focuses on long and short options day trading using SORBET, SATY ATR/Pivot (Vomy) and Supply and Demand with Key Fib Levels.<br/><br/>Over 10 years as an active Investor.  Over 30 years in leadership positions in the petroleum sector and insurance. "
+      text: "Technical Analysis Trader focusing on small caps, swing trades and theta gang options strategies. "
       tickers: "Trades SPY, TSLA, QQQ and Mega Caps"
       button:
         label: "Follow on Twitter"
@@ -80,7 +71,7 @@ That's why we trade. And we hope to teach you how to trade. Join us on this jour
     - image: "images/teachers-mrwoofers.png"
       name: "Mr Woofers"
       title: "Mentor"
-      text: "Momentum trader primarily using supply and demand zones coupled with The System for trading.<br/><br/>Primarily trading large cap stocks on a daily basis with some swing trading added from time to time.<br/><br/>29 years of experience as a long term investor and 4 years in option trading."
+      text: "Momentum trader primarily using supply and demand zones coupled with The System for trading."
       tickers: "Trades SPY/SPX and Mega Cap Tech"
       button:
         label: "Follow on Twitter"
