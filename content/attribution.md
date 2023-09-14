@@ -1,5 +1,6 @@
 +++
-title = "Attribution"
+title = "Partners and Software Attribution"
+description = "The Spyder Academy website utilizes software from a variety of partners and sources."
 date = "2023-05-05"
 disableShare = true
 +++

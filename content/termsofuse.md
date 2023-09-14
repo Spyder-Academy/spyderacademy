@@ -1,5 +1,6 @@
 +++
-title = "Terms Of Use"
+title = "Our Standard Terms Of Use"
+description = "Use of Spyder Academy services are subject to the following Terms of Use."
 date = "2023-05-05"
 disableShare = true
 +++

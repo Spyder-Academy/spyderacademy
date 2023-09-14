@@ -248,10 +248,23 @@ class Trades {
         this.chartTrims = null;
         this.chartDrawdowns = null;
 
+        this.tradesCollection = this.firestore_db.collection("trades");
+        this.userMode = false;
+
     }
 
     selectUser(username){
         this.filterByUser = username !== null ? username.toString() : null;
+
+        if (this.filterByUser !== null && this.filterByUser.toLowerCase() == this.userLoggedIn.uid.toLowerCase()){
+          this.tradesCollection =  this.firestore_db.collection("users").doc(this.userLoggedIn.email).collection("trades")
+          this.userMode = true;
+        }
+        else{
+          this.tradesCollection = this.firestore_db.collection("trades")
+          this.userMode = false;
+        }
+
         this.closedTrades = this._getAllClosedTrades();
     }
 
@@ -761,7 +774,7 @@ class Trades {
         var tradeId = trade.tradeid;
         var entryPrice = trade.entry_price;
     
-        var exitsRef = this.firestore_db.collection("trades").doc(tradeId).collection("exits");
+        var exitsRef = this.tradesCollection.doc(tradeId).collection("exits");
     
         if (trade.exit_price_max != null)
         {
@@ -1068,11 +1081,11 @@ class Trades {
         });
 
         // Get the candle data from the database
-        var tradeRef = this.firestore_db.collection("trades").doc(tradeid);
-        var candlesRef = this.firestore_db.collection("trades").doc(tradeid).collection("price_history").doc("underlying").collection("candles");
-        var optionsRef = this.firestore_db.collection("trades").doc(tradeid).collection("price_history").doc("options_price").collection("candles");
-        var entriesRef = this.firestore_db.collection("trades").doc(tradeid).collection("entries");
-        var exitsRef = this.firestore_db.collection("trades").doc(tradeid).collection("exits");
+        var tradeRef = this.tradesCollection.doc(tradeid);
+        var candlesRef = this.tradesCollection.doc(tradeid).collection("price_history").doc("underlying").collection("candles");
+        var optionsRef = this.tradesCollection.doc(tradeid).collection("price_history").doc("options_price").collection("candles");
+        var entriesRef = this.tradesCollection.doc(tradeid).collection("entries");
+        var exitsRef = this.tradesCollection.doc(tradeid).collection("exits");
     
         var hasData = false;
         
@@ -1283,6 +1296,12 @@ class Trades {
                   if (tradeEntry.drawdownValue != ""){
                     entryNotesEl.append("<p><strong>" + "Max Drawdown" + "</strong><br/>" + tradeEntry.drawdownValue + "</p>")
                   }
+
+                  // link button to add an execution (eg average in, trim)
+                  if (this.userMode){
+                    entryNotesEl.append("<p><a class='secondary' href='#' onclick='showNewTradeExecution(\"" + tradeEntry.tradeid + "\", \"" + tradeEntry.ticker.toUpperCase() + " " + tradeEntry.strike.toUpperCase() + "\");'>" + "Add Execution" + "</a></p>");
+                  }
+
                   
                 });
 
@@ -1431,8 +1450,8 @@ class Trades {
         var recapHeader = $("<div class='col-10'><h2 class='text-uppercase p-3'>" + formattedDate + "</h2></div>")
         recapRow.append(recapHeader);
 
-        if (this.filterByUser !== null && this.filterByUser.toLowerCase() == this.userLoggedIn.email.toLowerCase()){
-          var recapButton = $("<div class='col-2 d-flex justify-content-center align-items-center'><button class='btn btn-primary btn-circle' title='Coming Soon'>+</button></div>")
+        if (this.userMode){
+          var recapButton = $("<div class='col-2 d-flex justify-content-center align-items-center'><button class='btn btn-primary btn-circle' title='Add Trade' onclick='showTradeModal();'>+</button></div>")
           recapRow.append(recapButton)
         }
 
@@ -1485,9 +1504,8 @@ class Trades {
 
         console.log("Query Firebase - getOpenTrades", recap_date)
 
-        var trades_query = this.firestore_db.collection("trades");
-
-        var trades_query_filter = trades_query.where("exit_date_max", "==", null).where("entry_date", "<=", entryDate);
+        
+        var trades_query_filter = this.tradesCollection.where("exit_date_max", "==", null).where("entry_date", "<=", entryDate);
 
         return new Promise((resolve, reject) => {
             trades_query_filter.get().then(
@@ -1497,6 +1515,7 @@ class Trades {
                     trades_snapshot.forEach(
                         function(doc) {
                             var tradeEntry = TradeRecord.from_dict(doc.id, doc.data());
+                            // console.log(tradeEntry)
 
                             var showTrade = self.filterByUser == null || tradeEntry.userid == self.filterByUser
                             
@@ -1516,7 +1535,6 @@ class Trades {
         var self = this;
 
         // Query for exited trades
-        var trades_query = this.firestore_db.collection("trades");
         console.log("Query Firebase - getClosedTrades", recap_date)
 
         var recapDateStart = new Date(recap_date);
@@ -1526,7 +1544,7 @@ class Trades {
         var recapDateEnd = new Date(recap_date);
         recapDateEnd.setUTCHours(23, 59, 59, 999);
         // recapDateEnd.setHours(recapDateEnd.getHours() - 4);
-        var trades_query_filter = trades_query.where("exit_date_max", ">=", new Date(recapDateStart)).where("exit_date_max", "<=", new Date(recapDateEnd));
+        var trades_query_filter = this.tradesCollection.where("exit_date_max", ">=", new Date(recapDateStart)).where("exit_date_max", "<=", new Date(recapDateEnd));
         // console.log(recapDateEnd)
 
         return new Promise((resolve, reject) => {
@@ -1555,7 +1573,7 @@ class Trades {
         var self = this;
 
         console.log("Query Firebase - getAllClosedTrades")
-        var trades_query = this.firestore_db.collection("trades");
+        var trades_query = this.tradesCollection
         return trades_query
           .where('exit_date_max', '>=', new Date("05/22/2023"))
           .get()
@@ -1609,7 +1627,251 @@ class Trades {
         });
     } // end getRecap
 
+    calculateFridayDate() {
+      // Function to calculate the next Friday date
+      var currentDate = new Date();
+      
+      // Get the current day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+      var currentDayOfWeek = currentDate.getDay();
+  
+      // Calculate the number of days until the next Friday
+      var daysUntilNextFriday = 5 - currentDayOfWeek;
+  
+      if (daysUntilNextFriday <= 0) {
+          // If today is Friday or a later day, add 7 days to get to the next Friday
+          daysUntilNextFriday += 7;
+      }
+  
+      // Create a new Date object for the next Friday
+      var nextFridayDate = new Date(currentDate);
+      nextFridayDate.setDate(currentDate.getDate() + daysUntilNextFriday);
+  
+      // Format the date as "YYYY-MM-DD"
+      var formattedDate = nextFridayDate.toISOString().split('T')[0];
+  
+      return formattedDate;
+    }
+  
+    formatDate(date) {
+      // Function to format date as "YYYY-MM-DD"
+      var year = "20" + date.slice(0, 2);
+      var month = date.slice(2, 4);
+      var day = date.slice(4, 6);
+      return year + '-' + month + '-' + day;
+    }
 
+    
+
+    addManualTrade(){
+      if (this.userLoggedIn && this.userMode){
+        var tradeContract = $("#txtTradeContract").val().toUpperCase()
+        var tradeEntryDate = $("#txtTradeEntryDate").val()
+        var tradeEntryTime = $("#txtTradeEntryTime").val()
+        var tradeDatetime = new Date(tradeEntryDate + ' ' + tradeEntryTime);
+        console.log(tradeDatetime)
+
+        var tradePrice = $("#txtTradePrice").val()
+        var tradeNumCons = $("#txtTradeNumContracts").val()
+        var tradeNotes = $("#txtTradeNotes").val()
+
+        var email = firebase.auth().currentUser.email
+        var userid = firebase.auth().currentUser.uid
+
+        // Regular expressions to match the two possible formats
+        var format1Pattern = /^(\w+)\s+(\d+)(C|P)$/;  // Matches "TSLA 300C"
+        var format2Pattern = /^(\w+)\s+(\d{6})(C|P)(\d+)$/;  // Matches "TSLA 230908C300"
+
+        // Check if the input matches the first format
+        var format1Match = tradeContract.match(format1Pattern);
+        if (format1Match) {
+          // Assign values for format 1
+          var tradeTicker = format1Match[1];
+          var tradeStrike = format1Match[2] + format1Match[3];
+
+          if (tradeTicker in ["SPY", "QQQ", "SPX"]){
+            var tradeExp = new Date().toISOString().split('T')[0]; // expires today 0dte default
+          }
+          else if (tradeTicker in ["MES", "ES", "MNQ", "MYM"]){
+            var tradeExp = null // futures dont expire
+          }
+          else{
+            var tradeExp = this.calculateFridayDate();  // Function to calculate this coming Friday date
+          }
+        } else {
+            // Check if the input matches the second format
+            var format2Match = tradeContract.match(format2Pattern);
+
+            if (format2Match) {
+                // Assign values for format 2
+                var tradeTicker = format2Match[1];
+                var expirationDate = format2Match[2];
+                var tradeStrike = format2Match[4] + format2Match[3];
+                var tradeExp = this.formatDate(expirationDate);  // Function to format date as "YYYY-MM-DD"
+            } else {
+                $('#tradeErrorMessage').text("Invalid trade contract format");
+                return false;  // Exit the function if the format is invalid
+            }
+        }
+        
+
+        // Create a new entry in the database for this user's trade
+        var userDocRef = this.firestore_db.collection("users").doc(email);
+        var tradesCollection = userDocRef.collection('trades');
+
+        // Define the data to be saved
+        var tradeData = {
+            "entry_date": tradeDatetime,
+            "num_contracts": tradeNumCons,
+            "entry_price": tradePrice,
+            "exit_date_max": null,
+            "exit_price_max": null,
+            "expiration": tradeExp,
+            "notes": tradeNotes,
+            "strike": tradeStrike,
+            "ticker": tradeTicker,
+            "userid": userid,
+            "username": email,
+        };
+
+        // create the entry record also
+        var entryData = {
+          "date_time": tradeDatetime,
+          "notes": tradeNotes,
+          "price": tradePrice,
+          "num_contracts": tradeNumCons
+        }
+
+
+        // Add a new document to the "trades" subcollection
+        tradesCollection.add(tradeData)
+          .then(function(docRef){
+            var trade_id = docRef.id
+
+            // create the trade entry record
+            tradesCollection.doc(trade_id).collection("entries").add(entryData)
+
+            return true;
+          })
+      }
+      else{
+        $('#tradeErrorMessage').text("User not logged in.");
+        return false;
+      }
+      
+      $('#tradeErrorMessage').text("Saving Trade");
+      return true;
+    }
+
+    async addExecutionTrade() {
+      if (this.userLoggedIn && this.userMode) {
+          try {
+              // Create the trade exit (or average in) trade record
+              var tradeID = $("#txtTradeExecutionID").val();
+              var tradeExecutionAction = $("#txtTradeExecutionAction").val()
+              var tradeExecutionDate = $("#txtTradeExecutionDate").val();
+              var tradeExecutionTime = $("#txtTradeExecutionTime").val();
+              var tradeDatetime = new Date(tradeExecutionDate + ' ' + tradeExecutionTime);
+              var tradeNumCons = $("#txtTradeExecutionContracts").val();
+              var tradePrice = $("#txtTradeExecutionPrice").val();
+              var tradeNotes = $("#txtTradeExecutionNotes").val();
+  
+              if (tradeExecutionAction == "TRIM") {
+                  // Create the exit/trim record
+                  var tradeExitData = {
+                      "date_time": tradeDatetime,
+                      "notes": tradeNotes,
+                      "price": tradePrice,
+                      "num_contracts": tradeNumCons
+                  }
+  
+                  console.log("Saving trim for ", tradeID, tradeExitData)
+  
+                  var tradeDocRef = this.tradesCollection.doc(tradeID);
+                  var exitCollectionRef = tradeDocRef.collection("exits");
+  
+                  // Add the trade exit data
+                  await exitCollectionRef.add(tradeExitData);
+  
+                  // Query the exits subcollection to find the maximum exit price
+                  var exitQuery = exitCollectionRef.orderBy('price', 'desc').limit(1);
+  
+                  var querySnapshot = await exitQuery.get();
+  
+                  var maxExitPrice = null;
+                  var maxExitDate = null;
+  
+                  querySnapshot.forEach(function(exitDoc) {
+                      maxExitPrice = exitDoc.get('price');
+                      maxExitDate = exitDoc.get('date_time');
+                  });
+  
+                  // Update the parent document with the max exit price and date
+                  await tradeDocRef.update({
+                      exit_price_max: maxExitPrice,
+                      exit_date_max: maxExitDate
+                  });
+  
+                  console.log('Max exit price and date updated successfully');
+                  return true;
+              } else if (tradeExecutionAction == "AVG IN") {
+                  // Create the averaged in entry record
+                  // Create the exit/trim record
+                  var tradeEntryData = {
+                    "date_time": tradeDatetime,
+                    "notes": tradeNotes,
+                    "price": tradePrice,
+                    "num_contracts": tradeNumCons
+                  }
+
+                  console.log("Saving Avg In for ", tradeID, tradeEntryData)
+
+                  var tradeDocRef = this.tradesCollection.doc(tradeID);
+                  var entryCollectionRef = tradeDocRef.collection("entries");
+
+                  // Add the trade exit data
+                  await entryCollectionRef.add(tradeEntryData);
+
+                  // Update the parent document with the entry price
+                  await tradeDocRef.update({
+                      entry_price: tradePrice
+                  });
+
+                  console.log('Entry price updated successfully');
+                  return true;
+              } else {
+                  $('#tradeExecutionErrorMessage').text("Unknown Action");
+                  return false;
+              }
+          } catch (error) {
+              console.error('Error in addExecutionTrade:', error);
+              return false;
+          }
+      } else {
+          $('#tradeExecutionErrorMessage').text("User not logged in.");
+          return false;
+      }
+  }
+
+  async deleteTrade(){
+    if (this.userLoggedIn && this.userMode) {
+      var tradeID = $("#txtTradeExecutionID").val();
+
+      var tradeDocRef = this.tradesCollection.doc(tradeID);
+
+      // Add the trade exit data
+      await tradeDocRef.delete()
+      .then(() => {
+        return true;
+      })
+
+      return true;
+    }
+    else {
+      $('#tradeExecutionErrorMessage').text("User not logged in.");
+      return false;
+    } 
+  }
+  
 
 
 

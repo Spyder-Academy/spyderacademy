@@ -1,6 +1,6 @@
 +++
 author = "CashMoneyTrades"
-title = "Unlocking Profit Potential: How to Trade with Volume"
+title = "How to Trade with Volume"
 date = "2023-09-05"
 description = "Learn the secrets of successful trading with volume analysis."
 tags = [

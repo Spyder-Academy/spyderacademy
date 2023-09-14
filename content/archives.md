@@ -1,6 +1,6 @@
 ---
 date: 2019-05-28
 type: section
-title: "Archives"
+title: "Educational Archives"
 layout: "archives"
 ---

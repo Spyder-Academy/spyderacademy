@@ -1,5 +1,6 @@
 +++
-title = "Privacy Policy"
+title = "Our Privacy Policy"
+description = "This Privacy Policy describes Our policies and procedures."
 date = "2023-05-05"
 disableShare = true
 +++

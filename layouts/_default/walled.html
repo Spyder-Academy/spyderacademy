@@ -44,6 +44,92 @@
                     </div>
                 </div>
             </div>
+
+            <div id="addTradeModal" class="modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Manual Entry</h5>
+                            <button type="button" class="close" onclick="hideTradeEntry();">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div id="tradeErrorMessage" class="alert alert-danger small" role="alert" style="display: none">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="txtTradeContract" placeholder="TSLA 230908C300">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="txtTradeEntryDate" placeholder="Entry Date">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="txtTradeEntryTime" placeholder="Entry Time">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="txtTradeNumContracts" placeholder="Num Contracts">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="txtTradePrice" placeholder="Price">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="txtTradeNotes" placeholder="Notes">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <button type="button" class="btn btn-secondary" onclick="addManualTrade()">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="executeTradeModal" class="modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add Trade Execution</h5>
+                            <button type="button" class="close" onclick="hideTradeExecution();">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div id="tradeExecutionErrorMessage" class="alert alert-danger small" role="alert" style="display: none">
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" class="form-control" id="txtTradeExecutionID" value="">
+
+                                    <select class="form-control" id="txtTradeExecutionAction" value="TRIM">
+                                        <option>TRIM</option>
+                                        <option>AVG IN</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="txtTradeExecutionDate" placeholder="Date">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="txtTradeExecutionTime" placeholder="Time">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="txtTradeExecutionContracts" placeholder="Num Contracts">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="txtTradeExecutionPrice" placeholder="Price">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="txtTradeExecutionNotes" placeholder="Notes">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <button type="button" class="btn btn-primary" onclick="deleteTrade()"><i class="fa fa-trash"></i> Delete</button>
+                            <button type="button" class="btn btn-secondary" onclick="addExecutionTrade()">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
 
             <div class="mentor card shadow border-0 p-3 m-1" style="min-width: 8em; border-radius: 15px; background-color: #29741d; ">
@@ -245,6 +331,75 @@
         $('#loginModal').hide();
        }
 
+       function showTradeModal() {
+        // Get the current date and time
+        var currentDate = new Date();
+        var currentDateString = currentDate.toISOString().split('T')[0]; // Get the date in "YYYY-MM-DD" format
+        var currentTimeString = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+
+        $("#txtTradeEntryDate").val(currentDateString);
+        $("#txtTradeEntryTime").val(currentTimeString);
+
+        $('#addTradeModal').show();
+       }
+
+       function hideTradeEntry(){
+        $('#tradeErrorMessage').hide()
+        $('#addTradeModal').hide();
+       }
+
+       function addManualTrade(){
+            var success = userTrades.addManualTrade();
+            if (success){
+                hideTradeEntry();
+                userTrades.updateCharts();
+            }
+            else{
+                $('#tradeErrorMessage').show()
+            }
+       }
+
+       function showNewTradeExecution(id, contract){
+            // Get the current date and time
+            var currentDate = new Date();
+            var currentDateString = currentDate.toISOString().split('T')[0]; // Get the date in "YYYY-MM-DD" format
+            var currentTimeString = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+
+            $('#executeTradeModal .modal-title').text(contract);
+            $("#txtTradeExecutionID").val(id);
+            $("#txtTradeExecutionDate").val(currentDateString);
+            $("#txtTradeExecutionTime").val(currentTimeString);
+
+            $('#executeTradeModal').show();
+       }
+
+       function hideTradeExecution(){
+            $('#tradeExecutionErrorMessage').hide()
+            $('#executeTradeModal').hide();
+       }
+
+       async function addExecutionTrade(){
+            var success = await userTrades.addExecutionTrade();
+            if (success){
+                hideTradeExecution();
+                userTrades.updateCharts();
+            }
+            else{
+                $('#tradeExecutionErrorMessage').show()
+            }
+       }
+
+       async function deleteTrade(){
+            var success = await userTrades.deleteTrade();
+            if (success){
+                hideTradeExecution();
+                userTrades.updateCharts();
+            }
+            else{
+                $('#tradeExecutionErrorMessage').show()
+            }
+       }
+
          // Sign in with email and password when the submit button is clicked
         const submitLogin = document.getElementById('submitLogin');
         submitLogin.addEventListener('click', () => {
@@ -298,7 +453,7 @@
                 nickname = email.split("@")[0].toUpperCase()
                 $("#loginButton").text(nickname)
                 $("#loginButton").on("click", () => {
-                    selectInstructor(user.email, nickname.toUpperCase())
+                    selectInstructor(user.uid, nickname.toUpperCase())
                 });
 
                 $("#btnSignOut").show();
