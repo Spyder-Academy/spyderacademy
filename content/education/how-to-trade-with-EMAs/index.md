@@ -3,7 +3,7 @@ author = "Gobi Calls"
 title = "Mastering the Art of Trading with Moving Average Crossovers"
 date = "2023-05-25T10:00:00"
 description = "Unlocking Success with the 9/21/50 EMA Moving Average Crossover Strategy"
-course = "Trading Strategies"
+course = "TA 101"
 tags = [
    "Strategies",
 ]

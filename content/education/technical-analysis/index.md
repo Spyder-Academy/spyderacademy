@@ -3,7 +3,7 @@ author = "Gobi Calls"
 title = "How to Get Started with Technical Analysis Trading"
 date = "2023-05-16T05:00:00"
 description = "Technical Analysis"
-course = "Trading 101"
+course = "TA 101"
 tags = [
     "Getting Started",
 ]

@@ -3,7 +3,7 @@ author = "CashMoneyTrades"
 title = "How to Trade with Volume"
 date = "2023-09-05"
 description = "Learn the secrets of successful trading with volume analysis."
-course = "Trading Strategies"
+course = "TA 101"
 tags = [
     "Getting Started",
 ]
