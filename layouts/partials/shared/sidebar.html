@@ -48,21 +48,39 @@
     // Function to toggle the sidebar
     $('iframe').css('background', '#F6FBFF');
 
-    
     function toggleSidebar() {
         const sidebar = document.getElementById('sidebar');
         sidebar.style.bottom = sidebar.style.bottom === '0px' ? '-50%' : '0px';
     }
+ 
 
     // Function to close the sidebar
     function closeSidebar() {
-        const sidebar = document.getElementById('sidebar');
-        sidebar.style.bottom = '-50%';
+      const sidebar = document.getElementById('sidebar');
+      sidebar.style.bottom = '-50%';
+
+      // Set a cookie to remember that the user closed the sidebar today
+      const now = new Date();
+      const expires = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
+      document.cookie = 'sidebarClosed=true; expires=' + expires.toUTCString() + '; path=/';
     }
 
-    // Delayed sliding of the sidebar after 3 seconds
+    // Function to check if the sidebar should be displayed
+    function shouldDisplaySidebar() {
+      const today = new Date();
+      const cookie = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('sidebarClosed='))
+        ?.split('=')[1];
+
+      return cookie !== 'true' && today.getHours() < 20; // Display the sidebar until 8 PM
+    }
+
+    // Delayed sliding of the sidebar after 3 seconds, only if it should be displayed
     setTimeout(function() {
+      if (shouldDisplaySidebar()) {
         toggleSidebar();
+      }
     }, 3000);
 
   </script>
