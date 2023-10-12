@@ -3,6 +3,7 @@ author = "Pauldozer"
 title = "8 Deadly Mistakes Traders Must Avoid"
 date = "2023-07-12T00:00:00"
 description = "Learn about some of the biggest mistakes traders make!"
+course = "Trading Psychology"
 tags = [
     "Trading Psychology",
 ]

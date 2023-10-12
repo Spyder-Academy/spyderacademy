@@ -3,6 +3,7 @@ author = "CashMoneyTrades"
 title = "3 Ways To Build Patience When Trading"
 date = "2023-06-20T00:00:00"
 description = "How to Build Patience When Trading Stocks and Options"
+course = "Trading Psychology"
 tags = [
     "Trading Psychology",
 ]

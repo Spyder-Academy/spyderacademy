@@ -32,12 +32,70 @@
           </div>
         </div>
       </div>
-      <div class="row justify-content-center">
-        <div class="col-lg-6 col-sm-12">
-          <a class="btn btn-lg btn-block btn-primary" style="border-radius: 0.5em"  href="https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_n9NbbxfFeIW95&accessPassId=prod_45GZIGs1lRCGs&a=spyderacademy" >Try Spyder Academy For Free</a>
-        </div>
-      </div>
-    </div>
+
+      
+      {{ if isset .Params "course" }}
+        {{ $currentCourse := .Params.course }}
+        {{ $allPages := .Site.RegularPages }}
+        {{ $coursePages := slice }}
+        
+        {{ range $allPages }}
+          {{ if isset .Params "course" }}
+            {{ if in .Params.course $currentCourse }}
+              {{ $coursePages = $coursePages | append . }}
+            {{ end }}
+          {{ end }}
+        {{ end }}
+        
+        {{ $sortedTaxonomyPages := $coursePages.ByDate }}
+        
+        {{ if gt (len $sortedTaxonomyPages) 1 }}
+          {{ $currentPage := . }}
+          {{ $currentPageIndex := -1 }}
+          {{ range $index, $page := $sortedTaxonomyPages }}
+            {{ if eq $page $currentPage }}
+              {{ $currentPageIndex = $index }}
+            {{ end }}
+          {{ end }}
+
+
+
+
+          {{ $nextTaxonomyPage := index $sortedTaxonomyPages (add $currentPageIndex 1) }}
+
+          {{ $totalLessons := len $sortedTaxonomyPages }}
+          <div class="col-12 mb-5 mb-md-4 d-flex text-center justify-content-center">
+            <div class="card shadow border-0  testimonial-card d-flex" style="border-radius: 15px;">
+              <div class="card-header">
+                {{ $currentCourse }}<br/>
+                {{ if ne $currentPageIndex -1 }} Lesson {{ add $currentPageIndex 1 }} of {{ $totalLessons }}{{ end }}
+              </div>
+              <ul class="list-group list-group-flush">
+                {{ if $nextTaxonomyPage }}
+                  <li class="list-group-item text-black-61 px-5 mb-0 text-justify">
+                    <a class="fw-bold text-primary  text-nowrap text-decoration-none" href="{{ $nextTaxonomyPage.RelPermalink }}">Next Lesson: {{ $nextTaxonomyPage.LinkTitle }}</a>
+                  </li>
+                {{ end }}
+
+                {{ with $sortedTaxonomyPages }}
+                    {{ range $index, $page := . }}
+                    <li class="list-group-item text-black-61 px-5 mb-0 text-justify {{ if eq $page $currentPage }} bg-blue-light {{ end }}">
+                      <span class="px-4">{{ add $index 1 }}</span>
+                      <a class="text-decoration-none" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+                    </li>
+                    {{ end }}
+                {{ end }}
+              </ul>
+              <div class="card-footer text-muted">
+                <a class="btn btn-lg btn-block btn-primary" style="border-radius: 0.5em"  href="https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_n9NbbxfFeIW95&accessPassId=prod_45GZIGs1lRCGs&a=spyderacademy" >Try Spyder Academy For Free</a>
+              </div>
+              </div>
+             
+            </div>
+          </div>
+        {{ end }}
+      {{ end }}
+
 
     <div class="pinterest-images d-none">
         {{ $pinPath := "pins/**" }}

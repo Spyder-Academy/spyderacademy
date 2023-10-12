@@ -3,6 +3,7 @@ author = "Gobi Calls"
 title = "7 Amazing Trading Resources"
 date = "2023-05-16T09:00:00"
 description = "Trading Platforms, Tools, Resources"
+course = "Trading 101"
 tags = [
     "Getting Started",
 ]

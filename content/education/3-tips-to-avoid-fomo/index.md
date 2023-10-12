@@ -3,6 +3,7 @@ author = "Pauldozer"
 title = "3 Tips to Avoid FOMO"
 date = "2023-07-12T10:00:00"
 description = "FOMO in trading refers to the fear of missing a big opportunity in the market."
+course = "Trading Psychology"
 tags = [
    "Trading Psychology",
 ]

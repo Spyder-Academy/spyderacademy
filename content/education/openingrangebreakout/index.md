@@ -3,6 +3,7 @@ author = "CashMoneyTrades"
 title = "How to Trade the Opening Range Breakout (ORB) Strategy"
 date = "2023-05-29T09:00:00"
 description = "Learn how to Trade the Opening Range Breakout (ORB) Strategy"
+course = "Trading Strategies"
 tags = [
     "Strategies",
 ]

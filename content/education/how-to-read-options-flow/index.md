@@ -3,6 +3,7 @@ author = "CashMoneyTrades"
 title = "How To Read Options Flow"
 date = "2023-09-05"
 description = "Understanding and interpreting options flow for successful trading."
+course = "Trading Strategies"
 tags = [
     "Strategies",
 ]

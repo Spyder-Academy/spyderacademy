@@ -66,9 +66,13 @@ menus:
       url: "/education"
       weight: 5
 
+    - name: "Courses"
+      url: "/courses"
+      weight: 6
+
     - name: "SpyderWeb"
       url: "/members"
-      weight: 6
+      weight: 7
 
    
 
@@ -114,5 +118,4 @@ menus:
 
 
 taxonomies:
-  series: "series"
   tags: "tags"

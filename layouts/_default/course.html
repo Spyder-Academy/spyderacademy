@@ -1,0 +1,136 @@
+{{ define "main" }}
+
+
+  <section class="section blog-single py-5">
+    <div class="container">
+      <div class="row justify-content-center pb-0">
+        <div class="col-12">
+          {{ with .Title }}
+            <h1 class="display-1 fw-bold text-center text-primary pb-3">{{ . }}</h1>
+          {{ end }}
+          {{ with .Params.description }}
+            <p class="text-black-61 text-center pb-3">{{ . }}</p>
+          {{ end }}
+
+
+        </div>
+      </div>
+      
+      <div class="row pb-5">
+        <div class="col-lg-6 col-sm-12 ">
+          <div class="blog-content fs-5">
+            <h3>Course Overview</h3>
+            {{ .Content }}
+          </div>
+          
+          <div class="card shadow border-0 p-3 testimonial-card d-flex  bg-blue-light" style="border-radius: 15px;">
+            <div class="card-body p-0">
+                <div class="container-fluid p-0 m-0">
+                <div class="row  align-items-top ">
+                    <div class="col-4">
+                      <p class="small p-0 m-0">TIME</p>
+                      <p>{{ .Params.time }}</p>
+                    </div>
+                    <div class="col-4">
+                      <p class="small p-0 m-0">DIFFICULTY</p>
+                      <p>{{ .Params.level }}</p>
+                    </div>
+                    <div class="col-4">
+                      <p class="small p-0 m-0">BENEFITS</p>
+                      <p>
+                      {{ range .Params.benefits }}
+                        {{ . }}<br/>
+                      {{ end }}
+                      </p>
+                    </div>
+                </div>
+                </div>
+            </div>
+          </div>
+         
+        </div>
+
+      
+      {{ if isset .Params "course" }}
+        {{ $currentCourse := .Params.course }}
+        {{ $allPages := .Site.RegularPages }}
+        {{ $coursePages := slice }}
+        
+        {{ range $allPages }}
+          {{ if isset .Params "course" }}
+            {{ if in .Params.course $currentCourse }}
+              {{ $coursePages = $coursePages | append . }}
+            {{ end }}
+          {{ end }}
+        {{ end }}
+        
+        {{ $sortedTaxonomyPages := $coursePages.ByDate }}
+        
+        {{ if gt (len $sortedTaxonomyPages) 1 }}
+          {{ $currentPage := . }}
+          {{ $currentPageIndex := -1 }}
+          {{ range $index, $page := $sortedTaxonomyPages }}
+            {{ if eq $page $currentPage }}
+              {{ $currentPageIndex = $index }}
+            {{ end }}
+          {{ end }}
+
+
+
+
+          {{ $nextTaxonomyPage := index $sortedTaxonomyPages (add $currentPageIndex 1) }}
+
+          {{ $totalLessons := len $sortedTaxonomyPages }}
+          <div class="col-lg-6 col-sm-12 mb-5 mb-md-4 d-flex text-center justify-content-center">
+            <div class="card shadow border-0  testimonial-card d-flex" style="border-radius: 15px;">
+              <div class="card-header">
+                {{ $currentCourse }}<br/>
+                {{ if ne $currentPageIndex -1 }} Lesson {{ add $currentPageIndex 1 }} of {{ $totalLessons }}{{ end }}
+              </div>
+              <ul class="list-group list-group-flush">
+                {{ if $nextTaxonomyPage }}
+                  <li class="list-group-item text-black-61 px-4 mb-0 text-justify">
+                    <a class="fw-bold text-primary  text-nowrap text-decoration-none" href="{{ $nextTaxonomyPage.RelPermalink }}">Next Lesson: {{ $nextTaxonomyPage.LinkTitle }}</a>
+                  </li>
+                {{ end }}
+
+                {{ with $sortedTaxonomyPages }}
+                    {{ range $index, $page := . }}
+                    <li class="list-group-item text-black-61 px-1 mb-0 text-justify {{ if eq $page $currentPage }} bg-blue-light {{ end }}">
+                      <span class="px-4">{{ add $index 1 }}</span>
+                      <a class="text-decoration-none" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+                    </li>
+                    {{ end }}
+                {{ end }}
+              </ul>
+              <div class="card-footer text-muted">
+                <a class="btn btn-lg btn-block btn-primary" style="border-radius: 0.5em"  href="https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_n9NbbxfFeIW95&accessPassId=prod_45GZIGs1lRCGs&a=spyderacademy" >Try Spyder Academy For Free</a>
+              </div>
+              </div>
+             
+            </div>
+          </div>
+        {{ end }}
+      {{ end }}
+    </div>
+
+
+    <div class="pinterest-images d-none">
+        {{ $pinPath := "pins/**" }}
+        {{ $pinImages := .Page.Resources.Match $pinPath }}
+
+        {{ range $pinImages }}
+          {{ $pin := .Resize "1000x" }}
+          {{ with $pin }}
+             <img src="{{ .RelPermalink }}" alt="{{$.Description}}">
+          {{ end }}
+        {{ end }}
+    </div>
+
+  </section>
+
+  {{ with .Site.Data.home.benefits }}{{ partial "sections/benefits.html" . }}{{ end }}
+  {{ with .Site.Data.home.trades }}{{ partial "sections/trades.html" . }}{{ end }}
+  {{ partial "shared/sidebar.html" }}
+
+{{ end }}

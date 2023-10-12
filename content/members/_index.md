@@ -1,7 +1,7 @@
 ---
 date: 2019-05-28
 title: "Spyder Web Analytics"
-layout: "walled"
+layout: "members"
 firebase: true
 ---
 

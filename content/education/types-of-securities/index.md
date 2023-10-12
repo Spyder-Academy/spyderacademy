@@ -3,6 +3,7 @@ author = "Gobi Calls"
 title = "4 Types of Securities You Can Trade"
 date = "2023-05-16T03:00:00"
 description = "Types of Securities"
+course = "Trading 101"
 tags = [
     "Getting Started",
 ]

@@ -3,9 +3,9 @@ author = "Gobi Calls"
 title = "7 Types of Trading Strategies to Find Your Style"
 date = "2023-05-16T07:00:00"
 description = "Trading Strategies"
+course = "Trading 101"
 tags = [
     "Getting Started",
-    "Strategies"
 ]
 +++
 

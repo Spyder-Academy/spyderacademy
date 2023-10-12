@@ -3,6 +3,7 @@ author = "Pauldozer"
 title = "Mastering Delta Hedging"
 date = "2023-07-26T00:00:00"
 description = "Minimize Risk, Profit from Volatility, and Unleash the Potential of Delta Hedging!"
+course = "Trading Strategies"
 tags = [
     "Getting Started",
 ]

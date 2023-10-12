@@ -14,7 +14,9 @@
         </div>
       </div>
 
-      {{ partial "shared/tags.html" }}
+      {{ if eq .Section "education" }}
+        {{ partial "shared/tags.html" }}
+      {{ end }}
 
       <div class="row g-4 pb-5">
         {{ range (.Paginate .RegularPages).Pages.ByDate }}
@@ -32,7 +34,8 @@
             </div>
             <div class="card-body">
               <h5 class="card-title fw-semibold">{{ .Title }}</h5>
-              <p class="card-text text-danger">By {{ .Param "author" | plainify }}</p>
+              {{ if eq .Section "education" }}<p class="card-text text-danger">By {{ .Param "author" | plainify }}</p>{{ end }}
+              {{ if eq .Section "courses" }}<p class="card-text text-danger">{{ .Param "level" | plainify }}</p>{{ end }}
               <p class="card-text text-black-61">{{ .Summary }}</p>
             </div>
           </a>

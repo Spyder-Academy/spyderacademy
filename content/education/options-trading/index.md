@@ -3,6 +3,7 @@ author = "Gobi Calls"
 title = "Understanding the Basics of Trading Options"
 date = "2023-05-16T06:00:00"
 description = "Options Trading"
+course = "Trading 101"
 tags = [
     "Getting Started",
 ]

@@ -3,6 +3,7 @@ author = "Gobi Calls"
 title = "Introduction to the Market"
 date = "2023-05-16T01:00:00"
 description = "Introduction to the Stock Market"
+course = "Trading 101"
 tags = [
     "Getting Started",
 ]

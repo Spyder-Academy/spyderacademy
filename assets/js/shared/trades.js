@@ -1451,8 +1451,13 @@ class Trades {
         recapRow.append(recapHeader);
 
         if (this.userMode){
-          var recapButton = $("<div class='col-2 d-flex justify-content-center align-items-center'><button class='btn btn-primary btn-circle' title='Add Trade' onclick='showTradeModal();'>+</button></div>")
-          recapRow.append(recapButton)
+          var buttons = $("<div class='col-2 d-flex justify-content-end'></div")
+          var addTradeButton = $("<button class='btn btn-primary btn-circle m-1' title='Add Trade' onclick='showManualTradeModal();'><i class='fa fa-plus'></i></button>")
+          var importButton = $("<button class='btn btn-primary btn-circle m-1' title='Import Trades' onclick='showImportTradeModal();'><i class='fa fa-file-import'></i></button>")
+          
+          buttons.append(addTradeButton)
+          buttons.append(importButton)
+          recapRow.append(buttons)
         }
 
         $('#tradeRecap').append(recapRow);        
@@ -1851,6 +1856,143 @@ class Trades {
           return false;
       }
   }
+
+  formatETradeDate(inputDate) {
+    // Split the input date string into parts
+    const parts = inputDate.split('-');
+  
+    // Convert the month abbreviation to a numeric month
+    const monthAbbreviation = parts[0];
+    const months = [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+    const month = months.findIndex(abbr => abbr === monthAbbreviation);
+    
+    if (month === -1) {
+      // Invalid month abbreviation
+      return null;
+    }
+  
+    // Extract the day and year
+    const day = parseInt(parts[1]);
+    const year = parseInt(parts[2]);
+  
+    // Calculate the full year (considering years below 100)
+    const fullYear = year < 50 ? 2000 + year : 1900 + year;
+  
+    // Create a date object with the extracted values
+    const date = new Date(fullYear, month, day);
+  
+    // Format the date as "YYYY-MM-DD"
+    const formattedDate = date.toISOString().split('T')[0];
+  
+    return formattedDate;
+  }
+  
+
+  importTradesFromETrade(csvData) {
+    if (this.userLoggedIn && this.userMode) {
+
+      // Create a new entry in the database for this user's trade
+      var userDocRef = this.firestore_db.collection("users").doc(firebase.auth().currentUser.email);
+      var tradesCollection = userDocRef.collection('trades');
+
+      // Split the CSV data into lines
+      const lines = csvData.split('\n');
+  
+      // Define regular expressions to extract relevant data
+      const symbolPattern = /"Symbol","(.+?)"/;
+      const timePattern = /"Time","(.+?)"/;
+      const fillPattern = /"Fill","(.+?)"/;
+      const descriptionPattern = /"Description","(.+?)"/;
+      const statusPattern = /"Status","(.+?)"/;
+      const accountPattern = /"Account","(.+?)"/;
+      const idPattern = /"ID","(.+?)"/;
+  
+      const trades = [];
+  
+      // Loop through each line of CSV data (excluding header)
+      for (let i = 1; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (line) {
+          // Extract trade details using regular expressions
+          const symbolMatch = line.match(symbolPattern);
+          const timeMatch = line.match(timePattern);
+          const fillMatch = line.match(fillPattern);
+          const descriptionMatch = line.match(descriptionPattern);
+          const statusMatch = line.match(statusPattern);
+          const accountMatch = line.match(accountPattern);
+          const idMatch = line.match(idPattern);
+  
+          if (symbolMatch && timeMatch && fillMatch && descriptionMatch && statusMatch) {
+            // Extract relevant trade details
+            const tradeTicker = symbolMatch[1];
+            const tradeDatetime = new Date(timeMatch[1]);
+            const tradeNumCons = fillMatch[1].split(" @ ")[0]; // '7 @ 2.12'
+            const tradePrice = fillMatch[1].split(" @ ")[1]; // '7 @ 2.12'
+            const description = descriptionMatch[1].split(" "); // "Sell 7 Sep-22-23 415 Puts @ 2.12 Stop to Close"
+            const tradeStrikePrice = description[3] 
+            const tradeExp = this.formatETradeDate(description[2])
+            
+            var tradeStrikeDirection = ""
+            if (description[4] == "Puts"){
+              tradeStrikeDirection = "P"
+            }
+            else if (description[4] == "Calls"){
+              tradeStrikeDirection = "C"
+            }
+
+            const tradeStrike = tradeStrikePrice + tradeStrikeDirection
+            const tradeNotes = description
+            const tradeStatus = statusMatch[1]; // "Filled"
+  
+            if (tradeStatus == "Filled" &&  description[0] == "Buy"){
+                // Create a trade entry object
+                var tradeData = {
+                  "entry_date": tradeDatetime,
+                  "num_contracts": tradeNumCons,
+                  "entry_price": tradePrice,
+                  "exit_date_max": null,
+                  "exit_price_max": null,
+                  "expiration": tradeExp,
+                  "notes": tradeNotes,
+                  "strike": tradeStrike,
+                  "ticker": tradeTicker,
+                  "userid":  firebase.auth().currentUser.uid,
+                  "username": firebase.auth().currentUser.email,
+                };
+
+                var entryData = {
+                  "date_time": tradeDatetime,
+                  "notes": tradeNotes,
+                  "price": tradePrice,
+                  "num_contracts": tradeNumCons
+                }
+
+                // Add a new document to the "trades" subcollection
+                tradesCollection.add(tradeData)
+                .then(function(docRef){
+                  var trade_id = docRef.id
+
+                  // create the trade entry record
+                  tradesCollection.doc(trade_id).collection("entries").add(entryData)
+                })
+        
+              }
+            }
+
+            if (tradeStatus == "Filled" &&  description[0] == "Sell"){
+              // this is an exit.  Match it to an existing entry trade
+              
+            }
+          }
+        }
+      }
+  }
+  
+
+ 
 
   async deleteTrade(){
     if (this.userLoggedIn && this.userMode) {

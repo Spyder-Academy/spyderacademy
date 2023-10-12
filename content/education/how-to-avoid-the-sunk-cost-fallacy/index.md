@@ -3,6 +3,7 @@ author = "Pauldozer"
 title = "How to Avoid the Sunk Cost Fallacy"
 date = "2023-07-24T00:00:00"
 description = "The Sunk Cost Fallacy: a trap that many fall into in the world of options trading. But what is it? Simply put, it's the fallacy of allowing past, irretrievable costs to influence future decisions."
+course = "Trading Psychology"
 tags = [
     "Trading Psychology",
 ]

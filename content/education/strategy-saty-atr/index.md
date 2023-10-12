@@ -3,6 +3,7 @@ author = "CashMoneyTrades"
 title = "Mastering Trading with the Saty ATR"
 date = "2023-09-05"
 description = "Learn How to Trade the Saty ATR Strategy and Unlock Your Trading Potential"
+course = "Trading Strategies"
 tags = [
     "Strategies",
 ]

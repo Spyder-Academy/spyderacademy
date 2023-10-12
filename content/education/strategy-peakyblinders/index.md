@@ -3,6 +3,7 @@ author: "CashMoneyTrades"
 title: "Unlocking Trading Potential with the 9/30 EMA Moving Average Crossover"
 date: 2023-06-11T00:00:00-04:00
 description: "Discover the Peaky Blinders strategy and its 9/30 EMA crossover approach"
+course: "Trading Strategies"
 tags:
   - "Strategies"
 ---

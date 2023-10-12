@@ -3,6 +3,7 @@ author = "Pauldozer"
 title = "How Millionaires Make Their Money"
 date = "2023-07-12T00:00:00"
 description = "Learn how ultra high net worth millionaires make their money."
+course = "Long Term Investing"
 tags = [
    "Getting Started",
 ]
