@@ -4,6 +4,7 @@ title = "Mastering the Art of Trading with Fibonacci"
 date = "2023-09-05"
 description = "Unlock the power of Fibonacci retracements and extensions in your trading strategy."
 course = "TA 101"
+time = "2 min"
 tags = [
     "Getting Started",
 ]

@@ -4,6 +4,7 @@ title = "6 Characteristics of Ultra High Net Individuals"
 date = "2023-07-12T00:00:00"
 description = "88% of ultra high net worth individuals (more than $30 million net worth) are self-made. "
 course = "Long Term Investing"
+time = "1 min"
 tags = [
    "Getting Started",
 ]

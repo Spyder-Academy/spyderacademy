@@ -4,6 +4,7 @@ title = "How To Trade With Bollinger Bands"
 date = "2023-07-31T00:00:00"
 description = "Bollinger Bands are a popular technical indicator used by traders to identify potential buying and selling opportunities in the market."
 course = "TA 101"
+time = "2 min"
 tags = [
     "Getting Started",
 ]

@@ -5,6 +5,7 @@ title = "The Dangers of Pessimism in Trading"
 date = "2023-07-12T00:00:00"
 description = "Pessimism can be a deep psychological trap. It sows seeds of doubt, erodes hope, and colors our perception of the world. It's like a poison that seeps into our thoughts, affecting our mood and outlook."
 course = "Trading Psychology"
+time = "2 min"
 tags = [
     "Trading Psychology",
 ]

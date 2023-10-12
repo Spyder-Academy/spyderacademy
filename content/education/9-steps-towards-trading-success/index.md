@@ -4,6 +4,7 @@ title = "9 Steps Towards Trading Succcess"
 date = "2023-07-06T10:00:00"
 description = "How to develop a trading edge: nine steps towards trading success"
 course = "Trading 101"
+time = "2 min"
 tags = [
    "Getting Started",
 ]

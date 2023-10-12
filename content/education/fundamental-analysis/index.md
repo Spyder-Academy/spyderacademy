@@ -4,6 +4,7 @@ title = "How to Get Started with Fundamental Analysis"
 date = "2023-05-16T04:00:00"
 description = "Fundamental Analysis"
 course = "Trading 101"
+time = "2 min"
 tags = [
     "Getting Started",
 ]

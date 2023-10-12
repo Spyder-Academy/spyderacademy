@@ -4,6 +4,7 @@ title: "How to Trade The System Strategy"
 date:  2023-06-11T00:00:00-04:00
 description: "Learn how to trade The System strategy using the 10/50 SMA Moving Average Crossover, and improve your win rate by knowing the market direction!"
 course: "Trading Strategies"
+time: "2 min"
 tags:
   - "Strategies"
 

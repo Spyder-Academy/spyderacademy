@@ -4,6 +4,7 @@ title = "How to Get Started with Technical Analysis Trading"
 date = "2023-05-16T05:00:00"
 description = "Technical Analysis"
 course = "TA 101"
+time = "3 min"
 tags = [
     "Getting Started",
 ]

@@ -4,6 +4,7 @@ title = "Mastering Break and Retest Strategies: The Break Hook and Go Technique"
 date = "2023-05-29T09:00:00"
 description = "Learn How to Excel in Break and Retest Trading with the Break Hook and Go Technique"
 course = "TA 101"
+time = "2 min"
 tags = [
     "Strategies",
 ]

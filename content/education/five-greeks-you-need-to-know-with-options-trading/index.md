@@ -4,6 +4,7 @@ title = "5 Greeks You Need To Know With Options Trading"
 date = "2023-07-21T00:00:00"
 description = "When you hear about Delta, Gamma, Vega, Theta, Rho - it's not a secret society, it's financial engineering at its finest. Get ready to demystify these terms!"
 course = "Trading 101"
+time = "2 min"
 tags = [
     "Getting Started",
 ]

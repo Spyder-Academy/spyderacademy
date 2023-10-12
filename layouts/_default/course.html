@@ -29,7 +29,7 @@
                 <div class="row  align-items-top ">
                     <div class="col-4">
                       <p class="small p-0 m-0">TIME</p>
-                      <p>{{ .Params.time }}</p>
+                      <p>{{ .Params.coursetime }}</p>
                     </div>
                     <div class="col-4">
                       <p class="small p-0 m-0">DIFFICULTY</p>
@@ -97,8 +97,11 @@
                 {{ with $sortedTaxonomyPages }}
                     {{ range $index, $page := . }}
                     <li class="list-group-item text-black-61 px-1 mb-0 text-justify {{ if eq $page $currentPage }} bg-blue-light {{ end }}">
-                      <span class="px-4">{{ add $index 1 }}</span>
-                      <a class="text-decoration-none" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+                      <div class="row text-center">
+                        <div class="col-2"> {{ if .Params.time }}<span class="mx-0 d-flex  badge badge-secondary text-uppercase">{{ .Params.time }}</span>{{ end }}</div>
+                        <div class="col-1"><span class="px-0">{{ add $index 1 }}</span></div>
+                        <div class="col-8  text-justify"><a class="text-decoration-none" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></div>
+                      </div>
                     </li>
                     {{ end }}
                 {{ end }}

@@ -4,6 +4,7 @@ title = "How to Trade the IV Flush Strategy"
 date = "2023-07-24T10:00:00"
 description = "The IV Flush strategy takes advantage of the implied moves in options pricing."
 course = "Trading Strategies"
+time = "2 min"
 tags = [
    "Strategies",
 ]

@@ -4,6 +4,7 @@ title = "7 Steps To Developing a Trading Plan"
 date = "2023-05-16T10:00:00"
 description = "Developing a trading plan"
 course = "Trading 101"
+time = "1 min"
 tags = [
    "Getting Started",
 ]

@@ -4,6 +4,7 @@ title = "10 Investing Lessons from Warren Buffet"
 date = "2023-07-12T00:00:00"
 description = "Warren Buffett built a +$100 billion net worth through long-term investing. Every year since 1965 he’s written an annual letter showing us how he did it."
 course = "Long Term Investing"
+time = "2 min"
 tags = [
    "Getting Started",
 ]

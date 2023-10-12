@@ -4,6 +4,7 @@ title = "Your Essential Options Trading Guide"
 date = "2023-05-02"
 description = "Free Trading Guide"
 course = "Trading 101"
+time = "60 min"
 tags = [
     "Getting Started",
 ]

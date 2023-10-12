@@ -4,6 +4,7 @@ title: "How to Trade The SORBET Strategy"
 date: 2023-06-11T00:00:00-04:00
 description: "Learn how to trade The SORBET strategy and improve your win rate by knowing the market direction!"
 course: "Trading Strategies"
+time: "5 min"
 tags:
   - "Strategies"
 

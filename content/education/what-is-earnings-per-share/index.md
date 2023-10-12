@@ -4,6 +4,7 @@ title = "What is Earnings Per Share (EPS)"
 date = "2023-07-26T00:00:00"
 description = "Earnings Per Share (EPS) is a key financial ratio that indicates a company's profitability. It's calculated by dividing net income by the number of outstanding shares. A crucial tool for investors and traders."
 course = "Long Term Investing"
+time = "2 min"
 tags = [
     "Getting Started",
 ]

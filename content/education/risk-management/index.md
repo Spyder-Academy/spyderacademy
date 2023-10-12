@@ -4,6 +4,7 @@ title = "7 Ways to Manage your Risk When Trading"
 date = "2023-05-16T08:00:00"
 description = "Risk management in trading refers to the identification, analysis, and acceptance or mitigation of trading risks. It is an essential component of your broader trading strategy, aimed at minimizing potential losses."
 course = "Trading 101"
+time = "2 min"
 tags = [
     "Getting Started",
     "Trading Psychology"

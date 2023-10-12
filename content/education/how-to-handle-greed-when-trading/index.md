@@ -4,6 +4,7 @@ title = "How To Handle Greed When Trading"
 date = "2023-07-12T00:00:00"
 description = "Greed is the desire for more, driven by a sense of entitlement that current market conditions will continue indefinitely."
 course = "Trading Psychology"
+time = "1 min"
 tags = [
     "Trading Psychology",
 ]
