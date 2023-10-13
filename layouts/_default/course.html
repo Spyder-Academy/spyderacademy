@@ -23,7 +23,7 @@
             {{ .Content }}
           </div>
           
-          <div class="card shadow border-0 p-3 testimonial-card d-flex  bg-blue-light" style="border-radius: 15px;">
+          <div class="card shadow border-0 p-3 mb-3 testimonial-card d-flex  bg-blue-light" style="border-radius: 15px;">
             <div class="card-body p-0">
                 <div class="container-fluid p-0 m-0">
                 <div class="row  align-items-top ">
@@ -90,17 +90,19 @@
               <ul class="list-group list-group-flush">
                 {{ if $nextTaxonomyPage }}
                   <li class="list-group-item text-black-61 px-4 mb-0 text-justify">
-                    <a class="fw-bold text-primary  text-nowrap text-decoration-none" href="{{ $nextTaxonomyPage.RelPermalink }}">Next Lesson: {{ $nextTaxonomyPage.LinkTitle }}</a>
+                    {{ if eq $currentPageIndex 0 }} <a class="btn btn-lg btn-block btn-primary" href="{{ $nextTaxonomyPage.RelPermalink }}">Start Lesson</a>
+                    {{ else }} <a class="fw-bold text-primary  text-nowrap text-decoration-none" href="{{ $nextTaxonomyPage.RelPermalink }}">Next Lesson: {{ $nextTaxonomyPage.LinkTitle }}</a>
+                    {{ end }}
                   </li>
                 {{ end }}
 
                 {{ with $sortedTaxonomyPages }}
                     {{ range $index, $page := . }}
-                    <li class="list-group-item text-black-61 px-1 mb-0 text-justify {{ if eq $page $currentPage }} bg-blue-light {{ end }}">
+                    <li class="list-group-item text-black-61 px-1 mb-0 text-left {{ if eq $page $currentPage }} bg-blue-light {{ end }}">
                       <div class="row text-center">
-                        <div class="col-2"> {{ if .Params.time }}<span class="mx-0 d-flex  badge badge-secondary text-uppercase">{{ .Params.time }}</span>{{ end }}</div>
-                        <div class="col-1"><span class="px-0">{{ add $index 1 }}</span></div>
-                        <div class="col-8  text-justify"><a class="text-decoration-none" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></div>
+                        <div class="col-2"> {{ if .Params.time }}<span class="mx-0 d-flex badge badge-secondary text-uppercase"><small>{{ .Params.time }}</small></span>{{ end }}</div>
+                        <div class="col-1"><span class="px-0 text-nowrap">{{ add $index 1 }}</span></div>
+                        <div class="col-8  text-left"><a class="text-decoration-none" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></div>
                       </div>
                     </li>
                     {{ end }}

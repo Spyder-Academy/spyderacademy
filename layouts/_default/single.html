@@ -72,18 +72,18 @@
               </div>
               <ul class="list-group list-group-flush">
                 {{ if $nextTaxonomyPage }}
-                  <li class="list-group-item text-black-61 px-5 mb-0 text-justify">
-                    <a class="fw-bold text-primary  text-nowrap text-decoration-none" href="{{ $nextTaxonomyPage.RelPermalink }}">Next Lesson: {{ $nextTaxonomyPage.LinkTitle }}</a>
+                  <li class="list-group-item text-black-61 px-2 mb-0 text-justify">
+                    <a class="fw-bold text-primary text-decoration-none" href="{{ $nextTaxonomyPage.RelPermalink }}">Next Lesson: {{ $nextTaxonomyPage.LinkTitle }}</a>
                   </li>
                 {{ end }}
 
                 {{ with $sortedTaxonomyPages }}
                     {{ range $index, $page := . }}
-                    <li class="list-group-item text-black-61 px-5 mb-0 text-justify {{ if eq $page $currentPage }} bg-blue-light {{ end }}">
+                    <li class="list-group-item text-black-61 px-2 mb-0 text-justify {{ if eq $page $currentPage }} bg-blue-light {{ end }}">
                       <div class="row text-center">
-                        <div class="col-2"> {{ if .Params.time }}<span class="mx-0 d-flex  badge badge-secondary text-uppercase">{{ .Params.time }}</span>{{ end }}</div>
-                        <div class="col-1"><span class="px-0">{{ add $index 1 }}</span></div>
-                        <div class="col-8  text-justify"><a class="text-decoration-none" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></div>
+                        <div class="col-2 p-0 ml-3"> {{ if .Params.time }}<span class="mx-0 d-flex badge badge-secondary text-uppercase"><small>{{ .Params.time }}</small></span>{{ end }}</div>
+                        <div class="col-1"><span class="px-0 text-nowrap">{{ add $index 1 }}</span></div>
+                        <div class="col-8 text-left"><a class="text-decoration-none" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></div>
                       </div>
                     </li>
                     {{ end }}
