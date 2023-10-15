@@ -44,6 +44,14 @@ The opposite can be played in the inverse setup, where we may have a SELL signal
 Once we get the reversal into the 50SMA, we should start to buy/sell the pullbacks in anticipation of the EMA crossover occurring and a new signal being announced.
 
 
+### BASIC SETUP
+
+One way we like to trade the System SMAs is to map them over to lower time frames to help improve with our entries.  The following table outlines how to map the System SMA's onto a 5 minute chart. Remember to use Regular Hours as The System is not designed to take Extended Hours into account for its strategy.
+
+{{< figure class="floatleft" src="images/SMA_mapping.png" >}}
+
+
+
 #### SORBET - THE SYSTEM + ORB ENTRY POINTS
 
 The [SORBET strategy](/education/strategy-sorbet/) combines my two favorite techniques - ORB and The System.  Learn more about the [Opening Range Breakout](/education/openingrangebreakout/) strategy to find Entries and Exits.  By combining these two strategies, you can reduce the amount of fakeouts by determine the larger timeframe bias given by The System, with optimal day trading entries and exits using ORB.
