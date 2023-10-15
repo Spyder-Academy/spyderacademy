@@ -1,7 +1,7 @@
 +++
 author = "CashMoneyTrades"
 title = "Long Term Investing"
-date = "2021-01-04T00:00:00"
+date = "2021-03-01T00:00:00"
 description = "Welcome to the Long-Term Investing and Wealth Building Course: A Blueprint for Financial Success"
 coursetime = "8 min"
 level = "Advanced"

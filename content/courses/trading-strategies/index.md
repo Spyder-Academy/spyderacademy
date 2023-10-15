@@ -1,7 +1,7 @@
 +++
 author = "CashMoneyTrades"
 title = "Trading Strategies"
-date = "2021-01-03T00:00:00"
+date = "2021-02-01T00:00:00"
 description = "Elevate Your Trading Skills with Proven Techniques using our Winning Trading Strategies"
 coursetime = "27 min"
 level = "Intermediate"

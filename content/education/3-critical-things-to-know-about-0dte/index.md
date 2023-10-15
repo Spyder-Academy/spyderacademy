@@ -3,7 +3,7 @@ author = "CashMoneyTrades"
 title = "3 Critical Tips Before Trading 0DTE Options"
 date = "2023-06-21T00:00:00"
 description = "3 Critical Things To Know Before Trading 0DTE Options"
-course = "Trading 101"
+course = "Being Disciplined"
 time = "2 min"
 tags = [
     "Trading Psychology",
