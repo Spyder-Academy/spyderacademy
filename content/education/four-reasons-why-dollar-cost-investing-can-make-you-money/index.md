@@ -1,6 +1,6 @@
 +++
 author = "Pauldozer"
-title = "4 Reasons Why Dollar Cost Averaging Can Make You Money"
+title = "4 Reasons Dollar Cost Averaging Can Make You Money"
 date = "2023-07-21T00:00:00"
 description = "Unlocking the Power of Consistent Investing"
 course = "Long Term Investing"
