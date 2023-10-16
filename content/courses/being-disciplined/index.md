@@ -3,7 +3,7 @@ author = "CashMoneyTrades"
 title = "Being Disciplined"
 date = "2021-01-04T00:00:00"
 description = "In this course, we'll cover a variety of topics that are essential to becoming a disciplined trader."
-coursetime = "13 min"
+coursetime = "25 min"
 level = "Beginner"
 course = "Being Disciplined"
 benefits = [
@@ -37,3 +37,4 @@ stronger foundation for long-term success.
 
 So if you're ready to take your trading to the next level,
 it's time to buckle down and get disciplined!
+
