@@ -1415,7 +1415,7 @@ class Trades {
               },
             yaxis: {
                 min: -100,
-                max: Math.ceil(Math.min(1000, maxYValue) / 100) * 100,
+                max: Math.ceil(Math.min(2000, maxYValue) / 100) * 100,
                 tickAmount: 20,
                 forceNiceScale: false,
                 labels: {
