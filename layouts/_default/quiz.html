@@ -1,0 +1,246 @@
+{{ define "main" }}
+
+
+  <section class="section blog-single py-5">
+    <div class="container">
+      <div class="row justify-content-center pb-0">
+        <div class="col-12">
+          {{ with .Title }}
+            <h1 class="display-1 fw-bold text-center text-primary pb-3">{{ . }}</h1>
+          {{ end }}
+          {{ with .Params.description }}
+            <p class="text-black-61 text-center pb-3">{{ . }}</p>
+          {{ end }}
+
+
+        </div>
+      </div>
+
+
+      <div class="row justify-content-center pb-0">
+        <div id="quiz-carousel" class="quiz carousel slide mb-5 " data-ride="carousel">
+          <div class="carousel-inner">
+            
+            <div id="questionTemplate" class="carousel-item text-center">
+              <div class="card" style="border-radius: 15px;">
+                <div class="card-body" style="margin-bottom: 0">
+                  <div class="row">
+                      <h4 class="question"></h4>
+                  </div>
+                  <div class="row">
+                      <div class="col-12">
+                        <!-- add list of multichoice answers here -->
+                        <div class="choices">
+                          
+                      </div>
+                      </div>
+                  </div>
+                </div>
+                <div  class="card-footer" style="margin-bottom: 0">
+
+                    <p class="card-text collapse correct answers"></p>
+                    <p class="card-text collapse incorrect answers"></p>
+
+                    <button class="btn btn-primary btnNext"  style="border-radius: 1em;" type="button">NEXT</button>
+
+                </div>
+              </div> <!-- card close -->
+            </div> <!-- carousel item -->
+            
+          </div> <!-- carousel-inner -->
+        </div>
+      </div>
+      
+      {{ if isset .Params "course" }}
+      {{ $currentCourse := .Params.course }}
+      {{ $allPages := .Site.RegularPages }}
+      {{ $coursePages := slice }}
+      
+      {{ range $allPages }}
+        {{ if isset .Params "course" }}
+          {{ if in .Params.course $currentCourse }}
+            {{ $coursePages = $coursePages | append . }}
+          {{ end }}
+        {{ end }}
+      {{ end }}
+      
+      {{ $sortedTaxonomyPages := $coursePages.ByDate }}
+      
+      {{ if gt (len $sortedTaxonomyPages) 1 }}
+        {{ $currentPage := . }}
+        {{ $currentPageIndex := -1 }}
+        {{ range $index, $page := $sortedTaxonomyPages }}
+          {{ if eq $page $currentPage }}
+            {{ $currentPageIndex = $index }}
+          {{ end }}
+        {{ end }}
+
+
+
+
+        {{ $nextTaxonomyPage := index $sortedTaxonomyPages (add $currentPageIndex 1) }}
+
+        {{ $totalLessons := len $sortedTaxonomyPages }}
+        <div class="col-12 mb-5 mb-md-4 d-flex text-center justify-content-center">
+          <div class="card shadow border-0  testimonial-card d-flex" style="border-radius: 15px;">
+            <div class="card-header">
+              {{ $currentCourse }}<br/>
+              {{ if ne $currentPageIndex -1 }} Lesson {{ add $currentPageIndex 1 }} of {{ $totalLessons }}{{ end }}
+            </div>
+            <ul class="list-group list-group-flush">
+              {{ if $nextTaxonomyPage }}
+                <li class="list-group-item text-black-61 px-2 mb-0 text-justify">
+                  <a class="fw-bold text-primary text-decoration-none" href="{{ $nextTaxonomyPage.RelPermalink }}">Next Lesson: {{ $nextTaxonomyPage.LinkTitle }}</a>
+                </li>
+              {{ end }}
+
+              {{ with $sortedTaxonomyPages }}
+                  {{ range $index, $page := . }}
+                  <li class="list-group-item text-black-61 px-2 mb-0 text-justify {{ if eq $page $currentPage }} bg-blue-light {{ end }}">
+                    <div class="row text-center">
+                      <div class="col-2 p-0 ml-3"> {{ if .Params.time }}<span class="mx-0 d-flex badge badge-secondary text-uppercase"><small>{{ .Params.time }}</small></span>{{ end }}</div>
+                      <div class="col-1"><span class="px-0 text-nowrap">{{ add $index 1 }}</span></div>
+                      <div class="col-8 text-left"><a class="text-decoration-none" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></div>
+                    </div>
+                  </li>
+                  {{ end }}
+              {{ end }}
+            </ul>
+            <div class="card-footer text-muted">
+              <a class="btn btn-lg btn-block btn-primary" style="border-radius: 0.5em"  href="https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_n9NbbxfFeIW95&accessPassId=prod_45GZIGs1lRCGs&a=spyderacademy" >Try Spyder Academy For Free</a>
+            </div>
+            </div>
+           
+          </div>
+        </div>
+      {{ end }}
+    {{ end }}
+
+    <div class="pinterest-images d-none">
+        {{ $pinPath := "pins/**" }}
+        {{ $pinImages := .Page.Resources.Match $pinPath }}
+
+        {{ range $pinImages }}
+          {{ $pin := .Resize "1000x" }}
+          {{ with $pin }}
+             <img src="{{ .RelPermalink }}" alt="{{$.Description}}">
+          {{ end }}
+        {{ end }}
+    </div>
+
+  </section>
+
+  {{ with .Site.Data.home.benefits }}{{ partial "sections/benefits.html" . }}{{ end }}
+  {{ with .Site.Data.home.trades }}{{ partial "sections/trades.html" . }}{{ end }}
+  {{ partial "shared/sidebar.html" }}
+
+
+  {{ .Content }}
+
+  <script>
+    function shuffle(array) {
+      let currentIndex = array.length,  randomIndex;
+
+      // While there remain elements to shuffle.
+      while (currentIndex != 0) {
+
+        // Pick a remaining element.
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [
+          array[randomIndex], array[currentIndex]];
+      }
+
+      return array;
+    }
+
+    quiz = shuffle(quiz);
+
+    // Iterate through the dictionary using $.each()
+    $(quiz).each(function(index, q){
+        questionSlide = $('#questionTemplate').clone(true)
+
+        slideId = "slide_" + index
+        lookupSlideId = "#" + slideId
+
+        questionSlide.attr("id", slideId)
+        $('#quiz-carousel .carousel-inner').append(questionSlide)
+
+        // add the list of multichoice options
+        $(lookupSlideId + ' .choices').empty()
+
+        q.answers.forEach(o => {
+          l = $("<label class='options' />")
+          l.text(o['desc'])
+
+          i = $("<input type='radio' name='radio' slide='" + lookupSlideId + "' />")  
+
+          c = $("<span class='checkmark' />")
+
+          if (o['correct'] === true){
+            // this is the correct answer, show the correctStatus when this radio is clicked
+            i.click(function(el){
+              slide = $(this).attr("slide")
+              $(slide + ' .correct').collapse('show') 
+              $(slide + ' .incorrect').collapse('hide') 
+            })
+          }
+          else{
+            // this is the incorrect answer, show the incorrectStatus when this radio is clicked
+            i.click(function(){
+              slide = $(this).attr("slide")
+              $(slide + ' .correct').collapse('hide') 
+              $(slide + ' .incorrect').collapse('show') 
+            })
+          }
+
+          l.append(i)
+          l.append(c)
+
+          $(lookupSlideId + ' .choices').append(l)
+        });
+
+
+        correctStatus = "<p><a class='btn btn-success text-white' style='border-radius: 1em;'>YOU'RE CORRECT</a></p>"
+        incorrectStatus = "<p><a class='btn btn-warning text-white' style='border-radius: 1em;'>LET'S WORK ON THAT</a></p>"
+
+        $(lookupSlideId + ' .question').text(q.question);
+        $(lookupSlideId + ' .multichoice').html(q.answers);
+        $(lookupSlideId + ' .correct').html(correctStatus + q.explanation);
+        $(lookupSlideId + ' .incorrect').html(incorrectStatus + q.explanation);
+        
+        $(lookupSlideId + ' .btnNext').click(function(el) {
+            // Check if there is a next slide
+            if ($(this).closest('.carousel-inner').children('.carousel-item.active').next('.carousel-item').length) {
+                $('#quiz-carousel').carousel('next');
+            } 
+        });
+
+    })
+
+    // clone once more for the end card
+    finalSlide = $('#questionTemplate').clone(true)
+    finalSlideId = "slide_" + quiz.length
+    finalSlide.attr("id", finalSlideId)
+
+    $('#quiz-carousel .carousel-inner').append(finalSlide)
+    $("#" + finalSlideId + ' .card-footer').remove()
+    $("#" + finalSlideId + ' .question').text("Congratulations. You have completed the Quiz!")
+
+    // remove the template
+    $('#questionTemplate').remove()
+
+    // make the first slide the active one
+    $('#quiz-carousel .carousel-item').first().addClass('active');
+
+    $('#quiz-carousel').carousel({ interval: false });
+    $("#quiz-carousel").on('slid.bs.carousel', function(e){
+        $('#quiz-carousel').carousel('pause');
+    });
+
+  </script>
+
+
+{{ end }}
