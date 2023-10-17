@@ -203,8 +203,8 @@
         });
 
 
-        correctStatus = "<p><a class='btn btn-success text-white' style='border-radius: 1em;'>YOU'RE CORRECT</a></p>"
-        incorrectStatus = "<p><a class='btn btn-warning text-white' style='border-radius: 1em;'>LET'S WORK ON THAT</a></p>"
+        correctStatus = "<p><span class='badge badge-success' style='border-radius: 1em;'>YOU'RE CORRECT</span></p>"
+        incorrectStatus = "<p><span class='badge badge-warning' style='border-radius: 1em;'>LET'S WORK ON THAT</span></p>"
 
         $(lookupSlideId + ' .question').text(q.question);
         $(lookupSlideId + ' .multichoice').html(q.answers);
