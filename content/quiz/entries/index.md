@@ -9,7 +9,6 @@ layout = "quiz"
 +++
 
 
-// quiz questions
 <script>
 var quiz = [
     {
