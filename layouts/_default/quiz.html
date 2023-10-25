@@ -28,11 +28,12 @@
                       <h4 class="question"></h4>
                   </div>
                   <div class="row">
-                      <div class="col-12">
+                    <img class="quizImage" src=""></img>
+                  </div>
+                  <div class="row">
                         <!-- add list of multichoice answers here -->
-                        <div class="choices">
+                        <div class="row choices mt-5">
                           
-                      </div>
                       </div>
                   </div>
                 </div>
@@ -172,16 +173,35 @@
         $(lookupSlideId + ' .choices').empty()
 
         q.answers.forEach(o => {
-          l = $("<label class='options' />")
+          l = $("<div class='btn btn-block p-4 m-0 options' slide='" + lookupSlideId + "' />")
+          
+          switch (o['option']) {
+            case "A":
+              l.addClass("btn-danger");
+              break;
+            case "B":
+              l.addClass("btn-warning");
+              break;
+            case "C":
+              l.addClass("btn-info");
+              break;
+            case "D":
+              l.addClass("btn-success");
+              break;
+            default:
+              l.addClass("btn-secondary");
+              break;
+          }
+
           l.text(o['desc'])
 
-          i = $("<input type='radio' name='radio' slide='" + lookupSlideId + "' />")  
+          // i = $("<input type='radio' name='radio' slide='" + lookupSlideId + "' />")  
 
-          c = $("<span class='checkmark' />")
+          // c = $("<span class='checkmark' />")
 
           if (o['correct'] === true){
             // this is the correct answer, show the correctStatus when this radio is clicked
-            i.click(function(el){
+            l.click(function(el){
               slide = $(this).attr("slide")
               $(slide + ' .correct').collapse('show') 
               $(slide + ' .incorrect').collapse('hide') 
@@ -189,17 +209,18 @@
           }
           else{
             // this is the incorrect answer, show the incorrectStatus when this radio is clicked
-            i.click(function(){
+            l.click(function(){
               slide = $(this).attr("slide")
               $(slide + ' .correct').collapse('hide') 
               $(slide + ' .incorrect').collapse('show') 
             })
           }
 
-          l.append(i)
-          l.append(c)
+          cl = $("<div class='col-6 p-1 m-0'>")
+          cl.append(l)
+          // l.append(c)
 
-          $(lookupSlideId + ' .choices').append(l)
+          $(lookupSlideId + ' .choices').append(cl)
         });
 
 
@@ -207,6 +228,7 @@
         incorrectStatus = "<p><span class='badge badge-warning' style='border-radius: 1em;'>LET'S WORK ON THAT</span></p>"
 
         $(lookupSlideId + ' .question').text(q.question);
+        $(lookupSlideId + ' .quizImage').attr("src", q.image);
         $(lookupSlideId + ' .multichoice').html(q.answers);
         $(lookupSlideId + ' .correct').html(correctStatus + q.explanation);
         $(lookupSlideId + ' .incorrect').html(incorrectStatus + q.explanation);
