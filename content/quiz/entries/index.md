@@ -6,7 +6,6 @@ description = "In this quiz, we'll test your knowledge on finding optimal entrie
 time = "5 min"
 course = "TA 101"
 layout = "quiz"
-draft = "true"
 +++
 
 
