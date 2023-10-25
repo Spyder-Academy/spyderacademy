@@ -1489,8 +1489,20 @@ class Trades {
         var self = this;
 
         if (dateString === null){
-            // use today
-            dateString = new Date().setHours(0,0,0,0)
+            var today = new Date()
+            if (this.userLoggedIn){
+              // use today
+              dateString = today.setHours(0,0,0,0)
+            }
+            else{
+              // use yesterday
+              var yesterday = new Date(today);
+              yesterday.setDate(today.getDate() - 1);
+
+              dateString = yesterday.setHours(0,0,0,0)
+            }
+            console.log(dateString)
+            
         }
 
         var todayStart = new Date(dateString)

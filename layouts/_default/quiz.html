@@ -130,13 +130,12 @@
     </div>
 
   </section>
+  
+  {{ .Content }}
 
   {{ with .Site.Data.home.benefits }}{{ partial "sections/benefits.html" . }}{{ end }}
   {{ with .Site.Data.home.trades }}{{ partial "sections/trades.html" . }}{{ end }}
   {{ partial "shared/sidebar.html" }}
-
-
-  {{ .Content }}
 
   <script>
     function shuffle(array) {

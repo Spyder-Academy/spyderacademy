@@ -8,7 +8,6 @@ course = "TA 101"
 layout = "quiz"
 +++
 
-
 <script>
 var quiz = [
     {
