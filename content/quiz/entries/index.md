@@ -54,6 +54,16 @@ var quiz = [
         ],
         explanation: "QQQ broke VWAP and the 9ema with strong sell volume. This was followed by low volume consolidation, with QQQ holding below the ORB 15min range. Entries at the 9ema here were rewarded with a nice continuation of the downtrend along the 9ema."
     },
-   
+   {
+        question: "Sith earned bags going both long and short in QQQ on Oct 27th. What can you learn from his entries?",
+        image: "images/QQQ 2023-10-27.png",
+        answers: [
+            {option: "A", desc: "Wait for the 9ema to break or reclaim before entering a position."}, 
+            {option: "B", desc: "Check the volume supports the direction you are taking (buyers entering for longs, sellers entering for shorts)"}, 
+            {option: "C", desc: "Confirm a retest of the 9ema supports your direction (low volume retest for continuation)"}, 
+            {option: "D", desc: "All of the above", correct: true}
+        ],
+        explanation: "The morning was choppy, but the first sign of a direction only came after QQQ had 2 candle closes below the 9ema, signalling to go short.<br/><br/>That would have given a quick scalp before the 9ema was reclaimed again with buyers stepping in. The reclaim of the 9ema showed buying interest increasing in the volume bar, signalling a potential long opportunity.  <br/><br/>Later, the trend flipped again with another reclaim of the 9ema. A good entry was the low volume retest of the 9ema.  However this trade may have gone negative during the weak move up while QQQ bear flagged.  <br/><br/>If you missed that entry, another retest of the 9ema with a tweezer top formation and strong sell volume would have made the more ideal entry."
+    },
 ]
 </script>

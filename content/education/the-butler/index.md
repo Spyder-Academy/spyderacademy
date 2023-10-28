@@ -1,8 +1,8 @@
 +++
 author = "Sith"
-title = "Trading The Butler"
+title = "Trading The 9ema Trend Reversal Pattern"
 date = "2023-07-12T00:00:00"
-description = "How to trade The Butler 9ema bullish reversal pattern"
+description = "How to trade The Butler 9ema bullish trend reversal pattern"
 course = "Trading Strategies"
 time = "2 min"
 tags = [
@@ -10,7 +10,7 @@ tags = [
 ]
 +++
 
-The Butler is a bullish reversal of a 9ema rejection and should signal support of the 9ema and move for a leg higher. This setup provides a support zone below entry that acts as a stop and invalidates the trade. A bullish reversal with support provides a solid Risk:Reward ratio(R:R) on these setups. Typically traded on the 5-minute chart, The Butler is also valid on other timeframes.
+The Butler is a bullish trend reversal off a 9ema rejection and should signal support of the 9ema and move for a leg higher. This setup provides a support zone below entry that acts as a stop and invalidates the trade. A bullish reversal with support provides a solid Risk:Reward ratio(R:R) on these setups. Typically traded on the 5-minute chart, The Butler is also valid on other timeframes.
 
 ![](images/main.png)
 

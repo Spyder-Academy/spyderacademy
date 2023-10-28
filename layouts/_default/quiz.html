@@ -130,7 +130,7 @@
     </div>
 
   </section>
-  
+
   {{ .Content }}
 
   {{ with .Site.Data.home.benefits }}{{ partial "sections/benefits.html" . }}{{ end }}
@@ -172,7 +172,7 @@
         $(lookupSlideId + ' .choices').empty()
 
         q.answers.forEach(o => {
-          l = $("<div class='btn btn-block p-4 m-0 options' slide='" + lookupSlideId + "' />")
+          l = $("<div class='btn btn-block p-4 m-0 options d-flex justify-content-center align-middle' slide='" + lookupSlideId + "' />")
           
           switch (o['option']) {
             case "A":
@@ -215,7 +215,7 @@
             })
           }
 
-          cl = $("<div class='col-6 p-1 m-0'>")
+          cl = $("<div class='col-6 p-1 m-0 d-flex '>")
           cl.append(l)
           // l.append(c)
 
