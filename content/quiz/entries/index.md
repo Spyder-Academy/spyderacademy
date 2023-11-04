@@ -65,5 +65,16 @@ var quiz = [
         ],
         explanation: "The morning was choppy, but the first sign of a direction only came after QQQ had 2 candle closes below the 9ema, signalling to go short.<br/><br/>That would have given a quick scalp before the 9ema was reclaimed again with buyers stepping in. The reclaim of the 9ema showed buying interest increasing in the volume bar, signalling a potential long opportunity.  <br/><br/>Later, the trend flipped again with another reclaim of the 9ema. A good entry was the low volume retest of the 9ema.  However this trade may have gone negative during the weak move up while QQQ bear flagged.  <br/><br/>If you missed that entry, another retest of the 9ema with a tweezer top formation and strong sell volume would have made the more ideal entry."
     },
+    {
+        question: "Cash shorted SPY at points A and B.  Which one was the better short?",
+        image: "images/SPY 2023-10-30.png",
+        answers: [
+            {option: "A", desc: "A - Sell volume increasing as the 9ema broke.", correct: true}, 
+            {option: "B", desc: "B - Another rejection of VWAP and ORB Low."}, 
+            {option: "C", desc: "Both - Both broke ORB L and VWAP so lets go!"}, 
+            {option: "D", desc: "Neither - Risk Reward wasnt there"}
+        ],
+        explanation: "A was the better entry as sellers stepped up as the ORB Low and 9ema levels broke.  With B, the sell volume was weak, reducing the conviction of the trade.  Although B made money, it also went against for a period of time.<br/><br/>Later, with Trade C, the ORBH level broke but did not have strong selling volume compared to the previous candle, thus caused a fake out.  Trade D was good because of the 9ema retest on a decreasing/low volume pullback."
+    },
 ]
 </script>

@@ -312,6 +312,7 @@ class Trades {
 
             $("#winRate").text(winRate);
             $("#avgGain").text(avgGain);
+            $('#numTrades').text(numTrades + "Trades")
             $("#profitFactor").text(winFactor + " (" + numBags + "💰)");
 
             if (numTrades == 0){
@@ -342,72 +343,72 @@ class Trades {
             this.chartWinRate.render();
 
 
-            // Calculate rolling average data for average gain chart
-            var rollingAvgData = [];
-            var rollingSum = 0;
-            for (var i = 0; i < tradesData.length; i++) {
-                if (i > 20){
-                    rollingSum += tradesData[i].gainsValue;
-                    var rollingAvg = rollingSum / (i + 1 - 20);
-                    rollingAvgData.push(rollingAvg.toFixed(0));
-                }
-            }
+            // // Calculate rolling average data for average gain chart
+            // var rollingAvgData = [];
+            // var rollingSum = 0;
+            // for (var i = 0; i < tradesData.length; i++) {
+            //     if (i > 20){
+            //         rollingSum += tradesData[i].gainsValue;
+            //         var rollingAvg = rollingSum / (i + 1 - 20);
+            //         rollingAvgData.push(rollingAvg.toFixed(0));
+            //     }
+            // }
 
-            var avgGainsChartOptions = {
-                chart: {
-                  id: 'avgGainChart',
-                  group: 'sparks',
-                  type: 'line',
-                  height: 80,
-                  sparkline: {
-                    enabled: true
-                  },
-                  dropShadow: {
-                    enabled: true,
-                    top: 1,
-                    left: 1,
-                    blur: 2,
-                    opacity: 0.2,
-                  }
-                },
-                series: [
-                    {
-                      name: 'Average Gain',
-                      data: rollingAvgData,
-                    },
-                ],
-                stroke: {
-                  curve: 'smooth',
-                  width: 3,
-                },
-                markers: {
-                  size: 0
-                },
-                grid: {
-                  padding: {
-                    top: 10,
-                    bottom: 10,
-                    left: 65
-                  }
-                },
-                colors: ['#fff'],
-                tooltip: {
-                  x: {
-                    show: false
-                  },
-                  y: {
-                    title: {
-                      formatter: function formatter(val) {
-                        return val + '%';
-                      }
-                    }
-                  }
-                }
-              }
+            // var avgGainsChartOptions = {
+            //     chart: {
+            //       id: 'avgGainChart',
+            //       group: 'sparks',
+            //       type: 'line',
+            //       height: 80,
+            //       sparkline: {
+            //         enabled: true
+            //       },
+            //       dropShadow: {
+            //         enabled: true,
+            //         top: 1,
+            //         left: 1,
+            //         blur: 2,
+            //         opacity: 0.2,
+            //       }
+            //     },
+            //     series: [
+            //         {
+            //           name: 'Average Gain',
+            //           data: rollingAvgData,
+            //         },
+            //     ],
+            //     stroke: {
+            //       curve: 'smooth',
+            //       width: 3,
+            //     },
+            //     markers: {
+            //       size: 0
+            //     },
+            //     grid: {
+            //       padding: {
+            //         top: 10,
+            //         bottom: 10,
+            //         left: 65
+            //       }
+            //     },
+            //     colors: ['#fff'],
+            //     tooltip: {
+            //       x: {
+            //         show: false
+            //       },
+            //       y: {
+            //         title: {
+            //           formatter: function formatter(val) {
+            //             return val + '%';
+            //           }
+            //         }
+            //       }
+            //     }
+            //   }
 
-            if (this.chartAvgGains != null) this.chartAvgGains.destroy();
-            this.chartAvgGains = new ApexCharts(document.querySelector("#avgGainChart"), avgGainsChartOptions);
-            this.chartAvgGains.render();
+            // if (this.chartAvgGains != null) this.chartAvgGains.destroy();
+            // this.chartAvgGains = new ApexCharts(document.querySelector("#avgGainChart"), avgGainsChartOptions);
+            // this.chartAvgGains.render();
         
 
 
