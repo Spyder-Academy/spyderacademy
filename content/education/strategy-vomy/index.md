@@ -16,7 +16,6 @@ As the ribbon develops, it starts to look like a Dolphin.  You then wait for a b
 
 Saty Mahajan has a great [write up](https://twitter.com/satymahajan/status/1648369109774614532?s=20) on how to trade the VOMY setup.  This strategy is traded frequently by Gobi Calls here at Spyder Academy.
 
-![](images/vomy.png)
 
 
 
