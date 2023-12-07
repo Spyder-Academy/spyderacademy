@@ -18,7 +18,7 @@ content:
     - featured: true
       title: "The Class Room"
       price: "80"
-      promotion: "SAVE 30% WITH OUR BLACK FRIDAY SALE!<br/><br/> USE CODE 'THANKS' AT CHECKOUT"
+      # promotion: "SAVE 30% WITH OUR BLACK FRIDAY SALE!<br/><br/> USE CODE 'THANKS' AT CHECKOUT"
       
       button:
         label: "Start Your 7-Day Free Trial"
