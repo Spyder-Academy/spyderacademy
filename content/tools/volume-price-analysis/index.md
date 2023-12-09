@@ -11,7 +11,7 @@ tags = [
 
 # 
 
-Unlock the power of Volume Price Analysis (VPA) with our VPA indicator, designed for the discerning trader navigating the intricacies of the financial markets using Volume Price Analysis. 
+Unlock the power of [Volume Price Analysis](/education/what-is-volume-price-analysis/)) with our VPA indicator, designed for the discerning trader navigating the intricacies of the financial markets using Volume Price Analysis. 
 
 In this comprehensive guide, we'll delve into the workings of the VPA indicator, shedding light on its features and how to harness its insights for more informed trading decisions.
 
@@ -33,6 +33,8 @@ The indicator identifies various candlestick patterns and associated volume cond
 - **Large Spread Candle with Large Volume:** Indicates a strong bullish or bearish candle with substantial volume support.
 - **Large Upper Wick with High Selling Volume:** Highlights a potential inverted hammer or shooting star pattern, signaling bearish sentiment.
 - **Large Lower Wick with High Buying Volume:** Suggests a potential hammer pattern, indicating bullish sentiment.
+- **Anomoly Candles:** Suggests an anomoly in the market, usually occuring when there is a wide candle spread on low volume, or tiny candle spread on high volume.
+- **Declining Volume:** Suggests a movement in price on declining volume when the volume is lower than the preceding candle. Candles are made opaque in this situation - signaling the weakening in strength of the move.
 - **Hanging Man Patterns:** Recognizes bullish and bearish hammer candles, providing additional context to potential trend reversals.
 
 ## Leveraging the VPA Indicator for Trading
@@ -46,7 +48,7 @@ The VPA indicator unveils opportunities for reversal and continuation trades bas
 Given the dynamic nature of the VPA signals, traders should be agile and ready to execute quick entry and exit strategies. Timeliness is crucial when responding to the indicator's insights.  Entries based on Doji candles also allow tight risk management based on the trade being invalidated.  It is always a good idea to cut losing trades quickly while giving winning trades room to run.
 
 ### Hammering Out Profitable Strategies
-The VPA indicator offers valuable signals for recognizing hammer patterns, gravestone dojis, and dragonfly dojis. Traders can use these insights to align their strategies with potential trend reversals.  Combine these signals with [Key Levels](/tools/key-levels/) and other strategies to boost your confidence trading with Volume Price Analysis!
+The VPA indicator offers valuable signals for recognizing hammer patterns, gravestone dojis, and dragonfly dojis. Traders can use these insights to align their strategies with potential trend reversals.  Combine these signals with [Key Levels](/tools/key-levels/) and other strategies to boost your confidence trading with [Volume Price Analysis](/education/what-is-volume-price-analysis/))!
 
 ## Conclusion
 

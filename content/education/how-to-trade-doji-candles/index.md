@@ -22,12 +22,12 @@ Doji candles are unique because they signify market indecision. These candles ha
 ### Gravestone Doji
 
 - **Appearance:** The Gravestone Doji has a long upper shadow and little to no lower shadow, resembling an upside-down "T" or tombstone.
-- **Significance:** It suggests that buyers started strong but were overpowered by sellers by the close, indicating a potential bearish reversal.
+- **Significance:** It suggests that buyers started strong but were overpowered by sellers by the close, indicating a potential bearish reversal when put in at highs.  A gravestone doji at lows can indicate sellers not able to push the price lower, and thus signal a reversal back up as a bottoming candle.
 
 ### Dragonfly Doji
 
 - **Appearance:** The Dragonfly Doji has a long lower shadow and little to no upper shadow, resembling a dragonfly.
-- **Significance:** It signals that sellers dominated early but were overcome by buyers by the close, hinting at a potential bullish reversal.
+- **Significance:** It signals that sellers dominated early but were overcome by buyers by the close, hinting at a potential bullish reversal when put in at lows.  A dragonfly doji at highs usually signal that buyers couldnt push the price higher, thus becoming a topping candle and may indicate a reversal lower.
 
 ## Using Volume and Key Levels for Reversals
 
@@ -63,7 +63,7 @@ In the example, we see a Gravestone Doji forming near a resistance level, accomp
    - Use Doji patterns as part of a comprehensive analysis, combining them with other indicators for confirmation.
 
 2. **Risk Management:**
-   - Set stop-loss and take-profit levels to manage your risk effectively.
+   - Set stop-loss and take-profit levels to manage your risk effectively.  Enter/Exit a trade based on a breach of the wicks of the doji candle.  Eg, you may consider entering long on price movement above the high of a doji (indecision breaking to the upside) with a stop if price breaks below the low of the doji.
 
 3. **Stay Informed:**
    - Stay updated on market news and events that could impact your chosen assets.
