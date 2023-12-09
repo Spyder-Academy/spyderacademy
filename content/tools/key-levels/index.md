@@ -13,7 +13,7 @@ tags = [
 
 
 #### Adding the indicator
-As a [Spyder Academy student](/#services)), gaining access to the Key Levels indicator on TradingView is a game-changer. Dive into the Invite Only scripts and, if you've recently joined, a quick restart of your TradingView app will reveal the magic.
+As a [Spyder Academy student](/#services), gaining access to the Key Levels indicator on TradingView is a game-changer. Dive into the Invite Only scripts and, if you've recently joined, a quick restart of your TradingView app will reveal the magic.
 
 ![Adding the Key Levels Trading View Indicator](images/inviteonly.png)
 
