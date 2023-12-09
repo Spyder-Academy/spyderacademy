@@ -5,7 +5,7 @@ date = "2023-12-07T10:00:00"
 description = "Unlock the potential of the Spyder Academy Earnings Calendar command to elevate your trading game, specifically when preparing for lucrative IV Flush trades."
 time = "1 min"
 tags = [
-   "TradingView",
+   "Discord",
 ]
 +++
 

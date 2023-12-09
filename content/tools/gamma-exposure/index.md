@@ -5,7 +5,7 @@ date = "2023-12-07T12:00:00"
 description = "How to get Gamma Exposure Levels"
 time = "1 min"
 tags = [
-   "Discord Tools",
+   "Discord",
 ]
 +++
 
