@@ -13,7 +13,8 @@ content:
           <i class='fas fa-chart-line'></i> Trade Recaps</br/>
           <i class='fas fa-bell'></i> Instructor Trade Alerts<br/>
           <i class='fas fa-book'></i> Detailed Reasons for Entries and Exits<br/>
-          <i class='fas fa-map'></i> Strategy Guides
+          <i class='fas fa-map'></i> Strategy Guides<br/>
+          <i class='fas fa-book'></i> Online Courses<br/>
             "
 
   - image: "images/portfolio-background.png"
@@ -23,6 +24,8 @@ content:
           <i class='fas fa-robot'></i> Algo Alerts<br/>
           <i class='fas fa-spider'></i> SpyderWeb Analytics<br/>
           <i class='fas fa-chess-rook'></i> Backtested Strategies<br/>
+          <i class='fas fa-chart-line'></i> TradingView Indicators<br/>
+          <i class='fas fa-robot'></i> Discord Tools<br/>
           "
 
   - image: "images/portfolio-background.png"
@@ -30,6 +33,7 @@ content:
     title: "Community"
     text: "
           <i class='fas fa-users'></i> Premium Community Chat<br/>
-          <i class='fas fa-clipboard-question'></i> Weekly Edu with Q&A Sessions<br/>
+          <i class='fas fa-phone'></i> Live Voice All Day<br/>
+          <i class='fas fa-clipboard-question'></i> Education with Q&A Sessions<br/>
           <i class='fas fa-face-dizzy'></i> Trading Psychology<br/>
     "
