@@ -2,7 +2,7 @@
 author = "CashMoneyTrades"
 title = "How to Recognize Over Confidence when Trading"
 date = "2023-06-21T00:00:00"
-description = "Overcoming the Fear of Taking Trades in Options Trading"
+description = "Overconfidence can lead traders to take excessive risks, disregard warning signals, and execute trades without sound analysis. Recognizing and overcoming overconfidence is paramount for sustained success in options trading. "
 course = "Trading Psychology"
 time = "4 min"
 tags = [
