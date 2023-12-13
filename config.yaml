@@ -11,6 +11,7 @@ markup:
 
 
 googleAnalytics: "G-FT7VJCMYJ5"
+enableRobotsTXT: false
 
 summaryLength: 20
 paginate: 100
