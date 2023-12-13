@@ -1,2 +1,6 @@
 User-agent: *
 Disallow: /*/tooltip
+Disallow: /*/dom/*
+Disallow: /*/base-component
+
+Sitemap: https://www.spyderacademy.com/sitemap.xml
