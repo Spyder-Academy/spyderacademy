@@ -3,7 +3,7 @@ author: "CashMoneyTrades"
 title: "What Is a Good Delta for Options?"
 date: 2023-12-14T00:00:00-04:00
 description: "Discover optimal options delta. What's a good delta for options? Unlock success in trading with our expert insights."
-course: "Getting Started"
+course: "Trading 101"
 time: "2 min"
 tags:
   - "Getting Started"
