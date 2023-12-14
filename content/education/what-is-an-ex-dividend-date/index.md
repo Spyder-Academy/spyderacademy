@@ -7,7 +7,6 @@ course: "Trading 101"
 time: "1 min"
 tags:
   - "Getting Started"
-draft: true
 ---
 
 
