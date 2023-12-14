@@ -5,7 +5,7 @@ date: 2023-12-09T00:00:00-04:00
 description: "OpenAI is a private company and cannot be publicly traded. Explore strategic AI investments indirectly tied to OpenAI through Microsoft, Google, and NVIDIA."
 time: "1 min"
 tags:
-  - "Getting Started"
+  - "Not Publicly Traded"
 ---
 
 In the dynamic realm of artificial intelligence, exploring investment opportunities requires a nuanced approach. While OpenAI is not publicly traded, there are strategic ways to indirectly tap into its potential.

@@ -5,7 +5,7 @@ date: 2023-12-14T00:00:00-04:00
 description: "Marvel Comics is a subsidiary of The Walt Disney Company (DIS). To invest in Marvel, you'll need to focus on Disney's stock, as Marvel itself is not a publicly traded company."
 time: "1 min"
 tags:
-  - "Getting Started"
+  - "Not Publicly Traded"
 ---
 
 
