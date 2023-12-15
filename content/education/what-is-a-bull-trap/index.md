@@ -16,7 +16,9 @@ In the intricate landscape of financial markets, traders often encounter a pheno
 
 A bull trap occurs when a rising trend in the market prompts investors to believe that an asset's value is on a sustainable upward trajectory. However, this optimism is short-lived, as the price unexpectedly reverses, catching these hopeful investors off guard. The trap lies in the false signals of a prolonged upward movement, luring investors to buy in before the impending downturn.
 
-## Identifying the Bull Trap: Deconstructing the Illusion
+A bull trap is also known as a “sucker's rally“. A bull trap tricks traders into thinking a market is done falling and that it's a great time to buy, only to then continue its fall to new lows.
+
+## Identifying the Bull Trap: How the Bull Trap works
 
 Several indicators can help traders identify a potential bull trap:
 
