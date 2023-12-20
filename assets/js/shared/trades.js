@@ -1453,7 +1453,7 @@ class Trades {
           title: { text: "TOTAL WINS AND LOSSES"},
           labels: {
             formatter: function (val) {
-              return Math.abs(Math.round(val)) + "%"
+              return Math.abs(Math.round(val)) 
             }
           },
           tooltip: {
@@ -1465,7 +1465,7 @@ class Trades {
             },
             y: {
               formatter: function (val) {
-                return Math.abs(val) + "%"
+                return Math.abs(val) 
               }
             }
           },
