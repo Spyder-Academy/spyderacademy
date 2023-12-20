@@ -274,6 +274,7 @@ class Trades {
 
         this.renderStats();
         this.renderCalendar();
+        this.renderScoreboard();
         this.renderGainsBubbleChart();
         this.renderRecap();
         this.renderDrawDowns();
@@ -448,7 +449,7 @@ class Trades {
                     data: tradeWinPercentages,
                 }],
                 chart: {
-                    height: 350,
+                    height: 400,
                     type: 'radar',
                     toolbar: {
                         show: false,
@@ -628,7 +629,7 @@ class Trades {
           var chartData = {
             chart: {
               type: 'bar',
-              height: 350,
+              height: 400,
               toolbar: {
                 show: false,
               }
@@ -1348,96 +1349,177 @@ class Trades {
 
 
     renderGainsBubbleChart() {
-        var self = this;
+      this.closedTrades.then(tradesData => {
 
-        this.closedTrades.then(tradesData => {
-          const seriesData = [];
+        // get the counts of winning trades/losing trades based on range of drawdown.
 
-          
-          // Group trades by userid
-          const tradesByUser = tradesData.reduce((acc, trade) => {
-            if (!acc[trade.userid]) {
-              acc[trade.userid] = [];
+        // Categorize drawdowns
+        var gainsCategories = {
+          "0-20%": 0,
+          "21-50%": 0,
+          "51-100%": 0,
+          "101-500%": 0,
+          "501-1000%": 0,
+          "1000%+": 0,
+          // Add more categories here...
+        };
+
+        var lossCategories = {
+          "0-20%": 0,
+          "21-50%": 0,
+          "51-100%": 0,
+          "101-500%": 0,
+          "501-1000%": 0,
+          "1000%+": 0,
+        };
+
+        // Iterate through trade records
+        $.each(tradesData, function(index, trade) {
+          var gain = trade.gainsValue;
+
+          if (trade.gainsValue >= 0){
+            if (gain >= 0 && gain <= 20) {
+              gainsCategories["0-20%"]++;
+            } else if (gain > 20 && gain <= 50) {
+              gainsCategories["21-50%"]++;
+            } else if (gain > 50  && gain <= 100) {
+              gainsCategories["51-100%"]++;
+            } else if (gain > 100  && gain <= 500) {
+              gainsCategories["101-500%"]++;
+            } else if (gain > 500  && gain <= 1000) {
+              gainsCategories["501-1000%"]++;
+            } else if (gain > 1000) {
+              gainsCategories["1000%+"]++;
             }
-            acc[trade.userid].push(trade);
-            return acc;
-          }, {});
-          
-          // Create series data for each username
-          for (const userid in tradesByUser) {
-
-            const trades = tradesByUser[userid];
-            const series = {
-              name: tradesData.find((data) => data.userid == userid).username,
-              data: trades.map((trade) => ({
-                x: trade.exit_date_max.toDate(),
-                y: trade.gainsValue, 
-                fillColor: trade.gainsValue < 0 ? '#FF0000' : ( trade.gainsValue >= 100  ? "GOLD"  : "#BFE1CF" )
-              })),
-            };
-            seriesData.push(series);
+            // Add more conditions for other categories...
           }
 
-          let maxYValue = Number.NEGATIVE_INFINITY;
-          for (const series of seriesData) {
-            for (const dataPoint of series.data) {
-              if (dataPoint.y > maxYValue) {
-                maxYValue = dataPoint.y;
+          else if (trade.gainsValue < 0){
+            if (gain < 0 && gain >= -20) {
+              lossCategories["0-20%"]--;
+            } else if (gain < -20 && gain >= -50) {
+              lossCategories["21-50%"]--;
+            } else if (gain < -50  && gain >= -100) {
+              lossCategories["51-100%"]--;
+            } 
+            // Add more conditions for other categories...
+          }
+        });
+
+        // Prepare data for ApexCharts
+        var chartData = {
+          chart: {
+            type: 'bar',
+            height: 400,
+            stacked: true,
+            toolbar: {
+              show: false,
+            }
+          },
+          series: [
+            {
+              name: 'Winning Trades',
+              data: Object.values(gainsCategories),
+            },
+            {
+              name: 'Losing Trades',
+              data: Object.values(lossCategories),
+            }
+          ],
+          xaxis: {
+            categories: [
+              "0-20%",
+              "21-50%",
+              "51-100%",
+              "101-500%",
+              "501-1000%",
+              "1000%+",
+          ],
+          },
+          colors: [ "#BFE1CF", "#cc0000"],
+          plotOptions: {
+            bar: {
+              horizontal: true,
+              barHeight: '80%',
+            },
+            stroke: {
+              width: 1,
+              colors: ["#fff"]
+            },
+          },
+          dataLabels: {
+            enabled: false
+          },
+          title: { text: "TOTAL WINS AND LOSSES"},
+          labels: {
+            formatter: function (val) {
+              return Math.abs(Math.round(val)) + "%"
+            }
+          },
+          tooltip: {
+            shared: false,
+            x: {
+              formatter: function (val) {
+                return val
+              }
+            },
+            y: {
+              formatter: function (val) {
+                return Math.abs(val) + "%"
               }
             }
-          }
+          },
+        };
 
-          // console.log("Gains vs Losses", JSON.stringify(seriesData, null, 2));
+        // Render the gains chart
+        if (this.chartScatterGains != null) this.chartScatterGains.destroy();
 
+        this.chartScatterGains = new ApexCharts(document.querySelector("#tradeGainsBubble"), chartData);
+        this.chartScatterGains.render();
+      });
+    }
 
+    renderScoreboard(){
+      this.closedTrades.then(tradesData => {
+        $('#tradeScoreboard').empty()
 
+        var scoreboardRow = $("<div class='row'></div>")
+        var scoreboardHeader = $("<div class='col-10'><h2 class='text-uppercase p-3'>" + "Scoreboard" + "</h2></div>")
+        scoreboardRow.append(scoreboardHeader);
+        $('#tradeScoreboard').append(scoreboardRow);
 
-          // Configure and render the Bubble Chart
-          const options = {
-            series: seriesData,
-            chart: {
-                type: 'scatter',
-                zoom: {
-                    type: 'xy'
-                },
-                toolbar: {show: false},
-                events: {
-                    dataPointSelection: (event, chartContext, config) => {
-                        var dateClicked = seriesData[config.seriesIndex].data[config.dataPointIndex].x
-                        self.renderRecap(dateClicked)
-                    }
-                  }
-            },
-            dataLabels: { enabled: false },
-            legend: { show: false },
-            title: { text: "GAINS vs LOSSES"},
-            xaxis: {
-                type: 'datetime',
-              },
-            yaxis: {
-                min: -100,
-                max: Math.ceil(Math.min(2000, maxYValue) / 100) * 100,
-                tickAmount: 20,
-                forceNiceScale: false,
-                labels: {
-                    formatter: function (value) {
-                      return value + "%";
-                    }
-                  },
-            }
-            // Additional chart configurations...
-          };
+        
+        var tradeCard = $('.trade-card-template');
 
-          if (this.chartScatterGains != null) this.chartScatterGains.destroy();
+        // Create a copy of the array before sorting
+        var tradesDataCopy = [...tradesData];
+
+        // Fix sorting logic
+        tradesDataCopy.sort((a, b) => b.gainsValue - a.gainsValue);
+
+        // Get the top 10 trades
+        var tradesDataTop = tradesDataCopy.slice(0, 5);
 
 
-          this.chartScatterGains = new ApexCharts(
-            document.querySelector("#tradeGainsBubble"),
-            options
-          );
+        // Create table rows for each trade
+        tradesDataTop.forEach(function(trade) {
+            var tradeCardRow = tradeCard.clone()
+            tradeCardRow.removeClass("trade-card-template")
+            tradeCardRow.removeClass("d-none")
+            tradeCardRow.removeClass("template")
+            tradeCardRow.removeClass("col-lg-6")
+            tradeCardRow.addClass("col-lg-12")
+            tradeCardRow.find(".traderName").text(trade.username + " on " + trade.exit_date_max.toDate().toLocaleDateString())
+            tradeCardRow.find(".tradeContract").text(trade.ticker + " " + trade.strike)
+            tradeCardRow.find(".tradeGain").text(trade.gainsString)
+            tradeCardRow.find(".tradeNotes").text(trade.notes)
+            tradeCardRow.find(".tradeLogo").attr("src", "https://www.getthatcashmoney.com/images/logos/" + trade.ticker.toUpperCase() + ".png")
+            tradeCardRow.find(".tradeRow").attr("tradeid", trade.tradeid)
+            tradeCardRow.find(".tradeRow").removeAttr("onclick")
 
-          this.chartScatterGains.render();
+            $('#tradeScoreboard').append(tradeCardRow);
         });
+      });
     }
 
     renderTradeRecap(trades, recap_date){
@@ -1470,6 +1552,7 @@ class Trades {
             var tradeCardRow = tradeCard.clone()
             tradeCardRow.removeClass("d-none")
             tradeCardRow.removeClass("template")
+            tradeCardRow.removeClass("trade-card-template")
             tradeCardRow.find(".traderName").text(trade.username)
             tradeCardRow.find(".tradeContract").text(trade.ticker + " " + trade.strike)
             tradeCardRow.find(".tradeGain").text(trade.gainsString)
