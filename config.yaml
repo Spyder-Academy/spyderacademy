@@ -64,19 +64,19 @@ menus:
       weight: 3
 
     - name: "Education"
-      url: "/education"
+      url: "/education/"
       weight: 5
 
     - name: "Courses"
-      url: "/courses"
+      url: "/courses/"
       weight: 6
 
     - name: "Tools"
-      url: "/tools"
+      url: "/tools/"
       weight: 7
 
     - name: "SpyderWeb"
-      url: "/members"
+      url: "/members/"
       weight: 8
 
    
@@ -105,15 +105,15 @@ menus:
       weight: 4
 
     - name: "Education"
-      url: "/education"
+      url: "/education/"
       weight: 5
 
     - name: "Terms of Use"
-      url: "/termsofuse"
+      url: "/termsofuse/"
       weight: 6
 
     - name: "Privacy Policy"
-      url: "/privacy"
+      url: "/privacy/"
       weight: 7
 
     - name: "Get our Free Newsletter"
