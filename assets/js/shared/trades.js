@@ -1567,13 +1567,13 @@ class Trades {
             if (trade.username.toUpperCase() == "LINKSNIPES"){
               king_image = "/images/teachers-linksnipes.png"
             }
-            else if (trade.username.toUpperCase() == "MRWOOFERS1968"){
+            else if (trade.username.toUpperCase().startsWith("MRWOOFERS") || trade.username.toUpperCase().startsWith("MR WOOFERS")){
               king_image = "/images/teachers-mrwoofers.png"
             }
             else if (trade.username.toUpperCase() == "SITH"){
               king_image = "/images/teachers-sith.png"
             }
-            else if (trade.username.toUpperCase() == "PAULDOZER"){
+            else if (trade.username.toUpperCase().startsWith("PAULDOZER")){
               king_image = "/images/teachers-pauldozer.png"
             }
             else if (trade.username.toUpperCase() == "GOBI"){
@@ -1581,6 +1581,9 @@ class Trades {
             }
             else if (trade.username.toUpperCase() == "CASHMONEYTRADES"){
               king_image = "/images/teachers-cash.png"
+            }
+            else if (trade.username.toUpperCase() == "WOODY"){
+              king_image = "/images/teachers-woody.png"
             }
             tradeCardRow.find(".tradeLogo").attr("src", king_image)
             tradeCardRow.find(".tradeRow").attr("tradeid", trade.tradeid)
