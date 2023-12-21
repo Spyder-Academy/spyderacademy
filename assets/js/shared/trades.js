@@ -767,11 +767,12 @@ class Trades {
 
     async renderTrims(trades) {
       var self = this;
-      var tradeData = [];
+      var upsideTradeData = [];
+      var downsideTradeData = [];
+
       var tradeMaxLoss = [];
       var exitPriceCache = {}; // In-memory cache for exit prices
 
-      
       for (const trade of trades) {
         var tradeId = trade.tradeid;
         var entryPrice = trade.entry_price;
@@ -824,17 +825,35 @@ class Trades {
             const medianVal =  sortedValues[Math.ceil((len - 1)/2)]; // middle trim
             const q3Val =  len > 2 ? sortedValues[len - 2] : sortedValues[len - 1] // second to last trim, or last if only one trim
             
-            const minVal =  (sortedValues[0]);
+            var minVal =  (sortedValues[0]);
             var maxVal =  (sortedValues[len - 1]);
 
             if (maxVal == 0){
               maxVal = 0.001
             }
       
-            tradeData.push({
-              x: trade.username + " " + trade.ticker + " " + trade.strike,
-              y: [minVal, q1Val, medianVal, q3Val, maxVal],
-            });
+            var keyValue = trade.username + " " + trade.ticker + " " + trade.strike
+
+            upsideTradeData.push(
+              {
+                x: keyValue,
+                y: maxVal,
+                goals: [
+                  {
+                      name: "First Trim",
+                      value: sortedValues[1],
+                      strokeWidth: 2,
+                      strokeColor: '#775DD0',
+                  }
+                ]
+              });
+           
+            downsideTradeData.push(
+              {
+                x: keyValue,
+                y: minVal
+              });
+
 
            
 
@@ -844,36 +863,66 @@ class Trades {
         }
       }
 
+      console.log(upsideTradeData)
+
+
       var options = {
-        title: { text: "TRIM LEVELS"},
+        series: [
+          {
+            name: 'Max Trim',
+            data: upsideTradeData
+          },
+          {
+            name: 'Downside Trims',
+            data: downsideTradeData
+          }
+        ],
         chart: {
-          type: "boxPlot",
           height: 400,
-          toolbar: {show: false},
+          type: 'bar',
+          stacked: true,
+          toolbar: false,
+        },
+        title: {
+          text: "TRIM LEVELS"
+        },
+        xaxis: {
+          title: {
+            text: "Trim Percentage"
+          }
+        },
+        yaxis: {
+          min: -100,
         },
         plotOptions: {
           bar: {
             horizontal: true,
-            barHeight: '50%'
+          }
+        },
+        colors: ['#BFE1CF', '#FF4560'],
+        dataLabels: {
+        enabled: false
+        },
+        tooltip: {
+          shared: false,
+          x: {
+            formatter: function (val) {
+              return val
+            }
           },
-          boxPlot: {
-            colors: {
-              upper: '#e9ecef',
-              lower: '#f8f9fa'
+          y: {
+            formatter: function (val) {
+              return Math.abs(val) + "%"
             }
           }
         },
-        stroke: {
-          colors: ['#6c757d']
-        },
-        series: [
-          {
-            data: tradeData
-          },
-        ],
-        yaxis: {
-          min: -100,
-          forceNiceScale: true,
+        legend: {
+          show: false,
+          showForSingleSeries: true,
+          customLegendItems: ['Max Trim', 'First Trim'],
+          markers: {
+            fillColors: ['#BFE1CF', '#CC0000']
+          }
         }
       };
     
