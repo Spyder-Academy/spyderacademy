@@ -34,7 +34,7 @@ The Saty ATR strategy can be combined with the Saty Ribbon which utilizes the 8/
 
 When the ribbon shows a clear trend, and the ATR levels are crossed, you have added conviction to trade the levels with the trend.
 
-An example of a high performing strategy using the Saty Pivot Ribbons can be found with the [Dolphin Vomy Strategy](/education/strategy-vomy).
+An example of a high performing strategy using the Saty Pivot Ribbons can be found with the [Dolphin Vomy Strategy](/education/strategy-vomy/).
 
 ### The Golden Gate: A Saty ATR Variation
 

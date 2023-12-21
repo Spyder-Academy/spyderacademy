@@ -48,7 +48,7 @@ There are a couple of things I keep in mind when plotting zones:
 - Recent price action takes priority over older price action.
 - Mark out areas that see multiple rejections and/or bounces
 - Mark zones that had a big impulsive move in either direction
-- Zones that have been [Break Hook & Go](/education/how-to-trade-the-break-hook-and-go) are also good areas to have
+- Zones that have been [Break Hook & Go](/education/how-to-trade-the-break-hook-and-go/) are also good areas to have
 
 ![](images/rejections.png)
 
