@@ -1484,7 +1484,7 @@ class Trades {
         $('#tradeScoreboard').empty()
 
         var scoreboardRow = $("<div class='row'></div>")
-        var scoreboardHeader = $("<div class='col-10'><h2 class='text-uppercase p-3'>" + "Scoreboard" + "</h2></div>")
+        var scoreboardHeader = $("<div class='col-10'><h2 class='text-uppercase p-3'>" + "HIGH SCORE" + "</h2></div>")
         scoreboardRow.append(scoreboardHeader);
         $('#tradeScoreboard').append(scoreboardRow);
 
@@ -1513,7 +1513,27 @@ class Trades {
             tradeCardRow.find(".tradeContract").text(trade.ticker + " " + trade.strike)
             tradeCardRow.find(".tradeGain").text(trade.gainsString)
             tradeCardRow.find(".tradeNotes").text(trade.notes)
-            tradeCardRow.find(".tradeLogo").attr("src", "https://www.getthatcashmoney.com/images/logos/" + trade.ticker.toUpperCase() + ".png")
+
+            var king_image = "https://www.getthatcashmoney.com/images/logos/" + trade.ticker.toUpperCase() + ".png"
+            if (trade.username.toUpperCase() == "LINKSNIPES"){
+              king_image = "/images/teachers-linksnipes.png"
+            }
+            else if (trade.username.toUpperCase() == "MRWOOFERS1968"){
+              king_image = "/images/teachers-mrwoofers.png"
+            }
+            else if (trade.username.toUpperCase() == "SITH"){
+              king_image = "/images/teachers-sith.png"
+            }
+            else if (trade.username.toUpperCase() == "PAULDOZER"){
+              king_image = "/images/teachers-pauldozer.png"
+            }
+            else if (trade.username.toUpperCase() == "GOBI"){
+              king_image = "/images/teachers-gobi.png"
+            }
+            else if (trade.username.toUpperCase() == "CASHMONEYTRADES"){
+              king_image = "/images/teachers-cash.png"
+            }
+            tradeCardRow.find(".tradeLogo").attr("src", king_image)
             tradeCardRow.find(".tradeRow").attr("tradeid", trade.tradeid)
             tradeCardRow.find(".tradeRow").removeAttr("onclick")
 
