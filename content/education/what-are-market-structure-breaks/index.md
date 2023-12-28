@@ -35,6 +35,8 @@ Market structure breaks occur when there is a noticeable shift in the establishe
 
 ## **Strategies for Navigating Market Structure Breaks**
 
+Once you see a market structure (higher highs/higher lows or lower highs/lower lows), then look to trade the trend by going short when a new higher low is put in (during a clear downtrend), or going long with each higher low in an uptrend.  When the market structure breaks, consider exiting your position as it could signify a reversal.  Alternatively, consider flipping your bias if a reversal is starting to play out.  Always look for other indicators for confirmation of a market shift.
+
 1. **Stay Informed:** Regularly monitor economic calendars, news feeds, and market analysis to anticipate potential market-moving events.
 2. **Risk Management:** Implement robust risk management strategies to protect against unforeseen market disruptions.
 3. **Adaptability:** Be prepared to adapt trading strategies based on the evolving market structure.
