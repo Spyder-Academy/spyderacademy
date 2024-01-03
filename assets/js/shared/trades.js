@@ -199,9 +199,11 @@ class TradeRecord {
         var expiration_date_parts = this.expiration.split("/");
         var expiration_month = parseInt(expiration_date_parts[0]) - 1; // Month is 0-based in JavaScript
         var expiration_day = parseInt(expiration_date_parts[1]);
+        var expiration_year = parseInt(this.entry_date.toDate().getFullYear()) // hack until i fix the exp dates in the db to include the year!
 
-        var expiration_date_obj = new Date(current_date.getFullYear(), expiration_month, expiration_day);
 
+        // console.log("Expiration Date: :", expiration_year)
+        var expiration_date_obj = new Date(expiration_year, expiration_month, expiration_day);
         // Compare the expiration date with the current date
         if (expiration_date_obj < current_date) {
             return true;
