@@ -665,10 +665,6 @@ class Trades {
 
 
     renderHeatmap(seriesData){
-
-        // console.log("Daily Performance", JSON.stringify(seriesData, null, 2));
-
-
         var options = {
           series: seriesData,
           chart: {
@@ -751,7 +747,16 @@ class Trades {
             var selectedIndex = config.dataPointIndex + 1
             var selectedSeries = config.seriesIndex
 
-            var selectedDate = new Date(seriesData[selectedSeries].name + " " + selectedIndex + " 2023");
+            console.log(config)
+
+            //var selectedDate = new Date(seriesData[selectedSeries].name + " " + selectedIndex + " 2023");
+            var [month, year] = seriesData[selectedSeries].name.split(" ");
+
+            var monthMap = {Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6, Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12}
+            console.log(monthMap[month], selectedIndex, year)
+
+            var selectedDate = new Date(year, monthMap[month] - 1, selectedIndex);
+
             // Call the getTodaysRecap() function with the selected date
             self.renderRecap(selectedDate.setHours(0,0,0,0));
         });
@@ -961,94 +966,90 @@ class Trades {
       }
     }
 
-    renderCalendar(){
-        // Create a map to store the count of winners and losers for each date
-        var self = this;
-        var seriesData = {};
-
-         // Initialize with at least the past 6 months
-        var currentDate = new Date();
-        for (var i = 0; i < 7; i++) {
-            var month = currentDate.toLocaleString('default', { month: 'short' });
-            var date = currentDate.getDate();
-            var monthKey = month;
-
-            if (!seriesData.hasOwnProperty(monthKey)) {
-            seriesData[monthKey] = [];
-            }
-            seriesData[monthKey].push({ x: date, y: 0.5 });
-
-            // Move to the previous month
-            currentDate.setMonth(currentDate.getMonth() - 1);
-        }
-
-
-        // Execute the trades query
-        this.closedTrades.then(tradesData => {
-            tradesData.forEach(tradeEntry => {
-                var isWinner = tradeEntry.gainsValue >= 0;
-                var isLoser = tradeEntry.gainsValue < 0;
-    
-                // Extract the month and date from the exit date
-                var month = tradeEntry.exit_date_max.toDate().toLocaleString('default', { month: 'short' });
-                var date = tradeEntry.exit_date_max.toDate().getDate();
-    
-                // Create a unique key for each date
-                var monthKey = month;
-    
-                // Update the Chart Series data for the specific month and date
-                if (seriesData.hasOwnProperty(monthKey)) {
-                    var monthData = seriesData[monthKey];
-            
-                    // Find the index of the date in the monthData array
-                    var dateIndex = monthData.findIndex((data) => data.x === date);
-            
-                    if (dateIndex !== -1) {
-                        if (isWinner) {
-                            monthData[dateIndex].y += 1; // Increment winners count
-                        } 
-                        else if (isLoser) {
-                            monthData[dateIndex].y -= 1; // Decrement losers count
-                        }
-                    } 
-                    else {
-                        monthData.push({ x: date, y: isWinner ? 1 : -1 });
-                    }
-                } 
-                else {
-                    seriesData[monthKey] = [{ x: date, y: isWinner ? 1 : -1 }];
-                }
-            })
-
-            // Add missing dates with a value of 0 for each month
-            Object.values(seriesData).forEach((monthData) => {
-                var allDates = monthData.map((data) => data.x);
-                var minDate = 1;
-                var maxDate = 31;
-                for (var i = minDate; i <= maxDate; i++) {
-                    if (!allDates.includes(i)) {
-                        monthData.push({ x: i, y: 0.5 });
-                    }
-                }
-            });
-
-            // Convert the seriesData object to an array of series
-            var series = Object.entries(seriesData).map(([key, value]) => ({
-                name: key,
-                data: value
-            }));
-
-            // Sort the series array by date within each series
-            series.forEach((seriesItem) => {
-                seriesItem.data.sort((a, b) => a.x - b.x);
-            });
-
-            series.reverse();
-
-            this.renderHeatmap(series);
-        })
-        
+    renderCalendar() {
+      // Create a map to store the count of winners and losers for each date
+      var self = this;
+      var seriesData = {};
+  
+      // Initialize with at least the past 6 months
+      var currentDate = new Date();
+      for (var i = 0; i < 7; i++) {
+          var month = currentDate.toLocaleString('default', { month: 'short' });
+          var year = currentDate.getFullYear();
+          var date = currentDate.getDate();
+          var monthKey = month + ' ' + year; // Include the year in the key
+  
+          if (!seriesData.hasOwnProperty(monthKey)) {
+              seriesData[monthKey] = [];
+          }
+          seriesData[monthKey].push({ x: date, y: 0.5 });
+  
+          // Move to the previous month
+          currentDate.setMonth(currentDate.getMonth() - 1);
+      }
+  
+      // Execute the trades query
+      this.closedTrades.then(tradesData => {
+          tradesData.forEach(tradeEntry => {
+              var isWinner = tradeEntry.gainsValue >= 0;
+              var isLoser = tradeEntry.gainsValue < 0;
+  
+              // Extract the month, date, and year from the exit date
+              var month = tradeEntry.exit_date_max.toDate().toLocaleString('default', { month: 'short' });
+              var year = tradeEntry.exit_date_max.toDate().getFullYear();
+              var date = tradeEntry.exit_date_max.toDate().getDate();
+              var monthKey = month + ' ' + year; // Include the year in the key
+  
+              // Create a unique key for each date
+              if (seriesData.hasOwnProperty(monthKey)) {
+                  var monthData = seriesData[monthKey];
+  
+                  // Find the index of the date in the monthData array
+                  var dateIndex = monthData.findIndex((data) => data.x === date);
+  
+                  if (dateIndex !== -1) {
+                      if (isWinner) {
+                          monthData[dateIndex].y += 1; // Increment winners count
+                      } else if (isLoser) {
+                          monthData[dateIndex].y -= 1; // Decrement losers count
+                      }
+                  } else {
+                      monthData.push({ x: date, y: isWinner ? 1 : -1 });
+                  }
+              } else {
+                  seriesData[monthKey] = [{ x: date, y: isWinner ? 1 : -1 }];
+              }
+          })
+  
+          // Add missing dates with a value of 0 for each month
+          Object.values(seriesData).forEach((monthData) => {
+              var allDates = monthData.map((data) => data.x);
+              var minDate = 1;
+              var maxDate = 31;
+              for (var i = minDate; i <= maxDate; i++) {
+                  if (!allDates.includes(i)) {
+                      monthData.push({ x: i, y: 0.5 });
+                  }
+              }
+          });
+  
+          // Convert the seriesData object to an array of series
+          var series = Object.entries(seriesData).map(([key, value]) => ({
+              name: key,
+              data: value
+          }));
+  
+          // Sort the series array by date within each series
+          series.forEach((seriesItem) => {
+              seriesItem.data.sort((a, b) => a.x - b.x);
+          });
+  
+          series.reverse();
+  
+          this.renderHeatmap(series);
+      })
     }
+  
 
     renderTVChart(parentEl, tradeid) {
         var el = $(parentEl).find(".tvChartHeader")[0]
