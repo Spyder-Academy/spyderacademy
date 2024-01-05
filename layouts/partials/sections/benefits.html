@@ -11,6 +11,9 @@
       </div>
     </div>
 
+    {{ partial "shared/signup.html" . }}
+
+
     <div class="row justify-content-center ">
       {{ range $i, $c := .content }}
       {{ $colors := (slice  "#b3b3c8"  "#bfe1cf" "#e9e4d7" ) }}

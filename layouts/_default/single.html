@@ -33,6 +33,9 @@
         </div>
       </div>
 
+    {{ partial "shared/signup.html" . }}
+
+
       
       {{ if isset .Params "course" }}
         {{ $currentCourse := .Params.course }}
@@ -113,6 +116,7 @@
     </div>
 
   </section>
+
 
   {{ with .Site.Data.home.benefits }}{{ partial "sections/benefits.html" . }}{{ end }}
   {{ with .Site.Data.home.trades }}{{ partial "sections/trades.html" . }}{{ end }}
