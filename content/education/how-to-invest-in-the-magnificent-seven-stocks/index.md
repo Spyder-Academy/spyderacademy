@@ -17,15 +17,15 @@ Often referred to as FAANG & Friends, these companies collectively hold a substa
 
 The Magnificent Seven, or FAANG & Friends, comprises:
 
-- **META - Facebook (Meta Platforms, Inc.)**
-- **AAPL - Apple Inc.**
-- **AMZN - Amazon.com Inc.**
-- **GOOG - Alphabet Inc. (Google)**
-- **MSFT - Microsoft Corporation**
-- **TSLA - Tesla, Inc.**
-- **NVDA - NVIDIA Corporation**
+- [META](/stocks/meta/) - Facebook (Meta Platforms, Inc.)
+- [AAPL](/stocks/aapl/) - Apple Inc.
+- [AMZN](/stocks/amzn/) - Amazon.com Inc.
+- [GOOG](/stocks/goog/) - Alphabet Inc. (Google)
+- [MSFT](/stocks/msft/) - Microsoft Corporation
+- [TSLA](/stocks/tsla/) - Tesla, Inc.
+- [NVDA](/stocks/meta/) - NVIDIA Corporation
 
-- **_NFLX - Netflix Inc._**
+- _[NFLX](/stocks/nflx/) - Netflix Inc._
 
 NFLX is a FAANG company, but usually not included in the Magnificent Seven List.
 
@@ -35,6 +35,79 @@ Collectively, these companies wield immense influence over the broader market in
 
 - *Approximate Weight in S&P 500:* Around 25%
 - *Approximate Weight in Nasdaq:* Over 40%
+
+<!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+  <div class="tradingview-widget-container__widget"></div>
+  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js" async>
+  {
+  "symbols": [
+    [
+      "Apple",
+      "AAPL|1D"
+    ],
+    [
+      "Google",
+      "GOOGL|1D"
+    ],
+    [
+      "Microsoft",
+      "MSFT|1D"
+    ],
+    [
+      "Meta",
+      "META|1D"
+    ],
+    [
+      "Tesla",
+      "TSLA|1D"
+    ],
+    [
+      "Amazon",
+      "AMZN|1D"
+    ],
+    [
+      "Nvidia",
+      "NASDAQ:NVDA|1D"
+    ]
+  ],
+  "chartOnly": false,
+  "width": 1000,
+  "height": 500,
+  "locale": "en",
+  "colorTheme": "light",
+  "autosize": false,
+  "showVolume": false,
+  "showMA": false,
+  "hideDateRanges": false,
+  "hideMarketStatus": false,
+  "hideSymbolLogo": false,
+  "scalePosition": "right",
+  "scaleMode": "Normal",
+  "fontFamily": "-apple-system, BlinkMacSystemFont, Trebuchet MS, Roboto, Ubuntu, sans-serif",
+  "fontSize": "10",
+  "noTimeScale": false,
+  "valuesTracking": "1",
+  "changeMode": "price-and-percent",
+  "chartType": "area",
+  "maLineColor": "#2962FF",
+  "maLineWidth": 1,
+  "maLength": 9,
+  "lineWidth": 2,
+  "lineType": 0,
+  "dateRanges": [
+    "1d|1",
+    "1m|30",
+    "3m|60",
+    "12m|1D",
+    "60m|1W",
+    "all|1M"
+  ]
+}
+  </script>
+</div>
+<!-- TradingView Widget END -->
 
 ## **3. Common Themes: Innovation and Disruption**
 
@@ -54,31 +127,31 @@ As these companies continue to evolve, they set the stage for the future of inve
 
 ## THE MAGNIFICENT SEVEN
 
-#### **1. Apple Inc. (AAPL): The Tech Innovator**
+#### **1. Apple Inc. ([AAPL](/stocks/aapl/)): The Tech Innovator**
 
 Apple's legacy of innovation and consumer loyalty places it at the forefront of the Magnificent Seven. From iconic devices to services, Apple's ability to shape and lead the tech industry makes it a cornerstone in any investment portfolio.
 
-#### **2. Microsoft Corporation (MSFT): Tech Powerhouse**
+#### **2. Microsoft Corporation ([MSFT](/stocks/msft/)): Tech Powerhouse**
 
 As a global technology giant, Microsoft's influence extends across software, cloud computing, and beyond. Its consistent growth and strategic diversification underscore its position in the Magnificent Seven. In 2023, MSFT entered a powerful partnership with OpenAI and have integrated what is arguably one of the most powerful AI systems available into their products.
 
-#### **3. Alphabet Inc. (GOOGL): Google's Dominance**
+#### **3. Alphabet Inc. ([GOOGL](/stocks/goog/)): Google's Dominance**
 
 Alphabet, Google's parent company, is synonymous with internet search dominance. With a vast ecosystem of products and services, Alphabet's innovative spirit secures its place among the Magnificent Seven.
 
-#### **4. Amazon.com Inc. (AMZN): E-Commerce Titan**
+#### **4. Amazon.com Inc. ([AMZN](/stocks/amzn/)): E-Commerce Titan**
 
 Amazon's unparalleled success in e-commerce, cloud computing, and diverse ventures places it in the elite circle of the Magnificent Seven. Its ability to disrupt and innovate continues to drive impressive market performance.
 
-#### **5. Meta Platforms, Inc. (META): Redefining Social Connectivity**
+#### **5. Meta Platforms, Inc. ([META](/stocks/meta/)): Redefining Social Connectivity**
 
 Formerly Facebook, Meta Platforms holds a pivotal role in social media and is now venturing into the metaverse. META's ambitious vision and technological endeavors solidify its presence among the Magnificent Seven.
 
-#### **6. NVIDIA Corporation (NVDA): Powering the AI Revolution**
+#### **6. NVIDIA Corporation ([NVDA](/stocks/nvda/)): Powering the AI Revolution**
 
 NVIDIA's role in powering artificial intelligence and gaming technology elevates it to the status of a Magnificent Seven member. Its cutting-edge hardware and innovation contribute significantly to the tech industry's transformation.
 
-#### **7. Tesla, Inc. (TSLA): Revolutionizing the Automotive Industry**
+#### **7. Tesla, Inc. ([TSLA](/stocks/tsla/)): Revolutionizing the Automotive Industry**
 
 Tesla's disruptive influence in the electric vehicle market and renewable energy solutions cements its place among the Magnificent Seven. Its charismatic leadership and commitment to sustainable technology redefine the automotive landscape.
 
