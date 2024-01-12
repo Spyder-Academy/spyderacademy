@@ -28,7 +28,7 @@
       <div class="row pb-5">
         <div class="col-12 justify-content-center">
           <div class="fs-5">
-            {{ partial "shared/stock-widgets" .Page.Params.ticker }}
+            {{ partial "shared/stock-widgets" .Page.Params.ticker | safeJS }}
           </div>
         </div>
       </div>
