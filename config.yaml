@@ -75,6 +75,11 @@ menus:
       url: "/tools/"
       weight: 7
 
+    - name: "Stocks"
+      url: "/stocks/"
+      weight: 7
+
+
     - name: "SpyderWeb"
       url: "/members/"
       weight: 8

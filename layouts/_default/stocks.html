@@ -1,0 +1,66 @@
+{{ define "main" }}
+
+
+  <section class="section blog-single py-5">
+    <div class="container">
+      {{ partial "shared/tags.html" }}
+
+      <div class="row justify-content-center pb-0">
+        <div class="col-12">
+          {{ with .Title }}
+            <h1 class="display-1 fw-bold text-center text-primary pb-3">{{ . }}</h1>
+          {{ end }}
+          {{ with .Params.description }}
+            <p class="text-black-61 text-center pb-3">{{ . }}</p>
+          {{ end }}
+
+
+        </div>
+      </div>
+
+      <div class="row justify-content-center pb-5">
+        <div class="col-12 d-flex justify-content-center">
+          {{ partial "shared/share-buttons" . }}
+        </div>
+
+      </div>
+
+      <div class="row pb-5">
+        <div class="col-12 justify-content-center">
+          <div class="fs-5">
+            {{ partial "shared/stock-widgets" .Page.Params.ticker }}
+          </div>
+        </div>
+      </div>
+
+      <div class="row pb-5">
+        <div class="col-12 d-flex justify-content-center">
+          <div class="blog-content fs-5">
+            {{ .Content }}
+          </div>
+        </div>
+      </div>
+
+    {{ partial "shared/signup.html" . }}
+
+
+      
+    <div class="pinterest-images d-none">
+        {{ $pinPath := "pins/**" }}
+        {{ $pinImages := .Page.Resources.Match $pinPath }}
+
+        {{ range $pinImages }}
+          {{ $pin := .Resize "1000x" }}
+          {{ with $pin }}
+             <img src="{{ .RelPermalink }}" alt="{{$.Description}}">
+          {{ end }}
+        {{ end }}
+    </div>
+
+  </section>
+
+
+  {{ with .Site.Data.home.benefits }}{{ partial "sections/benefits.html" . }}{{ end }}
+  {{ with .Site.Data.home.trades }}{{ partial "sections/trades.html" . }}{{ end }}
+
+{{ end }}
