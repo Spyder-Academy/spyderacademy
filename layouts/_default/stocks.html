@@ -28,7 +28,7 @@
       <div class="row pb-5">
         <div class="col-12 justify-content-center">
           <div class="fs-5">
-            {{ partial "shared/stock-widgets" .Page.Params.ticker | safeJS }}
+            {{ partial "shared/stock-widgets" .Page.Params.ticker  }}
           </div>
         </div>
       </div>
@@ -64,3 +64,4 @@
   {{ with .Site.Data.home.trades }}{{ partial "sections/trades.html" . }}{{ end }}
 
 {{ end }}
+
