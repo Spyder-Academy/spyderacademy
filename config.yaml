@@ -9,6 +9,10 @@ markup:
     renderer:
       unsafe: true
 
+minify:
+   disableJS: true
+
+
 
 googleAnalytics: "G-FT7VJCMYJ5"
 enableRobotsTXT: false
