@@ -16,20 +16,20 @@ OpenAI, a private research organization, has been at the forefront of AI innovat
 
 ## **Investing in OpenAI through Microsoft (MSFT): A Strategic Approach**
 
-Microsoft (MSFT), a publicly traded company, holds a significant stake in OpenAI. Investing in Microsoft provides an indirect way to benefit from OpenAI's advancements. As OpenAI continues to shape the AI landscape, Microsoft stands to gain, presenting investors with an avenue to align their portfolios with cutting-edge AI developments.
+Microsoft ([MSFT](/stocks/msft/)), a publicly traded company, holds a significant stake in OpenAI. Investing in Microsoft provides an indirect way to benefit from OpenAI's advancements. As OpenAI continues to shape the AI landscape, Microsoft stands to gain, presenting investors with an avenue to align their portfolios with cutting-edge AI developments.
 
 ## **Diversifying AI Investments: Exploring Other Industry Leaders**
 
 While OpenAI is a major player, several other companies are making significant strides in AI:
 
-### **1. Google (Alphabet Inc.) - Project Gemini:**
-   - Google, through its parent company Alphabet Inc., is actively involved in AI research and development. Project Gemini focuses on pushing the boundaries of AI capabilities, making Alphabet a key player in the AI space.
+### **1. Google (Alphabet Inc.) - Project Gemini / Bard:**
+   - [Google](/stocks/goog/), through its parent company Alphabet Inc., is actively involved in AI research and development. Project Gemini focuses on pushing the boundaries of AI capabilities, making Alphabet a key player in the AI space.
 
-### **2. X (formerly Google X) - Grok:**
-   - X, a subsidiary of Alphabet, is known for its ambitious projects. Grok, an AI initiative by X, aims to revolutionize machine learning. Exploring investment opportunities in Alphabet allows investors to access X's innovative endeavors.
+### **2. X (formerly Twitter) - Grok:**
+   - X, formerly known as Twitter, is known for its ambitious projects. Grok, an AI initiative for X (led by a new subsidiary named X.AI), aims to revolutionize machine learning. X.AI brings in talent from X as well as Tesla and SpaceX (Elon Musk's other companies). Exploring investment opportunities in X via [Tesla](/stocks/tsla/) allows investors to potentially access X.AI's innovative endeavors.
 
 ### **3. NVIDIA Corporation (NVDA) - GPU Technology for AI:**
-   - NVIDIA is a leading provider of GPU chips used in artificial intelligence. As the demand for AI processing power continues to rise, investing in NVIDIA offers exposure to the hardware side of the AI ecosystem.
+   - [NVIDIA](/stocks/nvda/) is a leading provider of GPU chips used in artificial intelligence. As the demand for AI processing power continues to rise, investing in NVIDIA offers exposure to the hardware side of the AI ecosystem.
 
 ## **Strategic Considerations for AI Investments:**
 
