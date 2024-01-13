@@ -11,6 +11,8 @@
   <meta name="robots" content="noindex, nofollow" />
   {{ end }}
 
+  {{ with .Keywords }}<meta name="keywords" content="{{ range $i, $e := . }}{{ if $i }} {{ end }}{{ $e }}{{ end }}">{{ end }}
+
   <!-- Favicons and Manifest -->
   {{ partial "head/_favicons.html" . }}
 
