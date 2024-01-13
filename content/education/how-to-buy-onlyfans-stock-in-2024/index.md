@@ -41,19 +41,19 @@ Keep in mind that the status of companies and the availability of publicly trade
 
 #### 1. Snap Inc. (SNAP):
 
-Snapchat, owned by Snap Inc., is a multimedia messaging app with a Discover feature that allows content creators to share content with a wider audience.
+Snapchat, owned by [Snap Inc.](/stocks/snap/), is a multimedia messaging app with a Discover feature that allows content creators to share content with a wider audience.
 
 #### 2. X (formally known as Twitter):
 
-Twitter hosts a diverse range of content, including tweets, images, and videos. It has features like Spaces that allow for multimedia content creation. Recently that added the ability for users to subscribe to Creators, bringing X into direct competition with OnlyFans (minus the Adult content bias).
+X hosts a diverse range of content, including posts, images, and videos. It has features like Spaces that allow for multimedia content creation. Recently that added the ability for users to subscribe to Creators, bringing X into direct competition with OnlyFans (minus the Adult content bias).
 
 #### 3. Pinterest Inc. (PINS):
 
-Pinterest is a visual discovery and bookmarking platform where users can discover and save ideas. Creators often share content related to various interests.
+[Pinterest](/stocks/pins/) is a visual discovery and bookmarking platform where users can discover and save ideas. Creators often share content related to various interests.
 
 #### 4. Facebook, Inc. (Meta Platforms, Inc.) (META):
 
-Facebook, now Meta Platforms, Inc., encompasses a suite of platforms, including Facebook, Instagram, and WhatsApp, where users can share various types of content.
+Facebook, now [Meta Platforms, Inc.](/stocks/meta/), encompasses a suite of platforms, including Facebook, Instagram, and WhatsApp, where users can share various types of content.
 
 #### 5. Tencent Holdings Limited (TCEHY):
 
