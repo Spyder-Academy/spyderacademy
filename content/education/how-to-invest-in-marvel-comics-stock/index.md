@@ -9,7 +9,7 @@ tags:
 ---
 
 
-For enthusiasts captivated by the Marvel universe, the desire to invest in the creative powerhouse is a common sentiment. However, the journey into Marvel's financial realm is unique, as Marvel Comics is not a publicly traded entity. Instead, it operates under the umbrella of The Walt Disney Company (DIS), making Disney the gateway for potential investors.
+For enthusiasts captivated by the Marvel universe, the desire to invest in the creative powerhouse is a common sentiment. However, the journey into Marvel's financial realm is unique, as Marvel Comics is not a publicly traded entity. Instead, it operates under the umbrella of [The Walt Disney Company (DIS)](/stocks/dis/), making Disney the gateway for potential investors.
 
 ## **Marvel's Home: Disney's Acquisition**
 
@@ -17,7 +17,7 @@ The intriguing story of Marvel's financial landscape begins with Disney's acquis
 
 ## **Investing in the Disney Empire**
 
-To be a part-owner of Marvel, one must invest in Disney. Disney's stock (DIS) is publicly traded and serves as the conduit for investors seeking exposure to the Marvel universe. Disney's financial health and performance are integral aspects to consider.
+To be a part-owner of Marvel, one must invest in [Disney](/stocks/dis/). Disney's stock ([DIS](/stocks/dis/)) is publicly traded and serves as the conduit for investors seeking exposure to the Marvel universe. Disney's financial health and performance are integral aspects to consider.
 
 ## **1. Disney's Earnings and Marvel's Influence**
 
