@@ -19,7 +19,7 @@ From its early days as a mail carrier in the 1920s to becoming one of the larges
 
 Investors and market analysts closely watch AAL stock, not only as a gauge of the company's health but also as an indicator of broader trends in the airline industry. In this article, we'll analyze AAL's current market position, dissect its financial health, explore future projections for the company and the sector, and offer insights into the risks and opportunities for investors considering AAL stock. Join us on this journey to understand where AAL has been, where it is now, and what the future might hold for this aviation giant.
 
-![Classic American Airlines airplane in flight with logo visible on tail.](images/AAL_plane.png)
+![Classic American Airlines airplane in flight with logo visible on tail.](images/AAL_jetplane_expanded.png)
 
 #### The Early Days: A Humble Beginning
 American Airlines, known today as a titan of the skies, had a humble beginning. Founded in 1926 as a mail carrier under the name of American Airways, it played a crucial role in developing the young aviation industry. The initial years were marked by rapid expansion and mergers, a strategy that laid the foundation for its future as a commercial airline giant. The airline's initial public offering (IPO) in the stock market marked a pivotal moment, signaling its transition from a simple mail carrier to a key player in passenger aviation.

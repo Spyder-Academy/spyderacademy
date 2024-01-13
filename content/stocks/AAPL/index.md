@@ -28,6 +28,8 @@ The stock's journey includes significant milestones, such as Apple's IPO in 1980
 
 Apple's recent focus on wearables, services, and innovations like the Apple Watch and AirPods has broadened its revenue streams. The ongoing development of augmented reality (AR) and autonomous vehicle projects adds an exciting dimension to Apple's future.
 
+![Apple Airpods depicted in an exploded view](images/airpods.jpeg)
+
 ### Financial Performance
 
 Analyzing AAPL's financial reports reveals a robust revenue stream, consistently beating market expectations. Understanding key financial indicators, such as revenue growth, profit margins, and return on equity, is crucial for traders seeking a comprehensive view of the company's financial health.
