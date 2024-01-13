@@ -1,6 +1,6 @@
 +++
 author = "CashMoneyTrades"
-title = "Investing in Buy Now, Pay Later: The Story of AFRM Stock"
+title = "AFRM | Investing in Buy Now, Pay Later: The Story of AFRM Stock"
 date = "2024-01-12T10:00:00"
 description = "Dive into the dynamic world of AFRM stock, exploring Affirm Holdings' impact in the BNPL sector. Discover the key factors driving its market journey, from fintech innovation to competitive challenges and future prospects."
 keywords = "AFRM stock, Affirm Holdings, Buy Now Pay Later, fintech, digital payments, stock analysis, BNPL market, financial technology, AFRM stock journey."
