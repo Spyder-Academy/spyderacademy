@@ -1,8 +1,8 @@
 +++
 author = "CashMoneyTrades"
-title = "Long Term Investing"
+title = "Long Term Investing Essentials: Building Wealth for the Future"
 date = "2021-03-01T00:00:00"
-description = "Welcome to the Long-Term Investing and Wealth Building Course: A Blueprint for Financial Success"
+description = "Unlock the secrets of wealth growth with our 'Long Term Investing Essentials' course. Designed for investors of all levels, this course provides key strategies for long-term investment success, focusing on portfolio diversification, risk management, and market analysis. Start your journey towards financial freedom and sustainable wealth today!"
 coursetime = "8 min"
 level = "Advanced"
 course = "Long Term Investing"

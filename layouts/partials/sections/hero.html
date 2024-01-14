@@ -7,6 +7,9 @@
         </video>
       </div>
       <div class="col-12 col-xl-6 mt-5 d-flex flex-column justify-content-center">
+        {{ with .content.main }}
+          <h1 class="fw-bold text-center text-xl-start pb-1">{{ . | markdownify }}</h1>
+        {{ end }}
         {{ with .content.title }}
           <h3 class="hero-title fw-bold display-1 text-primary text-center text-xl-start pb-4">{{ . | markdownify }}</h3>
         {{ end }}
@@ -15,7 +18,7 @@
         {{ end }}
         <div class="d-flex flex-column flex-xl-row">
           {{ with .content.buttonSecondary }}
-            <a class="btn btn-primary text-light px-4 my-1" href="{{ .url }}" title="{{ .label }}">{{ .label }}</a>
+            <a class="btn btn-secondary text-light px-4 my-1" href="{{ .url }}" title="{{ .label }}">{{ .label }}</a>
           {{ end }}
         </div>
       </div>

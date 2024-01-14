@@ -1,8 +1,8 @@
 +++
 author = "CashMoneyTrades"
-title = "Trading 101"
+title = "Trading 101: Your Gateway to Financial Markets Mastery"
 date = "2021-01-01T00:00:00"
-description = "Are you ready to embark on an exciting journey into the dynamic and ever-evolving world of trading? "
+description = "Begin your trading journey with confidence through our 'Trading 101' course. Tailored for newcomers, this comprehensive course covers all the basics from stock market fundamentals to initial trading strategies. Perfect for those starting out, it lays a strong foundation for profitable trading. Enroll now and take the first step towards mastering the financial markets!"
 coursetime = "85 min"
 level = "Beginner"
 course = "Trading 101"

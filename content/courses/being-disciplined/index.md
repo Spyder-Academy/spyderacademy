@@ -1,8 +1,8 @@
 +++
 author = "CashMoneyTrades"
-title = "Being Disciplined"
+title = "Trading Discipline Mastery: The Key to Consistent Profits"
 date = "2021-01-04T00:00:00"
-description = "In this course, we'll cover a variety of topics that are essential to becoming a disciplined trader."
+description = "Elevate your trading game with our 'Trading Discipline Mastery' course. Designed for traders at all levels, this course offers in-depth insights into developing and maintaining discipline, a critical skill for achieving consistent profitability in the volatile trading market. Join now to transform your trading mindset and strategies!"
 coursetime = "25 min"
 level = "Beginner"
 course = "Being Disciplined"

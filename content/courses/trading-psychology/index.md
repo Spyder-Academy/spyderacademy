@@ -1,8 +1,8 @@
 +++
 author = "CashMoneyTrades"
-title = "Trading Psychology"
+title = "How to improve your Psychology in Trading"
 date = "2021-01-02T00:00:00"
-description = "Welcome to the Trading Psychology Course: Mastering the Mind for Consistent Trading Success"
+description = "Unlock your trading potential with our 'How to Improve Your Psychology in Trading' course. Master emotional control, develop a winning mindset, and learn psychological strategies used by top traders. Boost your trading confidence and decision-making skills. Enroll now to transform your trading psychology!"
 coursetime = "26 min"
 level = "Beginner"
 course = "Trading Psychology"

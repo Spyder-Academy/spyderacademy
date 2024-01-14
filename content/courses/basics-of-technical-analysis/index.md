@@ -1,8 +1,8 @@
 +++
 author = "CashMoneyTrades"
-title = "Basics of Technical Analysis"
+title = "Technical Analysis Fundamentals: Unlocking Market Patterns"
 date = "2021-01-03T00:00:00"
-description = "Technical analysis can help you make sense of the way investor behavior drives market prices. "
+description = "Embark on a journey to master the stock market with our 'Technical Analysis Fundamentals' course. Perfect for beginners, this course demystifies chart patterns, trends, and indicators, equipping you with essential skills to analyze and predict market movements confidently. Enroll today and start your path to becoming a savvy investor!"
 coursetime = "32 min"
 level = "Beginner"
 course = "TA 101"

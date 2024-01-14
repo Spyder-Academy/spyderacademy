@@ -2,6 +2,7 @@ enabled: true
 id: "hero"
 
 content:
+  main:  Stock Market Trading Education
   title: For every **Trader**. Real Results.
   text: "Imagine a time... When you make more money trading than you do at your job. When you have free time to do the things you really love. When you are making consistent gains. When you have conquered the mental side of trading."
 
@@ -10,6 +11,6 @@ content:
     url: "#mission"
 
   buttonSecondary:
-    label: "Start Improving Now"
+    label: "Start Your 7-Day Free Trial"
     url: "#services"
 

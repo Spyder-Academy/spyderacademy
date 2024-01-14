@@ -1,8 +1,8 @@
 +++
 author = "CashMoneyTrades"
-title = "Trading Strategies"
+title = "Master Trading Strategies: Elevate Your Market Success"
 date = "2021-02-01T00:00:00"
-description = "Elevate Your Trading Skills with Proven Techniques using our Winning Trading Strategies"
+description = "Discover the secrets to successful trading with our comprehensive 'Master Trading Strategies' course. Tailored for both beginners and experienced traders, this course covers advanced techniques and proven strategies to help you excel in the market. Join now and transform your trading approach!"
 coursetime = "27 min"
 level = "Intermediate"
 course = "Trading Strategies"
