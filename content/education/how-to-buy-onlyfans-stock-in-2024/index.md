@@ -5,7 +5,7 @@ date: 2023-12-26T00:00:00-04:00
 description: "OnlyFans is a private company and not publicly traded on stock exchanges. Consider alternative options for an indirect investment opportunity into OnlyFans."
 time: "1 min"
 tags:
-  - "Getting Started"
+  - "Not Publicly Traded"
 ---
 
 In the dynamic landscape of the stock market, investors are constantly on the lookout for unique opportunities. 

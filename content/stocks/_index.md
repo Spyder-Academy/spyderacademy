@@ -32,6 +32,10 @@ Tracking market trends is crucial for successful investing. Our list not only sh
 
 Before making any investment decisions, conduct thorough research on the stocks that catch your attention. Analyze financial reports, assess market trends, and consider the long-term potential of each company. Our list provides a starting point for your research journey.
 
+#### Investing in Non Publicly Traded Companies
+
+Sometimes we see success stories in companies that we want to invest in (eg SpaceX, Marvel Comics, OnlyFans, etc) but are unable to do so directly.  Read our [list on non publicly traded stocks](/tags/not-publicly-traded) and how you can invest in them.
+
 ### Stay Updated
 
 Markets are dynamic, and staying updated is essential for successful investing. Regularly check back for the latest information on your chosen stocks. Our platform is designed to keep you informed about recent developments and updates in the financial world.

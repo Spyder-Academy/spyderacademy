@@ -4,7 +4,7 @@ title: "How To Invest in Lamborghini Stock"
 date: 2024-01-03T00:00:00-04:00
 description: "Unleashing the Bull: A Ride into Lamborghini's Financial Fast Lane"
 tags:
-  - "Getting Started"
+  - "Not Publicly Traded"
 ---
 
 
