@@ -55,10 +55,6 @@ menus:
       url: "/#hero"
       weight: 1
 
-    # - name: "Our Team"
-    #   url: "/#teachers"
-    #   weight: 3
-
     - name: "Pricing"
       url: "/#services"
       weight: 2
