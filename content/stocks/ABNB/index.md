@@ -23,6 +23,9 @@ As we dissect the nuances of ABNB stock, we will take a closer look at Airbnb's 
 #### The Beginnings of a Global Phenomenon
 Airbnb's story began in 2008, born out of a simple yet innovative idea: turning available living spaces into temporary lodging for travelers. This concept not only provided an alternative to traditional hotels but also created a new way for people to connect and experience destinations. Airbnb's approach to hospitality, which combined personal touch with technological ease, quickly caught on, propelling the company to global popularity.
 
+![AirBNB homes](images/airbnb_homes.png)
+
+
 #### From Startup to Stock Market Sensation
 Airbnb's journey to the stock market was as unconventional as its business model. The company grew rapidly, expanding its presence worldwide and diversifying its offerings. By the time of its IPO in December 2020, Airbnb had transformed the hospitality industry, presenting a unique value proposition to both its users and investors. The IPO was a resounding success, reflecting investor confidence in Airbnb's innovative model and growth potential.
 

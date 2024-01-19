@@ -27,6 +27,9 @@ This article will explore Adobe's comprehensive digital product portfolio, analy
 ## Innovative Software Solutions
 Adobe's ascent in the digital realm has been largely driven by its innovative software solutions. Renowned for its Creative Suite, including flagship products like Photoshop and Illustrator, Adobe has set the standard for digital creativity tools. These products have become indispensable for professionals in graphic design, photography, video editing, and more.
  
+![ADobe Firefly - AI generated art](images/adobe_firefly.webp)
+
+
 #### Expansion into Digital Marketing and Cloud Services
 Adobe's expansion beyond creative software into digital marketing and cloud services marked a significant turning point. Products like Adobe Marketing Cloud and Adobe Document Cloud cater to a wider range of business needs, from digital advertising to document management, broadening Adobe's market reach.
 
