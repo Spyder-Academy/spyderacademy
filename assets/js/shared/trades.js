@@ -1566,7 +1566,7 @@ class Trades {
             tradeCardRow.find(".tradeGain").text(trade.gainsString)
             tradeCardRow.find(".tradeNotes").text(trade.notes)
 
-            var king_image = "https://www.getthatcashmoney.com/images/logos/" + trade.ticker.toUpperCase() + ".png"
+            var king_image = "/images/logos/" + trade.ticker.toUpperCase() + ".png"
             if (trade.username.toUpperCase() == "LINKSNIPES"){
               king_image = "/images/teachers-linksnipes.png"
             }
@@ -1632,7 +1632,7 @@ class Trades {
             tradeCardRow.find(".tradeContract").text(trade.ticker + " " + trade.strike)
             tradeCardRow.find(".tradeGain").text(trade.gainsString)
             tradeCardRow.find(".tradeNotes").text(trade.notes)
-            tradeCardRow.find(".tradeLogo").attr("src", "https://www.getthatcashmoney.com/images/logos/" + trade.ticker.toUpperCase() + ".png")
+            tradeCardRow.find(".tradeLogo").attr("src", "/images/logos/" + trade.ticker.toUpperCase() + ".png")
             tradeCardRow.find(".tradeRow").attr("tradeid", trade.tradeid)
 
             $('#tradeRecap').append(tradeCardRow);
