@@ -109,10 +109,26 @@
             <i class="fa fas-book" style="color: #fefefe"></i>
           </div>
 
+        {{ $coverImagePath := "images/cover.*" }}
+        {{ $coverImages := .Page.Resources.Match $coverImagePath }}
+
         {{ $pinPath := "pins/**" }}
         {{ $pinImages := .Page.Resources.Match $pinPath }}
         {{ $pinDesc := .Page.Params.Description }}
         <div id="pinImages" class="row g-4 pb-5 px-3 collapse hide" data-parent="#accordion">
+          {{ range $coverImages }}
+          <div class="col-3">
+            <a class="card shadow border-0 p-4 text-decoration-none h-100" style="border-radius: 15px;">
+              <div class="aspect-ratio-full">
+                {{ $pin := .Resize "1000x" }}
+                {{ with $pin }}
+                  <img src="{{ .RelPermalink }}" alt="{{$pinDesc}}" title="{{$pinDesc}}">
+                {{ end }}
+              </div>
+            </a>
+          </div>
+          {{ end }}
+
           {{ range $pinImages }}
             <div class="col-3">
               <a class="card shadow border-0 p-4 text-decoration-none h-100" style="border-radius: 15px;">
