@@ -11,6 +11,9 @@ benefits = [
     "Easy Lessons"
 ]
 layout = "course"
+tags = [
+    "Strategies",
+]
 +++
 
 Welcome to the Trading Strategies Mastery Course, where we'll explore a diverse array of powerful strategies designed to enhance your trading proficiency and boost your success in the markets.

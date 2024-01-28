@@ -11,6 +11,9 @@ benefits = [
     "Easy Lessons"
 ]
 layout = "course"
+tags = [
+    "Strategies",
+]
 +++
 
 Ever wonder how traders predict where the market might go? Well, in this course, we're going to break it down for you in simple terms.

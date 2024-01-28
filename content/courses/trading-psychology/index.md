@@ -11,6 +11,9 @@ benefits = [
     "Easy Lessons"
 ]
 layout = "course"
+tags = [
+    "Trading Psychology",
+]
 +++
 
 Embark on a transformative journey into the realm of Trading Psychology with Spyder Academy. 

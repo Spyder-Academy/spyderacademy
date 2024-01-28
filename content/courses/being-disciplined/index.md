@@ -11,6 +11,9 @@ benefits = [
     "Easy Lessons"
 ]
 layout = "course"
+tags = [
+    "Trading Psychology",
+]
 +++
 
 Are you tired of feeling like your trading strategy is all

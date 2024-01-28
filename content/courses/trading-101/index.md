@@ -11,6 +11,9 @@ benefits = [
     "Easy Lessons"
 ]
 layout = "course"
+tags = [
+    "Getting Started",
+]
 +++
 
 Whether you're a complete beginner or looking to sharpen your skills, our Trading 101 course is designed to equip you with the knowledge and strategies you need to navigate the markets with confidence.
