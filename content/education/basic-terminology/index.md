@@ -1,9 +1,10 @@
 +++
 author = "Gobi Calls"
 title = "Understanding the Basic Trading Terminology"
-date = "2023-05-16T02:00:00"
+date = "2023-01-02T02:00:00"
 description = "Learn the Vocabulary"
 course = "Trading 101"
+module = "Module 1: Introduction to Trading Basics" 
 time = "3 min"
 tags = [
     "Getting Started",

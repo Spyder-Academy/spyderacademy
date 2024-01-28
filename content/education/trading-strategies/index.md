@@ -1,9 +1,10 @@
 +++
 author = "Gobi Calls"
 title = "7 Types of Trading Strategies to Find Your Style"
-date = "2023-05-16T07:00:00"
+date = "2023-03-01T07:00:00"
 description = "Trading Strategies"
 course = "Trading 101"
+module = "Module 3: Trading Strategies and Risk Management" 
 time = "2 min"
 tags = [
     "Getting Started",
@@ -15,6 +16,8 @@ There are various styles and strategies that traders use, which are usually base
 ## Day Trading
 Day traders buy and sell securities within a single day, attempting to capitalize on short-term price movements. It's a full-time job as it requires continuous monitoring of the markets and quick decision-making. Day trading strategies often involve technical analysis and high-volume trading.
 
+At Spyder Academy, our traders use a variety of [trading strategies](/tags/strategies/) every day. As you start your trading journey, it is always a good idea to find a strategy that fits your personal style.  Experiment.  Once you find success with a particular strategy, refine it until it becomes muscle memory.  Then as you look to find improvements to your trading, you can start to incorporate other trading strategies alongside your main trading strategy.
+ 
 ## Swing Trading 
 Swing traders take advantage of 'swings' in the prices of assets. They typically hold positions for a period of days to weeks, aiming to profit from short- to medium-term price patterns. Swing trading combines elements of day trading and trend trading, focusing on momentum and using technical analysis to identify trading opportunities.
 

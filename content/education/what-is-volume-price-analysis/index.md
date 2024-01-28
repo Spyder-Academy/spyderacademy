@@ -1,9 +1,10 @@
 ---
 author: "CashMoneyTrades"
-title: "Mastering Volume Price Analysis (VPA) for Informed Trading"
+title: "An Introduction to Volume Price Analysis (VPA) for Informed Trading"
 date: 2023-12-09T00:00:00-04:00
 description: "Volume Price Analysis (VPA) offers traders a powerful tool to decipher the market's language and make more informed trading decisions."
-course: "Trading Strategies"
+course: "Volume Price Analysis"
+module: "Module 1: Fundamentals of Volume Price Analysis" 
 time: "10 min"
 tags:
   - "Strategies"

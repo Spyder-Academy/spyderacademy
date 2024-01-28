@@ -1,9 +1,10 @@
 ---
 author: "CashMoneyTrades"
 title: "How Many Trading Days In A Year?"
-date: 2023-12-09T00:00:00-04:00
+date: 2023-06-01T00:00:00-04:00
 description: "The standard trading year typically consists of 252 trading days. In this guide, we'll delve into various aspects related to trading days, including holidays, trading hours, and the optimal times for trading."
 course: "Trading 101"
+module: "Module 6: Market Information and Analysis" 
 time: "1 min"
 tags:
   - "Getting Started"

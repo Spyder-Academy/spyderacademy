@@ -1,9 +1,10 @@
 +++
 author = "CashMoneyTrades"
 title = "Your Essential Options Trading Guide"
-date = "2023-05-02"
+date = "2023-02-03"
 description = "Free Trading Guide"
 course = "Trading 101"
+module = "Module 2: Getting Started with Trading" 
 time = "60 min"
 tags = [
     "Getting Started",

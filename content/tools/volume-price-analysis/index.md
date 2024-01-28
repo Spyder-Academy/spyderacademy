@@ -11,7 +11,7 @@ tags = [
 
 # 
 
-Unlock the power of [Volume Price Analysis](/education/what-is-volume-price-analysis/)) with our VPA indicator, designed for the discerning trader navigating the intricacies of the financial markets using Volume Price Analysis. 
+Unlock the power of [Volume Price Analysis](/education/what-is-volume-price-analysis/) with our [TradingView Volume Price Analysis Indicator](https://www.tradingview.com/script/5VDKXEdJ-VPA/), designed for the discerning trader navigating the intricacies of the financial markets using Volume Price Analysis. 
 
 In this comprehensive guide, we'll delve into the workings of the VPA indicator, shedding light on its features and how to harness its insights for more informed trading decisions.
 

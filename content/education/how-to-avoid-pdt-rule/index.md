@@ -1,9 +1,10 @@
 ---
 author: "CashMoneyTrades"
 title: "Navigating the PDT Rule: A Guide for New Traders"
-date: 2024-01-04T00:00:00-04:00
+date: 2023-02-04T00:00:00-04:00
 description: "Discover the rules, positives, and negatives of PDT, and learn strategic ways to sidestep it. Uncover insights tailored for new traders seeking to navigate the complexities of day trading while avoiding regulatory restrictions."
 course: "Trading 101"
+module: "Module 2: Getting Started with Trading" 
 time: "1 min"
 tags:
   - "Getting Started"

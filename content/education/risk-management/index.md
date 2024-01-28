@@ -1,9 +1,10 @@
 +++
 author = "Gobi Calls"
 title = "7 Ways to Manage your Risk When Trading"
-date = "2023-05-16T08:00:00"
+date = "2023-03-02T08:00:00"
 description = "Risk management in trading refers to the identification, analysis, and acceptance or mitigation of trading risks. It is an essential component of your broader trading strategy, aimed at minimizing potential losses."
 course = "Trading 101"
+module = "Module 3: Trading Strategies and Risk Management" 
 time = "2 min"
 tags = [
     "Getting Started",
@@ -31,7 +32,7 @@ The risk/reward ratio marks the prospective reward an investor can earn for ever
 Regular monitoring of your trades and adjustments based on market conditions and performance are key. Markets are dynamic and can change quickly, so it's important to be flexible and ready to adapt your strategy as necessary.
 
 ## Emotional Discipline 
-Emotional discipline is critical in trading. Fear and greed can significantly influence your trading decisions. Having a well-thought-out trading plan and sticking to it is crucial, regardless of what the market does and how it might tempt you to break your own rules.
+[Emotional discipline](/courses/trading-psychology/) is critical in trading. Fear and greed can significantly influence your trading decisions. Having a well-thought-out trading plan and sticking to it is crucial, regardless of what the market does and how it might tempt you to break your own rules.
 
 
 Remember, the objective of risk management is not to avoid losses entirely, but to limit them and make sure they do not impair your overall trading capital. Risk management goes hand in hand with your trading strategy, and both should be defined before you begin to trade. It's also important to regularly review and adjust your risk management strategy, just like your trading strategy, to ensure it remains effective.

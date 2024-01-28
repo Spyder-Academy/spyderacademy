@@ -1,9 +1,10 @@
 ---
 author: "CashMoneyTrades"
 title: "What is a Bull Trap: Navigating the Market's Deceptive Move"
-date: 2023-12-15T00:00:00-04:00
+date: 2023-07-02T00:00:00-04:00
 description: "A bull trap occurs when a rising trend in the market prompts investors to believe that an asset's value is on a sustainable upward trajectory."
 course: "Trading 101"
+module: "Module 7: Advanced Trading Concepts" 
 time: "1 min"
 tags:
   - "Getting Started"

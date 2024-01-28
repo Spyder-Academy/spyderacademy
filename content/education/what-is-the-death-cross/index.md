@@ -1,9 +1,10 @@
 ---
 author: "CashMoneyTrades"
 title: "What is the Death Cross - A Comprehensive Guide"
-date: 2023-12-15T00:00:00-04:00
+date: 2023-07-03T00:00:00-04:00
 description: "In technical analysis, a Death Cross occurs when the short-term moving average of an asset crosses below its long-term moving average."
 course: "Trading 101"
+module: "Module 7: Advanced Trading Concepts" 
 time: "1 min"
 tags:
   - "Getting Started"

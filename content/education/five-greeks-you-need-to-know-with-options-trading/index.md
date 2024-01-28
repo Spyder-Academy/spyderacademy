@@ -1,9 +1,10 @@
 +++
 author = "Pauldozer"
 title = "5 Greeks You Need To Know With Options Trading"
-date = "2023-07-21T00:00:00"
+date = "2023-05-01T00:00:00"
 description = "The 5 Greeks in options are Delta, Gamma, Vega, Theta, Rho - it's not a secret society, it's financial engineering at its finest. Get ready to demystify these terms!"
 course = "Trading 101"
+module = "Module 5: Options Trading Essentials" 
 time = "2 min"
 tags = [
     "Getting Started",

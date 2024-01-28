@@ -1,9 +1,10 @@
 ---
 author: "CashMoneyTrades"
 title: "Navigating Market Structure Breaks: A Comprehensive Exploration"
-date: 2023-12-27T00:00:00-04:00
+date: 2023-07-04T00:00:00-04:00
 description: "Market structure breaks, a phenomenon in financial markets, hold significant implications for traders and investors alike. Understanding these breaks is essential for adapting to evolving market dynamics and making informed decisions."
 course: "Trading 101"
+module: "Module 7: Advanced Trading Concepts" 
 time: "1 min"
 tags:
   - "Getting Started"

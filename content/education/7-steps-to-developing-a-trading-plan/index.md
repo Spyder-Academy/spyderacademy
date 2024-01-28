@@ -1,9 +1,10 @@
 +++
 author = "Gobi Calls"
 title = "7 Steps To Developing a Trading Plan"
-date = "2023-05-16T10:00:00"
+date = "2023-04-02T10:00:00"
 description = "Developing a trading plan"
 course = "Trading 101"
+module = "Module 4: Trading Resources and Planning" 
 time = "1 min"
 tags = [
    "Getting Started",

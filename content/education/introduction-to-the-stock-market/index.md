@@ -1,9 +1,10 @@
 +++
 author = "Gobi Calls"
 title = "Introduction to the Market"
-date = "2023-05-16T01:00:00"
+date = "2023-01-01T01:00:00"
 description = "Introduction to the Stock Market"
 course = "Trading 101"
+module = "Module 1: Introduction to Trading Basics" 
 time = "2 min"
 tags = [
     "Getting Started",

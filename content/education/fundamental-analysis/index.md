@@ -1,9 +1,10 @@
 +++
 author = "Gobi Calls"
 title = "How to Get Started with Fundamental Analysis"
-date = "2023-05-16T04:00:00"
+date = "2023-02-01T04:00:00"
 description = "Fundamental Analysis"
 course = "Trading 101"
+module = "Module 2: Getting Started with Trading" 
 time = "2 min"
 tags = [
     "Getting Started",

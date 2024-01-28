@@ -1,9 +1,10 @@
 ---
 author: "CashMoneyTrades"
 title: "Navigating the Bear Trap: A Beginner's Guide"
-date: 2024-01-05T00:00:00-04:00
+date: 2023-07-02T00:00:00-04:00
 description: "A Bear Trap is a deceptive market scenario where prices appear to be entering a bearish trend, enticing traders to short or sell. Just as despair sets in, the market reverses, catching those who fell for the trap off guard. It's a tale of false signals and unexpected turns."
 course: "Trading 101"
+module: "Module 7: Advanced Trading Concepts" 
 time: "1 min"
 tags:
   - "Getting Started"

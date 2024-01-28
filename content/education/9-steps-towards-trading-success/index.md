@@ -1,9 +1,10 @@
 +++
 author = "Pauldozer"
 title = "9 Steps Towards Trading Succcess"
-date = "2023-07-06T10:00:00"
+date = "2023-04-03T10:00:00"
 description = "How to develop a trading edge: nine steps towards trading success"
 course = "Trading 101"
+module = "Module 4: Trading Resources and Planning" 
 time = "2 min"
 tags = [
    "Getting Started",

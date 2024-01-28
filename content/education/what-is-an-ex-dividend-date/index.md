@@ -1,9 +1,10 @@
 ---
 author: "CashMoneyTrades"
 title: "What is an Ex-Dividend Date?"
-date: 2023-12-14T00:00:00-04:00
+date: 2023-07-01T00:00:00-04:00
 description: "The Ex-Dividend Date is a pivotal moment in the dividend distribution process. On this date, a stock begins trading without the right to the upcoming dividend payment. Investors who purchase the stock on or after the ex-dividend date won't receive the dividend."
 course: "Trading 101"
+module: "Module 7: Advanced Trading Concepts" 
 time: "1 min"
 tags:
   - "Getting Started"

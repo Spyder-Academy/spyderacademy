@@ -1,9 +1,10 @@
 +++
 author = "Gobi Calls"
 title = "7 Amazing Trading Resources"
-date = "2023-05-16T09:00:00"
+date = "2023-04-01T09:00:00"
 description = "Trading Platforms, Tools, Resources"
 course = "Trading 101"
+module = "Module 4: Trading Resources and Planning" 
 time = "1 min"
 tags = [
     "Getting Started",

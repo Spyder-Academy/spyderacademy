@@ -1,9 +1,10 @@
 ---
 author: "CashMoneyTrades"
 title: "What are the Stock Market Holidays in 2024"
-date: 2023-12-09T00:00:00-04:00
+date: 2023-06-02T00:00:00-04:00
 description: "The NYSE is closed on New Years Day, MLK Day, Presidents Day, Good Friday, Memorial Day, Independence Day, Labor Day, Thanksgiving Day, and Christmas Day."
 course: "Trading 101"
+module: "Module 6: Market Information and Analysis" 
 time: "1 min"
 tags:
   - "Getting Started"
