@@ -18,7 +18,7 @@
       </div>
       <div class="col-12 col-xl-3 text-center text-xl-start pb-4">
         <ul class="list-unstyled">
-          {{ range first 4 .Site.Menus.footer }}
+          {{ range first 5 .Site.Menus.footer }}
             <li class="">
               <a class="small text-black-61 text-decoration-none" href="{{ .URL }}">{{ .Name }}</a>
             </li>
@@ -27,7 +27,7 @@
       </div>
       <div class="col-12 col-xl-3 text-center text-xl-start pb-4">
         <ul class="list-unstyled">
-          {{ range after 4 .Site.Menus.footer }}
+          {{ range after 5 .Site.Menus.footer }}
             <li class="">
               <a class="small text-black-61 text-decoration-none" href="{{ .URL }}">{{ .Name }}</a>
             </li>
