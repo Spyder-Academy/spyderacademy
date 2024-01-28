@@ -6,7 +6,6 @@ description: ""
 course: "Volume Price Analysis"
 module: "Module 1: Fundamentals of Volume Price Analysis" 
 time: "5 min"
-draft: true
 ---
 
 ## Introduction

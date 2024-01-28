@@ -1,8 +1,10 @@
 +++
 author = "CashMoneyTrades"
 title = "Decoding the VPA Indicator: A Deep Dive into Volume Price Analysis"
-date = "2023-12-06T10:00:00"
+date = "2024-01-26T10:00:00"
 description = "Unlock the power of Volume Price Analysis (VPA) with our VPA indicator, designed for the discerning trader navigating the intricacies of the financial markets using Volume Price Analysis."
+course = "Volume Price Analysis"
+module = "Module 2: Tools and Techniques for Volume Price Analysis"
 time = "1 min"
 tags = [
    "TradingView",
@@ -11,7 +13,7 @@ tags = [
 
 # 
 
-Unlock the power of [Volume Price Analysis](/education/what-is-volume-price-analysis/) with our [TradingView Volume Price Analysis Indicator](https://www.tradingview.com/script/5VDKXEdJ-VPA/), designed for the discerning trader navigating the intricacies of the financial markets using Volume Price Analysis. 
+Unlock the power of [Volume Price Analysis](/courses/mastering-volume-price-analysis-for-day-trading/) with our [TradingView Volume Price Analysis Indicator](https://www.tradingview.com/script/5VDKXEdJ-VPA/), designed for the discerning trader navigating the intricacies of the financial markets using Volume Price Analysis. 
 
 In this comprehensive guide, we'll delve into the workings of the VPA indicator, shedding light on its features and how to harness its insights for more informed trading decisions.
 

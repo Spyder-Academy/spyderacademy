@@ -11,7 +11,6 @@ benefits = [
     "Easy Lessons"
 ]
 layout = "course"
-draft = true
 +++
 
 This course is crafted to transform your trading approach, offering you an in-depth understanding of Volume Price Analysis (VPA), a method that combines the power of price and volume data to provide a clearer picture of market dynamics.
