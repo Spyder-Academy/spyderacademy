@@ -1,7 +1,7 @@
 +++
 author = "CashMoneyTrades"
-title = "Decoding the VPA Indicator: A Deep Dive into Volume Price Analysis"
-date = "2024-01-26T10:00:00"
+title = "Decoding the VPA Indicator: Tools to help you trade VPA"
+date = 2024-01-28T00:02:05
 description = "Unlock the power of Volume Price Analysis (VPA) with our VPA indicator, designed for the discerning trader navigating the intricacies of the financial markets using Volume Price Analysis."
 course = "Volume Price Analysis"
 module = "Module 2: Tools and Techniques for Volume Price Analysis"
@@ -51,6 +51,12 @@ Given the dynamic nature of the VPA signals, traders should be agile and ready t
 
 ### Hammering Out Profitable Strategies
 The VPA indicator offers valuable signals for recognizing hammer patterns, gravestone dojis, and dragonfly dojis. Traders can use these insights to align their strategies with potential trend reversals.  Combine these signals with [Key Levels](/tools/key-levels/) and other strategies to boost your confidence trading with [Volume Price Analysis](/education/what-is-volume-price-analysis/))!
+
+## Buying Selling Volume by Ceyhun
+
+[The Buying Selling Volume indicator by Ceyhun](https://www.tradingview.com/script/f32HlgbI/) (on TradingView) splits the volume within a given timeframe candle by Buy Volume and Sell Volume.  This is an amazing indicator that helps determine the strength of buyers and sellers within a candle, relative to previous volume candles.
+
+Looking for chart patterns and the movement of price relative to the buying and selling volume allows you to better measure the strength of a move, and ultimately find confluence in your trading decisions.
 
 ## Conclusion
 
