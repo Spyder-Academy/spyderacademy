@@ -40,11 +40,10 @@
               </div>
           </div>
 
-          {{- $tradesJS := resources.Get "js/shared/trades.js" -}}
-          <script>{{- $tradesJS.Content | safeJS -}}</script>
+          
           <script>
             userTrades = new Trades();
-            userTrades.renderTopRecentTrades();
+            userTrades.renderTopRecentTrades(isCarousel = false, parentEl = $("#tradesRecentBest"), template = $(".trade-card-template"));
           </script>
       </div>
       <!-- content -->

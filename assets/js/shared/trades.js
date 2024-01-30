@@ -1597,15 +1597,15 @@ class Trades {
       });
     }
 
-    renderTopRecentTrades(){
+    renderTopRecentTrades(isCarousel = false, parentElement, templateElement){
       this._getRecentlyClosedTrades().then(tradesData => {
-        $('#tradesRecentBest').empty()
+        $(parentElement).empty()
 
         var scoreboardRow = $("<div class='row'></div>")
-        $('#tradesRecentBest').append(scoreboardRow);
+        $(parentElement).append(scoreboardRow);
 
         
-        var tradeCard = $('.trade-card-template');
+        var tradeCard = $(templateElement);
 
         // Create a copy of the array before sorting
         var tradesDataCopy = [...tradesData];
@@ -1628,13 +1628,21 @@ class Trades {
 
 
         // Create table rows for each trade
-        tradesDataTop.forEach(function(trade) {
+        tradesDataTop.forEach(function(trade, index) {
             var tradeCardRow = tradeCard.clone()
             tradeCardRow.removeClass("trade-card-template")
             tradeCardRow.removeClass("d-none")
             tradeCardRow.removeClass("template")
             tradeCardRow.removeClass("col-lg-6")
             tradeCardRow.addClass("col-lg-12")
+            
+            if (isCarousel) {
+              tradeCardRow.addClass("carousel-item")
+              tradeCardRow.addClass("pb-5")
+              if (index === 0) {
+                tradeCardRow.addClass("active")
+              }
+            }
 
             var hoursAgo = Math.abs(new Date() - trade.exit_date_max.toDate()) / 36e5; // 36e5 is the number of milliseconds in one hour
             var hoursAgoText = Math.floor(hoursAgo) + " hours ago";
@@ -1650,7 +1658,7 @@ class Trades {
             tradeCardRow.find(".tradeRow").attr("tradeid", trade.tradeid)
             tradeCardRow.find(".tradeRow").removeAttr("onclick")
 
-            $('#tradesRecentBest').append(tradeCardRow);
+            $(parentElement).append(tradeCardRow);
         });
       });
     }

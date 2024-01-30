@@ -25,10 +25,10 @@
 {{ partial "head/twitter_cards.html" . }}
 {{ partial "head/opengraph.html" . }}
 
-{{ if isset .Params "firebase" }}
-  {{ partial "shared/firebase.html" . }}
-{{ end }}
+{{ partial "shared/firebase.html" . }}
 
 <script async defer src="//assets.pinterest.com/js/pinit.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+{{- $tradesJS := resources.Get "js/shared/trades.js" -}}
+<script>{{- $tradesJS.Content | safeJS -}}</script>

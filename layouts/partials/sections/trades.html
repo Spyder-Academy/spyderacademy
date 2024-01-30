@@ -1,46 +1,51 @@
 <section id="{{ .id }}" class="section trades  bg-blue-light">
-  <div class="container">
-    <div id="carouselTrades" class="carousel slide d-none d-lg-block carousel-dark" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        {{ range $i, $e := .content }}
-          <div class="carousel-item {{ if eq $i  0 }} active {{ end }}" data-bs-interval="4000">
-              <div class="row justify-content-center pb-5">
-                <div class="col-6 mb-md-0">
-                  <div class="card shadow border-0  mx-0 my-1" style="border-radius: 1em;">
-                    <div class="card-body p-1 tradeRow" onclick="selectContract(this);">
-                        <div class="container p-1">
-                            <div class="row">
-                                <div class="col-2 m-0">
-                                    <img class="tradeLogo" src="/images/logos/{{ $e.ticker }}.png" style="width: 3em; border-radius: 2em;" alt="{{ $e.ticker }}" />
-                                </div>
-                                <div class="col-10 px-3">
-                                    <div class="row">
-                                        <div class="col-8 small lh-1 fw-light text-uppercase traderName">{{$e.trader}}</div>
-                                        <div class="col-4"></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-8 fs-3 lh-1 tradeContract">{{$e.contract}}</div>
-                                        <div class="col-4 fs-3 lh-1 tradeGain text-end">{{$e.gains}}</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-8  small lh-1 tradeNotes" style="overflow: hidden; text-overflow: ellipses; white-space: nowrap;">{{$e.notes}}</div>
-                                        <div class="col-4"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tvChartHeader m-4 card shadow border-0 d-none" style="border-radius: 1em;"> </div>
-                            <div class="entryExitNotes small lh-1 m-4 p-3 card shadow border-0 d-none" style="border-radius: 1em; background-color: #BFE1CF;"></div>
-                            <div class="membersRecap card shadow border-0 p-3 justify-content-center" style="border-radius: 15px; display: none"> <img src="/images/memberRecaps.png" alt="Member Recap"/> </div>
+  <div class="container pb-5">
+    <div class="row justify-content-center">
+      <div class="col-sm-12 col-lg-6">
+        <div id="carouselTrades" class="carousel slide d-none d-lg-block carousel-dark" data-bs-ride="carousel">
+          <div class="carousel-inner">
+              <div id="tradesCarousel"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-12 col-sm-12 trade-carousel-template d-none">
+    <div class="card shadow border-0  mx-0 my-1" style="border-radius: 1em;">
+        <div class="card-body p-1 tradeRow" onclick="selectContract(this);">
+            <div class="container p-0">
+                <div class="row">
+                    <div class="col-2 m-0">
+                        <img class="tradeLogo" src="/images/logos/TSLA.png" style="width: 3em; border-radius: 2em;" />
+                    </div>
+                    <div class="col-10 px-3">
+                        <div class="row">
+                            <div class="col-8 small lh-1 fw-light text-uppercase traderName">Trader Name</div>
+                            <div class="col-4"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8 fs-3 lh-1 tradeContract">Contract</div>
+                            <div class="col-4 fs-3 lh-1 tradeGain text-end">Gains %</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-8  small lh-1 tradeNotes" style="overflow: hidden; text-overflow: ellipses; white-space: nowrap;">Trade Notes</div>
+                            <div class="col-4"></div>
                         </div>
                     </div>
                 </div>
-                </div>
-              </div>
-          </div>
-        {{ end }}
-      </div>
+            </div>
+        </div>
     </div>
+</div>
 
-    
-  </div>
+  <script>
+    userTrades = new Trades();
+    userTrades.renderTopRecentTrades(isCarousel = true, parentElement=$('#tradesCarousel'), templateElement=$('.trade-carousel-template')).then(() => {
+        // Reinitialize the carousel
+        $('#carouselTrades').carousel();
+    });
+
+  </script>
+  
 </section>

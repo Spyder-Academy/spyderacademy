@@ -350,9 +350,6 @@
 
 
     <!-- Load Shared JS -->
-    {{- $tradesJS := resources.Get "js/shared/trades.js" -}}
-
-    <script>{{- $tradesJS.Content | safeJS -}}</script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 	<script type="text/javascript" src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
