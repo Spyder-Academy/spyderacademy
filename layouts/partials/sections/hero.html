@@ -1,11 +1,53 @@
 <section id="{{ .id }}" class="section hero py-5">
   <div class="container">
     <div class="row flex-column flex-xl-row-reverse">
-      <div class="col-12 col-xl-6  d-flex flex-column justify-content-center hero-image">
-        <video autoplay muted loop playsinline style="border-radius: 1em" >
-          <source src="/videos/hero.mp4" type="video/mp4" />
-        </video>
+      <!-- hero image -->
+      <div class="col-12 col-xl-6  d-flex flex-column justify-content-center hero-image p-5">
+        
+            <div class="row  align-items-center ">
+              <div class="col-12 mb-md-0">
+                  <div class="card  border-0  mx-0 my-1" style="border-radius: 1em;">
+                    <div id="tradesRecentBest"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-12 col-sm-12 trade-card-template d-none">
+              <div class="card shadow border-0  mx-0 my-1" style="border-radius: 1em;">
+                  <div class="card-body p-1 tradeRow" onclick="selectContract(this);">
+                      <div class="container p-0">
+                          <div class="row">
+                              <div class="col-2 m-0">
+                                  <img class="tradeLogo" src="/images/logos/TSLA.png" style="width: 3em; border-radius: 2em;" />
+                              </div>
+                              <div class="col-10 px-3">
+                                  <div class="row">
+                                      <div class="col-8 small lh-1 fw-light text-uppercase traderName">Trader Name</div>
+                                      <div class="col-4"></div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-8 fs-3 lh-1 tradeContract">Contract</div>
+                                      <div class="col-4 fs-3 lh-1 tradeGain text-end">Gains %</div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-8  small lh-1 tradeNotes" style="overflow: hidden; text-overflow: ellipses; white-space: nowrap;">Trade Notes</div>
+                                      <div class="col-4"></div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          {{- $tradesJS := resources.Get "js/shared/trades.js" -}}
+          <script>{{- $tradesJS.Content | safeJS -}}</script>
+          <script>
+            userTrades = new Trades();
+            userTrades.renderTopRecentTrades();
+          </script>
       </div>
+      <!-- content -->
       <div class="col-12 col-xl-6 mt-5 d-flex flex-column justify-content-center">
         {{ with .content.main }}
           <h1 class="fw-bold text-center text-xl-start pb-1">{{ . | markdownify }}</h1>

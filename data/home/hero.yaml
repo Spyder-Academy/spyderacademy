@@ -14,3 +14,35 @@ content:
     label: "Start Your 7-Day Free Trial"
     url: "#services"
 
+trades:
+    - ticker: "QQQ"
+      contract: "QQQ 379p"
+      trader: "Pauldozer"
+      gains: "632%"
+      notes: "7/20/2023 - market weakness, ORB retest and rejected"
+
+    - ticker: "AMD"
+      contract: "AMD 120p"
+      trader: "Sith"
+      gains: "522%"
+      notes: "7/14/2023 - Tight stop. Market is bullish, but good RR on downside move here. "
+
+    - ticker: "BAC"
+      contract: "BAC 30.5c"
+      trader: "Link Snipes"
+      gains: "331%"
+      notes: "7/19/2023 - IV Flush Strategy"
+
+    - ticker: "AAPL"
+      contract: "AAPL 200c"
+      trader: "Link Snipes"
+      gains: "292%"
+      notes: "7/19/2023 - News Trade"
+
+    - ticker: "SPY"
+      contract: "SPY 452c"
+      trader: "Gobi"
+      gains: "144%"
+      notes: "7/18/2023 - Break over SATY ATR Call Trigger (451.75)"
+
+   

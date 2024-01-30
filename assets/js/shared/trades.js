@@ -1597,6 +1597,64 @@ class Trades {
       });
     }
 
+    renderTopRecentTrades(){
+      this._getRecentlyClosedTrades().then(tradesData => {
+        $('#tradesRecentBest').empty()
+
+        var scoreboardRow = $("<div class='row'></div>")
+        $('#tradesRecentBest').append(scoreboardRow);
+
+        
+        var tradeCard = $('.trade-card-template');
+
+        // Create a copy of the array before sorting
+        var tradesDataCopy = [...tradesData];
+
+         // Sort trades by most recent exit date
+         tradesDataCopy.sort((a, b) => b.exit_date_max.toDate() - a.exit_date_max.toDate());
+
+        // Filter trades with gain > 0 and then sort by gain within each date
+        var filteredAndSortedTrades = tradesDataCopy
+          .filter(trade => trade.gainsValue > 20)
+          .sort((a, b) => {
+            if (a.exit_date_max.toDate().getDate() === b.exit_date_max.toDate().getDate()) {
+              return b.gainsValue - a.gainsValue; // Sort by gain if dates are the same
+            }
+            return b.exit_date_max.toDate() - a.exit_date_max.toDate(); // Otherwise, keep date sort
+          });
+
+        // Get the top 10 most recent trades with positive gains
+        var tradesDataTop = filteredAndSortedTrades.slice(0, 7);
+
+
+        // Create table rows for each trade
+        tradesDataTop.forEach(function(trade) {
+            var tradeCardRow = tradeCard.clone()
+            tradeCardRow.removeClass("trade-card-template")
+            tradeCardRow.removeClass("d-none")
+            tradeCardRow.removeClass("template")
+            tradeCardRow.removeClass("col-lg-6")
+            tradeCardRow.addClass("col-lg-12")
+
+            var hoursAgo = Math.abs(new Date() - trade.exit_date_max.toDate()) / 36e5; // 36e5 is the number of milliseconds in one hour
+            var hoursAgoText = Math.floor(hoursAgo) + " hours ago";
+            if (Math.floor(hoursAgo) == 1) hoursAgoText = Math.floor(hoursAgo) + " hour ago";
+
+            tradeCardRow.find(".traderName").text(trade.username + " - " + hoursAgoText)
+            tradeCardRow.find(".tradeContract").text(trade.ticker + " " + trade.strike)
+            tradeCardRow.find(".tradeGain").text(trade.gainsString)
+            tradeCardRow.find(".tradeNotes").text(trade.notes)
+
+            var king_image = "/images/logos/" + trade.ticker.toUpperCase() + ".png"
+            tradeCardRow.find(".tradeLogo").attr("src", king_image)
+            tradeCardRow.find(".tradeRow").attr("tradeid", trade.tradeid)
+            tradeCardRow.find(".tradeRow").removeAttr("onclick")
+
+            $('#tradesRecentBest').append(tradeCardRow);
+        });
+      });
+    }
+
     renderTradeRecap(trades, recap_date){
         $('#tradeRecap').empty()
         
@@ -1767,6 +1825,35 @@ class Trades {
 
                 return data;
             });
+    }
+
+    _getRecentlyClosedTrades(){
+      var self = this;
+
+      console.log("Query Firebase - getRecentlyClosedTrades")
+
+      var twoWeeksAgo = new Date();
+      twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14); // Subtract 14 days
+
+      
+      var trades_query = this.tradesCollection
+      return trades_query
+        .where('exit_date_max', '>=', twoWeeksAgo)
+        .get()
+        .then((querySnapshot) => {
+              const data = [];
+              
+              querySnapshot.forEach((doc) => {
+                  const tradeEntry =  TradeRecord.from_dict(doc.id, doc.data());
+
+                  var showTrade = self.filterByUser == null || tradeEntry.userid == self.filterByUser
+                  if (showTrade){
+                      data.push(tradeEntry)
+                  }
+              });
+
+              return data;
+          });
     }
 
 
