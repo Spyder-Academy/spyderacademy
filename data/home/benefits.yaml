@@ -1,39 +1,40 @@
 enabled: true
 id: "benefits"
-title: "Trade Stocks and Options With Confidence"
-text: "Level up your trading with confidence. Spyder Academy focuses on Education to help you master your A+ Setups, Trading Psychology, and improve your consistency."
+title: "Conquer Trading with Spyder Academy"
+subtitle: "Confidence in Every Decision"
+text: "Step into a world where trading isn't just a guesswork game. At Spyder Academy, we understand the hurdles and uncertainties you face. Our tailored education program cuts through the complexities of stock and options trading, equipping you with robust strategies for identifying your A+ Setups and mastering trading psychology. We're here to guide you toward consistent success, transforming uncertainty into confidence with every trade you make."
 
 content:
   - image: "images/portfolio-background.png"
-    pretitle: "Trade With Better"
+    pretitle: "Find Clarity With Better"
     title: "Education"
     text: "
-          <i class='fas fa-users'></i> 7 Amazing Instructors<br/>
-          <i class='fas fa-laptop'></i> Screen Sharing<br/>
-          <i class='fas fa-chart-line'></i> Trade Recaps</br/>
-          <i class='fas fa-bell'></i> Instructor Trade Alerts<br/>
-          <i class='fas fa-book'></i> Detailed Reasons for Entries and Exits<br/>
-          <i class='fas fa-map'></i> Strategy Guides<br/>
-          <i class='fas fa-book'></i> Online Courses<br/>
+          <i class='fas fa-users'></i> <a href='#teachers'>7 Amazing Instructors</a><br/>
+          <i class='fas fa-laptop'></i> <a href='#services'>Screen Sharing</a><br/>
+          <i class='fas fa-chart-line'></i> <a href='/members/'>Trade Recaps</a></br/>
+          <i class='fas fa-bell'></i> <a href='/members/'>Instructor Trade Alerts</a><br/>
+          <i class='fas fa-book'></i> <a href='/members/'>Detailed Reasons for Entries and Exits</a><br/>
+          <i class='fas fa-map'></i> <a href='/courses/trading-strategies/'>Strategy Guides</a><br/>
+          <i class='fas fa-book'></i> <a href='/courses/'>Online Courses</a><br/>
             "
 
   - image: "images/portfolio-background.png"
-    pretitle: "Trade With Better"
+    pretitle: "See The Matrix with Better"
     title: "Intelligence"
     text: "
-          <i class='fas fa-robot'></i> Algo Alerts<br/>
-          <i class='fas fa-spider'></i> SpyderWeb Analytics<br/>
-          <i class='fas fa-chess-rook'></i> Backtested Strategies<br/>
-          <i class='fas fa-chart-line'></i> TradingView Indicators<br/>
-          <i class='fas fa-robot'></i> Discord Tools<br/>
+          <i class='fas fa-robot'></i> <a href='#services'>Algo Alerts</a><br/>
+          <i class='fas fa-spider'></i> <a href='/members/'>SpyderWeb Analytics</a><br/>
+          <i class='fas fa-chess-rook'></i> <a href='/courses/trading-strategies/'>Backtested Strategies</a><br/>
+          <i class='fas fa-chart-line'></i> <a href='/tools/'>TradingView Indicators</a><br/>
+          <i class='fas fa-robot'></i> <a href='/tools/'>Discord Tools</a><br/>
           "
 
   - image: "images/portfolio-background.png"
-    pretitle: "Trade With a Better"
+    pretitle: "Find Wisdom From a Friendly"
     title: "Community"
     text: "
-          <i class='fas fa-users'></i> Premium Community Chat<br/>
-          <i class='fas fa-phone'></i> Live Voice All Day<br/>
-          <i class='fas fa-clipboard-question'></i> Education with Q&A Sessions<br/>
-          <i class='fas fa-face-dizzy'></i> Trading Psychology<br/>
+          <i class='fas fa-users'></i> <a href='#services'>Premium Community Chat</a><br/>
+          <i class='fas fa-phone'></i> <a href='#services'>Live Voice All Day</a><br/>
+          <i class='fas fa-clipboard-question'></i> <a href='#services'>Education with Q&A Sessions</a><br/>
+          <i class='fas fa-face-dizzy'></i> <a href='/courses/trading-psychology/'>Trading Psychology</a><br/>
     "

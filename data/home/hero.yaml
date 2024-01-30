@@ -2,9 +2,9 @@ enabled: true
 id: "hero"
 
 content:
-  main:  Stock Market Trading Education
-  title: For every **Trader**. Real Results.
-  text: "Imagine a time... When you make more money trading than you do at your job. When you have free time to do the things you really love. When you are making consistent gains. When you have conquered the mental side of trading."
+  main:  Revolutionize Your **Trading**
+  title: "Propel Yourself to **Success**!"
+  text: "Envision a future where your trading skills not only match but exceed your regular job income. A world where your newfound financial freedom affords you the luxury of time – time to indulge in your passions. Picture consistent gains, not as a dream, but as your new reality. And imagine mastering the psychological complexities of trading, turning challenges into triumphs."
 
   buttonPrimary:
     label: "How We Teach"

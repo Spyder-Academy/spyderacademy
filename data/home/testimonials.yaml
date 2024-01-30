@@ -2,7 +2,7 @@ enabled: true
 id: "testimonials"
 
 content:
-  title: "Check out what our Students say about us"
+  title: "I GET IT!<br/><strong class='text-danger'>Trading is hard.</strong><br/>You aren't alone. <br/><br/>Check out what our students say!"
   text: "<a href='https://www.whop.com/spyder-academy/' target='_blank'>Leave a Review</a> or <a href='https://whop.com/checkout/plan_QiCwlm5hSTMgd/' target='_blank'>Buy us Coffee</a>"
 
   featured:

@@ -8,21 +8,22 @@
         {{ with .content.text }}
           <p class="text-black-61 text-center pb-3">{{ . }}</p>
         {{ end }}
-        {{ with .content.description }}
         <div class="card shadow border-0 testimonial-card d-flex" style="border-radius: 15px;">
           <div class="card-body">
-          <p class="card-text text-black-61 text-justify p-5">{{ . | safeHTML }}</p>
+            {{ range $e := .content.learning }}
+              <h5 class="mt-4 fw-bold text-danger">{{ .title }}</h5>
+              <p class="card-text text-black-61">{{ .text | safeHTML }}</p>
+            {{ end }}
           </div>
         </div>
 
-        {{ end }}
       </div>
     </div>
 
     <div class="row">
       {{ range $i, $e := .content.cards }}
       <!-- column  -->
-      <div class="col-lg-3 mb-4">
+      <div class="col mb-4" style="flex: 0 0 14.28%; max-width: 14.28%">
         <!-- Row -->
         <div class="row">
           <div class="col-md-12">
@@ -34,7 +35,7 @@
           </div>
           <div class="col-md-12 text-center">
             <div class="pt-2">
-              <h5 class="mt-4 font-weight-medium mb-0">{{ $e.name }}</h5>
+              <h5 class="mt-4 font-weight-medium mb-0"><a href="{{ $e.button.url }}" target="_blank">{{ $e.name }}</a></h5>
               <h6 class="subtitle mb-3 font-weight-bold">{{ $e.title }}</h6>
               <p class="small font-weight-light">{{ $e.text | safeHTML}}</p>
             </div>

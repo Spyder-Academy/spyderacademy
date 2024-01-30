@@ -1,0 +1,11 @@
+enabled: true
+id: "problem"
+
+content: "I used to feel overwhelmed by options trading. No matter how much I read or tried, I couldn't make sense of the market and my decisions were more guesswork than strategy. I was on the verge of giving up, feeling that successful trading was just out of my reach."
+
+agitate:
+  - fear: "I feel utterly <strong class='text-danger'>lost</strong> in the market's chaos."
+  - fear: "The fear of financial <strong class='text-danger'>failure</strong> haunts me constantly."
+  - fear: "Every trade feels like a blind <strong class='text-danger'>gamble</strong>, shaking me to the core."
+  - fear: "My emotions swing from hope to <strong class='text-danger'>despair</strong> in an instant."
+  - fear: "Nothing I try seems to work, I'm <strong class='text-danger'>starved</strong> for real wisdom."

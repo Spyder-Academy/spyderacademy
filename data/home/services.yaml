@@ -2,8 +2,8 @@ enabled: true
 id: "services"
 
 content:
-  title: "Student Registration"
-  text: "Our pricing is simple and all inclusive, and comes with a 7 day free trial."
+  title: "Begin Your Trading Transformation: Join Spyder Academy Today"
+  text: "Unlock exclusive access to our expert-led courses, in-depth strategies, and a community of like-minded traders. No more guesswork, just confident and informed trading decisions. Ready to elevate your trading game? Sign up now and embrace the path to consistent success!"
   cards:
     # - image: "images/services-library.png"
     #   title: "The Library"

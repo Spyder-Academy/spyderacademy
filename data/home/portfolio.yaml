@@ -1,6 +1,10 @@
 enabled: true
 id: "mission"
 
+header:
+  title: "The Spyder Academy Edge"
+  text: "At Spyder Academy, trading is not just a skill but a transformative experience. Our program is designed with a clear mission – to empower you, the trader, at every step of your financial journey. Here's a glimpse into what makes us stand out in the world of trading education:"
+
 content:
   - image: "images/portfolio-mission.png"
     pretitle: "Mission"
