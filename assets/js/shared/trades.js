@@ -1640,7 +1640,7 @@ class Trades {
             var hoursAgoText = Math.floor(hoursAgo) + " hours ago";
             if (Math.floor(hoursAgo) == 1) hoursAgoText = Math.floor(hoursAgo) + " hour ago";
 
-            tradeCardRow.find(".traderName").text(trade.username + " - " + hoursAgoText)
+            tradeCardRow.find(".traderName").text(hoursAgoText)
             tradeCardRow.find(".tradeContract").text(trade.ticker + " " + trade.strike)
             tradeCardRow.find(".tradeGain").text(trade.gainsString)
             tradeCardRow.find(".tradeNotes").text(trade.notes)

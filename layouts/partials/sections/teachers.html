@@ -23,13 +23,13 @@
     <div class="row">
       {{ range $i, $e := .content.cards }}
       <!-- column  -->
-      <div class="col mb-4" style="flex: 0 0 14.28%; max-width: 14.28%">
+      <div class="col-lg col-md-3 mb-4" style="@media(min-width: 1200px) {flex: 0 0 14.28%; max-width: 14.28%}">
         <!-- Row -->
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-12 text-center">
             {{ with $e.image }}
               {{ with resources.Get . }}
-                <img class="img-fluid rounded-circle" src="{{ .Permalink }}" alt="{{ $e.name }}"  style="border-radius: 20px;" />
+                <img class="img-fluid rounded-circle" src="{{ .Permalink }}" alt="{{ $e.name }}"  style="border-radius: 20px; max-width: 150px" />
               {{ end }}
             {{ end }}
           </div>
