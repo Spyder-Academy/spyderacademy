@@ -19,7 +19,7 @@ content:
             "
 
   - image: "images/portfolio-background.png"
-    pretitle: "See The Matrix with Better"
+    pretitle: "Analyze the Charts with Better"
     title: "Intelligence"
     text: "
           <i class='fas fa-robot'></i> <a href='#services'>Algo Alerts</a><br/>
