@@ -18,7 +18,7 @@ Day trading is not just an investment strategy; it's a lifestyle. It requires de
 
 1. **Learn How to Trade the Stock Market for Beginners**: Our first step is to offer you a comprehensive understanding of the stock market. This includes the basics of how the market works, understanding stocks, bonds, and commodities, and the fundamentals of market analysis. 
 
-<div class="card shadow border-0 p-3 m-3" style="border-radius: 15px; background-color: #BFE1CF; width: 20em; min-width: 300px">
+<div class="card col-lg-6 shadow border-0 p-3 mb-3" style="border-radius: 15px; background-color: #BFE1CF;">
     <div class="card-body p-0">
         <div class="container-fluid">
         <div class="row  align-items-center ">
@@ -34,7 +34,7 @@ Day trading is not just an investment strategy; it's a lifestyle. It requires de
 
 2. **Explore Trading Strategies**: Every successful trader has a strategy that works for them. Our "Trading Strategies" section offers insights into various approaches, including technical analysis, swing trading, and more. These strategies are tailored to help beginners make informed decisions and minimize risks. 
 
-<div class="card shadow border-0 p-3 m-3" style="border-radius: 15px; background-color: #E9E4D7; width: 20em; min-width: 300px">
+<div class="card col-lg-6 shadow border-0 p-3 mb-3" style="border-radius: 15px; background-color: #E9E4D7;">
     <div class="card-body p-0">
         <div class="container-fluid">
         <div class="row  align-items-center ">
@@ -50,7 +50,7 @@ Day trading is not just an investment strategy; it's a lifestyle. It requires de
 
 3. **Master Trading Psychology**: The psychological aspect of trading is as important as the technical skills. Our "Trading Psychology" section is designed to help you understand the mindset of successful traders, deal with emotional trading, and manage stress. 
 
-<div class="card shadow border-0 p-3 m-3" style="border-radius: 15px; background-color: #DCA9D1; width: 20em; min-width: 300px">
+<div class="card col-lg-6 shadow border-0 p-3 mb-3" style="border-radius: 15px; background-color: #DCA9D1;">
     <div class="card-body p-0">
         <div class="container-fluid">
         <div class="row  align-items-center ">
@@ -70,7 +70,7 @@ For those who seek a more structured learning path, our online courses are a per
 
 Enroll in our [online courses](/courses/) to gain in-depth knowledge and practical skills in day trading.
 
-<div class="card shadow border-0 p-3 m-3" style="border-radius: 15px; background-color: #BFE1CF; width: 20em; min-width: 300px">
+<div class="card col-lg-6 shadow border-0 p-3 mb-3" style="border-radius: 15px; background-color: #BFE1CF;">
     <div class="card-body p-0">
         <div class="container-fluid">
         <div class="row  align-items-center ">
