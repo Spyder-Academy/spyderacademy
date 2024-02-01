@@ -25,6 +25,7 @@
 
 
           {{ if eq .Layout "stocks" }}
+            {{ if ne .Params.disableListPage true }}
             <div class="col-6 col-md-3 col-lg-2">
               <a class="card shadow border-0 p-4 text-decoration-none h-100" style="border-radius: 15px;" href="{{ .Permalink }}">
                 <div class="aspect-ratio-full">
@@ -35,6 +36,7 @@
                 </div>
               </a>
             </div>
+            {{ end }}
           {{ else }} 
             <div class="col-12 col-md-6 col-lg-4">
               <a class="card shadow border-0 p-4 text-decoration-none h-100" style="border-radius: 15px;" href="{{ .Permalink }}">

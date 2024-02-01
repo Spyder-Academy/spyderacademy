@@ -2475,7 +2475,7 @@ class Trades {
         const whenIcon = earning.when === 'post market' ? "fa-moon" : "fa-sun";
   
         let earningsEntryHtml = `<div class="row ${whenClass}" id="earning-${earning.symbol}">`;
-        earningsEntryHtml += ` <div class="col-lg-2 col-sm-6 ">${earning.symbol}</div>`;
+        earningsEntryHtml += ` <div class="col-lg-2 col-sm-6 "><a href="/stocks/${earning.symbol.toLowerCase()}/">${earning.symbol}</a></div>`;
         earningsEntryHtml += ` <div class="col-lg-2 col-sm-6 ">${formattedMarketCap}</div>`;
         earningsEntryHtml += ` <div class="col-lg-3 col-sm-6 " id="iv-move-${earning.symbol}">Loading...</div>`;
         earningsEntryHtml += ` <div class="col-lg-4 col-sm-6 " id="iv-range-${earning.symbol}"></div>`; // Placeholder for IV range
