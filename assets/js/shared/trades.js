@@ -2279,6 +2279,39 @@ class Trades {
       return false;
     } 
   }
+
+
+  async fetchIVData(ticker) {
+    $("#iv_results").addClass("d-none");
+
+    var sentTicker = ticker.toUpperCase();
+    var url = "https://api.options.ai/expected-moves/" + sentTicker;
+
+    try {
+      let response = await $.ajax({url: url, method: 'GET'});
+      if (response && response.length > 0) {
+        var item = response[0];
+        var movePercent = (item.movePercent * 100).toFixed(2) + '%';
+        var moveAmount = '$' + item.moveAmount.toFixed(2);
+        var rangeTop = '$' + item.moveUpper.toFixed(2);
+        var rangeBottom = '$' + item.moveLower.toFixed(2);
+        var ivRange = rangeBottom + ' - ' + rangeTop;
+        var closePrice = '$' + (item.moveLower + item.moveAmount).toFixed(2);
+
+        // Update the HTML elements
+        $('#movePercent').text(movePercent);
+        $('#moveAmount').text("(" + moveAmount + ")");
+        $('#ivRange').text(ivRange);
+        $('#closePrice').text(closePrice);
+
+        $("#iv_results").removeClass("d-none");
+      } else {
+        console.error('No data received from API.');
+      }
+    } catch (error) {
+      console.error('Error fetching data from the API:', error);
+    }
+  }
   
 
 

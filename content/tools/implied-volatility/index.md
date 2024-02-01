@@ -11,8 +11,51 @@ tags = [
 
 Are you ready to take your trading game to the next level? Discover the Spyder Academy's Implied Volatility (IV) command, a powerful tool designed to enhance your understanding of market positioning, especially in anticipation of earnings announcements.
 
-#### How to Access the Implied Volatility Command
-Simply head to our Classroom Discord channel and type `/iv TICKER`. 
+#### Try the Implied Volatility Command Now
+
+<div class="card shadow border-0 p-3 mb-5 justify-content-center" style="border-radius: 15px; background-color: #BFE1CF; ">
+   <div class="row p-0 m-0 align-items-center">
+      <div class="col-8  p-0 m-0 align-items-center">
+         <label hidden for="search-input">Enter Ticker Symbol</label>
+         <input id="ticker" class="no-border-transparent-bg" type="text" placeholder="Enter Ticker">
+      </div>
+      <!--end of col-->
+      <div class="col-4">
+         <button class="btn btn-lg btn-success" onclick="getIV(); return false;">Get Implied Volatility</button>
+      </div>
+      <!--end of col-->
+   </div>
+</div>
+
+
+<div class="card shadow p-3 mb-5 justify-content-center d-none" id="iv_results">
+   <div class="row">
+      <div class="col-4">
+         <div id="movePercentTitle">Expected Move</div>
+         <span id="movePercent"></span> <span id="moveAmount"> </span>
+      </div>
+      <div class="col-4">
+         <div id="closePriceTitle">Close Price</div>
+         <span id="closePrice"></span>
+      </div>
+      <div class="col-4">
+         <div id="ivRangeTitle">Range</div>
+         <span id="ivRange"></span>
+      </div>
+   </div>
+</div>
+
+
+<script>
+   function getIV(){
+      userTrades = new Trades();
+      userTrades.fetchIVData($("#ticker").val());
+
+   }
+</script>
+
+#### How to Access the Implied Volatility Command on Discord
+Not only do you now have access to pull IV on the website, you can also head to our Classroom Discord channel and type `/iv TICKER`. 
 
 The Spyder-Bot will swiftly respond, providing you with the essential information on the expected move for the specified ticker. This invaluable insight is derived from the current market positioning, making it an indispensable resource for traders seeking an edge in the market.
 
