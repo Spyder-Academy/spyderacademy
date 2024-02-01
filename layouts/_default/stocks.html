@@ -59,7 +59,7 @@
      <script>
         $(document).ready(function() {
            userTrades = new Trades();
-           userTrades.fetchIVData("AAPL");
+           userTrades.fetchIVData({{ .Page.Params.ticker }});
         });
      </script>
 
