@@ -10,6 +10,19 @@ tags = [
 +++
 
 
+## Upcoming Earnings Calendar
+
+<div class="container">
+   <div class="row" id="earningsCalendar">
+   </div>
+</div>
+
+<script>
+   $(document).ready(function() {
+      userTrades = new Trades();
+      userTrades.fetchEarningsCalendar();
+   });
+</script>
 
 #### Accessing the Earnings Calendar Command
 Navigate to your Discord channel and type `/iv_earnings`. 

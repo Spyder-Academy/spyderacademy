@@ -2312,6 +2312,23 @@ class Trades {
       console.error('Error fetching data from the API:', error);
     }
   }
+
+  async fetchIVMove(ticker) {
+    var sentTicker = ticker.toUpperCase();
+    var url = "https://api.options.ai/expected-moves/" + sentTicker;
+
+    try {
+      let response = await $.ajax({url: url, method: 'GET'});
+      if (response && response.length > 0) {
+        var item = response[0];
+        var movePercent = (item.movePercent * 100).toFixed(2) + '%';
+
+        return movePercent
+      } 
+    } catch (error) {
+      console.error('Error fetching data from the API:', error);
+    }
+  }
   
   async fetchBondAuctions() {
     const apiUrl = "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/upcoming_auctions?fields=security_term,security_type,offering_amt,auction_date&sort=auction_date&format=json";
@@ -2320,7 +2337,7 @@ class Trades {
       let response = await $.ajax({ url: apiUrl, method: 'GET' });
       let bondData = response.data;
       let groupedAuctions = this.groupAuctionsByDate(bondData);
-      this.renderCalendar(groupedAuctions);
+      this.renderBondCalendar(groupedAuctions);
     } catch (error) {
       console.error('Error fetching bond auction data:', error);
     }
@@ -2343,7 +2360,7 @@ class Trades {
     return grouped;
   }
 
-  renderCalendar(groupedAuctions) {
+  renderBondCalendar(groupedAuctions) {
     // Basic weekly calendar rendering (further customization required)
     let calendarHtml = '';
     Object.keys(groupedAuctions).forEach(date => {
@@ -2363,4 +2380,62 @@ class Trades {
   }
 
 
+  async fetchEarningsCalendar() {
+    const apiUrl = "https://production-market-api.herokuapp.com/earnings/this-week";
+
+    try {
+      let response = await $.ajax({ url: apiUrl, method: 'GET' });
+      let earningsData = response; // Directly use the response data
+
+      this.displayEarningsData(earningsData);
+    } catch (error) {
+      console.error('Error fetching earnings data:', error);
+    }
+  }
+
+  formatMarketCap(marketCap) {
+    return `$${(marketCap / 1_000_000_000).toFixed(1)}B`;
+  }
+
+  async displayEarningsData(data) {
+    const today = new Date();
+    let calendarHtml = '';
+  
+    for (let i = 0; i < 5; i++) {
+      const currentDate = new Date(today);
+      currentDate.setDate(today.getDate() + i);
+  
+      const formattedDate = currentDate.toISOString().split('T')[0];
+      const dayEarnings = data.filter(earning => earning.date === formattedDate && earning.marketCap >= 50000000000);
+  
+      if (dayEarnings.length > 0) {
+        calendarHtml += `<div class="row mb-3"><div class="col-12"><h4>${formattedDate}</h4></div>`;
+  
+        for (const earning of dayEarnings) {
+          const formattedMarketCap = this.formatMarketCap(earning.marketCap);
+          const expectedMove = await this.fetchIVMove(earning.symbol); // Await the asynchronous call
+  
+          const whenIcon = earning.when === 'post market' ? "fa-moon" : "fa-sun";
+          calendarHtml += `
+            <div class="col-md-4 mb-3">
+              <div class="card shadow">
+                <div class="card-header">
+                    <i class="fa-solid ${whenIcon}"></i>
+                    ${earning.symbol}
+                  (${formattedMarketCap})
+                </div>
+                <div class="card-body">
+                  <p class="card-text">Expected Move: ${expectedMove}</p>
+                </div>
+              </div>
+            </div>`;
+        }
+  
+        calendarHtml += `</div>`;
+      }
+    }
+  
+    $('#earningsCalendar').html(calendarHtml);
+  }
+  
 } // end class
