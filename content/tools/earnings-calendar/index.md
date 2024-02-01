@@ -1,8 +1,8 @@
 +++
 author = "CashMoneyTrades"
-title = "Mastering Spyder Academy's Earnings Calendar Command for Strategic IV Flush Trading"
+title = "Upcoming Earnings Calendar for Strategic IV Flush Trading"
 date = "2023-12-07T10:00:00"
-description = "Unlock the potential of the Spyder Academy Earnings Calendar command to elevate your trading game, specifically when preparing for lucrative IV Flush trades."
+description = "Unlock the potential of the Spyder Academy Upcoming Earnings Calendar command to elevate your trading game, specifically when preparing for lucrative IV Flush trades."
 time = "1 min"
 tags = [
    "Discord",
@@ -12,8 +12,17 @@ tags = [
 
 ## Upcoming Earnings Calendar
 
+Don't trade before earnings.  
+
+Instead, trade the [IV Flush](/education/how-to-trade-the-iv-flush-strategy/) after earnings by looking at what the options market is expecting. 
+
+Compare the actual move in premarket/after hours with the implied move, then trade the reaction when bulls/bears are both being IV crushed.  The ideal companies to trade in this scenario is when the actual post earnings move has stayed within the Implied Range.
+
 <div class="container">
    <div class="row" id="earningsCalendar">
+      <div class="card shadow p-5">
+       Loading Upcoming Earnings Calender
+       </div>
    </div>
 </div>
 

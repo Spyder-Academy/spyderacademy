@@ -2445,11 +2445,11 @@ class Trades {
         calendarHtml += `     <div class="card-header">${dayName} ${formattedDate}</div>`;
         calendarHtml += `     <div class="card-body">`
         calendarHtml += `       <div class="row">`;
-        calendarHtml += `         <div class="col-2 fw-bold">Symbol</div>`;
-        calendarHtml += `         <div class="col-2 fw-bold">Market Cap</div>`;
-        calendarHtml += `         <div class="col-3 fw-bold">Expected Move</div>`;
-        calendarHtml += `         <div class="col-4 fw-bold">Range</div>`;
-        calendarHtml += `         <div class="col-1 fw-bold"></div>`;
+        calendarHtml += `         <div class="col-lg-2 col-sm-6 fw-bold">Symbol</div>`;
+        calendarHtml += `         <div class="col-lg-2 col-sm-6 fw-bold">Market Cap</div>`;
+        calendarHtml += `         <div class="col-lg-3 col-sm-6 fw-bold">Implied Move</div>`;
+        calendarHtml += `         <div class="col-lg-4 col-sm-6 fw-bold">Bull/Bear Range</div>`;
+        calendarHtml += `         <div class="col-lg-1 col-sm-6 fw-bold"></div>`;
         calendarHtml += `     </div>`;
         for (const earning of dayEarnings) {
           const formattedMarketCap = this.formatMarketCap(earning.marketCap);
@@ -2457,11 +2457,11 @@ class Trades {
           const whenIcon = earning.when === 'post market' ? "fa-moon" : "fa-sun";
           const whenClass = earning.when === 'post market' ? "bg-blue-light" : "";
           calendarHtml += `<div class="row ${whenClass}">`;
-          calendarHtml += ` <div class="col-2">${earning.symbol}</div>`;
-          calendarHtml += ` <div class="col-2">${formattedMarketCap}</div>`;
-          calendarHtml += ` <div class="col-3">${iv.movePercent} (${iv.moveAmount})</div>`;
-          calendarHtml += ` <div class="col-4">${iv.rangeBottom} - ${iv.rangeTop}</div>`;
-          calendarHtml += ` <div class="col-1"><i class="fa-solid ${whenIcon}"></i></div>`;
+          calendarHtml += ` <div class="col-lg-2 col-sm-6 ">${earning.symbol}</div>`;
+          calendarHtml += ` <div class="col-lg-2 col-sm-6 ">${formattedMarketCap}</div>`;
+          calendarHtml += ` <div class="col-lg-3 col-sm-6 ">${iv.movePercent} (${iv.moveAmount})</div>`;
+          calendarHtml += ` <div class="col-lg-4 col-sm-6 ">${iv.rangeBottom} - ${iv.rangeTop}</div>`;
+          calendarHtml += ` <div class="col-lg-1 col-sm-6 "><i class="fa-solid ${whenIcon}"></i></div>`;
           calendarHtml += `</div>`;
         }
 
