@@ -2322,8 +2322,20 @@ class Trades {
       if (response && response.length > 0) {
         var item = response[0];
         var movePercent = (item.movePercent * 100).toFixed(2) + '%';
+        var moveAmount = '$' + item.moveAmount.toFixed(2);
+        var rangeTop = '$' + item.moveUpper.toFixed(2);
+        var rangeBottom = '$' + item.moveLower.toFixed(2);
+        var ivRange = rangeBottom + ' - ' + rangeTop;
+        var closePrice = '$' + (item.moveLower + item.moveAmount).toFixed(2);
 
-        return movePercent
+        return {
+          movePercent: movePercent, 
+          moveAmount: moveAmount, 
+          rangeTop: rangeTop, 
+          rangeBottom: rangeBottom, 
+          ivRange: ivRange, 
+          closePrice: closePrice
+        };
       } 
     } catch (error) {
       console.error('Error fetching data from the API:', error);
@@ -2396,42 +2408,68 @@ class Trades {
   formatMarketCap(marketCap) {
     return `$${(marketCap / 1_000_000_000).toFixed(1)}B`;
   }
+  sortEarningsData(data) {
+    data.sort((a, b) => {
+      // Compare by date
+      if (a.date < b.date) return -1;
+      if (a.date > b.date) return 1;
+  
+      // Compare by earnings time (premarket/postmarket)
+      if (a.when === 'pre market' && b.when !== 'pre market') return -1;
+      if (a.when !== 'pre market' && b.when === 'pre market') return 1;
+  
+      // Compare by market cap
+      return b.marketCap - a.marketCap; // Descending order
+    });
+  }
 
   async displayEarningsData(data) {
     const today = new Date();
+    today.setDate(today.getDate() - 1);
+    
     let calendarHtml = '';
+    this.sortEarningsData(data); // Sort the data first
   
     for (let i = 0; i < 5; i++) {
       const currentDate = new Date(today);
       currentDate.setDate(today.getDate() + i);
   
+      const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
       const formattedDate = currentDate.toISOString().split('T')[0];
       const dayEarnings = data.filter(earning => earning.date === formattedDate && earning.marketCap >= 50000000000);
-  
+
       if (dayEarnings.length > 0) {
-        calendarHtml += `<div class="row mb-3"><div class="col-12"><h4>${formattedDate}</h4></div>`;
-  
+        calendarHtml += `<div class="row mb-3">`;
+        calendarHtml += ` <div class="col-12">`;
+        calendarHtml += `   <div class="card m-0">`;
+        calendarHtml += `     <div class="card-header">${dayName} ${formattedDate}</div>`;
+        calendarHtml += `     <div class="card-body">`
+        calendarHtml += `       <div class="row">`;
+        calendarHtml += `         <div class="col-2 fw-bold">Symbol</div>`;
+        calendarHtml += `         <div class="col-2 fw-bold">Market Cap</div>`;
+        calendarHtml += `         <div class="col-3 fw-bold">Expected Move</div>`;
+        calendarHtml += `         <div class="col-4 fw-bold">Range</div>`;
+        calendarHtml += `         <div class="col-1 fw-bold"></div>`;
+        calendarHtml += `     </div>`;
         for (const earning of dayEarnings) {
           const formattedMarketCap = this.formatMarketCap(earning.marketCap);
-          const expectedMove = await this.fetchIVMove(earning.symbol); // Await the asynchronous call
-  
+          const iv = await this.fetchIVMove(earning.symbol); // Await the asynchronous call
           const whenIcon = earning.when === 'post market' ? "fa-moon" : "fa-sun";
-          calendarHtml += `
-            <div class="col-md-4 mb-3">
-              <div class="card shadow">
-                <div class="card-header">
-                    <i class="fa-solid ${whenIcon}"></i>
-                    ${earning.symbol}
-                  (${formattedMarketCap})
-                </div>
-                <div class="card-body">
-                  <p class="card-text">Expected Move: ${expectedMove}</p>
-                </div>
-              </div>
-            </div>`;
+          const whenClass = earning.when === 'post market' ? "bg-blue-light" : "";
+          calendarHtml += `<div class="row ${whenClass}">`;
+          calendarHtml += ` <div class="col-2">${earning.symbol}</div>`;
+          calendarHtml += ` <div class="col-2">${formattedMarketCap}</div>`;
+          calendarHtml += ` <div class="col-3">${iv.movePercent} (${iv.moveAmount})</div>`;
+          calendarHtml += ` <div class="col-4">${iv.rangeBottom} - ${iv.rangeTop}</div>`;
+          calendarHtml += ` <div class="col-1"><i class="fa-solid ${whenIcon}"></i></div>`;
+          calendarHtml += `</div>`;
         }
-  
+
+        calendarHtml += `     </div>`;
+        calendarHtml += `   </div>`;
+        calendarHtml += ` </div>`;
         calendarHtml += `</div>`;
+  
       }
     }
   
