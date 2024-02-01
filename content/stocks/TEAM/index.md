@@ -8,4 +8,5 @@ tags = [
 ]
 layout = "stocks"
 ticker = "TEAM"
+disableListPage = true
 +++

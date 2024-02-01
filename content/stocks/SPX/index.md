@@ -8,4 +8,5 @@ tags = [
 ]
 layout = "stocks"
 ticker = "SPX500"
+disableListPage = true
 +++

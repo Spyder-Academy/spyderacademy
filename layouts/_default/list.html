@@ -60,6 +60,10 @@
       </div>
     {{ end }}
 
+    <div class="row pb-5">
+      {{ template "_internal/pagination.html" . }}
+    </div>
+
     
     <div class="row pb-5">
       <div class="col-12 d-flex justify-content-center">
@@ -71,9 +75,7 @@
 
 
 
-      <div class="row pb-5">
-        {{ template "_internal/pagination.html" . }}
-      </div>
+      
     </div>
   </section>
 {{ end }}
