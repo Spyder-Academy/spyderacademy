@@ -1,6 +1,6 @@
 +++
 author = "CashMoneyTrades"
-title = "Discover the upcoming Treasury Bond Auctions Schedule"
+title = "Discover the Upcoming Treasury Bond Auctions Schedule"
 date = "2023-12-08T10:00:00"
 description = "Discover Spyder Academy's Bonds command, a powerful tool designed to position your trading plan in anticipation of Treasury sales announcements."
 time = "1 min"

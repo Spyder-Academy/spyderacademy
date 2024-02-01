@@ -2402,6 +2402,8 @@ class Trades {
       let earningsData = response; // Directly use the response data
 
       this.displayEarningsData(earningsData);
+      await this.updateIVData(earningsData); // Step 2: Asynchronously update with IV data
+
     } catch (error) {
       console.error('Error fetching earnings data:', error);
     }
@@ -2425,12 +2427,11 @@ class Trades {
     });
   }
 
-  async displayEarningsData(data) {
+  displayEarningsCalendarSkeleton(data) {
     const today = new Date();
     today.setDate(today.getDate() - 1);
-    
+  
     let calendarHtml = '';
-    this.sortEarningsData(data); // Sort the data first
   
     for (let i = 0; i < 5; i++) {
       const currentDate = new Date(today);
@@ -2438,44 +2439,122 @@ class Trades {
   
       const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
       const formattedDate = currentDate.toISOString().split('T')[0];
-      const dayEarnings = data.filter(earning => earning.date === formattedDate && earning.marketCap >= 50000000000);
 
-      if (dayEarnings.length > 0) {
-        calendarHtml += `<div class="row mb-3">`;
+      if (dayName != "Saturday" && dayName != "Sunday"){
+        calendarHtml += `<div class="row mb-3" id="earnings-${formattedDate}">`;
         calendarHtml += ` <div class="col-12">`;
         calendarHtml += `   <div class="card m-0">`;
         calendarHtml += `     <div class="card-header">${dayName} ${formattedDate}</div>`;
-        calendarHtml += `     <div class="card-body">`
+        calendarHtml += `     <div class="card-body" id="earnings-data-${formattedDate}">`;
         calendarHtml += `       <div class="row">`;
         calendarHtml += `         <div class="col-lg-2 col-sm-6 fw-bold">Symbol</div>`;
         calendarHtml += `         <div class="col-lg-2 col-sm-6 fw-bold">Market Cap</div>`;
         calendarHtml += `         <div class="col-lg-3 col-sm-6 fw-bold">Implied Move</div>`;
         calendarHtml += `         <div class="col-lg-4 col-sm-6 fw-bold">Bull/Bear Range</div>`;
-        calendarHtml += `         <div class="col-lg-1 col-sm-6 fw-bold"></div>`;
-        calendarHtml += `     </div>`;
-        for (const earning of dayEarnings) {
-          const formattedMarketCap = this.formatMarketCap(earning.marketCap);
-          const iv = await this.fetchIVMove(earning.symbol); // Await the asynchronous call
-          const whenIcon = earning.when === 'post market' ? "fa-moon" : "fa-sun";
-          const whenClass = earning.when === 'post market' ? "bg-blue-light" : "";
-          calendarHtml += `<div class="row ${whenClass}">`;
-          calendarHtml += ` <div class="col-lg-2 col-sm-6 ">${earning.symbol}</div>`;
-          calendarHtml += ` <div class="col-lg-2 col-sm-6 ">${formattedMarketCap}</div>`;
-          calendarHtml += ` <div class="col-lg-3 col-sm-6 ">${iv.movePercent} (${iv.moveAmount})</div>`;
-          calendarHtml += ` <div class="col-lg-4 col-sm-6 ">${iv.rangeBottom} - ${iv.rangeTop}</div>`;
-          calendarHtml += ` <div class="col-lg-1 col-sm-6 "><i class="fa-solid ${whenIcon}"></i></div>`;
-          calendarHtml += `</div>`;
-        }
-
+        calendarHtml += `         <div class="col-lg-1 col-sm-6 fw-bold"></div>`;      
+        calendarHtml += `       </div>`;
         calendarHtml += `     </div>`;
         calendarHtml += `   </div>`;
         calendarHtml += ` </div>`;
         calendarHtml += `</div>`;
-  
       }
+
     }
   
     $('#earningsCalendar').html(calendarHtml);
   }
+  
+  displayEarningsData(data) {
+    this.displayEarningsCalendarSkeleton(data); // Display the calendar skeleton
+    this.sortEarningsData(data); // Sort the data first
+  
+    for (const earning of data) {
+      if (earning.marketCap >= 50000000000) {
+        const formattedMarketCap = this.formatMarketCap(earning.marketCap);
+        const whenClass = earning.when === 'post market' ? "bg-blue-light" : "";
+        const whenIcon = earning.when === 'post market' ? "fa-moon" : "fa-sun";
+  
+        let earningsEntryHtml = `<div class="row ${whenClass}" id="earning-${earning.symbol}">`;
+        earningsEntryHtml += ` <div class="col-lg-2 col-sm-6 ">${earning.symbol}</div>`;
+        earningsEntryHtml += ` <div class="col-lg-2 col-sm-6 ">${formattedMarketCap}</div>`;
+        earningsEntryHtml += ` <div class="col-lg-3 col-sm-6 " id="iv-move-${earning.symbol}">Loading...</div>`;
+        earningsEntryHtml += ` <div class="col-lg-4 col-sm-6 " id="iv-range-${earning.symbol}"></div>`; // Placeholder for IV range
+        earningsEntryHtml += ` <div class="col-lg-1 col-sm-6 "><i class="fa-solid ${whenIcon}"></i></div>`;
+        earningsEntryHtml += `</div>`;
+  
+        $(`#earnings-data-${earning.date}`).append(earningsEntryHtml); // Append the data to the respective day
+      }
+    }
+  }
+
+  async updateIVData(data) {
+    for (const earning of data) {
+      if (earning.marketCap >= 50000000000) {
+        const iv = await this.fetchIVMove(earning.symbol); // Fetch data asynchronously
+  
+        $(`#iv-move-${earning.symbol}`).text(`${iv.movePercent} (${iv.moveAmount})`); // Update IV data
+        $(`#iv-range-${earning.symbol}`).text(`${iv.rangeBottom} - ${iv.rangeTop}`);  // Update IV data
+      }
+    }
+  }
+
+
+  
+  
+  
+  
+
+  // async displayEarningsData(data) {
+  //   const today = new Date();
+  //   today.setDate(today.getDate() - 1);
+    
+  //   let calendarHtml = '';
+  //   this.sortEarningsData(data); // Sort the data first
+  
+  //   for (let i = 0; i < 5; i++) {
+  //     const currentDate = new Date(today);
+  //     currentDate.setDate(today.getDate() + i);
+  
+  //     const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
+  //     const formattedDate = currentDate.toISOString().split('T')[0];
+  //     const dayEarnings = data.filter(earning => earning.date === formattedDate && earning.marketCap >= 50000000000);
+
+  //     if (dayEarnings.length > 0) {
+  //       calendarHtml += `<div class="row mb-3">`;
+  //       calendarHtml += ` <div class="col-12">`;
+  //       calendarHtml += `   <div class="card m-0">`;
+  //       calendarHtml += `     <div class="card-header">${dayName} ${formattedDate}</div>`;
+  //       calendarHtml += `     <div class="card-body">`
+  //       calendarHtml += `       <div class="row">`;
+  //       calendarHtml += `         <div class="col-lg-2 col-sm-6 fw-bold">Symbol</div>`;
+  //       calendarHtml += `         <div class="col-lg-2 col-sm-6 fw-bold">Market Cap</div>`;
+  //       calendarHtml += `         <div class="col-lg-3 col-sm-6 fw-bold">Implied Move</div>`;
+  //       calendarHtml += `         <div class="col-lg-4 col-sm-6 fw-bold">Bull/Bear Range</div>`;
+  //       calendarHtml += `         <div class="col-lg-1 col-sm-6 fw-bold"></div>`;
+  //       calendarHtml += `     </div>`;
+  //       for (const earning of dayEarnings) {
+  //         const formattedMarketCap = this.formatMarketCap(earning.marketCap);
+  //         const iv = await this.fetchIVMove(earning.symbol); // Await the asynchronous call
+  //         const whenIcon = earning.when === 'post market' ? "fa-moon" : "fa-sun";
+  //         const whenClass = earning.when === 'post market' ? "bg-blue-light" : "";
+  //         calendarHtml += `<div class="row ${whenClass}">`;
+  //         calendarHtml += ` <div class="col-lg-2 col-sm-6 ">${earning.symbol}</div>`;
+  //         calendarHtml += ` <div class="col-lg-2 col-sm-6 ">${formattedMarketCap}</div>`;
+  //         calendarHtml += ` <div class="col-lg-3 col-sm-6 ">${iv.movePercent} (${iv.moveAmount})</div>`;
+  //         calendarHtml += ` <div class="col-lg-4 col-sm-6 ">${iv.rangeBottom} - ${iv.rangeTop}</div>`;
+  //         calendarHtml += ` <div class="col-lg-1 col-sm-6 "><i class="fa-solid ${whenIcon}"></i></div>`;
+  //         calendarHtml += `</div>`;
+  //       }
+
+  //       calendarHtml += `     </div>`;
+  //       calendarHtml += `   </div>`;
+  //       calendarHtml += ` </div>`;
+  //       calendarHtml += `</div>`;
+  
+  //     }
+  //   }
+  
+  //   $('#earningsCalendar').html(calendarHtml);
+  // }
   
 } // end class
