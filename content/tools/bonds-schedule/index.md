@@ -11,7 +11,24 @@ tags = [
 
 Discover the Spyder Academy's Bonds command, a powerful tool designed to enhance your understanding of market events around Treasury Sales.
 
-#### How to Access the Bonds Schedule
+
+## Upcoming Treasury Auctions
+
+<div class="container">
+   <div class="row" id="bondCalendar">
+   </div>
+</div>
+
+<script>
+   $(document).ready(function() {
+      userTrades = new Trades();
+      userTrades.fetchBondAuctions();
+   });
+</script>
+
+
+
+#### How to Access the Bonds Schedule in Discord
 Simply head to our Classroom Discord channel and type `/bonds`. 
 
 The Spyder-Bot will swiftly respond, providing you with the essential information on upcoming Treasury Sales for Bills, Bonds, and Notes.

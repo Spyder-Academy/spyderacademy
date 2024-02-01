@@ -2313,7 +2313,54 @@ class Trades {
     }
   }
   
+  async fetchBondAuctions() {
+    const apiUrl = "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/upcoming_auctions?fields=security_term,security_type,offering_amt,auction_date&sort=auction_date&format=json";
 
+    try {
+      let response = await $.ajax({ url: apiUrl, method: 'GET' });
+      let bondData = response.data;
+      let groupedAuctions = this.groupAuctionsByDate(bondData);
+      this.renderCalendar(groupedAuctions);
+    } catch (error) {
+      console.error('Error fetching bond auction data:', error);
+    }
+  }
+
+  groupAuctionsByDate(data) {
+    let grouped = {};
+    data.forEach(i => {
+      let auctionDate = new Date(i.auction_date + 'T00:00:00-05:00'); // Appending timezone offset for EST
+
+      let key = auctionDate.getFullYear() + '-' 
+                  + String(auctionDate.getMonth() + 1).padStart(2, '0') + '-' 
+                  + String(auctionDate.getDate()).padStart(2, '0');
+
+      if (!grouped[key]) {
+        grouped[key] = [];
+      }
+      grouped[key].push(i); // Add data to the specific date
+    });
+    return grouped;
+  }
+
+  renderCalendar(groupedAuctions) {
+    // Basic weekly calendar rendering (further customization required)
+    let calendarHtml = '';
+    Object.keys(groupedAuctions).forEach(date => {
+      
+      let auctionDate = new Date(date + 'T00:00:00-05:00'); // Appending timezone offset for EST
+      const dayName = auctionDate.toLocaleDateString('en-US', { weekday: 'long' });
+
+      calendarHtml += `<div class="card shadow col-2 m-1 p-0 text-center"><div class="card-header">${dayName} ${date}</div>`;
+      groupedAuctions[date].forEach(auction => {
+        calendarHtml += `<div class='card-body'>${auction.security_term} ${auction.security_type}</div>`;
+        // Additional auction details can be added here
+      });
+      calendarHtml += `</div>`;
+    });
+    calendarHtml += '</div>';
+    $('#bondCalendar').html(calendarHtml);
+  }
 
 
 } // end class
