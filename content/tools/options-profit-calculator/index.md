@@ -1,10 +1,10 @@
 +++
 author = "CashMoneyTrades"
 title = "Options Profit Calculator"
-date = "2024-01-11T10:00:00"
+date = "2026-01-11T10:00:00"
 description = "Options Profits can be calculated using the formula: Profit = Current Stock Price - Strike Price - Options Premium.  Variations may occur based changes in Implied Volatility, Theta, and other Options Greeks."
 tags = [
-   "TradingView",
+   "Web Tools",
 ]
 draft = true
 +++

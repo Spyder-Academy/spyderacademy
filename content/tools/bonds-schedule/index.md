@@ -6,6 +6,7 @@ description = "Discover Spyder Academy's Bonds command, a powerful tool designed
 time = "1 min"
 tags = [
    "Discord",
+   "Web Tools",
 ]
 +++
 

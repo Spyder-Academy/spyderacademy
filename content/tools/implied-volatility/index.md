@@ -5,7 +5,7 @@ date = "2023-12-07T10:00:00"
 description = "Discover Spyder Academy's Implied Volatility (IV) command, a powerful tool designed to enhance your understanding of market positioning, especially in anticipation of earnings announcements."
 time = "1 min"
 tags = [
-   "TradingView",
+   "Web Tools",
 ]
 +++
 

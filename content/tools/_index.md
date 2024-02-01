@@ -1,7 +1,7 @@
 +++
 aliases = ["tools"]
-title = "Trading View Indicators and Discord Tools"
-description = "Enhance your trading with our custom build Trading View Indicators and Discord Tools!"
+title = "Spyder Academy Tools"
+description = "Enhance your trading with our custom built Tools, Trading View Indicators, and Discord Commands!"
 author = "Spyder Academy"
-layout = "courses"
+layout = "tools"
 +++

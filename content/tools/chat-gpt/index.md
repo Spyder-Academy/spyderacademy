@@ -4,7 +4,7 @@ title = "Revolutionize Your Trading with 'Stocks Helper' – The AI-Powered Cand
 date = "2024-01-15T10:00:00"
 description = "Discover how 'Stocks Helper', our latest OpenAI ChatGPT AI tool, transforms the way traders analyze candlestick charts, offering insightful, AI-driven market analysis to enhance trading strategies."
 tags = [
-   "TradingView",
+   "Web Tools",
 ]
 +++
 

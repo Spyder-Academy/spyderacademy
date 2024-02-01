@@ -6,6 +6,7 @@ description = "Unlock the potential of the Spyder Academy Upcoming Earnings Cale
 time = "1 min"
 tags = [
    "Discord",
+   "Web Tools",
 ]
 +++
 
