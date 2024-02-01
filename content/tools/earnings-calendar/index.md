@@ -21,7 +21,7 @@ Compare the actual move in premarket/after hours with the implied move, then tra
 <div class="container">
    <div class="row" id="earningsCalendar">
       <div class="card shadow p-5">
-       Loading Upcoming Earnings Calender
+       Loading Upcoming Earnings Calendar
        </div>
    </div>
 </div>
@@ -33,13 +33,15 @@ Compare the actual move in premarket/after hours with the implied move, then tra
    });
 </script>
 
-#### Accessing the Earnings Calendar Command
+#### Accessing the Earnings Calendar Command via Discord
 Navigate to your Discord channel and type `/iv_earnings`. 
 
 The Spyder Academy Bot will promptly respond, presenting you with a comprehensive list of earnings scheduled for the week. This invaluable data is meticulously filtered to showcase companies with a market capitalization exceeding $50 billion.
 
 #### Key Features of the Earnings Calendar
 **Filtered Market Cap**: The list exclusively displays companies boasting a substantial market cap, ensuring you focus on major players in the market.
+
+**Implied Move**: The displays the expected move as priced by the options market before their Earnings announcement.
 
 #### Evaluating Earnings Data for IV Flush Opportunities
 Armed with the curated earnings calendar, you can strategically evaluate potential tickers for [IV Flush Trades](/education/how-to-trade-the-iv-flush-strategy/). 

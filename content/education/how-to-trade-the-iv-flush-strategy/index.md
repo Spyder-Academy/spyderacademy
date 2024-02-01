@@ -33,6 +33,8 @@ Example - If the implied move is  &#177;8% and the actual is +9%, this is not so
 
 I typically go on [marketchameleon.com](https://marketchameleon.com) to see the implied move vs actual move. 
 
+You can also now find the implied moves right here on Spyder Academy by checking out our [Upcoming Earnings Calendar](/tools/earnings-calendar/).
+
 We can use NIO as our example moving forward, NIO had an actual move well within the implied move. 
 
 Opening relatively flat around -0.8% vs the expected &#177;11.5%, this is the ideal candidate:
