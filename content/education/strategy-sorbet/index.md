@@ -11,7 +11,7 @@ tags:
 ---
 
 
-The SORBET strategy combines two already great strategies - [Opening Range Breakout (ORB) Strategy](/education/openingrangebreakout/), and [The System Strategy](/education/strategy-thesystem/)], to give consistent A+ setups.
+The SORBET strategy combines two already great strategies - [Opening Range Breakout (ORB) Strategy](/education/openingrangebreakout/), and [The System Strategy](/education/strategy-thesystem/), to give consistent A+ setups.
 
 The System dictates the directional trend of the higher time frame chart, while the ORB Strategy dictates when you should enter and exit a trade based on the ORB levels set in the first 15 minutes of the day.
 

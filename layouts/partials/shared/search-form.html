@@ -1,0 +1,21 @@
+<div class="row justify-content-center">
+    <div class="col-12">
+        <form id="search" action='{{ with .GetPage "/search" }}{{.Permalink}}{{end}}' method="get">
+            <div class="h4 p-0 m-0 row no-gutters align-items-center">
+                <div class="col-1 px-3 align-items-center">
+                    <i class="fas fa-search text-body"></i>
+                </div>
+                <div class="col-lg-9 col-7  p-0 m-0 align-items-center">
+                    <label hidden for="search-input">Search site</label>
+                    <input id="search-input" name="query" class="form-control form-control-lg form-control-borderless no-border-transparent-bg" type="text" placeholder="Search topics or keywords">
+                </div>
+                <!--end of col-->
+                <div class="col-2">
+                    <button class="btn btn-lg btn-success" type="submit">Search</button>
+                </div>
+                <!--end of col-->
+            </div>
+        </form>
+    </div>
+    <!--end of col-->
+</div>

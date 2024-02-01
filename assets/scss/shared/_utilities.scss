@@ -398,3 +398,30 @@ ul li {
 .quiz .options input[type="radio"]:checked ~ .checkmark:after{
   transform: translate(-50%,-50%) scale(1);
 }
+
+.no-border-transparent-bg {
+  border: none !important;
+  background-color: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* To improve the appearance, you might also want to style the input when it's focused */
+.no-border-transparent-bg:focus {
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.no-border-transparent-bg::placeholder {
+  color: black !important; /* Make placeholder text white */
+  opacity: 1 !important; /* Ensure the color is not partially transparent */
+}
+
+/* For cross-browser compatibility, you might want to include these as well */
+.no-border-transparent-bg:-ms-input-placeholder {
+  color: black !important;
+}
+
+.no-border-transparent-bg::-ms-input-placeholder {
+  color: black !important;
+}

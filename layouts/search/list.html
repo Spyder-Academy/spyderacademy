@@ -1,0 +1,45 @@
+{{ define "main" }}
+  <section class="section blog-list py-5">
+    <div class="container">
+        
+      <div class="row justify-content-center pb-5">
+        <div class="col-12 col-xl-6">
+          {{ with .Title }}
+            <h1 class="fs-1 fw-bold text-center text-primary pb-3">{{ . }}</h1>
+          {{ end }}
+          {{ with .Params.description }}
+            <p class="text-black-61 text-center pb-3">{{ . }}</p>
+          {{ end }}
+        </div>
+      </div>
+
+      <div class="row pb-5 justify-content-center">
+        <div class="col-lg-6 col-12">
+            <div class="container">
+                <div class="row pb-5" >
+                    <div class="col">
+                        <div class="card shadow border-0 p-3" style="border-radius: 15px; background-color: #BFE1CF; ">
+                            {{ partial "shared/search-form.html" . }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="row pb-5 justify-content-center">
+        <div class="col-12">
+            <div class="container">
+                <div class="row pb-5" >
+                    <div class="container">
+                        <div class="row pb-5" id="results">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+  
+  </section>
+{{ end }}
+

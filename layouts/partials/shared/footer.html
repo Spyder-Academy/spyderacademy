@@ -15,6 +15,10 @@
           {{ with .substack }}<li class="rounded-circle bg-blue-63 me-2 p-2"><a class="d-flex align-items-center justify-content-center size-16" href="{{ . }}" title="Substack" target="_blank">{{ partial "icons/substack.html" }}</a></li>{{ end }}
         </ul>
         {{ end }}
+
+        <div id="search">
+              {{ partial "shared/search-index.html" . }}
+        </div>
       </div>
       <div class="col-12 col-xl-3 text-center text-xl-start pb-4">
         <ul class="list-unstyled">

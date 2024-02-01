@@ -55,10 +55,6 @@ menus:
       url: "/#hero"
       weight: 1
 
-    - name: "Pricing"
-      url: "/#services"
-      weight: 2
-
     - name: "Reviews"
       url: "/#testimonials"
       weight: 3
@@ -84,7 +80,9 @@ menus:
       url: "/members/"
       weight: 8
 
-   
+    - name: "🔎"
+      url: "/search/"
+      weight: 9
 
   buttons:
     - name: "Start Learning"
