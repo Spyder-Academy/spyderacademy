@@ -3,7 +3,6 @@
 
   <section class="section blog-single py-5">
     <div class="container">
-      {{ partial "shared/tags.html" }}
 
       <div class="row justify-content-center pb-0">
         <div class="col-12">
@@ -25,6 +24,27 @@
 
       </div>
 
+      <div class="row justify-content-center pb-5">
+        <div class="col-lg-6 col-12 justify-content-center">
+          <div class="card shadow p-3 mb-5 justify-content-center d-none" id="iv_results" style="border-radius: 15px; background-color: #BFE1CF; ">
+            <div class="row">
+              <div class="col-4">
+                  <div id="movePercentTitle">Expected Move</div>
+                  <span id="movePercent"></span> <span id="moveAmount"> </span>
+              </div>
+              <div class="col-4">
+                  <div id="closePriceTitle">Last Close Price</div>
+                  <span id="closePrice"></span>
+              </div>
+              <div class="col-4">
+                  <div id="ivRangeTitle">Expectations</div>
+                  <span id="ivRange"></span>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
       <div class="row pb-5">
         <div class="col-12 justify-content-center">
           <div class="fs-5">
@@ -32,6 +52,16 @@
           </div>
         </div>
       </div>
+
+      
+     
+     
+     <script>
+        $(document).ready(function() {
+           userTrades = new Trades();
+           userTrades.fetchIVData("AAPL");
+        });
+     </script>
 
       <div class="row pb-5">
         <div class="col-12 d-flex justify-content-center">
