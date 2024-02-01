@@ -20,9 +20,33 @@ function displayResults(results, store) {
                             </div>
                         </div>
                     </div>
+
+                    <div class="row justify-content-center pb-5">
+                        <div class="col-lg-6 col-12 justify-content-center">
+                            <div class="card shadow p-3 mb-5 justify-content-center" id="iv_results" style="border-radius: 15px; background-color: #E9E4D7; ">
+                                <div class="row">
+                                <div class="col-4">
+                                    <div id="movePercentTitle">Expected Move</div>
+                                    <span id="movePercent"></span> <span id="moveAmount"> </span>
+                                </div>
+                                <div class="col-4">
+                                    <div id="closePriceTitle">Last Close Price</div>
+                                    <span id="closePrice"></span>
+                                </div>
+                                <div class="col-4">
+                                    <div id="ivRangeTitle">Expectations</div>
+                                    <span id="ivRange"></span>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 `;
 
                 // Create the configuration object
+                userTrades = new Trades();
+                userTrades.fetchIVData(item.ticker);
+
                 stockWidgetConfig = {
                     "symbols": [
                         [
@@ -103,6 +127,9 @@ function displayResults(results, store) {
             script.async = true;
             script.innerHTML = JSON.stringify(stockWidgetConfig);
             document.getElementById('tradingview-widget-container__widget').appendChild(script);
+
+            
+
         }
     } else {
         searchResults.text('No results found.');

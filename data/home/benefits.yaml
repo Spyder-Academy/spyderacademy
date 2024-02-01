@@ -26,7 +26,7 @@ content:
           <i class='fas fa-spider'></i> <a href='/members/'>SpyderWeb Analytics</a><br/>
           <i class='fas fa-chess-rook'></i> <a href='/courses/trading-strategies/'>Backtested Strategies</a><br/>
           <i class='fas fa-chart-line'></i> <a href='/tools/'>TradingView Indicators</a><br/>
-          <i class='fas fa-robot'></i> <a href='/tools/'>Discord Tools</a><br/>
+          <i class='fas fa-robot'></i> <a href='/tools/'>Options Trading Tools and AI</a><br/>
           "
 
   - image: "images/portfolio-background.png"
