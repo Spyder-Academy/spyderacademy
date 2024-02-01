@@ -7,5 +7,5 @@ tags = [
    "Stocks",
 ]
 layout = "stocks"
-ticker = "NQ"
+ticker = "NQ1!"
 +++

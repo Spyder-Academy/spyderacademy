@@ -1657,6 +1657,8 @@ class Trades {
             tradeCardRow.find(".tradeLogo").attr("src", king_image)
             tradeCardRow.find(".tradeRow").attr("tradeid", trade.tradeid)
             tradeCardRow.find(".tradeRow").removeAttr("onclick")
+            tradeCardRow.find(".stockLink").attr("href", "/stocks/" + trade.ticker.toLowerCase() + "/")
+            tradeCardRow.find(".stockLink").attr("title", trade.ticker + " | Stock and Overview")
 
             $(parentElement).append(tradeCardRow);
         });

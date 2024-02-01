@@ -6,6 +6,7 @@ description = "Discover Spyder Academy's Implied Volatility (IV) command, a powe
 time = "1 min"
 tags = [
    "Web Tools",
+   "Discord",
 ]
 +++
 
