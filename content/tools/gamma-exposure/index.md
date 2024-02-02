@@ -11,7 +11,7 @@ tags = [
 
 In our comprehensive educational section, we delved into [How to Trade using Gamma Exposure (GEX)](/education/how-to-trade-using-gamma-exposure/) — unveiling its significance and the benefits it brings to traders. 
 
-Now, let's explore the practical application of this powerful tool within the Spyder Academy Discord.
+Now, let's explore the practical application of using this powerful free Gamma Exposure tool.
 
 
 #### Look up the Gamma Exposure with our Free Tool
