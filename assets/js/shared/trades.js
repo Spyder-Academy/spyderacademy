@@ -2620,6 +2620,130 @@ class Trades {
     this.chartGEX.render();
   }
 
+  async fetchGEXOverlay(ticker) {
+    const jsonData = await this.fetchGEXOverlayData(ticker);
+    if (jsonData) {
+      this.renderGEXOverlay(ticker, jsonData);
+    } else {
+        console.log("No data to render.");
+    }
+  }
+
+  async fetchGEXOverlayData(ticker) {
+    const url = `https://us-central1-spyder-academy.cloudfunctions.net/gex_overlay?ticker=${ticker}`;
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Could not fetch data:", error);
+    }
+  }
+
+  prepareGEXOverlayChartData(data) {
+    // Define the offset for EST (UTC-5 hours)
+    const estOffset = 5 * 60 * 60 * 1000; // 5 hours in milliseconds
+    
+    // Prepare stock price series
+    const stockSeries = data.stock_price.map(item => ({
+        x: new Date(new Date(item.begins_at).getTime() - estOffset).getTime(),
+        y: parseFloat(item.close_price)
+    }));
+
+    // Prepare GEX data series
+    const gexAnnotations = data.gex_data.map(item => {
+      const GEXValue = parseFloat(item.GEX);
+      const borderWidth = Math.min(Math.abs(GEXValue) / Math.max(...data.gex_data.map(g => Math.abs(g.GEX))) * 3, 3); // Normalize and cap opacity between 0 and 1
+      return {
+          y: parseFloat(item.Strike),
+          borderColor: GEXValue >= 0 ? "#00E396" : "#FF4560",
+          borderWidth: borderWidth, // Thicker line
+          label: {
+              borderColor: GEXValue >= 0 ? "#00E396" : "#FF4560",
+              style: {
+                  color: "#fff",
+                  background: GEXValue >= 0 ? "#00E396" : "#FF4560",
+              },
+              text: `$${item.Strike.toFixed(2)}`,
+              position: 'center'
+          }
+      };
+    });
+
+
+    return { stockSeries, gexAnnotations };
+  }
+
+  async renderGEXOverlay(ticker, jsonData) {
+
+    const { stockSeries, gexAnnotations } = this.prepareGEXOverlayChartData(jsonData);
+
+    var options = {
+      chart: {
+          height: 350,
+          type: 'area',
+          stacked: false,
+          toolbar: false,
+          zoom: {
+            type: 'x',
+            enabled: true,
+            autoScaleYaxis: true
+          },
+      },
+      series: [{
+          name: 'Stock Price',
+          type: 'line',
+          data: stockSeries
+        }],
+      stroke: {
+          curve: 'smooth'
+      },
+      dataLabels: {
+        enabled: false
+      },
+      title: { text: ticker.toUpperCase() + " Gamma Exposure Overlay"},
+      xaxis: {
+          type: 'datetime',
+          tickPlacement: 'on'
+      },
+      yaxis: [{
+          title: {
+              text: 'Price',
+          },
+          forceNiceScale: true,
+          labels: {
+            formatter: function (val) {
+              return (val).toFixed(0);
+            },
+          },
+      }],
+      grid: {
+        show: false, // This will hide both x and y gridlines
+      },
+      tooltip: {
+          shared: true,
+          intersect: false,
+          y: {
+            formatter: function (val) {
+              return (val).toFixed(0)
+            }
+          }
+      },
+      annotations: {
+        yaxis: gexAnnotations
+    },
+    };
+
+    $("#gammaChartOverlay").removeClass("d-none")
+    $("#gammaChartOverlay").empty()
+    
+    if (this.chartGEXOverlay != null) this.chartGEXOverlay.destroy();
+    this.chartGEXOverlay = new ApexCharts(document.querySelector("#gammaChartOverlay"), options);
+    this.chartGEXOverlay.render();
+  }
   
   
 } // end class

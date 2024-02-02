@@ -35,12 +35,15 @@ Now, let's explore the practical application of using this powerful free Gamma E
 <div class="card shadow p-3 mb-5 justify-content-center d-none" id="gammaChart">
 </div>
 
+<div class="card shadow p-3 mb-5 justify-content-center d-none" id="gammaChartOverlay">
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
    function getGEX(){
       userTrades = new Trades();
       userTrades.fetchGEXByStrike($("#ticker").val());
-
+      userTrades.fetchGEXOverlay($("#ticker").val());
    }
 </script>
 
