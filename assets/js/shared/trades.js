@@ -2498,63 +2498,128 @@ class Trades {
     }
   }
 
+  async fetchGEXByStrike(ticker) {
+    const jsonData = await this.fetchGEXData(ticker);
+    if (jsonData) {
+      this.renderGEXByStrike(ticker, jsonData);
+    } else {
+        console.log("No data to render.");
+    }
+  }
 
-  
-  
-  
-  
+  async fetchGEXData(ticker) {
+    const url = `https://us-central1-spyder-academy.cloudfunctions.net/gex?ticker=${ticker}`;
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Could not fetch data:", error);
+    }
+  }
 
-  // async displayEarningsData(data) {
-  //   const today = new Date();
-  //   today.setDate(today.getDate() - 1);
+  async renderGEXByStrike(ticker, jsonData) {
+
+    // Prepare your data for ApexCharts
+    var seriesData = jsonData.map(
+      function(item) {
+        return {
+            x: item.Strike,
+            y: item.GEX,
+            fillColor: item.GEX >= 0 ? '#00E396' : '#FF4560' // Green for positive, Red for negative
+        };
+    });
+
+    var currentSpotPrice = jsonData[0].Spot
+
+    var options = {
+      chart: {
+          type: 'bar',
+          height: 350,
+          toolbar: {
+            show: false,
+          }
+      },
+      series: [{
+          name: 'GEX',
+          data: seriesData
+      }],
+      plotOptions: {
+          bar: {
+              colors: {
+                  ranges: [{
+                      from: -100,
+                      to: 0,
+                      color: '#FF4560'
+                  }, {
+                      from: 0,
+                      to: 100,
+                      color: '#00E396'
+                  }]
+              }
+          }
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      title: { text: ticker.toUpperCase() + " Gamma Exposure By Strike"},
+      xaxis: {
+          type: 'category',
+          title: {
+              text: 'Strike Price'
+          },
+          labels: {
+            formatter: function (x) {
+              return "$" + x.toFixed(0) ;
+            }
+          }
+      },
+      yaxis: {
+          title: {
+              text: 'Gamma Exposure (Bn$/%)'
+          },
+          forceNiceScale: true,
+          labels: {
+            formatter: function (y) {
+              return y.toFixed(3) + "%";
+            }
+          }
+      },
+      annotations: {
+          xaxis: [{
+              x: currentSpotPrice,
+              borderColor: '#999',
+              label: {
+                  borderColor: '#999',
+                  style: {
+                      color: '#fff',
+                      background: '#999'
+                  },
+                  text: 'Current Price'
+              }
+          }]
+      },
+      tooltip: {
+          y: {
+              formatter: function (val) {
+                  return val.toFixed(3) + " GEX"
+              }
+          }
+      }
+    };
+
+    $("#gammaChart").removeClass("d-none")
+    $("#gammaChart").empty()
     
-  //   let calendarHtml = '';
-  //   this.sortEarningsData(data); // Sort the data first
-  
-  //   for (let i = 0; i < 5; i++) {
-  //     const currentDate = new Date(today);
-  //     currentDate.setDate(today.getDate() + i);
-  
-  //     const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
-  //     const formattedDate = currentDate.toISOString().split('T')[0];
-  //     const dayEarnings = data.filter(earning => earning.date === formattedDate && earning.marketCap >= 50000000000);
+    if (this.chartGEX != null) this.chartGEX.destroy();
 
-  //     if (dayEarnings.length > 0) {
-  //       calendarHtml += `<div class="row mb-3">`;
-  //       calendarHtml += ` <div class="col-12">`;
-  //       calendarHtml += `   <div class="card m-0">`;
-  //       calendarHtml += `     <div class="card-header">${dayName} ${formattedDate}</div>`;
-  //       calendarHtml += `     <div class="card-body">`
-  //       calendarHtml += `       <div class="row">`;
-  //       calendarHtml += `         <div class="col-lg-2 col-sm-6 fw-bold">Symbol</div>`;
-  //       calendarHtml += `         <div class="col-lg-2 col-sm-6 fw-bold">Market Cap</div>`;
-  //       calendarHtml += `         <div class="col-lg-3 col-sm-6 fw-bold">Implied Move</div>`;
-  //       calendarHtml += `         <div class="col-lg-4 col-sm-6 fw-bold">Bull/Bear Range</div>`;
-  //       calendarHtml += `         <div class="col-lg-1 col-sm-6 fw-bold"></div>`;
-  //       calendarHtml += `     </div>`;
-  //       for (const earning of dayEarnings) {
-  //         const formattedMarketCap = this.formatMarketCap(earning.marketCap);
-  //         const iv = await this.fetchIVMove(earning.symbol); // Await the asynchronous call
-  //         const whenIcon = earning.when === 'post market' ? "fa-moon" : "fa-sun";
-  //         const whenClass = earning.when === 'post market' ? "bg-blue-light" : "";
-  //         calendarHtml += `<div class="row ${whenClass}">`;
-  //         calendarHtml += ` <div class="col-lg-2 col-sm-6 ">${earning.symbol}</div>`;
-  //         calendarHtml += ` <div class="col-lg-2 col-sm-6 ">${formattedMarketCap}</div>`;
-  //         calendarHtml += ` <div class="col-lg-3 col-sm-6 ">${iv.movePercent} (${iv.moveAmount})</div>`;
-  //         calendarHtml += ` <div class="col-lg-4 col-sm-6 ">${iv.rangeBottom} - ${iv.rangeTop}</div>`;
-  //         calendarHtml += ` <div class="col-lg-1 col-sm-6 "><i class="fa-solid ${whenIcon}"></i></div>`;
-  //         calendarHtml += `</div>`;
-  //       }
+    this.chartGEX = new ApexCharts(document.querySelector("#gammaChart"), options);
+    this.chartGEX.render();
+  }
 
-  //       calendarHtml += `     </div>`;
-  //       calendarHtml += `   </div>`;
-  //       calendarHtml += ` </div>`;
-  //       calendarHtml += `</div>`;
   
-  //     }
-  //   }
-  
-  //   $('#earningsCalendar').html(calendarHtml);
-  // }
   
 } // end class

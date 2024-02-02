@@ -1,8 +1,8 @@
 +++
 author = "CashMoneyTrades"
-title = "Unleashing the Power of Net Gamma Exposure in Spyder Academy Discord"
+title = "Unleashing the Power of the Net Gamma Exposure"
 date = "2023-12-07T12:00:00"
-description = "How to get Gamma Exposure Levels"
+description = "Learn how to leverage options trading Gamma Exposure Levels to understand where the market has exposure with options."
 time = "1 min"
 tags = [
    "Discord",
@@ -12,6 +12,36 @@ tags = [
 In our comprehensive educational section, we delved into [How to Trade using Gamma Exposure (GEX)](/education/how-to-trade-using-gamma-exposure/) — unveiling its significance and the benefits it brings to traders. 
 
 Now, let's explore the practical application of this powerful tool within the Spyder Academy Discord.
+
+
+#### Look up the Gamma Exposure with our Free Tool
+
+<div class="card shadow border-0 p-3 mb-5 justify-content-center" style="border-radius: 15px; background-color: #BFE1CF; ">
+   <div class="row p-0 m-0 align-items-center">
+      <div class="col-8  p-0 m-0 align-items-center">
+         <label hidden for="search-input">Enter Ticker Symbol</label>
+         <input id="ticker" class="no-border-transparent-bg" type="text" placeholder="Enter Ticker">
+      </div>
+      <!--end of col-->
+      <div class="col-4">
+         <button class="btn btn-lg btn-success" onclick="getGEX(); return false;">Get GEX</button>
+      </div>
+      <!--end of col-->
+   </div>
+</div>
+
+
+<div class="card shadow p-3 mb-5 justify-content-center d-none" id="gammaChart">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+   function getGEX(){
+      userTrades = new Trades();
+      userTrades.fetchGEXByStrike($("#ticker").val());
+
+   }
+</script>
 
 ## Navigating the Spyder Academy Net Gamma Exposure Tool:
 
