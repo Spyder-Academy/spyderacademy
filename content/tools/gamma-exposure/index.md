@@ -5,6 +5,7 @@ date = "2023-12-07T12:00:00"
 description = "Learn how to leverage options trading Gamma Exposure Levels to understand where the market has exposure with options."
 time = "1 min"
 tags = [
+   "Web Tools",
    "Discord",
 ]
 +++
