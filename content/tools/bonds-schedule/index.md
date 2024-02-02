@@ -28,7 +28,6 @@ Discover the Spyder Academy's Bonds command, a powerful tool designed to enhance
 </script>
 
 
-
 #### How to Access the Bonds Schedule in Discord
 Simply head to our Classroom Discord channel and type `/bonds`. 
 

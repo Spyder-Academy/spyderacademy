@@ -8,5 +8,4 @@ tags = [
 ]
 layout = "stocks"
 ticker = "CVX"
-disableListPage = true
 +++
