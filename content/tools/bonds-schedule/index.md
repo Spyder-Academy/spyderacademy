@@ -27,6 +27,9 @@ Discover the Spyder Academy's Bonds command, a powerful tool designed to enhance
    });
 </script>
 
+{{% quote %}}
+   Armed with the expected bond sales data, you can position your trades by derisking ahead of key Treasury Sales scheduled for the day.
+{{% /quote %}}
 
 #### How to Access the Bonds Schedule in Discord
 Simply head to our Classroom Discord channel and type `/bonds`. 
@@ -34,7 +37,7 @@ Simply head to our Classroom Discord channel and type `/bonds`.
 The Spyder-Bot will swiftly respond, providing you with the essential information on upcoming Treasury Sales for Bills, Bonds, and Notes.
 
 #### Prepare your Trading Day by knowing key market events such as Bonds Sales
-Armed with the expected bond sales data, you can position your trades by derisking ahead of key bond sales scheduled for the day.  These sales recently (late 2023) have been known to significantly move the market as participants look at the volume of interest in bond sales to determine market risk.
+These sales recently (late 2023) have been known to significantly move the market as participants look at the volume of interest in bond sales to determine market risk.
 
 ![Bond Schedule](images/bonds.png)
 

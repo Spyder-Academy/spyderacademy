@@ -2382,7 +2382,7 @@ class Trades {
       let auctionDate = new Date(date + 'T00:00:00-05:00'); // Appending timezone offset for EST
       const dayName = auctionDate.toLocaleDateString('en-US', { weekday: 'long' });
 
-      calendarHtml += `<div class="card shadow col-2 m-1 p-0 text-center"><div class="card-header">${dayName} ${date}</div>`;
+      calendarHtml += `<div class="card shadow col-md-2 m-1 p-0 text-center"><div class="card-header">${dayName} ${date}</div>`;
       groupedAuctions[date].forEach(auction => {
         calendarHtml += `<div class='card-body'>${auction.security_term} ${auction.security_type}</div>`;
         // Additional auction details can be added here
@@ -2428,39 +2428,42 @@ class Trades {
   }
 
   displayEarningsCalendarSkeleton(data) {
-    const today = new Date();
-    today.setDate(today.getDate() - 1);
+    // Start from the yesterday
+    let startDate = new Date();
+    startDate.setDate(startDate.getDate() - 1);
   
     let calendarHtml = '';
-  
-    for (let i = 0; i < 5; i++) {
-      const currentDate = new Date(today);
-      currentDate.setDate(today.getDate() + i);
-  
-      const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
-      const formattedDate = currentDate.toISOString().split('T')[0];
+    let currentDate = new Date(startDate);
 
-      if (dayName != "Saturday" && dayName != "Sunday"){
-        calendarHtml += `<div class="row mb-3" id="earnings-${formattedDate}">`;
-        calendarHtml += ` <div class="col-12">`;
-        calendarHtml += `   <div class="card m-0">`;
-        calendarHtml += `     <div class="card-header">${dayName} ${formattedDate}</div>`;
-        calendarHtml += `     <div class="card-body" id="earnings-data-${formattedDate}">`;
-        calendarHtml += `       <div class="row">`;
-        calendarHtml += `         <div class="col-lg-2 col-sm-6 fw-bold">Symbol</div>`;
-        calendarHtml += `         <div class="col-lg-2 col-sm-6 fw-bold">Market Cap</div>`;
-        calendarHtml += `         <div class="col-lg-3 col-sm-6 fw-bold">Implied Move</div>`;
-        calendarHtml += `         <div class="col-lg-4 col-sm-6 fw-bold">Bull/Bear Range</div>`;
-        calendarHtml += `         <div class="col-lg-1 col-sm-6 fw-bold"></div>`;      
-        calendarHtml += `       </div>`;
-        calendarHtml += `     </div>`;
-        calendarHtml += `   </div>`;
-        calendarHtml += ` </div>`;
-        calendarHtml += `</div>`;
-      }
+    // Loop through the rest of the week
+    while (currentDate.getDay() !== 6) { // 6 is Saturday in getDay()
+        const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
+        const formattedDate = currentDate.toISOString().split('T')[0];
 
+        // Check if the day is not a weekend
+        if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
+            calendarHtml += `<div class="row mb-3" id="earnings-${formattedDate}">`;
+            calendarHtml += ` <div class="col-12">`;
+            calendarHtml += `   <div class="card shadow m-0">`;
+            calendarHtml += `     <div class="card-header">${dayName} ${formattedDate}</div>`;
+            calendarHtml += `     <div class="card-body" id="earnings-data-${formattedDate}">`;
+            calendarHtml += `       <div class="row">`;
+            calendarHtml += `         <div class="col-lg-2 col-6 fw-bold">Symbol</div>`;
+            calendarHtml += `         <div class="col-lg-2 col-6 fw-bold d-none d-md-block">Market Cap</div>`;
+            calendarHtml += `         <div class="col-lg-3 col-6 fw-bold">Implied Move</div>`;
+            calendarHtml += `         <div class="col-lg-4 col-6 fw-bold  d-none d-md-block">Bull/Bear Range</div>`;
+            calendarHtml += `         <div class="col-lg-1 col-6 fw-bold d-none d-md-block"></div>`;      
+            calendarHtml += `       </div>`;
+            calendarHtml += `     </div>`;
+            calendarHtml += `   </div>`;
+            calendarHtml += ` </div>`;
+            calendarHtml += `</div>`;
+        }
+
+        // Move to the next day
+        currentDate.setDate(currentDate.getDate() + 1);
     }
-  
+
     $('#earningsCalendar').html(calendarHtml);
   }
   
@@ -2474,12 +2477,12 @@ class Trades {
         const whenClass = earning.when === 'post market' ? "bg-blue-light" : "";
         const whenIcon = earning.when === 'post market' ? "fa-moon" : "fa-sun";
   
-        let earningsEntryHtml = `<div class="row ${whenClass}" id="earning-${earning.symbol}">`;
-        earningsEntryHtml += ` <div class="col-lg-2 col-sm-6 "><a href="/stocks/${earning.symbol.toLowerCase()}/">${earning.symbol}</a></div>`;
-        earningsEntryHtml += ` <div class="col-lg-2 col-sm-6 ">${formattedMarketCap}</div>`;
-        earningsEntryHtml += ` <div class="col-lg-3 col-sm-6 " id="iv-move-${earning.symbol}">Loading...</div>`;
-        earningsEntryHtml += ` <div class="col-lg-4 col-sm-6 " id="iv-range-${earning.symbol}"></div>`; // Placeholder for IV range
-        earningsEntryHtml += ` <div class="col-lg-1 col-sm-6 "><i class="fa-solid ${whenIcon}"></i></div>`;
+        let earningsEntryHtml = `<div class="row ${whenClass} py-2" style="border-bottom: 1px solid rgba(0,0,0,0.3);" id="earning-${earning.symbol}">`;
+        earningsEntryHtml += ` <div class="col-lg-2 col-6 "><a href="/stocks/${earning.symbol.toLowerCase()}/">${earning.symbol}</a></div>`;
+        earningsEntryHtml += ` <div class="col-lg-2 col-6  d-none d-md-block">${formattedMarketCap}</div>`;
+        earningsEntryHtml += ` <div class="col-lg-3 col-6 " id="iv-move-${earning.symbol}">Loading...</div>`;
+        earningsEntryHtml += ` <div class="col-lg-4 col-6  d-none d-md-block" id="iv-range-${earning.symbol}"></div>`; // Placeholder for IV range
+        earningsEntryHtml += ` <div class="col-lg-1 col-6  d-none d-md-block"><i class="fa-solid ${whenIcon}"></i></div>`;
         earningsEntryHtml += `</div>`;
   
         $(`#earnings-data-${earning.date}`).append(earningsEntryHtml); // Append the data to the respective day
@@ -2499,15 +2502,17 @@ class Trades {
   }
 
   async fetchGEXByStrike(ticker) {
-    const jsonData = await this.fetchGEXData(ticker);
+
+    ticker = ticker.toUpperCase();
+    const jsonData = await this._fetchGEXData(ticker);
     if (jsonData) {
-      this.renderGEXByStrike(ticker, jsonData);
+      this._renderGEXByStrike(ticker, jsonData);
     } else {
         console.log("No data to render.");
     }
   }
 
-  async fetchGEXData(ticker) {
+  async _fetchGEXData(ticker) {
     const url = `https://us-central1-spyder-academy.cloudfunctions.net/gex?ticker=${ticker}`;
     try {
         const response = await fetch(url);
@@ -2521,7 +2526,7 @@ class Trades {
     }
   }
 
-  async renderGEXByStrike(ticker, jsonData) {
+  async _renderGEXByStrike(ticker, jsonData) {
 
     // Prepare your data for ApexCharts
     var seriesData = jsonData.map(
@@ -2621,15 +2626,16 @@ class Trades {
   }
 
   async fetchGEXOverlay(ticker) {
-    const jsonData = await this.fetchGEXOverlayData(ticker);
+    ticker = ticker.toUpperCase();
+    const jsonData = await this._fetchGEXOverlayData(ticker);
     if (jsonData) {
-      this.renderGEXOverlay(ticker, jsonData);
+      this._renderGEXOverlay(ticker, jsonData);
     } else {
         console.log("No data to render.");
     }
   }
 
-  async fetchGEXOverlayData(ticker) {
+  async _fetchGEXOverlayData(ticker) {
     const url = `https://us-central1-spyder-academy.cloudfunctions.net/gex_overlay?ticker=${ticker}`;
     try {
         const response = await fetch(url);
@@ -2643,7 +2649,7 @@ class Trades {
     }
   }
 
-  prepareGEXOverlayChartData(data) {
+  _prepareGEXOverlayChartData(data) {
     // Define the offset for EST (UTC-5 hours)
     const estOffset = 5 * 60 * 60 * 1000; // 5 hours in milliseconds
     
@@ -2677,9 +2683,9 @@ class Trades {
     return { stockSeries, gexAnnotations };
   }
 
-  async renderGEXOverlay(ticker, jsonData) {
+  async _renderGEXOverlay(ticker, jsonData) {
 
-    const { stockSeries, gexAnnotations } = this.prepareGEXOverlayChartData(jsonData);
+    const { stockSeries, gexAnnotations } = this._prepareGEXOverlayChartData(jsonData);
 
     var options = {
       chart: {

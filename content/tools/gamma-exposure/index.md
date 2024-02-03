@@ -8,35 +8,32 @@ tags = [
    "Web Tools",
    "Discord",
 ]
+layout = "tool"
 +++
 
 In our comprehensive educational section, we delved into [How to Trade using Gamma Exposure (GEX)](/education/how-to-trade-using-gamma-exposure/) — unveiling its significance and the benefits it brings to traders. 
 
-Now, let's explore the practical application of using this powerful free Gamma Exposure tool.
 
 
-#### Look up the Gamma Exposure with our Free Tool
+## Look up the Gamma Exposure with our Free Tool
 
-<div class="card shadow border-0 p-3 mb-5 justify-content-center" style="border-radius: 15px; background-color: #BFE1CF; ">
-   <div class="row p-0 m-0 align-items-center">
-      <div class="col-8  p-0 m-0 align-items-center">
-         <label hidden for="search-input">Enter Ticker Symbol</label>
-         <input id="ticker" class="no-border-transparent-bg" type="text" placeholder="Enter Ticker">
+<div class="container p-0 m-0">
+   <div class="row">
+      <div class="card shadow border-0 p-3 mb-3 w-100" style="border-radius: 15px; background-color: #BFE1CF;">
+         <div class="row p-0 m-0 align-items-center">
+            <div class="col-6 p-0 m-0">
+               <input id="ticker" class="form-control no-border-transparent-bg" type="text" placeholder="Enter Ticker" autocomplete="off" style="text-transform:uppercase">
+            </div>
+            <div class="col-6 text-md-right text-center mt-md-0">
+               <button type="button" class="btn btn-lg btn-success" onclick="getGEX(); return false;">Get GEX</button>
+            </div>
+         </div>
       </div>
-      <!--end of col-->
-      <div class="col-4">
-         <button class="btn btn-lg btn-success" onclick="getGEX(); return false;">Get GEX</button>
-      </div>
-      <!--end of col-->
+      <div class="card shadow p-3 mb-5 w-100 d-none" id="gammaChart"></div>
+      <div class="card shadow p-3 mb-5 w-100 d-none" id="gammaChartOverlay"></div>
    </div>
 </div>
 
-
-<div class="card shadow p-3 mb-5 justify-content-center d-none" id="gammaChart">
-</div>
-
-<div class="card shadow p-3 mb-5 justify-content-center d-none" id="gammaChartOverlay">
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
@@ -47,15 +44,17 @@ Now, let's explore the practical application of using this powerful free Gamma E
    }
 </script>
 
-## Navigating the Spyder Academy Net Gamma Exposure Tool:
+{{% quote %}}
+   Now, let's explore the practical application of using this powerful free Gamma Exposure tool.
+{{% /quote %}}
+
+
+## Navigating the Net Gamma Exposure Chart:
 
 Traders can harness the capabilities of the Net Gamma Exposure tool on the Spyder Academy platform to gain insights into near real-time gamma positioning. This tool provides a profound understanding of structural flows, offering invaluable insights into the market's current state and potential future movements.
 
-In the Spyder Academy Discord Classroom, simply type `/gex chart TICKER`, replacing `TICKER` with the specific ticker you are analyzing.
-
-For instance, entering `/gex chart SPY` will generate the following chart for SPY as of Nov 15, 2023:
-
 ![SPY Gamma Exposure](images/SPY_gex.png)
+
 
 This chart visually represents the Net Gamma Exposure for all options contracts related to SPY at the current moment. The GREEN bars signify NET CALL GAMMA, indicating a bullish stance, while the magenta bars represent NET PUT GAMMA, signaling a bearish outlook.
 
@@ -80,3 +79,10 @@ While the largest Gamma Exposure levels act as magnetic forces, influencing the 
 However, if the price does start gravitating towards the prominent GEX levels, these levels can serve as potential targets for the entire move. 
 
 Traders may consider adjusting their positions along the way to capitalize on the journey towards the magnetic level.
+
+### How to Get the Gamma Exposure Chart in Discord
+In the Spyder Academy Discord Classroom, simply type `/gex chart TICKER`, replacing `TICKER` with the specific ticker you are analyzing.
+
+For instance, entering `/gex chart SPY` will generate the following chart for SPY as of Nov 15, 2023:
+
+![SPY Gamma Exposure](images/SPY_gex.png)

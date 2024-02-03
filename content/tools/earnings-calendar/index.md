@@ -19,7 +19,7 @@ Instead, trade the [IV Flush](/education/how-to-trade-the-iv-flush-strategy/) af
 
 Compare the actual move in premarket/after hours with the implied move, then trade the reaction when bulls/bears are both being IV crushed.  The ideal companies to trade in this scenario is when the actual post earnings move has stayed within the Implied Range.
 
-<div class="container">
+<div class="container p-0 m-0">
    <div class="row" id="earningsCalendar">
       <div class="card shadow p-5">
        Loading Upcoming Earnings Calendar
@@ -33,6 +33,10 @@ Compare the actual move in premarket/after hours with the implied move, then tra
       userTrades.fetchEarningsCalendar();
    });
 </script>
+
+{{% quote %}}
+   The graphical representation of the Earnings Calendar adds a layer of clarity to your decision-making process.
+{{% /quote %}}
 
 #### Accessing the Earnings Calendar Command via Discord
 Navigate to your Discord channel and type `/iv_earnings`. 
@@ -58,7 +62,7 @@ The Earnings Calendar serves as your roadmap to identifying companies that align
 
 ![Earnings Calendar](images/earnings.png)
 
-The graphical representation of the Earnings Calendar adds a layer of clarity to your decision-making process. Leverage this visual aid to identify potential opportunities, streamline your research, and enhance your overall trading strategy.
+Leverage this visual earnings calendar to identify potential opportunities, streamline your research, and enhance your overall trading strategy.
 
 #### Conclusion
 Maximize your trading potential by leveraging the Spyder Academy Earnings Calendar command. Tailored to showcase only high-market-cap companies, this tool empowers you to identify promising opportunities for IV Flush trades.
