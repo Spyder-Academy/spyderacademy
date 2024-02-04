@@ -1,15 +1,20 @@
+{{ $symbol := .symbol }}
+{{ $stocks := .Site.Data.stocks.stocks }}
+{{ $profile := where $stocks "symbol" $symbol }}
+
+
 <div class="container">
   <div class="row">
     <div class="col-12 p-0">
       <!-- TradingView Widget BEGIN -->
-      <div class="tradingview-widget-container pr-0">
+      <div class="card shadow border-0 p-0 mb-3 d-flex tradingview-widget-container" style="border-radius: 15px;">
         <div class="tradingview-widget-container__widget"></div>
         <script type="application/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js" async>
           {
-            "symbol" : "{{ . }}",
+            "symbol" : "{{ $symbol }}",
             "width" : "100%",
             "locale" : "en",
-            "colorTheme" : "dark",
+            "colorTheme" : "light",
             "isTransparent" : false
           }
         </script>
@@ -18,13 +23,13 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row py-3">
     <div class="col-12 p-0">
-      <div class="tradingview-widget-container pr-0">
+      <div class="card shadow border-0 p-3 d-flex tradingview-widget-container" style="border-radius: 15px;">
         <div class="tradingview-widget-container__widget"></div>
         <script type="application/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
           {
-            "symbol": "{{ . }}",
+            "symbol": "{{ $symbol }}",
             "width": "100%",
             "height": "500",
             "interval": "D",
@@ -41,9 +46,9 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-lg-6 col-sm-12 p-0">
-      <div class="tradingview-widget-container  pr-0">
+  <div class="row py-3">
+    <div class="col-lg-6 col-12 pl-0 pr-2 py-2">
+      <div class="card shadow border-0 p-3 d-flex tradingview-widget-container" style="border-radius: 15px;">
         <div class="tradingview-widget-container__widget"></div>
         <script type="application/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-financials.js" async>
           {
@@ -53,44 +58,60 @@
             "width": "100%",
             "height": 850,
             "colorTheme": "light",
-            "symbol": "{{ . }}",
+            "symbol": "{{ $symbol }}",
             "locale": "en"
           }
         </script>
       </div>
     </div>
-    <div class="col-lg-6 col-sm-12 p-0">
-      <!-- TradingView Widget BEGIN -->
-      <div class="tradingview-widget-container pr-0 pl-0">
-        <div class="tradingview-widget-container__widget"></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-profile.js" async>
-        {
-          "width": "100%",
-          "height": "850",
-          "isTransparent": false,
-          "colorTheme": "light",
-          "symbol": "{{ . }}",
-          "locale": "en"
-        }
-        </script>
-      </div>
-      <!-- TradingView Widget END -->
+
+    <div class="col-lg-6 col-12 pl-0 pr-0 py-2 d-flex ">
+      {{ if eq (len $profile) 1 }}
+        {{ with index $profile 0 }}
+          <div class="card shadow border-0 p-3 d-flex" style="border-radius: 15px;">
+            <h1>{{ .name }} Profile</h1>
+            <p>Sector: {{ .sector }}</p>
+            <p>Industry: {{ .industry }}</p>
+            <p>Employees: {{ .employees }}</p>
+            <p>{{ .profile }}</p>
+          </div>
+        {{ end }}
+      {{ else }}
+        <!-- Optional: Display a message if no profile is found -->
+        <!-- TradingView Widget BEGIN -->
+        <div class="card shadow border-0 p-3 d-flex tradingview-widget-container" style="border-radius: 15px;">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-profile.js" async>
+          {
+            "width": "100%",
+            "height": "850",
+            "isTransparent": false,
+            "colorTheme": "light",
+            "symbol": "{{ $symbol }}",
+            "locale": "en"
+          }
+          </script>
+        </div>
+        <!-- TradingView Widget END -->
+      {{ end }}
+
+      
     </div>
   </div>
 
-  <div class="row">
+  <div class="row py-3">
     <div class="col-12 p-0">
-      <div class="tradingview-widget-container pr-0 pl-0">
+      <div class="card shadow border-0 p-3 d-flex tradingview-widget-container" style="border-radius: 15px;">
         <div class="tradingview-widget-container__widget"></div>
         <script type="application/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
           {
             "feedMode": "symbol",
-            "symbol": "{{ . }}",
+            "symbol": "{{ $symbol }}",
             "isTransparent": false,
             "displayMode": "compact",
             "width": "100%",
-            "height": "350",
-            "colorTheme": "dark",
+            "height": "450",
+            "colorTheme": "light",
             "locale": "en"
           }
         </script>

@@ -69,7 +69,7 @@
      <div class="row pb-5">
       <div class="col-12 justify-content-center">
         <div class="fs-5">
-          {{ partial "shared/stock-widgets" .Page.Params.ticker  }}
+          {{ partial "shared/stock-widgets" (dict "symbol" .Page.Params.ticker "Site" .Site) }}
         </div>
       </div>
     </div>
@@ -99,10 +99,6 @@
           })();
         });
      </script>
-
-
-
-
 
       <div class="row pb-5">
         <div class="col-12 d-flex justify-content-center">

@@ -18,10 +18,10 @@ content:
     - featured: true
       title: "The Class Room"
       price: "80"
-      # promotion: "SAVE 30% WITH OUR BLACK FRIDAY SALE!<br/><br/> USE CODE 'THANKS' AT CHECKOUT"
+      # promotion: "7 Day FREE Trial"
       
       button:
-        label: "Start Your 7-Day Free Trial"
+        label: "Start My Free Trial"
         url: "https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_n9NbbxfFeIW95&accessPassId=prod_45GZIGs1lRCGs&a=spyderacademy"
 
   

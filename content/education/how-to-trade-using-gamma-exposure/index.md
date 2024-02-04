@@ -30,7 +30,10 @@ Long gamma and short gamma describe the positions taken by participants. When ma
 
 ## Net Gamma Exposure Tool:
 
-Traders can leverage tools like the Net Gamma Exposure tool on the Spyder Academy platform to read near real-time gamma positioning in the market. This provides a deeper understanding of structural flows, offering valuable insights into the market's current state and potential future movements.
+Traders can leverage tools like the [Net Gamma Exposure tool](/tools/gamma-exposure/) on the Spyder Academy platform to read near real-time gamma positioning in the market. This provides a deeper understanding of structural flows, offering valuable insights into the market's current state and potential future movements.
+
+
+### Gamma Exposure Tool in the Spyder Academy Discord
 
 In the Spyder Academy Discord Classroom, type ```/gex chart TICKER```, replacing `TICKER` with the ticker you are analyzing.
 
