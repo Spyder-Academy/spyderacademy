@@ -2400,13 +2400,16 @@ class Trades {
 
 
   async fetchEarningsCalendar() {
-    const apiUrl = "https://production-market-api.herokuapp.com/earnings/this-week";
+    const apiUrlThisWeek = "https://production-market-api.herokuapp.com/earnings/this-week";
+    const apiUrlNextWeek = "https://production-market-api.herokuapp.com/earnings/next-week";
 
     try {
-      let response = await $.ajax({ url: apiUrl, method: 'GET' });
-      let earningsData = response; // Directly use the response data
+      let responseOne = await $.ajax({ url: apiUrlThisWeek, method: 'GET' });
+      let responseTwo = await $.ajax({ url: apiUrlNextWeek, method: 'GET' });
+      
+      let earningsData = responseOne.concat(responseTwo); // Directly use the response data
 
-      this.displayEarningsData(earningsData);
+      await this.displayEarningsData(earningsData);
       await this.updateIVData(earningsData); // Step 2: Asynchronously update with IV data
 
     } catch (error) {
@@ -2433,20 +2436,26 @@ class Trades {
   }
 
   displayEarningsCalendarSkeleton(data) {
-    // Start from the yesterday
     let startDate = new Date();
-    startDate.setDate(startDate.getDate() - 1);
-  
+    // If today is Sunday (0), set to Monday. If it's Saturday (6), also adjust to next Monday.
+    if (startDate.getDay() === 0) {
+        startDate.setDate(startDate.getDate() + 1); // Next day (Monday)
+    } else if (startDate.getDay() === 6) {
+        startDate.setDate(startDate.getDate() + 2); // Skip to Monday
+    }
+
     let calendarHtml = '';
-    let currentDate = new Date(startDate);
+    let weekdaysAdded = 0;
 
-    // Loop through the rest of the week
-    while (currentDate.getDay() !== 6) { // 6 is Saturday in getDay()
-        const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' });
-        const formattedDate = currentDate.toISOString().split('T')[0];
+    // Loop until 5 weekdays have been added
+    while (weekdaysAdded < 5) {
+        const dayOfWeek = startDate.getDay();
+        const dayName = startDate.toLocaleDateString('en-US', { weekday: 'long' });
+        const formattedDate = startDate.toISOString().split('T')[0];
 
-        // Check if the day is not a weekend
-        if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
+        // Check if the day is a weekday
+        if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+            // Add to calendarHtml
             calendarHtml += `<div class="row mb-3" id="earnings-${formattedDate}">`;
             calendarHtml += ` <div class="col-12">`;
             calendarHtml += `   <div class="card shadow m-0">`;
@@ -2456,23 +2465,26 @@ class Trades {
             calendarHtml += `         <div class="col-lg-2 col-6 fw-bold">Symbol</div>`;
             calendarHtml += `         <div class="col-lg-2 col-6 fw-bold d-none d-md-block">Market Cap</div>`;
             calendarHtml += `         <div class="col-lg-3 col-6 fw-bold">Implied Move</div>`;
-            calendarHtml += `         <div class="col-lg-4 col-6 fw-bold  d-none d-md-block">Bull/Bear Range</div>`;
+            calendarHtml += `         <div class="col-lg-4 col-6 fw-bold d-none d-md-block">Bull/Bear Range</div>`;
             calendarHtml += `         <div class="col-lg-1 col-6 fw-bold d-none d-md-block"></div>`;      
             calendarHtml += `       </div>`;
             calendarHtml += `     </div>`;
             calendarHtml += `   </div>`;
             calendarHtml += ` </div>`;
             calendarHtml += `</div>`;
+            weekdaysAdded++; // Only increment on weekdays
         }
 
-        // Move to the next day
-        currentDate.setDate(currentDate.getDate() + 1);
+        // Always move to the next day
+        startDate.setDate(startDate.getDate() + 1);
     }
 
     $('#earningsCalendar').html(calendarHtml);
   }
+
+
   
-  displayEarningsData(data) {
+  async displayEarningsData(data) {
     this.displayEarningsCalendarSkeleton(data); // Display the calendar skeleton
     this.sortEarningsData(data); // Sort the data first
   
@@ -2497,11 +2509,34 @@ class Trades {
 
   async updateIVData(data) {
     for (const earning of data) {
-      if (earning.marketCap >= 50000000000) {
+      // Parse the earning's date string to a Date object
+      let earningDate = new Date(earning.date);
+
+      // Get today's date without the time part
+      let today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      // Calculate yesterday and tomorrow's dates based on today
+      let yesterday = new Date(today);
+      yesterday.setDate(today.getDate() - 1);
+
+      let tomorrow = new Date(today);
+      tomorrow.setDate(today.getDate() + 1);
+
+      if (earning.marketCap >= 50000000000 && earningDate >= yesterday && earningDate <= tomorrow) {
         const iv = await this.fetchIVMove(earning.symbol); // Fetch data asynchronously
-  
-        $(`#iv-move-${earning.symbol}`).text(`${iv.movePercent} (${iv.moveAmount})`); // Update IV data
-        $(`#iv-range-${earning.symbol}`).text(`${iv.rangeBottom} - ${iv.rangeTop}`);  // Update IV data
+        if (iv && iv.movePercent != "0.00%"){
+          $(`#iv-move-${earning.symbol}`).text(`${iv.movePercent} (${iv.moveAmount})`); // Update IV data
+          $(`#iv-range-${earning.symbol}`).text(`${iv.rangeBottom} - ${iv.rangeTop}`);  // Update IV data
+        }
+        else{
+          $(`#iv-move-${earning.symbol}`).text(`N/A`); // Update IV data
+          $(`#iv-range-${earning.symbol}`).text(`N/A`);  // Update IV data
+        }
+      }
+      else{
+        $(`#iv-move-${earning.symbol}`).text(`TBD`); // Update IV data
+        $(`#iv-range-${earning.symbol}`).text(`TBD`);  // Update IV data
       }
     }
   }
