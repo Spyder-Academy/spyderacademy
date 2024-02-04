@@ -1,8 +1,8 @@
 +++
 author = "Link Snipes"
-title = "How to Trade the IV Flush Strategy"
+title = "How to Trade the IV Flush Options Strategy"
 date = "2023-07-24T10:00:00"
-description = "The IV Flush strategy takes advantage of the implied moves in options pricing."
+description = "The IV Flush Options strategy takes advantage of the implied moves in options pricing."
 course = "Trading Strategies"
 time = "2 min"
 tags = [
@@ -11,9 +11,9 @@ tags = [
 +++
 
 
-## What is the IV Flush?
+## What is the IV Flush Options Strategy?
 
-The IV flush is a unique strategy that revolves around companies quarterly earnings and trading after they report. 
+The IV flush is a unique options strategy that revolves around companies quarterly earnings and trading after they report. 
 
 _This strategy was originally taught by [The Real Nasa | Frog-Tzu](https://twitter.com/TheRealNasa00) who covers this strategy with his amazing [YouTube](https://www.youtube.com/@therealnasa0028/videos) content._
 
@@ -23,7 +23,11 @@ When the actual move is well below the expected or implied move, this presents t
 
 Off open, these players will want to sell their contracts for whatever they can get for them, giving us the chance to capitalize on these discounted premiums.
 
+#### What is an IV Crush in Options?
 
+An Implied Volatility Crush (IV Crush) occurs in Options Trading when the implied volatility has a sudden decrease after a significant event occurs.  This will usually occur after an Earnings Announcement, or a major scheduled news event (FOMC, ancipitated product announcements, etc).
+
+One of the best options strategies for trading IV Crush is the IV Flush Options strategy.  The IV Flush Options Strategy takes advantage of the IV Crush by allowing you to trade with cheaper premiums (after the event has occurred), and taking advantage of those traders who are being IV crushed and therefore need to quickly cover their positions which are now down.
 
 ### Step 1: Find The Earnings Play Within The Implied Move
 
