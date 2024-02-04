@@ -50,6 +50,11 @@ Understanding these key components and their interplay is crucial for successful
 
 If you use [TradingView](https://www.tradingview.com/gopro/?share_your_love=amitgandhinz), you can integrate the best (and free) [ORB indicator](https://www.tradingview.com/script/ZpONAzhm-ORB-with-Price-Targets/) directly into your charts, created by our very own CashMoneyTrades.  The ORB Strategy Indicator will automatically plot the high and low opening range lines (optionally shaded), and plot the Price Targets.
 
+{{% quote %}}
+  Don't Trade ORB Alone.<br/>
+  Join us at Spyder Academy where we teach how to trade the ORB every day!<br/>
+  <a class="btn btn-lg btn-block btn-secondary mt-1" style="border-radius: 0.5em; max-width: 250px" href="https://whop.com/spyder-academy/?d2c=true&amp;directPlanId=plan_n9NbbxfFeIW95&amp;accessPassId=prod_45GZIGs1lRCGs&amp;a=spyderacademy">Trade Together</a>
+{{% /quote %}}
 
 #### Case studies and examples of successful opening range trades
 
@@ -127,4 +132,6 @@ In conclusion, the opening range is a critical time window in trading that can p
 
 By avoiding common pitfalls, utilizing the right tools and indicators, and mastering advanced techniques, you can navigate the opening range with confidence and seize profitable trading opportunities. Remember to always practice proper risk management and continuously refine your strategies based on real-life examples and case studies.
 
-Now that you have unlocked the secrets of the opening range, it's time to take control of your trading destiny. Embrace the opening range, seize the opportunities it presents, and master your trading strategy to achieve consistent profitability in the market. Happy trading!
+Now that you have unlocked the secrets of the opening range, it's time to take control of your trading destiny. Embrace the opening range, seize the opportunities it presents, and master your trading strategy to achieve consistent profitability in the market. 
+
+Join the team at Spyder Academy where we will help you unlock your trading success.  The team trades the Opening Range Breakout every day, and will help fast track you to becoming a successful trader.

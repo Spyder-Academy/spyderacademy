@@ -29,6 +29,12 @@ An Implied Volatility Crush (IV Crush) occurs in Options Trading when the implie
 
 One of the best options strategies for trading IV Crush is the IV Flush Options strategy.  The IV Flush Options Strategy takes advantage of the IV Crush by allowing you to trade with cheaper premiums (after the event has occurred), and taking advantage of those traders who are being IV crushed and therefore need to quickly cover their positions which are now down.
 
+{{% quote %}}
+  Don't Trade the IV Flush Alone.<br/>
+  Join us at Spyder Academy to trade the IV Flush every day during the Earnings Season!<br/>
+  <a class="btn btn-lg btn-block btn-secondary mt-1" style="border-radius: 0.5em; max-width: 250px" href="https://whop.com/spyder-academy/?d2c=true&amp;directPlanId=plan_n9NbbxfFeIW95&amp;accessPassId=prod_45GZIGs1lRCGs&amp;a=spyderacademy">Let's Trade Together</a>
+{{% /quote %}}
+
 ### Step 1: Find The Earnings Play Within The Implied Move
 
 First step is to find out if the stocks actual move is within the implied move or not. 

@@ -32,6 +32,12 @@ Unlocking the full potential of EMAs involves mastering their application:
 
 - **Assessing Trend Strength**: The gap between the 9 and 21 EMA can provide insights into the strength of the prevailing trend. A wider gap signifies a stronger trend, while a narrowing gap may indicate weakening momentum and a possible reversal on the horizon.
 
+{{% quote %}}
+  Don't Trade EMAs Alone.<br/>
+  Join us at Spyder Academy where we teach how to trade with Moving Averages every day!<br/>
+  <a class="btn btn-lg btn-block btn-secondary mt-1" style="border-radius: 0.5em; max-width: 250px" href="https://whop.com/spyder-academy/?d2c=true&amp;directPlanId=plan_n9NbbxfFeIW95&amp;accessPassId=prod_45GZIGs1lRCGs&amp;a=spyderacademy">Trade Together</a>
+{{% /quote %}}
+
 ### Real-World Application
 
 Here's an example chart featuring the 9, 21, and 50 EMAs:
