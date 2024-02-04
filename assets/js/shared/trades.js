@@ -2781,7 +2781,7 @@ class Trades {
         size: 0, // Hide markers for projection lines
       },
       stroke: {
-        width: [4, 2, 2], // Set stroke width for each series
+        width: [4, 4, 4], // Set stroke width for each series
         dashArray: [0, 5, 5], // Solid line for actual data, dotted lines for projections
         curve: "smooth",
       },
