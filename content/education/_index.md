@@ -2,7 +2,7 @@
 aliases = ["posts", "post", "articles", "blog", "showcase", "docs"]
 title = "The Essential Guide to Day Trading for Beginners"
 description = "At Spyder Academy, we've got your back with comprehensive day trading education for beginners, with the best coaching and mentoring available. Whether you are just starting out or consider yourself an advanced trader, we are here to boost your day trading knowledge and equip you with the hands-on skills needed to trade confidently."
-keywords = "Day Trading for Beginners, Learn Day Trading, Stock Market for Beginners, Trading Strategies, Trading Psychology, Online Trading Courses"
+keywords = "Day Trading for Beginners, Learn Day Trading, Stock Market for Beginners, Trading Strategies, Trading Psychology, Online Trading Courses, Day Trading Education, Education"
 author = "Spyder Academy"
 tags = [""]
 +++

@@ -1,9 +1,10 @@
 +++
 aliases = ["courses"]
-title = "Discovering the World of Online Trading: A Beginner's Journey with Spyder Academy"
+title = "Discovering the World of Online Trading: A Beginner's Journey with Spyder Academy Courses"
 description = "Spyder Academy's free online courses provide an invaluable resource for beginner traders. Covering everything from Trading 101 to Long Term Investing, these courses are designed to build a strong foundation for successful and consistently profitable trading."
 author = "Spyder Academy"
 layout = "courses"
+keywords = "Courses, Day Trading Courses, Free Options Trading Courses, Options Trading, Stocks and Options Beginners"
 +++
 
 Imagine a young, aspiring trader, eager to dive into the world of stocks but bewildered by the complex jargon and unpredictable market trends. This is where the journey begins for many beginners, and Spyder Academy's online courses offer a beacon of guidance and knowledge.
