@@ -2305,6 +2305,8 @@ class Trades {
         $('.moveAmount').text("(" + moveAmount + ")");
         $('.ivRange').text(ivRange);
         $('.closePrice').text(closePrice);
+        $('.bullRange').text("$" + item.moveUpper.toFixed(2));
+        $('.bearRange').text("$" + item.moveLower.toFixed(2));
 
         $("#iv_results").removeClass("d-none");
 
