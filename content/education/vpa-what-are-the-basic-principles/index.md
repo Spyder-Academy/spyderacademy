@@ -2,7 +2,7 @@
 author: "CashMoneyTrades"
 title: "Basic Principles of Volume Price Analysis (VPA): A Guide for Beginners"
 date: 2024-01-26T00:01:06
-description: ""
+description: "Understanding accumulation and distribution, along with the significance of support and resistance levels, and correctly interpreting bullish and bearish signals, are essential steps in mastering VPA."
 course: "Volume Price Analysis"
 module: "Module 1: Fundamentals of Volume Price Analysis" 
 time: "5 min"

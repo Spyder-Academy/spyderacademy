@@ -2,7 +2,7 @@
 author: "CashMoneyTrades"
 title: "The Evolution of Volume Price Analysis: Tracing its Roots and Impact on Trading"
 date: 2023-12-08T00:00:00-04:00
-description: ""
+description: "This article delves into the brief history of VPA - Volume Price Analysis, tracing its roots and understanding its impact on modern trading practices."
 course: "Volume Price Analysis"
 module: "Module 1: Fundamentals of Volume Price Analysis" 
 time: "5 min"

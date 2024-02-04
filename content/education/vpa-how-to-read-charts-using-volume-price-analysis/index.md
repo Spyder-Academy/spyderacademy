@@ -2,7 +2,7 @@
 author: "CashMoneyTrades"
 title: "How to Read Charts using Volume Price Analysis - Chart Reading Basics"
 date: 2024-01-28T00:02:02
-description: ""
+description: Learn how to read charts using VPA, gaining additional significance as it combines price action with volume data, offering a more nuanced view of the market.""
 course: "Volume Price Analysis"
 module: "Module 2: Tools and Techniques for Volume Price Analysis" 
 time: "5 min"

@@ -2,7 +2,7 @@
 author: "CashMoneyTrades"
 title: "Understanding and Using Volume Indicators in Trading"
 date: 2024-01-28T00:02:03
-description: ""
+description: "Volume indicators are mathematical tools applied to trading charts. They provide a deeper understanding of market activity, going beyond mere price information to reveal the intensity and conviction behind market movements."
 course: "Volume Price Analysis"
 module: "Module 2: Tools and Techniques for Volume Price Analysis" 
 time: "5 min"

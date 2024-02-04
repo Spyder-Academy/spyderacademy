@@ -2,7 +2,7 @@
 author: "CashMoneyTrades"
 title: "Unraveling the Relationship Between Volume and Price in Trading"
 date: 2024-01-26T00:01:05
-description: ""
+description: "The relationship between volume and price is a fundamental aspect of Volume Price Analysis and offers deep insights into market dynamics. By mastering this relationship, traders can significantly enhance their ability to read and react to market movements."
 course: "Volume Price Analysis"
 module: "Module 1: Fundamentals of Volume Price Analysis" 
 time: "5 min"

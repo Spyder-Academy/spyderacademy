@@ -2,7 +2,7 @@
 author: "CashMoneyTrades"
 title: "Mastering the Combination of Volume and Price in Trading"
 date: 2024-01-28T00:02:04
-description: ""
+description: Delve into strategies for effectively combining these Volume and Price to interpret market signals and make informed trading decisions using Volume Price Analysis (VPA)."
 course: "Volume Price Analysis"
 module: "Module 2: Tools and Techniques for Volume Price Analysis" 
 time: "5 min"
