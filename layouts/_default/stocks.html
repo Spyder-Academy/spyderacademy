@@ -30,38 +30,78 @@
             <div class="row">
               <div class="col-4">
                   <div id="movePercentTitle">Expected Move</div>
-                  <span id="movePercent"></span> <span id="moveAmount"> </span>
+                  <span class="movePercent"></span> <span class="moveAmount"> </span>
               </div>
               <div class="col-4">
                   <div id="closePriceTitle">Last Close Price</div>
-                  <span id="closePrice"></span>
+                  <span class="closePrice"></span>
               </div>
               <div class="col-4">
                   <div id="ivRangeTitle">Expectations</div>
-                  <span id="ivRange"></span>
+                  <span class="ivRange"></span>
               </div>
             </div>
         </div>
       </div>
     </div>
 
-      <div class="row pb-5">
-        <div class="col-12 justify-content-center">
-          <div class="fs-5">
-            {{ partial "shared/stock-widgets" .Page.Params.ticker  }}
+    <div class="row justify-content-center pb-5">
+      <div class="card shadow p-3 mb-5 w-100 d-none" id="gammaChart"></div>
+      <div class="card shadow p-3 mb-5 w-100 d-none" id="gammaChartOverlay"></div>
+    </div>  
+      
+    <section class="section problem p-3 my-5" style="background-color: #313131; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12 justify-content-center">
+            <div class="card d-flex flex-row align-items-start border-0 p-5  justify-content-center  text-center"  style="background-color: #313131;">
+              <span class="card-text text-light fs-3">
+                The Options Market has priced in an expected move on {{ .Page.Params.ticker }} of <span class="movePercent"></span> (or a move to <span class="ivRange"></span>). 
+                The largest Gamma Exposure Level on {{ .Page.Params.ticker }} is currently at <span class="largestGammaLevelText"></span>, with options traders positioned with a <span class="gammaOutlook"></span> outlook on the stock based on the Net Gamma.
+              </span>
+            </div>
           </div>
         </div>
       </div>
+    </section>
 
-      
+     <div class="row pb-5">
+      <div class="col-12 justify-content-center">
+        <div class="fs-5">
+          {{ partial "shared/stock-widgets" .Page.Params.ticker  }}
+        </div>
+      </div>
+    </div>
      
      
+     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
      <script>
-        $(document).ready(function() {
+       $(document).ready(function() {
            userTrades = new Trades();
-           userTrades.fetchIVData({{ .Page.Params.ticker }});
+           
+           var ticker = {{ .Page.Params.ticker }};
+           userTrades.fetchGEXByStrike(ticker);
+
+          // Use an async IIFE (Immediately Invoked Function Expression) to use await
+          (async function() {
+              try {
+                  var range = await userTrades.fetchIVData(ticker);
+                  if (range) {
+                      const expectedMove = range;
+                      userTrades.fetchGEXOverlay(ticker, expectedMove);
+                  } else {
+                      console.error('Failed to fetch IV data.');
+                  }
+              } catch (error) {
+                  console.error('Error fetching IV data:', error);
+              }
+          })();
         });
      </script>
+
+
+
+
 
       <div class="row pb-5">
         <div class="col-12 d-flex justify-content-center">

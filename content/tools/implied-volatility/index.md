@@ -31,15 +31,15 @@ Are you ready to take your trading game to the next level? Discover the Spyder A
       <div class="row">
          <div class="col-lg-4 col-6">
             <div id="movePercentTitle fw-bold">Expected Move</div>
-            <span id="movePercent"></span> <span id="moveAmount"> </span>
+            <span class="movePercent"></span> <span class="moveAmount"> </span>
          </div>
          <div class="col-lg-4 d-none d-md-block">
             <div id="closePriceTitle fw-bold">Close Price</div>
-            <span id="closePrice"></span>
+            <span class="closePrice"></span>
          </div>
          <div class="col-lg-4 col-6">
             <div id="ivRangeTitle fw-bold">Range</div>
-            <span id="ivRange"></span>
+            <span class="ivRange"></span>
          </div>
       </div>
    </div>

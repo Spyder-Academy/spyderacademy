@@ -2301,12 +2301,15 @@ class Trades {
         var closePrice = '$' + (item.moveLower + item.moveAmount).toFixed(2);
 
         // Update the HTML elements
-        $('#movePercent').text(movePercent);
-        $('#moveAmount').text("(" + moveAmount + ")");
-        $('#ivRange').text(ivRange);
-        $('#closePrice').text(closePrice);
+        $('.movePercent').text(movePercent);
+        $('.moveAmount').text("(" + moveAmount + ")");
+        $('.ivRange').text(ivRange);
+        $('.closePrice').text(closePrice);
 
         $("#iv_results").removeClass("d-none");
+
+        return {"bears": item.moveLower.toFixed(2), "bulls": item.moveUpper.toFixed(2)}
+
       } else {
         console.error('No data received from API.');
       }
@@ -2538,7 +2541,30 @@ class Trades {
         };
     });
 
-    var currentSpotPrice = jsonData[0].Spot
+    // Find the item with the largest absolute GEX value
+    let maxGEXItem = jsonData.reduce((prev, current) => {
+      return (Math.abs(prev.GEX) > Math.abs(current.GEX)) ? prev : current;
+    });
+    let netGEX = jsonData.reduce((acc, item) => acc + item.GEX, 0);
+
+    var currentSpotPrice = jsonData[0].Spot;
+
+    // Determine the sentiment based on the sign of the GEX and the current spot price
+    let bearbull = netGEX > 0 ? "Bullish" : netGEX < 0 ? "Bearish" : "Neutral";
+
+    // if (maxGEXItem.GEX > 0) {
+    //   // If largest GEX is positive (call gamma)
+    //   bearbull =  "Bullish";
+    // } else {
+    //   // If largest GEX is negative (put gamma)
+    //   bearbull =  "Bearish";
+    // }
+
+    $(".largestGammaLevelText").text("$" + maxGEXItem.Strike.toFixed(2));
+    $(".gammaOutlook").text(bearbull);
+
+
+
 
     var options = {
       chart: {
@@ -2625,11 +2651,11 @@ class Trades {
     this.chartGEX.render();
   }
 
-  async fetchGEXOverlay(ticker) {
+  async fetchGEXOverlay(ticker, expectedMove = null) {
     ticker = ticker.toUpperCase();
     const jsonData = await this._fetchGEXOverlayData(ticker);
     if (jsonData) {
-      this._renderGEXOverlay(ticker, jsonData);
+      this._renderGEXOverlay(ticker, jsonData, expectedMove);
     } else {
         console.log("No data to render.");
     }
@@ -2683,10 +2709,43 @@ class Trades {
     return { stockSeries, gexAnnotations };
   }
 
-  async _renderGEXOverlay(ticker, jsonData) {
+  async _renderGEXOverlay(ticker, jsonData, expectedMove = null) {
 
     const { stockSeries, gexAnnotations } = this._prepareGEXOverlayChartData(jsonData);
+    const forecastPoints = 0
 
+    // Calculate the last timestamp plus some interval (e.g., next 5 minutes)
+    const lastDataPoint = stockSeries[stockSeries.length - forecastPoints - 1];
+    const lastActualPrice = lastDataPoint.y;
+
+    var nextTimestamp = lastDataPoint.x + (120 * 60 * 1000); // Adding 120 minutes (2hr)
+
+    if (expectedMove === null) nextTimestamp = lastDataPoint.x 
+    expectedMove = expectedMove || {"bears": lastActualPrice, "bulls": lastActualPrice}; // Use the given expectedMove or fallback to default
+
+    // Append the bull and bear projections to the stock series
+    const bullProjection = {
+        x: nextTimestamp,
+        y: expectedMove.bulls,
+    };
+    const bearProjection = {
+        x: nextTimestamp,
+        y: expectedMove.bears,
+    };
+
+    // Assume that the last actual stock price will be the starting point for projections
+
+    // Create new series for bull and bear projections
+    const bullSeries = [{
+        x: lastDataPoint.x, // Last actual timestamp
+        y: lastActualPrice  // Last actual stock price
+    }, bullProjection];
+
+    const bearSeries = [{
+        x: lastDataPoint.x, // Last actual timestamp
+        y: lastActualPrice  // Last actual stock price
+    }, bearProjection];
+    
     var options = {
       chart: {
           height: 350,
@@ -2701,16 +2760,34 @@ class Trades {
       },
       series: [{
           name: 'Stock Price',
-          type: 'line',
+          type: 'area',
           data: stockSeries
-        }],
-      stroke: {
-          curve: 'smooth'
+        },
+        {
+          name: 'Bull Projection',
+          type: 'line',
+          data: bullSeries,
+          dashArray: 5, // Dotted line for projection
+        }, {
+          name: 'Bear Projection',
+          type: 'line',
+          data: bearSeries,
+          dashArray: 5, // Dotted line for projection
+        }
+      ],
+      markers: {
+        size: 0, // Hide markers for projection lines
       },
+      stroke: {
+        width: [4, 2, 2], // Set stroke width for each series
+        dashArray: [0, 5, 5], // Solid line for actual data, dotted lines for projections
+        curve: "smooth",
+      },
+      colors: ['#008FFB', '#00E396', '#FF4560'],
       dataLabels: {
         enabled: false
       },
-      title: { text: ticker.toUpperCase() + " Gamma Exposure Overlay"},
+      title: { text: ticker.toUpperCase() + " (5min) Gamma Exposure Overlay with Expected Move Projection"},
       xaxis: {
           type: 'datetime',
           tickPlacement: 'on'
@@ -2722,25 +2799,30 @@ class Trades {
           forceNiceScale: true,
           labels: {
             formatter: function (val) {
-              return (val).toFixed(0);
+              return (val).toFixed(2);
             },
           },
       }],
+      forecastDataPoints: {
+        count: forecastPoints
+      },
       grid: {
         show: false, // This will hide both x and y gridlines
       },
+      legend: { show: false },
       tooltip: {
           shared: true,
           intersect: false,
           y: {
             formatter: function (val) {
-              return (val).toFixed(0)
+              return (val).toFixed(2)
             }
           }
       },
       annotations: {
         yaxis: gexAnnotations
-    },
+      },
+      
     };
 
     $("#gammaChartOverlay").removeClass("d-none")
