@@ -48,7 +48,7 @@ content:
       tickers: "Trades: $SPY $QQQ Mega Caps"
       button:
         label: "Follow on Twitter"
-        url: "https://x.com/Sysadminsith"
+        url: "https://x.com/SithSwingTrades"
 
     - image: "images/teachers-cash.png"
       name: "CashMoneyTrades"
