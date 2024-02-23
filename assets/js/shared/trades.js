@@ -1597,7 +1597,7 @@ class Trades {
       });
     }
 
-    renderTopRecentTrades(isCarousel = false, parentElement, templateElement){
+    async renderTopRecentTrades(isCarousel = false, parentElement, templateElement){
       this._getRecentlyClosedTrades().then(tradesData => {
         $(parentElement).empty()
 
@@ -1645,10 +1645,22 @@ class Trades {
             }
 
             var hoursAgo = Math.abs(new Date() - trade.exit_date_max.toDate()) / 36e5; // 36e5 is the number of milliseconds in one hour
-            var hoursAgoText = Math.floor(hoursAgo) + " hours ago";
-            if (Math.floor(hoursAgo) == 1) hoursAgoText = Math.floor(hoursAgo) + " hour ago";
+            var timeAgoText = Math.floor(hoursAgo) + " hours ago";
 
-            tradeCardRow.find(".traderName").text(hoursAgoText)
+            if (hoursAgo > 24){
+              if (Math.floor(hoursAgo / 24) == 1) 
+                timeAgoText = Math.floor(hoursAgo / 24) + " day ago";
+              else
+              timeAgoText = Math.floor(hoursAgo / 24) + " days ago";
+            }
+            else{
+              if (Math.floor(hoursAgo) == 1) 
+                timeAgoText = Math.floor(hoursAgo) + " hour ago";
+              else 
+                timeAgoText = Math.floor(hoursAgo) + " hours ago";
+          }
+
+            tradeCardRow.find(".traderName").text(timeAgoText)
             tradeCardRow.find(".tradeContract").text(trade.ticker + " " + trade.strike)
             tradeCardRow.find(".tradeGain").text(trade.gainsString)
             tradeCardRow.find(".tradeNotes").text(trade.notes)
@@ -2749,16 +2761,44 @@ class Trades {
   async _renderGEXOverlay(ticker, jsonData, expectedMove = null) {
 
     const { stockSeries, gexAnnotations } = this._prepareGEXOverlayChartData(jsonData);
-    const forecastPoints = 0
+    const forecastPoints = 0 // chart prediction (not using right now)
 
+    let lastDataPoint = stockSeries[stockSeries.length - forecastPoints - 1];
+    
     // Calculate the last timestamp plus some interval (e.g., next 5 minutes)
-    const lastDataPoint = stockSeries[stockSeries.length - forecastPoints - 1];
+    const lastCloseDataPoint = stockSeries[stockSeries.length - forecastPoints - 1];
     const lastActualPrice = lastDataPoint.y;
+
+    // is the market closed?
+    const isMarketClosed = new Date(lastCloseDataPoint.x).getHours() >= 16;
+
+    if (isMarketClosed) {
+        // Market is closed, use the last data point
+        lastCloseDataPoint = lastDataPoint;
+    } else {
+        // Market is open, find the last data point at or before 4 PM from the previous trading day
+        // This will require iterating your stockSeries to find the appropriate point
+        // Assuming stockSeries is sorted in ascending order by timestamp
+        for (let i = stockSeries.length - 1; i >= 0; i--) {
+            const dataPointDate = new Date(stockSeries[i].x);
+            if (dataPointDate.getHours() == 16) {
+                lastCloseDataPoint = stockSeries[i];
+                lastActualPrice = lastCloseDataPoint
+                break;
+            }
+        }
+    }
+
+    // Proceed to use lastCloseDataPoint for your calculations
+    if (expectedMove === null) nextTimestamp = lastCloseDataPoint.x;
+    expectedMove = expectedMove || { "bears": lastCloseDataPoint.y, "bulls": lastCloseDataPoint.y }; // Adjust to use lastCloseDataPoint
+
+    
 
     var nextTimestamp = lastDataPoint.x + (120 * 60 * 1000); // Adding 120 minutes (2hr)
 
     if (expectedMove === null) nextTimestamp = lastDataPoint.x 
-    expectedMove = expectedMove || {"bears": lastActualPrice, "bulls": lastActualPrice}; // Use the given expectedMove or fallback to default
+    expectedMove = expectedMove || {"bears": lastCloseDataPoint, "bulls": lastCloseDataPoint}; // Use the given expectedMove or fallback to default
 
     // Append the bull and bear projections to the stock series
     const bullProjection = {

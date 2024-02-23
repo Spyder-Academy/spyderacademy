@@ -11,7 +11,7 @@ markup:
 
 minify:
    disableJS: true
-
+   disableHTML: true
 
 
 googleAnalytics: "G-FT7VJCMYJ5"
@@ -126,11 +126,6 @@ menus:
     - name: "Privacy Policy"
       url: "/privacy/"
       weight: 10
-
-    - name: "Get our Free Newsletter"
-      url: "https://spyderacademy.substack.com"
-      weight: 11
-
 
 
 taxonomies:

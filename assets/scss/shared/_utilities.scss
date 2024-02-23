@@ -272,7 +272,7 @@ ul li {
 .modal {
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 10000;
   left: 0;
   top: 0;
   width: 100%;
@@ -284,9 +284,30 @@ ul li {
 .modal-content {
   background-color: #fefefe;
   margin: 15% auto;
-  padding: 20px;
+  padding: 0;
   border: 1px solid #888;
-  width: 300px;
+  border-radius: 15px;
+  // width: 300px;
+  max-width: 90%;
+  overflow: hidden; /* This ensures that child elements do not overflow the rounded corners */
+}
+
+/* Styles for the left column with the image */
+.modal-left-column img {
+  // height: 100%;
+  object-fit: cover;
+  border-top-left-radius: 15px; /* Apply border-radius to the top-left of the image */
+  border-bottom-left-radius: 15px; /* Apply border-radius to the bottom-left of the image */
+}
+
+/* Styles for the right column content */
+.modal-right-column {
+  border-top-right-radius: 15px; /* Apply border-radius to the top-right of the content */
+  border-bottom-right-radius: 15px; /* Apply border-radius to the bottom-right of the content */
+}
+
+.modal-backdrop.show{
+  opacity: 0;
 }
 
 .close {
@@ -305,7 +326,7 @@ ul li {
 
 
 /* Styling for the sidebar */
-.sidebar {
+.popup {
   position: fixed;
   left: 0;
   bottom: -50%; /* Start with the sidebar hidden outside the screen */
@@ -317,11 +338,11 @@ ul li {
   box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.08);
 }
 
-.sidebar .newsletter-form {
+.popup .newsletter-form {
   padding: 20px;
 }
 
-.sidebar .close-button {
+.popup .close-button {
   cursor: pointer;
   float: right;
   font-size: 20px;

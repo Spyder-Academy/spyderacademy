@@ -42,8 +42,11 @@
 
           
           <script>
-            userTrades = new Trades();
-            userTrades.renderTopRecentTrades(isCarousel = false, parentEl = $("#tradesRecentBest"), template = $(".trade-card-template"));
+             $(document).ready(function() {
+                userTrades = new Trades();
+                userTrades.renderTopRecentTrades(isCarousel = false, parentEl = $("#tradesRecentBest"), template = $(".trade-card-template"));
+             });
+
           </script>
       </div>
       <!-- content -->

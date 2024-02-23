@@ -26,16 +26,16 @@ function displayResults(results, store) {
                             <div class="card shadow p-3 mb-5 justify-content-center" id="iv_results" style="border-radius: 15px; background-color: #E9E4D7; ">
                                 <div class="row">
                                 <div class="col-4">
-                                    <div id="movePercentTitle">Expected Move</div>
-                                    <span id="movePercent"></span> <span id="moveAmount"> </span>
+                                    <div id="movePercentTitle" class="fw-bold">Expected Move</div>
+                                    <span class="movePercent"></span> <span id="moveAmount"> </span>
                                 </div>
                                 <div class="col-4">
-                                    <div id="closePriceTitle">Last Close Price</div>
-                                    <span id="closePrice"></span>
+                                    <div id="closePriceTitle" class="fw-bold">Last Close Price</div>
+                                    <span class="closePrice"></span>
                                 </div>
                                 <div class="col-4">
-                                    <div id="ivRangeTitle">Expectations</div>
-                                    <span id="ivRange"></span>
+                                    <div id="ivRangeTitle" class="fw-bold">Expectations</div>
+                                    <span class="ivRange"></span>
                                 </div>
                                 </div>
                             </div>
@@ -44,6 +44,7 @@ function displayResults(results, store) {
                 `;
 
                 // Create the configuration object
+
                 userTrades = new Trades();
                 userTrades.fetchIVData(item.ticker);
 
@@ -127,53 +128,51 @@ function displayResults(results, store) {
             script.async = true;
             script.innerHTML = JSON.stringify(stockWidgetConfig);
             document.getElementById('tradingview-widget-container__widget').appendChild(script);
-
-            
-
         }
     } else {
         searchResults.text('No results found.');
     }
 }
 
-  
-// Get the query parameter(s)
-const params = new URLSearchParams(window.location.search)
-const query = params.get('query')
+$(document).ready(function() {
+    // Get the query parameter(s)
+    const params = new URLSearchParams(window.location.search)
+    const query = params.get('query')
 
-  // Perform a search if there is a query
-if (query) {
+    // Perform a search if there is a query
+    if (query) {
 
-    // Retain the search input in the form when displaying results
-    document.getElementById('search-input').setAttribute('value', query)
+        // Retain the search input in the form when displaying results
+        document.getElementById('search-input').setAttribute('value', query)
 
-  
-    const idx = lunr(function () {
-      this.ref('id')
-      this.field('title', {
-        boost: 15
-      })
-      this.field('tags')
-      this.field('author')
-      this.field('level')
-      this.field('content', {
-        boost: 10
-      })
-  
-      for (const key in window.store) {
-        this.add({
-          id: key,
-          title: window.store[key].title,
-          author: window.store[key].author,
-          level: window.store[key].level,
-          tags: window.store[key].category,
-          content: window.store[key].content
+    
+        const idx = lunr(function () {
+        this.ref('id')
+        this.field('title', {
+            boost: 15
         })
-      }
-    })
-  
-    // Perform the search
-    const results = idx.search(query)
-    // Update the list with results
-    displayResults(results, window.store)
-}
+        this.field('tags')
+        this.field('author')
+        this.field('level')
+        this.field('content', {
+            boost: 10
+        })
+    
+        for (const key in window.store) {
+            this.add({
+            id: key,
+            title: window.store[key].title,
+            author: window.store[key].author,
+            level: window.store[key].level,
+            tags: window.store[key].category,
+            content: window.store[key].content
+            })
+        }
+        })
+    
+        // Perform the search
+        const results = idx.search(query)
+        // Update the list with results
+        displayResults(results, window.store)
+    }
+});

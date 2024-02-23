@@ -13,7 +13,7 @@
 
   <div class="col-lg-12 col-sm-12 trade-carousel-template d-none">
     <div class="card shadow border-0  mx-0 my-1" style="border-radius: 1em;">
-        <div class="card-body p-1 tradeRow" onclick="selectContract(this);">
+        <div class="card-body p-1 tradeRow">
             <div class="container p-0">
                 <div class="row">
                     <div class="col-2 m-0">
@@ -40,11 +40,20 @@
 </div>
 
   <script>
-    userTrades = new Trades();
-    userTrades.renderTopRecentTrades(isCarousel = true, parentElement=$('#tradesCarousel'), templateElement=$('.trade-carousel-template')).then(() => {
+    $(document).ready(async function() {
+        userTrades = new Trades();
+        await userTrades.renderTopRecentTrades(isCarousel = true, parentElement=$('#tradesCarousel'), templateElement=$('.trade-carousel-template'))
         // Reinitialize the carousel
-        $('#carouselTrades').carousel();
-    });
+        $('#carouselTrades').carousel(
+          {interval: 2000} // Changes the slide every 2 seconds
+        );
+
+        // Explicitly start the carousel if needed
+        setTimeout(() => {
+          $('#carouselTrades').carousel('cycle'); // This command depends on the carousel plugin you're using
+        }, 1000); // A slight delay to ensure dynamic content is loaded and the carousel is ready
+
+      });
 
   </script>
   

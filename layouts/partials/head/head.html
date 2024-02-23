@@ -27,5 +27,7 @@
     {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
   {{ end -}}
 
+  {{- $tradesJS := resources.Get "js/shared/trades.js" -}}
+  <script src="{{ $tradesJS.Permalink }}" defer></script> 
 
 </head>

@@ -356,33 +356,30 @@
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
 
     <script>
-       
-       userTrades = new Trades();
-
        function showLogin() {
-        $('#loginModal').show();
+            $('#loginModal').show();
        }
 
        function hideLogin(){
-        $('#loginErrorMessage').hide()
-        $('#loginModal').hide();
+            $('#loginErrorMessage').hide()
+            $('#loginModal').hide();
        }
 
        function showManualTradeModal() {
-        // Get the current date and time
-        var currentDate = new Date();
-        var currentDateString = currentDate.toISOString().split('T')[0]; // Get the date in "YYYY-MM-DD" format
-        var currentTimeString = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+            // Get the current date and time
+            var currentDate = new Date();
+            var currentDateString = currentDate.toISOString().split('T')[0]; // Get the date in "YYYY-MM-DD" format
+            var currentTimeString = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
 
-        $("#txtTradeEntryDate").val(currentDateString);
-        $("#txtTradeEntryTime").val(currentTimeString);
+            $("#txtTradeEntryDate").val(currentDateString);
+            $("#txtTradeEntryTime").val(currentTimeString);
 
-        $('#addTradeModal').show();
+            $('#addTradeModal').show();
        }
 
        function hideTradeEntry(){
-        $('#tradeErrorMessage').hide()
-        $('#addTradeModal').hide();
+            $('#tradeErrorMessage').hide()
+            $('#addTradeModal').hide();
        }
 
        function addManualTrade(){
@@ -417,7 +414,7 @@
 
 
        function showImportTradeModal() {
-        $('#importTradeModal').show();
+            $('#importTradeModal').show();
        }
 
        async function addExecutionTrade(){
@@ -486,48 +483,7 @@
         });
 
 
-        firebase.auth().onAuthStateChanged((user) => {
-
-            if (user) {
-                // User is logged in, retrieve the email address
-                const email = user.email;
-                // Display the welcome message with the user's email
-                nickname = email.split("@")[0].toUpperCase()
-                $("#loginButton").text(nickname)
-                $("#loginButton").on("click", () => {
-                    selectInstructor(user.uid, nickname.toUpperCase())
-                });
-
-                $("#btnSignOut").show();
-                $(".mentor").show();
-                selectInstructor("ALL", "ALL MENTORS");
-
-
-            } else {
-                // User is not logged in
-                console.log("not logged in")
-                $("#loginButton").text("LOG IN")
-                $("#loginButton").on("click", () => {
-                    showLogin()
-                });
-                $("#btnSignOut").hide();
-                $(".mentor").hide();
-                selectInstructor("ALL", "ALL MENTORS");
-
-            }
-        });
-
-        function signOut(){
-            firebase.auth().signOut()
-                .then(() => {
-                // Sign-out successful
-                    console.log("User signed out");
-                })
-                .catch((error) => {
-                // An error occurred
-                    console.error("Sign-out error:", error);
-                });
-        }
+        
 
         function sendPasswordResetEmail() {
             var email = $("#txtEmail").val();
@@ -536,7 +492,8 @@
                 $('#loginErrorMessage').text("Please enter the email address you signed up with on Whop.com");
                 $('#loginErrorMessage').show();
             }
-            else{
+            else
+            {
                 firebase.auth().sendPasswordResetEmail(email)
                     .then(() => {
                         // Password reset email sent successfully
@@ -563,12 +520,8 @@
                         $('#loginErrorMessage').text(displayErrorMessage);
                         $('#loginErrorMessage').show();
                     });
-                }
             }
-
-
-       
-        
+        }
 
         // Firebase configuration
         function selectInstructor(userid, title){
@@ -584,17 +537,63 @@
 
         function selectContract(el){
             if (firebase.auth().currentUser){
-                console.log("is logged in, show tv")
                 userTrades.renderTVChart($(el), $(el).attr("tradeid"));
                 $(el).find(".membersOnlyContent").show();
                 $(el).find(".membersOnlyFiller").hide();
             }
             else{
-                console.log("not logged in, show filler")
                 $(el).find(".membersOnlyContent").hide();
                 $(el).find(".membersOnlyFiller").show();
             }
         }
+
+        let userTrades = null;
+
+        $(document).ready(function() {
+            userTrades = new Trades();
+
+            firebase.auth().onAuthStateChanged((user) => {
+                if (user) {
+                    // User is logged in, retrieve the email address
+                    const email = user.email;
+                    // Display the welcome message with the user's email
+                    nickname = email.split("@")[0].toUpperCase()
+                    $("#loginButton").text(nickname)
+                    $("#loginButton").on("click", () => {
+                        selectInstructor(user.uid, nickname.toUpperCase())
+                    });
+
+                    $("#btnSignOut").show();
+                    $(".mentor").show();
+                    selectInstructor("ALL", "ALL MENTORS");
+
+
+                } else {
+                    // User is not logged in
+                    console.log("not logged in")
+                    $("#loginButton").text("LOG IN")
+                    $("#loginButton").on("click", () => {
+                        showLogin()
+                    });
+                    $("#btnSignOut").hide();
+                    $(".mentor").hide();
+                    selectInstructor("ALL", "ALL MENTORS");
+
+                }
+            });
+
+            function signOut(){
+                firebase.auth().signOut()
+                    .then(() => {
+                    // Sign-out successful
+                        console.log("User signed out");
+                    })
+                    .catch((error) => {
+                    // An error occurred
+                        console.error("Sign-out error:", error);
+                    });
+            }
+        });
 
        
     </script>
