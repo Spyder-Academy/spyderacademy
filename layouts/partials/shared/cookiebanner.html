@@ -1,0 +1,18 @@
+<div id="cookieConsent" class="fixed-bottom bg-dark p-3 text-center cookie-consent">
+  <div class="container">
+      <div class="d-flex justify-content-between">
+          <div class="text-light">
+              By using our site, you acknowledge that you have read and understand our <a class="text-light" href="/privacy/#cookies">Cookie Policy</a>, <a class="text-light" href="/privacy/">Privacy Policy</a>, and our <a class="text-light" href="/termsofuse/">Terms of Service</a>.
+          </div>
+          <button type="button" class="btn btn-secondary consent-button">I Agree</button>
+      </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function(){
+      $('.consent-button').click(function(){
+          $('#cookieConsent').fadeOut();
+      });
+  });
+</script>

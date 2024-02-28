@@ -175,11 +175,11 @@
     
 
     // Show the modal after a delay, only if it should be displayed
-    // setTimeout(function() {
-    //   if (shouldDisplayModal()) {
-    //     showWelcomePopup();
-    //   }
-    // }, 25000); // 25 seconds.
+    setTimeout(function() {
+      if (shouldDisplayModal()) {
+        showWelcomePopup();
+      }
+    }, 25000); // 25 seconds.
 
     // Set a cookie when the modal is closed
     $('#welcomeModal').on('hidden.bs.modal', function (e) {
