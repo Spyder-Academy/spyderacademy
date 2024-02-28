@@ -1,4 +1,4 @@
-<div id="cookieConsent" class="fixed-bottom bg-dark p-3 text-center cookie-consent">
+<div id="cookieConsent" class="fixed-bottom bg-dark p-3 text-center cookie-consent d-none">
   <div class="container">
       <div class="d-flex justify-content-between">
           <div class="text-light">
@@ -11,8 +11,32 @@
 
 <script>
   $(document).ready(function(){
-      $('.consent-button').click(function(){
-          $('#cookieConsent').fadeOut();
-      });
+
+    showCookiePopup();
+
+    $('.consent-button').click(function(){
+        $('#cookieConsent').fadeOut();
+
+        const now = new Date();
+        const expires = new Date(now.getTime() + (60 * 60 * 1000)); // Adds 1 hour to the current time, so after dismissing it, you wont see it for another hour
+        document.cookie = 'cookieConfirmClosed=true; expires=' + expires.toUTCString() + '; path=/';
+    });
+
+    function showCookiePopup(){
+      if (shouldDisplayCookieAlert())
+        $('#cookieConsent').removeClass('d-none');
+    }
+
+    // Function to check if the modal should be displayed
+    function shouldDisplayCookieAlert() {
+      const today = new Date();
+      const cookie = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('cookieConfirmClosed='))
+        ?.split('=')[1];
+
+      return cookie !== 'true'; 
+    }
+
   });
 </script>
