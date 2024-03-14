@@ -94,7 +94,7 @@ class TradeRecord {
 
                 trade.trims = trade.exit_price_max;
 
-                if (trade.ticker === "ES" || trade.ticker === "MES" || trade.ticker === "MNQ" || trade.ticker === "NQ") {
+                if (trade.ticker === "ES" || trade.ticker === "MES" || trade.ticker === "MNQ" || trade.ticker === "NQ" || trade.ticker === "RTY" || trade.ticker === "MCL" || trade.ticker === "MYM") {
                     if (trade.strike.toUpperCase().endsWith("LONG")) {
                         trade.gainsValue = (trade.exit_price_max - trade.entry_price) ;
                         trade.gainsString = trade.gainsValue.toFixed(0) + " pts"
@@ -1976,7 +1976,7 @@ class Trades {
           if (tradeTicker in ["SPY", "QQQ", "SPX"]){
             var tradeExp = new Date().toISOString().split('T')[0]; // expires today 0dte default
           }
-          else if (tradeTicker in ["MES", "ES", "MNQ", "MYM"]){
+          else if (tradeTicker in ["MES", "ES", "MNQ", "NQ", "MYM", "RTY", "MCL"]){
             var tradeExp = null // futures dont expire
           }
           else{
