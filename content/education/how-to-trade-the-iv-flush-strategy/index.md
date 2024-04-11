@@ -32,7 +32,7 @@ One of the best options strategies for trading IV Crush is the IV Flush Options 
 {{% quote %}}
   Don't Trade the IV Flush Alone.<br/>
   Join us at Spyder Academy to trade the IV Flush every day during the Earnings Season!<br/>
-  <a class="btn btn-lg btn-block btn-secondary mt-1" style="border-radius: 0.5em; max-width: 250px" href="https://whop.com/spyder-academy/?d2c=true&amp;directPlanId=plan_n9NbbxfFeIW95&amp;accessPassId=prod_45GZIGs1lRCGs&amp;a=spyderacademy">Let's Trade Together</a>
+  <a class="btn btn-lg btn-block btn-secondary mt-1" style="border-radius: 0.5em; max-width: 250px" href="https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_1qHk1cBAAhUMZ&pass=prod_45GZIGs1lRCGs&a=spyderacademy">Let's Trade Together</a>
 {{% /quote %}}
 
 ### Step 1: Find The Earnings Play Within The Implied Move

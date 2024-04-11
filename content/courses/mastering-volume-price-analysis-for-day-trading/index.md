@@ -49,5 +49,5 @@ Embark on this journey to master Volume Price Analysis and elevate your trading 
 
 Welcome aboard!
 
-<a class="btn btn-lg btn-block btn-primary" style="border-radius: 0.5em"  href="https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_n9NbbxfFeIW95&accessPassId=prod_45GZIGs1lRCGs&a=spyderacademy" >Try Spyder Academy For Free</a>
+<a class="btn btn-lg btn-block btn-primary" style="border-radius: 0.5em"  href="https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_1qHk1cBAAhUMZ&pass=prod_45GZIGs1lRCGs&a=spyderacademy" >Try Spyder Academy For Free</a>
 

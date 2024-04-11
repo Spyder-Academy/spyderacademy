@@ -86,7 +86,7 @@ menus:
 
   buttons:
     - name: "Start Learning"
-      url: "https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_n9NbbxfFeIW95&accessPassId=prod_45GZIGs1lRCGs&a=spyderacademy&_gl=1*ethzl1*_ga*MTQ2NzAwNDkzNS4xNzAxOTgzNzQw*_ga_FT7VJCMYJ5*MTcwNjQ3OTYwNi4yNC4xLjE3MDY0ODAwMTMuMC4wLjA."
+      url: "https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_1qHk1cBAAhUMZ&pass=prod_45GZIGs1lRCGs&a=spyderacademy"
       weight: 5
       pre: "btn btn-primary text-light"
 
