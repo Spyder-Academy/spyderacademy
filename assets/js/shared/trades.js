@@ -2366,7 +2366,8 @@ class Trades {
 
     try {
       let response = await $.ajax({ url: apiUrl, method: 'GET' });
-      let bondData = response.data;
+      let currentDate = new Date().toISOString().split('T')[0]; // Get current date without time
+      let bondData = response.data.filter(auction => auction.auction_date >= currentDate);
       let groupedAuctions = this.groupAuctionsByDate(bondData);
       this.renderBondCalendar(groupedAuctions);
     } catch (error) {
