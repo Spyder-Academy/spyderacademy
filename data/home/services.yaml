@@ -13,7 +13,7 @@ content:
     #     - item: "Algo Bot Alerts."
     #   button:
     #     label: "Join Free"
-    #     url: "https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_1qHk1cBAAhUMZ&pass=prod_45GZIGs1lRCGs&a=spyderacademy"
+    #     url: "https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_2qHRKoIbGU6NN&pass=prod_45GZIGs1lRCGs&a=spyderacademy"
 
     - featured: true
       title: "The Class Room"
@@ -21,8 +21,8 @@ content:
       # promotion: "7 Day FREE Trial"
       
       button:
-        label: "Start My Free Trial"
-        url: "https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_1qHk1cBAAhUMZ&pass=prod_45GZIGs1lRCGs&a=spyderacademy"
+        label: "Start Learning"
+        url: "https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_2qHRKoIbGU6NN&pass=prod_45GZIGs1lRCGs&a=spyderacademy"
 
   
     

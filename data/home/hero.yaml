@@ -11,8 +11,8 @@ content:
     url: "#mission"
 
   buttonSecondary:
-    label: "Start My 7-Day Free Trial"
-    url: "https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_1qHk1cBAAhUMZ&pass=prod_45GZIGs1lRCGs&a=spyderacademy"
+    label: "Start Learning"
+    url: "https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_2qHRKoIbGU6NN&pass=prod_45GZIGs1lRCGs&a=spyderacademy"
 
 trades:
     - ticker: "QQQ"

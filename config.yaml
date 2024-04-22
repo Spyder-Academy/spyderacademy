@@ -47,6 +47,7 @@ params:
         - pinterest
         
   copyright: "© 2024 SpyderAcademy, LLC"
+  whop: "https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_2qHRKoIbGU6NN&pass=prod_45GZIGs1lRCGs&a=spyderacademy"
   postProcess: false
 
 menus:
@@ -86,7 +87,7 @@ menus:
 
   buttons:
     - name: "Start Learning"
-      url: "https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_1qHk1cBAAhUMZ&pass=prod_45GZIGs1lRCGs&a=spyderacademy"
+      url: "https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_2qHRKoIbGU6NN&pass=prod_45GZIGs1lRCGs&a=spyderacademy"
       weight: 5
       pre: "btn btn-primary text-light"
 
