@@ -18,14 +18,12 @@
         {{ partial "shared/tags.html" }}
       {{ end }}
 
-      {{ if ne .Section "education" }}
-        {{ if ne .Params.disableListPage true }}
-          <div class="row">
-            <div class="col-12">
-              <div class="card shadow p-3 mb-5 w-100 d-none" id="spyGammaChart"></div>
-            </div>
+      {{ if eq .Params.nickname "Stocks List" }}
+        <div class="row">
+          <div class="col-12">
+            <div class="card shadow p-3 mb-5 w-100 d-none" id="spyGammaChart"></div>
           </div>
-        {{ end }}
+        </div>
       {{ end }}
 
       {{ if ne .Section "education" }}

@@ -3,6 +3,7 @@ title = "Publicly Traded Stocks: A Comprehensive List"
 description = "Whether you're an experienced investor or just starting your journey into the world of stocks, our comprehensive list provides a valuable resource to explore and analyze various companies. Each stock on this list represents a unique opportunity for investment, and we've curated essential details to guide your financial decisions."
 author = "Spyder Academy"
 layout = "list"
+nickname = "Stocks List"
 +++
 
 
