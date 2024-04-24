@@ -2,13 +2,176 @@
   <section class="section blog-single py-5">
     <div class="container">
 
-      <div class="container py-0" id="instructorList">
+      
+     
+     
+
+    <div class="container">
+        <div class="card shadow border-0 my-1" style="border-radius: 15px; ">
+            <div class="row mx-0 my-1 sparkboxes">
+                <div class="col-lg-6 col-sm-12">
+                    <h1 class="m-3 mb-0" id="titleUser">SPYDER ACADEMY</h1>
+                    <div class="container my-0">
+                        <div class="row">
+                            <div class="col-12 m-0">
+                                <img class="tradeLogo" src="/images/blacklogo.png" title="All Mentors" style="width: 2em; border-radius: 1em;" onclick="selectInstructor('ALL', 'SPYDER ACADEMY');" />
+                                <img class="tradeLogo" src="/images/teachers-sith.png" title="Sith" style="width: 2em; border-radius: 1em;" onclick="selectInstructor(530657179183874070, 'SITH')"  />
+                                <img class="tradeLogo" src="/images/teachers-linksnipes.png" title="Link Snipes" style="width: 2em; border-radius: 1em;" onclick="selectInstructor(693307698229280818, 'LINK SNIPES')" />
+                                <img class="tradeLogo" src="/images/teachers-gobi.png" title="Gobi" style="width: 2em; border-radius: 1em;" onclick="selectInstructor(572158547597590538, 'GOBI')"/>
+                                <img class="tradeLogo" src="/images/teachers-mrwoofers.png" title="Mr Woofers" style="width: 2em; border-radius: 1em;" onclick="selectInstructor(958441217073483776, 'MR WOOFERS')" />
+                                <img class="tradeLogo" src="/images/teachers-pauldozer.png" title="Pauldozer" style="width: 2em; border-radius: 1em;" onclick="selectInstructor(751486945049444435, 'PAULDOZER')"  />
+                                <img class="tradeLogo" src="/images/teachers-cash.png" title="Cash" style="width: 2em; border-radius: 1em;" onclick="selectInstructor(667468315668774944, 'CASH MONEY TRADES')"/>
+                                <img class="tradeLogo" src="/images/teachers-woody.png" title="Woody" style="width: 2em; border-radius: 1em;" onclick="selectInstructor(828445309885218886, 'WOODY')" />
+                                <div class="btn btn-secondary" id="loginButton" class="text-decoration-none text-light">LOG IN</div>
+                                <div class="btn btn-secondary" id="btnSignOut" onclick="signOutUser();"  class="text-decoration-none text-light" style="display:none">SIGN OUT</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-2 col-sm-12 my-1">
+                    <div class="card  border-1 p-3" style="background-color: #FFF; ">
+                        <div class="details">
+                            <p class="small p-0 m-0">WIN RATE</p>
+                            <h4 id="winRate"></h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-sm-12 my-1">
+                    <div class="card  border-1 p-3" style="background-color: #FFF; ">
+                        <div class="details">
+                            <p class="small p-0 m-0">AVG GAIN (<span id="numTrades"></span>)</p>
+                            <h4 id="avgGain"></h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-sm-12 my-1">
+                    <div class="card  border-1 p-3" style="background-color: #FFF; ">
+                        <div class="details">
+                            <p class="small p-0 m-0">BAGS</p>
+                            <h4 id="profitFactor"></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+
+    <div class="container">
+        <div class="row" id="memberTrades">
+            <div class="col-lg-12 col-sm-12 my-1">
+                <div class="card shadow border-0 p-3" style="border-radius: 15px; ">
+                    <div class="row membersOnlyContent" id="tradeRecap">
+                        <!-- trade-card-template gets pasted into here -->
+                    </div>
+                    <div class="membersOnlyFiller card shadow border-0 p-3 justify-content-center" style="border-radius: 15px; display: none">
+                        <img src="/images/membersonly.png" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="tradeAnalytics" style="display: none">
+            
+            <div class="col-lg-6 col-sm-12 my-1">
+                <div class="card shadow border-0 p-3" style="border-radius: 15px; ">
+                    <div  id="tradeHeatmap"></div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-sm-12 my-1">
+                <div class="card shadow border-0 p-3" style="border-radius: 15px; ">
+                    <div id="tradeScoreboard"></div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-sm-12 my-1">
+                <div class="card shadow border-0 p-3" style="border-radius: 15px; ">
+                    <div id="tradeGainsBubble"></div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-sm-12 my-1">
+                <div class="card shadow border-0 p-3" style="border-radius: 15px; ">
+                    <div  id="tradeDrawdowns"></div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-sm-12 my-1">
+                <div class="card shadow border-0 p-3" style="border-radius: 15px; ">
+                    <div  id="tradeGainsDOWRadar"></div>
+                </div>
+            </div>
+
+           
+
+            <div class="col-lg-6 col-sm-12 my-1">
+                <div class="card shadow border-0 p-3" style="border-radius: 15px; ">
+                    <div class="membersOnlyFiller card shadow border-0 p-3 justify-content-center" style="border-radius: 15px; display: none">
+                        <img src="/images/membersonly.png" />
+                    </div>
+                    <div class="membersOnlyContent" id="tradeTrims"></div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-sm-12 my-1">
+                <div class="card shadow border-0 p-3" style="border-radius: 15px; ">
+
+                    <div class="membersAI card shadow border-0 p-3 justify-content-center" style="border-radius: 15px; display: none">
+                        <img src="/images/memberAI.png" />
+                    </div>
+                    <div class="membersOnlyContent" id="aiRecommendations">
+                        <h4>SPYDER AI</h4>
+ 
+                    </div>
+                    <div class="ai-template card border-1 p-3 my-2 justify-content-center d-none" style="border-radius: 15px; "></div>
+                </div>
+
+            </div>
+        </div>
+        
+    </div>
+  
+
+    <div class="col-lg-6 col-sm-12 trade-card-template d-none">
+        <div class="card  border-1  mx-0 my-1" style="border-radius: 1em;">
+            <div class="card-body p-1 tradeRow" onclick="selectContract(this);">
+                <div class="container p-0">
+                    <div class="row">
+                        <div class="col-2 m-0">
+                            <img class="tradeLogo" src="/images/logos/TSLA.png" style="width: 3em; border-radius: 2em;" />
+                        </div>
+                        <div class="col-10 px-3">
+                            <div class="row">
+                                <div class="col-8 small lh-1 fw-light text-uppercase traderName">Trader Name</div>
+                                <div class="col-4"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8 fs-3 lh-1 tradeContract">Contract</div>
+                                <div class="col-4 fs-3 lh-1 tradeGain text-end">Gains %</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8  small lh-1 tradeNotes" style="overflow: hidden; text-overflow: ellipses; white-space: nowrap;">Trade Notes</div>
+                                <div class="col-4"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="membersOnlyContent">
+                        <div class="tvChartHeader m-4 card shadow border-0 d-none" style="border-radius: 1em;"> </div>
+                        <div class="entryExitNotes small lh-1 m-4 p-3 card shadow border-0 d-none" style="border-radius: 1em; background-color: #BFE1CF;"></div>
+                    </div>
+                    <div class="membersOnlyFiller card shadow border-0 p-3 justify-content-center" style="border-radius: 15px; display: none"> <img src="/images/memberRecaps.png" /> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container py-0" id="popupDialogs">
         <!-- Each Instructor -->
         <div class="d-flex flex-row flex-nowrap pb-5 overflow-auto text-center" >
-            <div class="card shadow border-0 p-3 m-1" style="min-width: 9em; border-radius: 15px; background-color: #c00; ">
-                <div class="card-body p-0"> <strong><a href="#" id="loginButton" class="text-decoration-none text-light">LOG IN</a></strong></div>
-            </div>
-            
             <div id="loginModal" class="modal">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -165,185 +328,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="mentor card shadow border-0 p-3 m-1" style="min-width: 8em; border-radius: 15px; background-color: #29741d; ">
-                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor('ALL', 'ALL MENTORS');" class="text-decoration-none text-light">VIEW TEAM</a></strong></div>
-            </div>
-            <div class="mentor card shadow border-0 p-3 m-1 " style="min-width: 8em; border-radius: 15px; background-color: #B3B3C8; ">
-                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(530657179183874070, 'SITH')" class="text-decoration-none">SITH</a></strong></div>
-            </div>
-
-            <div class="mentor card shadow border-0 p-3 m-1" style="min-width: 8em; border-radius: 15px; background-color: #B3B3C8; ">
-                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(693307698229280818, 'LINK SNIPES')" class="text-decoration-none">LINK</a></strong></div>
-            </div>
-
-            <div class="mentor card shadow border-0 p-3 m-1" style="min-width: 8em; border-radius: 15px; background-color: #B3B3C8; ">
-                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(572158547597590538, 'GOBI')" class="text-decoration-none">GOBI</a></strong></div>
-            </div>
-
-            <div class="mentor card shadow border-0 p-3 m-1" style="min-width: 8em; border-radius: 15px; background-color: #B3B3C8; ">
-                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(958441217073483776, 'MR WOOFERS')" class="text-decoration-none">WOOFERS</a></strong></div>
-            </div>
-
-            <div class="mentor card shadow border-0 p-3 m-1" style="min-width: 8em; border-radius: 15px; background-color: #B3B3C8; ">
-                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(751486945049444435, 'PAULDOZER')" class="text-decoration-none">PAULDOZER</a></strong></div>
-            </div>
-            
-            <div class="mentor card shadow border-0 p-3 m-1 " style="min-width: 8em; border-radius: 15px; background-color: #B3B3C8; ">
-                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(667468315668774944, 'CASH MONEY TRADES')" class="text-decoration-none">CASH</a></strong></div>
-            </div>
-           
-            <div class="mentor card shadow border-0 p-3 m-1" style="min-width: 8em; border-radius: 15px; background-color: #B3B3C8; ">
-                <div class="card-body p-0"> <strong><a href="#" onclick="selectInstructor(828445309885218886, 'WOODY')" class="text-decoration-none">WOODY</a></strong></div>
-            </div>
-
-            <div id="btnSignOut" class="card shadow border-0 p-3 m-1" style="min-width: 9em; border-radius: 15px; background-color: #c00; display: none;">
-                <div class="card-body p-0"> <strong><a href="#" onclick="signOut()" class="text-decoration-none  text-light">SIGN OUT</a></strong></div>
-            </div>
-        </div>
-    </div>
-     
-     
-
-    <div class="container">
-        <div class="card shadow border-0 my-1" style="border-radius: 15px; ">
-            <div class="row mx-0 my-1 sparkboxes">
-                <div class="col-lg-6 col-sm-12">
-                    <h1 class="m-3" id="titleUser">ALL MENTORS</h1>
-                </div>
-                <div class="col-lg-2 col-sm-12 my-1">
-                    <div class="card shadow border-0 p-3" style="background-color: #BFE1CF; ">
-                        <div class="details">
-                            <p class="small p-0 m-0">WIN RATE</p>
-                            <h4 id="winRate">- %</h4>
-                        </div>
-                        <div id="winRateChart"></div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-sm-12 my-1">
-                    <div class="card shadow border-0 p-3" style="background-color: #BFE1CF; ">
-                        <div class="details">
-                            <p class="small p-0 m-0">AVG GAIN (<span id="numTrades"></span>)</p>
-                            <h4 id="avgGain">- %</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-sm-12 my-1">
-                    <div class="card shadow border-0 p-3" style="background-color: #BFE1CF; ">
-                        <div class="details">
-                            <p class="small p-0 m-0">WIN FACTOR</p>
-                            <h4 id="profitFactor">- %</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="container">
-        <div class="row" id="tradeAnalytics" style="display: none">
-            <div class="col-lg-6 col-sm-12 my-1">
-                <div class="card shadow border-0 p-3" style="border-radius: 15px; ">
-                    <div  id="tradeHeatmap"></div>
-                </div>
-            </div>
-
-            <div class="col-lg-6 col-sm-12 my-1">
-                <div class="card shadow border-0 p-3" style="border-radius: 15px; ">
-                    <div id="tradeScoreboard"></div>
-                </div>
-            </div>
-
-            <div class="col-lg-6 col-sm-12 my-1">
-                <div class="card shadow border-0 p-3" style="border-radius: 15px; ">
-                    <div id="tradeGainsBubble"></div>
-                </div>
-            </div>
-
-            <div class="col-lg-6 col-sm-12 my-1">
-                <div class="card shadow border-0 p-3" style="border-radius: 15px; ">
-                    <div  id="tradeDrawdowns"></div>
-                </div>
-            </div>
-
-            <div class="col-lg-6 col-sm-12 my-1">
-                <div class="card shadow border-0 p-3" style="border-radius: 15px; ">
-                    <div  id="tradeGainsDOWRadar"></div>
-                </div>
-            </div>
-
-           
-
-            <div class="col-lg-6 col-sm-12 my-1">
-                <div class="card shadow border-0 p-3" style="border-radius: 15px; ">
-                    <div class="membersOnlyFiller card shadow border-0 p-3 justify-content-center" style="border-radius: 15px; display: none">
-                        <img src="/images/membersonly.png" />
-                    </div>
-                    <div class="membersOnlyContent" id="tradeTrims"></div>
-                </div>
-            </div>
-
-            <div class="col-lg-6 col-sm-12 my-1">
-                <div class="card shadow border-0 p-3" style="border-radius: 15px; ">
-
-                    <div class="membersAI card shadow border-0 p-3 justify-content-center" style="border-radius: 15px; display: none">
-                        <img src="/images/memberAI.png" />
-                    </div>
-                    <div class="membersOnlyContent" id="aiRecommendations">
-                        <h4>SPYDER AI</h4>
- 
-                    </div>
-                    <div class="ai-template card shadow border-0 p-3 my-2 justify-content-center d-none" style="border-radius: 15px; "></div>
-                </div>
-
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12 col-sm-12 my-1">
-                <div class="card shadow border-0 p-3" style="border-radius: 15px; ">
-                    <div class="row membersOnlyContent" id="tradeRecap">
-                        <!-- trade-card-template gets pasted into here -->
-                    </div>
-                    <div class="membersOnlyFiller card shadow border-0 p-3 justify-content-center" style="border-radius: 15px; display: none">
-                        <img src="/images/membersonly.png" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-  
-
-    <div class="col-lg-6 col-sm-12 trade-card-template d-none">
-        <div class="card shadow border-0  mx-0 my-1" style="border-radius: 1em;">
-            <div class="card-body p-1 tradeRow" onclick="selectContract(this);">
-                <div class="container p-0">
-                    <div class="row">
-                        <div class="col-2 m-0">
-                            <img class="tradeLogo" src="/images/logos/TSLA.png" style="width: 3em; border-radius: 2em;" />
-                        </div>
-                        <div class="col-10 px-3">
-                            <div class="row">
-                                <div class="col-8 small lh-1 fw-light text-uppercase traderName">Trader Name</div>
-                                <div class="col-4"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-8 fs-3 lh-1 tradeContract">Contract</div>
-                                <div class="col-4 fs-3 lh-1 tradeGain text-end">Gains %</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-8  small lh-1 tradeNotes" style="overflow: hidden; text-overflow: ellipses; white-space: nowrap;">Trade Notes</div>
-                                <div class="col-4"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="membersOnlyContent">
-                        <div class="tvChartHeader m-4 card shadow border-0 d-none" style="border-radius: 1em;"> </div>
-                        <div class="entryExitNotes small lh-1 m-4 p-3 card shadow border-0 d-none" style="border-radius: 1em; background-color: #BFE1CF;"></div>
-                    </div>
-                    <div class="membersOnlyFiller card shadow border-0 p-3 justify-content-center" style="border-radius: 15px; display: none"> <img src="/images/memberRecaps.png" /> </div>
-                </div>
-            </div>
         </div>
     </div>
           
@@ -483,45 +467,19 @@
         });
 
 
-        
-
-        function sendPasswordResetEmail() {
-            var email = $("#txtEmail").val();
-
-            if (email == ""){
-                $('#loginErrorMessage').text("Please enter the email address you signed up with on Whop.com");
-                $('#loginErrorMessage').show();
-            }
-            else
-            {
-                firebase.auth().sendPasswordResetEmail(email)
-                    .then(() => {
-                        // Password reset email sent successfully
-                        console.log("Password reset email sent to", email);
-                        // Display a success message to the user
-                        $('#loginErrorMessage').text("Password reset email sent to " + email);
-                        $('#loginErrorMessage').show();
-                    })
-                    .catch((error) => {
-                        // An error occurred
-                        const errorCode = error.code;
-                        const errorMessage = error.message;
-                        console.error("Password reset email error:", errorCode, errorMessage);
-
-                        // Display an error message to the user
-                        var displayErrorMessage = "Failed to send password reset email"
-                        if (errorCode == "auth/user-not-found"){
-                            displayErrorMessage = "The email address entered is not a verified member."
-                        }
-                        else if (errorCode == "auth/invalid-email"){
-                            displayErrorMessage = "Please enter a valid email address."
-                        }
-
-                        $('#loginErrorMessage').text(displayErrorMessage);
-                        $('#loginErrorMessage').show();
-                    });
-            }
+        // Sign out
+        function signOutUser() {
+            firebase.auth().signOut()
+                .then(() => {
+                // Sign-out successful
+                    console.log("User signed out");
+                })
+                .catch((error) => {
+                // An error occurred
+                    console.error("Sign-out error:", error);
+                });
         }
+
 
         // Firebase configuration
         function selectInstructor(userid, title){
@@ -558,26 +516,27 @@
                     const email = user.email;
                     // Display the welcome message with the user's email
                     nickname = email.split("@")[0].toUpperCase()
-                    $("#loginButton").text(nickname)
-                    $("#loginButton").on("click", () => {
-                        selectInstructor(user.uid, nickname.toUpperCase())
-                    });
-
+                    // $("#loginButton").text(nickname)
+                    // $("#loginButton").on("click", () => {
+                    //     selectInstructor(user.uid, nickname.toUpperCase())
+                    // });
+                    $("#loginButton").hide();
                     $("#btnSignOut").show();
                     $(".mentor").show();
-                    selectInstructor("ALL", "ALL MENTORS");
+                    selectInstructor("ALL", "SPYDER ACADEMY");
 
 
                 } else {
                     // User is not logged in
                     console.log("not logged in")
+                    $("#loginButton").show();
                     $("#loginButton").text("LOG IN")
                     $("#loginButton").on("click", () => {
                         showLogin()
                     });
                     $("#btnSignOut").hide();
                     $(".mentor").hide();
-                    selectInstructor("ALL", "ALL MENTORS");
+                    selectInstructor("ALL", "SPYDER ACADEMY");
 
                 }
             });

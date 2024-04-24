@@ -272,6 +272,7 @@ class Trades {
 
     updateCharts(){
         this.userLoggedIn = firebase.auth().currentUser;
+        this.clearAll();
         this.clearRecommendations();
 
         this.renderStats();
@@ -280,6 +281,17 @@ class Trades {
         this.renderGainsBubbleChart();
         this.renderRecap();
         this.renderDrawDowns();
+    }
+
+    clearAll(){
+      // clear stats
+      $("#winRate").text("");
+      $("#avgGain").text("");
+      $('#numTrades').text("")
+      $("#profitFactor").text("");
+
+      $("#memberTrades").hide()
+      $("#tradeAnalytics").hide()
     }
 
     renderStats(){
@@ -316,7 +328,7 @@ class Trades {
             $("#winRate").text(winRate);
             $("#avgGain").text(avgGain);
             $('#numTrades').text(numTrades + "Trades")
-            $("#profitFactor").text(winFactor + " (" + numBags + "💰)");
+            $("#profitFactor").text( numBags + "💰");
 
             if (numTrades == 0){
               $("#tradeAnalytics").hide()
@@ -1536,7 +1548,7 @@ class Trades {
         $('#tradeScoreboard').empty()
 
         var scoreboardRow = $("<div class='row'></div>")
-        var scoreboardHeader = $("<div class='col-10'><h2 class='text-uppercase p-3'>" + "HIGH SCORE" + "</h2></div>")
+        var scoreboardHeader = $("<div class='col-10'><h2 class='text-uppercase p-3'>" + "LEADERBOARD" + "</h2></div>")
         scoreboardRow.append(scoreboardHeader);
         $('#tradeScoreboard').append(scoreboardRow);
 
@@ -1679,6 +1691,8 @@ class Trades {
 
     renderTradeRecap(trades, recap_date){
         $('#tradeRecap').empty()
+        $("#memberTrades").show()
+
         
         var date = new Date(recap_date);
         var formattedDate = date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
@@ -2554,12 +2568,12 @@ class Trades {
     }
   }
 
-  async fetchGEXByStrike(ticker) {
+  async fetchGEXByStrike(ticker, chartid="#gammaChart") {
 
     ticker = ticker.toUpperCase();
     const jsonData = await this._fetchGEXData(ticker);
     if (jsonData) {
-      this._renderGEXByStrike(ticker, jsonData);
+      this._renderGEXByStrike(ticker, jsonData, chartid);
     } else {
         console.log("No data to render.");
     }
@@ -2579,7 +2593,7 @@ class Trades {
     }
   }
 
-  async _renderGEXByStrike(ticker, jsonData) {
+  async _renderGEXByStrike(ticker, jsonData, chartid) {
 
     // Prepare your data for ApexCharts
     var seriesData = jsonData.map(
@@ -2692,12 +2706,12 @@ class Trades {
       }
     };
 
-    $("#gammaChart").removeClass("d-none")
-    $("#gammaChart").empty()
+    $(chartid).removeClass("d-none")
+    $(chartid).empty()
     
     if (this.chartGEX != null) this.chartGEX.destroy();
 
-    this.chartGEX = new ApexCharts(document.querySelector("#gammaChart"), options);
+    this.chartGEX = new ApexCharts(document.querySelector(chartid), options);
     this.chartGEX.render();
   }
 
