@@ -53,7 +53,7 @@ content:
     - image: "images/teachers-cash.png"
       name: "CashMoneyTrades"
       title: "Founder / Mentor"
-      text: "Primarily trades using ORB Breakouts, The System (SORBET), and VPA with a focus on data driven decision making."
+      text: "Trades ORB Breakouts, Key Levels, 90m Cycles, and VPA with a focus on data driven decision making."
       tickers: "Primarily Trades $SPY and $TSLA."
       button:
         label: "Follow on Twitter"
@@ -68,14 +68,18 @@ content:
         label: "Follow on Twitter"
         url: "https://x.com/link_0002"
 
-    - image: "images/teachers-mrwoofers.png"
-      name: "Mr Woofers"
+    - image: "images/teachers-ape.png"
+      name: "Anonymous Ape"
       title: "Mentor"
-      text: "Momentum trader primarily using supply and demand zones coupled with The System for trading."
-      tickers: "Trades SPY/SPX and Mega Cap Tech"
-      button:
-        label: "Follow on Twitter"
-        url: "https://x.com/mr_woofers"
+      text: "Technical Trader utilizing ICT principles within the 90m cycle time frames and setup confirmation via VPA and The System."
+      tickers: "Trades SPY, TSLA, QQQ and Mega Caps"
+     
+    - image: "images/teachers-u2.png"
+      name: "U2 Hibby"
+      title: "Mentor"
+      text: "Technical Analysis Trader focusing on 90m Cycle Times, The System, and Saty Ribbons"
+      tickers: "Trades SPY, TSLA, QQQ and Mega Caps"
+      
 
     - image: "images/teachers-woody.png"
       name: "Woody"
