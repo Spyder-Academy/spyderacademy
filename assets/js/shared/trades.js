@@ -1560,6 +1560,9 @@ class Trades {
 
         // Fix sorting logic
         tradesDataCopy.sort((a, b) => b.gainsValue - a.gainsValue);
+                           
+        // filter out Mr Woofers (958441217073483800) from the Leaderboard
+        tradesDataCopy = tradesDataCopy.filter(tradeEntry => tradeEntry.userid !== 958441217073483800)
 
         // Get the top 10 trades
         var tradesDataTop = tradesDataCopy.slice(0, 5);
@@ -1826,7 +1829,7 @@ class Trades {
                         function(doc) {
                             var tradeEntry = TradeRecord.from_dict(doc.id, doc.data());
 
-                            var showTrade = self.filterByUser == null || tradeEntry.userid == self.filterByUser
+                            var showTrade = (self.filterByUser == null)|| (tradeEntry.userid == self.filterByUser)
                             if (showTrade){
                                 trades.push(tradeEntry)
                             }
@@ -1853,7 +1856,7 @@ class Trades {
                 querySnapshot.forEach((doc) => {
                     const tradeEntry =  TradeRecord.from_dict(doc.id, doc.data());
 
-                    var showTrade = self.filterByUser == null || tradeEntry.userid == self.filterByUser
+                    var showTrade = (self.filterByUser == null)|| (tradeEntry.userid == self.filterByUser)
                     if (showTrade){
                         data.push(tradeEntry)
                     }
