@@ -1060,7 +1060,7 @@ class Trades {
 
           // sort the series (months) themselves
           series = series.sort((a, b) => new Date(a.name) - new Date(b.name))
-          console.log("sorted seriesData", series)
+          // console.log("sorted seriesData", series)
   
           // series.reverse();
 
@@ -1769,7 +1769,7 @@ class Trades {
 
               dateString = yesterday.setHours(0,0,0,0)
             }
-            console.log(dateString)
+            // console.log(dateString)
             
         }
 
