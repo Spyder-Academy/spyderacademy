@@ -677,6 +677,7 @@ class Trades {
 
 
     renderHeatmap(seriesData){
+        
         var options = {
           series: seriesData,
           chart: {
@@ -759,13 +760,13 @@ class Trades {
             var selectedIndex = config.dataPointIndex + 1
             var selectedSeries = config.seriesIndex
 
-            console.log(config)
+            // console.log(config)
 
             //var selectedDate = new Date(seriesData[selectedSeries].name + " " + selectedIndex + " 2023");
             var [month, year] = seriesData[selectedSeries].name.split(" ");
 
             var monthMap = {Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6, Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12}
-            console.log(monthMap[month], selectedIndex, year)
+            // console.log(monthMap[month], selectedIndex, year)
 
             var selectedDate = new Date(year, monthMap[month] - 1, selectedIndex);
 
@@ -986,18 +987,18 @@ class Trades {
       // Initialize with at least the past 6 months
       var currentDate = new Date();
       for (var i = 0; i < 7; i++) {
-          var month = currentDate.toLocaleString('default', { month: 'short' });
+          var month = currentDate.getMonth(); //toLocaleString('default', { month: 'short' });
           var year = currentDate.getFullYear();
           var date = currentDate.getDate();
-          var monthKey = month + ' ' + year; // Include the year in the key
+          var monthKey = new Date(year, month, 1); // Include the year in the key
   
           if (!seriesData.hasOwnProperty(monthKey)) {
               seriesData[monthKey] = [];
           }
-          seriesData[monthKey].push({ x: date, y: 0.5 });
+          // seriesData[monthKey].push({ x: date, y: 0.5 });
   
           // Move to the previous month
-          currentDate.setMonth(currentDate.getMonth() - 1);
+          currentDate.setMonth(currentDate.getMonth());
       }
   
       // Execute the trades query
@@ -1007,10 +1008,10 @@ class Trades {
               var isLoser = tradeEntry.gainsValue < 0;
   
               // Extract the month, date, and year from the exit date
-              var month = tradeEntry.exit_date_max.toDate().toLocaleString('default', { month: 'short' });
+              var month = tradeEntry.exit_date_max.toDate().getMonth(); //toLocaleString('default', { month: 'short' });
               var year = tradeEntry.exit_date_max.toDate().getFullYear();
               var date = tradeEntry.exit_date_max.toDate().getDate();
-              var monthKey = month + ' ' + year; // Include the year in the key
+              var monthKey = new Date(year, month, 1); // Include the year in the key
   
               // Create a unique key for each date
               if (seriesData.hasOwnProperty(monthKey)) {
@@ -1045,19 +1046,30 @@ class Trades {
               }
           });
   
+          // console.log("seriesData", seriesData)
           // Convert the seriesData object to an array of series
           var series = Object.entries(seriesData).map(([key, value]) => ({
               name: key,
-              data: value
+              data: value,
           }));
   
           // Sort the series array by date within each series
           series.forEach((seriesItem) => {
               seriesItem.data.sort((a, b) => a.x - b.x);
           });
+
+          // sort the series (months) themselves
+          series = series.sort((a, b) => new Date(a.name) - new Date(b.name))
+          console.log("sorted seriesData", series)
   
-          series.reverse();
-  
+          // series.reverse();
+
+          // Update the name property of each element in the series array
+          series.forEach((item) => {
+            item.name = new Date(item.name).toLocaleString('default', { month: 'short' }) + ' ' + new Date(item.name).getFullYear();
+          });
+         
+
           this.renderHeatmap(series);
       })
     }

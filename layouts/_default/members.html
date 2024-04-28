@@ -506,6 +506,44 @@
             }
         }
 
+        function sendPasswordResetEmail() {
+            var email = $("#txtEmail").val();
+
+            if (email == ""){
+                $('#loginErrorMessage').text("Please enter the email address you signed up with on Whop.com");
+                $('#loginErrorMessage').show();
+            }
+            else
+            {
+                firebase.auth().sendPasswordResetEmail(email)
+                    .then(() => {
+                        // Password reset email sent successfully
+                        console.log("Password reset email sent to", email);
+                        // Display a success message to the user
+                        $('#loginErrorMessage').text("Password reset email sent to " + email);
+                        $('#loginErrorMessage').show();
+                    })
+                    .catch((error) => {
+                        // An error occurred
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        console.error("Password reset email error:", errorCode, errorMessage);
+
+                        // Display an error message to the user
+                        var displayErrorMessage = "Failed to send password reset email"
+                        if (errorCode == "auth/user-not-found"){
+                            displayErrorMessage = "The email address entered is not a verified member."
+                        }
+                        else if (errorCode == "auth/invalid-email"){
+                            displayErrorMessage = "Please enter a valid email address."
+                        }
+
+                        $('#loginErrorMessage').text(displayErrorMessage);
+                        $('#loginErrorMessage').show();
+                    });
+            }
+        }
+
         let userTrades = null;
 
         $(document).ready(function() {
