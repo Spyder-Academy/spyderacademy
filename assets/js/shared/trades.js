@@ -258,7 +258,7 @@ class Trades {
     selectUser(username){
         this.filterByUser = username !== null ? username.toString() : null;
 
-        if (this.filterByUser !== null && this.filterByUser.toLowerCase() == this.userLoggedIn.uid.toLowerCase()){
+        if (this.filterByUser !== null && this.userLoggedIn !== null && this.filterByUser.toLowerCase() == this.userLoggedIn.uid.toLowerCase()){
           this.tradesCollection =  this.firestore_db.collection("users").doc(this.userLoggedIn.email).collection("trades")
           this.userMode = true;
         }
