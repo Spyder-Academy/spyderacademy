@@ -23,6 +23,7 @@
                                 <img class="tradeLogo" src="/images/teachers-woody.png" title="Woody" style="width: 2em; border-radius: 1em;" onclick="selectInstructor(828445309885218886, 'WOODY')" />
                                 <img class="tradeLogo" src="/images/teachers-ape.png" title="Anonymous Ape" style="width: 2em; border-radius: 1em;" onclick="selectInstructor(905933963971924038, 'ANONYMOUS APE')" />
                                 <img class="tradeLogo" src="/images/teachers-u2.png" title="U2 Hibby" style="width: 2em; border-radius: 1em;" onclick="selectInstructor(974635070914719745, 'U2 HIBBY')" />
+                                <img class="tradeLogo" src="/images/user-avatar.png" id="userButton" style="width: 2em; border-radius: 1em; display:none;"  />
                                 <div class="btn btn-secondary" id="loginButton" class="text-decoration-none text-light">LOG IN</div>
                                 <div class="btn btn-secondary" id="btnSignOut" onclick="signOutUser();"  class="text-decoration-none text-light" style="display:none">SIGN OUT</div>
                             </div>
@@ -213,7 +214,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Manual Trade Entry</h5>
+                            <h5 class="modal-title">New Trade</h5>
                             <button type="button" class="close" onclick="hideTradeEntry();">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -223,22 +224,7 @@
                                 <div id="tradeErrorMessage" class="alert alert-danger small" role="alert" style="display: none">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="txtTradeContract" placeholder="TSLA 230908C300">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="txtTradeEntryDate" placeholder="Entry Date">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="txtTradeEntryTime" placeholder="Entry Time">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="txtTradeNumContracts" placeholder="Num Contracts">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="txtTradePrice" placeholder="Price">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="txtTradeNotes" placeholder="Notes">
+                                    <input type="text" class="form-control" id="txtInCommand" placeholder="TSLA 200c at 6.90 exp 4/20 broke ORB High">
                                 </div>
                             </form>
                         </div>
@@ -253,7 +239,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Add Trade Execution</h5>
+                            <h5 class="modal-title">Trimmed/Exited Trade</h5>
                             <button type="button" class="close" onclick="hideTradeExecution();">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -263,39 +249,20 @@
                                 <div id="tradeExecutionErrorMessage" class="alert alert-danger small" role="alert" style="display: none">
                                 </div>
                                 <div class="form-group">
-                                    <input type="hidden" class="form-control" id="txtTradeExecutionID" value="">
-
-                                    <select class="form-control" id="txtTradeExecutionAction" value="TRIM">
-                                        <option>TRIM</option>
-                                        <option>AVG IN</option>
-                                    </select>
+                                    <input type="hidden" class="form-control" id="txtTradeExecutionID" >
+                                    <input type="text" class="form-control" id="txtOutCommand" placeholder="[Price] [Reason]">
                                 </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="txtTradeExecutionDate" placeholder="Date">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="txtTradeExecutionTime" placeholder="Time">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="txtTradeExecutionContracts" placeholder="Num Contracts">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="txtTradeExecutionPrice" placeholder="Price">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="txtTradeExecutionNotes" placeholder="Notes">
-                                </div>
+                               
                             </form>
                         </div>
                         <div class="modal-footer justify-content-center">
-                            <button type="button" class="btn btn-primary" onclick="deleteTrade()"><i class="fa fa-trash"></i> Delete</button>
                             <button type="button" class="btn btn-secondary" onclick="addExecutionTrade()">Save</button>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div id="importTradeModal" class="modal">
+            <!-- <div id="importTradeModal" class="modal">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -328,7 +295,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
           
@@ -379,16 +346,8 @@
        }
 
        function showNewTradeExecution(id, contract){
-            // Get the current date and time
-            var currentDate = new Date();
-            var currentDateString = currentDate.toISOString().split('T')[0]; // Get the date in "YYYY-MM-DD" format
-            var currentTimeString = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
-
-            $('#executeTradeModal .modal-title').text(contract);
+            $('#executeTradeModal .modal-title').text("Trimmed " + contract);
             $("#txtTradeExecutionID").val(id);
-            $("#txtTradeExecutionDate").val(currentDateString);
-            $("#txtTradeExecutionTime").val(currentTimeString);
-
             $('#executeTradeModal').show();
        }
 
@@ -398,9 +357,9 @@
        }
 
 
-       function showImportTradeModal() {
-            $('#importTradeModal').show();
-       }
+    //    function showImportTradeModal() {
+    //         $('#importTradeModal').show();
+    //    }
 
        async function addExecutionTrade(){
             var success = await userTrades.addExecutionTrade();
@@ -555,10 +514,14 @@
                     const email = user.email;
                     // Display the welcome message with the user's email
                     nickname = email.split("@")[0].toUpperCase()
-                    // $("#loginButton").text(nickname)
-                    // $("#loginButton").on("click", () => {
-                    //     selectInstructor(user.uid, nickname.toUpperCase())
-                    // });
+                    
+                    $("#userButton").text(nickname)
+                    $("#userButton").attr("title", nickname)
+                    $("#userButton").on("click", () => {
+                        selectInstructor(user.uid, nickname.toUpperCase())
+                    });
+                    $("#userButton").show(); // change this to .show() to enable user trades
+
                     $("#loginButton").hide();
                     $("#btnSignOut").show();
                     $(".mentor").show();
@@ -573,6 +536,7 @@
                     $("#loginButton").on("click", () => {
                         showLogin()
                     });
+                    $("#userButton").hide();
                     $("#btnSignOut").hide();
                     $(".mentor").hide();
                     selectInstructor("ALL", "SPYDER ACADEMY");

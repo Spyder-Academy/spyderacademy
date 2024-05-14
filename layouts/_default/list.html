@@ -3,7 +3,44 @@
     <div class="container">
       
         
-      <div class="row justify-content-center pb-5">
+      <div class="row justify-content-center">
+        {{ if eq .Params.nickname "Stocks List" }}
+        <div class="row justify-content-center">
+          <div class="col-12 pb-5">
+            {{ partial "shared/stock_ticker.html" }}
+          </div>
+          <div class="row">
+            {{ partial "shared/tickers.html" }}
+          </div>
+          <div class="row pb-5">
+            <div class="col-lg-4 col-12 mb-5">
+              {{ partial "shared/economic_calendar.html" }}
+            </div>
+            <div class="col-lg-8 col-12">
+              <div class="card shadow p-3 mb-5 w-100 d-none" id="spyGammaChart"></div>
+            </div>
+            <div class="col-12">
+              <div class="container p-3 m-0">
+                <div class="blog-content ">
+                  <h2>Upcoming Earnings</h2>
+                </div>
+                <div class="row" id="earningsCalendar">
+                  <div class="card shadow"> </div>
+                </div>
+                <div class="blog-content ">
+                  <a href="/tools/earnings-calendar">See More Upcoming Earnings</a>
+                </div>
+                <script>
+                  $(document).ready(function() {
+                     userTrades = new Trades();
+                     userTrades.fetchEarningsCalendar(2);
+                  });
+               </script>
+              </div>
+          </div>
+        </div>
+        {{ end }}
+
         <div class="col-12 col-xl-6">
           {{ with .Title }}
             <h1 class="fs-1 fw-bold text-center text-primary pb-3">{{ . }}</h1>
@@ -18,14 +55,7 @@
         {{ partial "shared/tags.html" }}
       {{ end }}
 
-      {{ if eq .Params.nickname "Stocks List" }}
-        <div class="row">
-          <div class="col-12">
-            <div class="card shadow p-3 mb-5 w-100 d-none" id="spyGammaChart"></div>
-          </div>
-        </div>
-      {{ end }}
-
+     
       {{ if ne .Section "education" }}
         <div class="row g-4 pb-5">
           {{ range (.Paginate .RegularPages).Pages.ByDate }}

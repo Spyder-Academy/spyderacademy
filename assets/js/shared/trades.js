@@ -260,7 +260,7 @@ class Trades {
 
         if (this.filterByUser !== null && this.userLoggedIn !== null && this.filterByUser.toLowerCase() == this.userLoggedIn.uid.toLowerCase()){
           this.tradesCollection =  this.firestore_db.collection("users").doc(this.userLoggedIn.email).collection("trades")
-          this.userMode = true;
+          this.userMode = false;
         }
         else{
           this.tradesCollection = this.firestore_db.collection("trades")
@@ -1377,7 +1377,12 @@ class Trades {
 
                   // link button to add an execution (eg average in, trim)
                   if (this.userMode){
-                    entryNotesEl.append("<p><a class='secondary' href='#' onclick='showNewTradeExecution(\"" + tradeEntry.tradeid + "\", \"" + tradeEntry.ticker.toUpperCase() + " " + tradeEntry.strike.toUpperCase() + "\");'>" + "Add Execution" + "</a></p>");
+                    var actionButtons = $("<p>")
+                    actionButtons.append("<a class='secondary' href='#' onclick='showNewTradeExecution(\"" + tradeEntry.tradeid + "\", \"" + tradeEntry.ticker.toUpperCase() + " " + tradeEntry.strike.toUpperCase() + "\");'>" + "<i class='fas fa-plus'></i> Exit Trade" + "</a>");
+                    actionButtons.append("<span>  |  </span");
+                    actionButtons.append("<a class='secondary' href='#' onclick='deleteTrade(\"" + tradeEntry.tradeid + "\");'>" + "<i class='fas fa-trash'></i> Delete Trade" + "</a>");
+
+                    entryNotesEl.append(actionButtons)
                   }
 
                   
@@ -1720,10 +1725,10 @@ class Trades {
         if (this.userMode){
           var buttons = $("<div class='col-2 d-flex justify-content-end'></div")
           var addTradeButton = $("<button class='btn btn-primary btn-circle m-1' title='Add Trade' onclick='showManualTradeModal();'><i class='fa fa-plus'></i></button>")
-          var importButton = $("<button class='btn btn-primary btn-circle m-1' title='Import Trades' onclick='showImportTradeModal();'><i class='fa fa-file-import'></i></button>")
+          // var importButton = $("<button class='btn btn-primary btn-circle m-1' title='Import Trades' onclick='showImportTradeModal();'><i class='fa fa-file-import'></i></button>")
           
           buttons.append(addTradeButton)
-          buttons.append(importButton)
+          // buttons.append(importButton)
           recapRow.append(buttons)
         }
 
@@ -1974,59 +1979,98 @@ class Trades {
       return year + '-' + month + '-' + day;
     }
 
+    parseEntryCommand(command) {
+      console.log("parsing", command)
+
+      // Define regex patterns to match symbol, option, price, expiration, and notes
+      const symbolPattern = /(\w+)/;
+      const optionPattern = /([\d.]+[cpCP]|LONG|SHORT|long|short)/;
+      const pricePattern = /(@|at|AT) ([\d\.]+)/i;
+      const expirationPattern = /\d+\/\d+/;
+      const notesPattern = /(@|at|AT) [\d\.]+ (.+)/i;
     
+      // Use regex to extract symbol, option, price, expiration, and notes from command
+      const symbol = command.match(symbolPattern)[1].toUpperCase();
+      const strike = command.match(optionPattern)[1].toUpperCase();
+      const price = parseFloat(command.match(pricePattern)[2]);
+    
+      const expirationMatch = command.match(expirationPattern);
+      const expirationStr = expirationMatch ? expirationMatch[0] : null;
+    
+      const notesMatch = command.match(notesPattern);
+      const notes = notesMatch ? notesMatch[2].trim() : null;
+    
+      // Parse the expiration date if it is provided, otherwise set it to default
+      let expiration;
+      if (expirationStr) {
+        // Check if expiration_str includes a year
+        if (expirationStr.split('/').length === 3) {
+          expiration = new Date(expirationStr.replace(/(\d+)\/(\d+)\/(\d+)/, '$2/$1/$3'));
+        } else {
+          // Append the current year to the expiration_str
+          const yearNow = new Date().getFullYear();
+          const tempDate = new Date(`${expirationStr}/${yearNow}`);
+          // If the tempDate has already passed, use next year; otherwise, use this year
+          if (tempDate < new Date()) {
+            expiration = new Date(`${expirationStr}/${yearNow + 1}`);
+          } else {
+            expiration = tempDate;
+          }
+        }
+
+        expiration = expiration.toISOString().slice(0, 10); // Format as "YYYY-MM-DD"
+      } else {
+        const today = new Date();
+        const todayStr = today.toISOString().slice(0, 10); // Format as "YYYY-MM-DD"
+        
+        const friday = new Date(today.getTime() + (5 - today.getDay()) % 7 * 24 * 60 * 60 * 1000);
+        friday.setHours(0, 0, 0, 0); // Set the time to 00:00:00 (midnight)
+        const fridayStr = friday.toISOString().slice(0, 10); // Format as "YYYY-MM-DD"
+
+
+        if (["SPY", "SPX", "QQQ"].includes(symbol)) {
+          expiration = todayStr;
+        } else if (["ES", "MES", "NQ", "MNQ", "RTY", "MCL"].includes(symbol)) {
+          expiration = "";
+        } else {
+          expiration = fridayStr;
+        }
+      }
+    
+      // Return the parsed values as an array
+      return {
+        "symbol": symbol, 
+        "strike": strike, 
+        "price": price, 
+        "expiration": expiration, 
+        "notes": notes
+      };
+    }
+
+    parseExitCommand(command) {
+      console.log("parsing", command)
+
+      const pricePattern = /([\d\.]+)/i;
+      const notesPattern = /[\d\.]+ (.+)/i;
+
+      const price = parseFloat(command.match(pricePattern)[1]);
+      const notesMatch = command.match(notesPattern);
+      const notes = notesMatch ? notesMatch[1].trim() : null;
+
+      return {
+        "price": price, 
+        "notes": notes
+      };
+    }
 
     addManualTrade(){
       if (this.userLoggedIn && this.userMode){
-        var tradeContract = $("#txtTradeContract").val().toUpperCase()
-        var tradeEntryDate = $("#txtTradeEntryDate").val()
-        var tradeEntryTime = $("#txtTradeEntryTime").val()
-        var tradeDatetime = new Date(tradeEntryDate + ' ' + tradeEntryTime);
-        console.log(tradeDatetime)
-
-        var tradePrice = $("#txtTradePrice").val()
-        var tradeNumCons = $("#txtTradeNumContracts").val()
-        var tradeNotes = $("#txtTradeNotes").val()
+        var tradeEntryCommand = $("#txtInCommand").val()
+        var objTrade = this.parseEntryCommand(tradeEntryCommand)
+        console.log(objTrade)
 
         var email = firebase.auth().currentUser.email
         var userid = firebase.auth().currentUser.uid
-
-        // Regular expressions to match the two possible formats
-        var format1Pattern = /^(\w+)\s+(\d+)(C|P)$/;  // Matches "TSLA 300C"
-        var format2Pattern = /^(\w+)\s+(\d{6})(C|P)(\d+)$/;  // Matches "TSLA 230908C300"
-
-        // Check if the input matches the first format
-        var format1Match = tradeContract.match(format1Pattern);
-        if (format1Match) {
-          // Assign values for format 1
-          var tradeTicker = format1Match[1];
-          var tradeStrike = format1Match[2] + format1Match[3];
-
-          if (tradeTicker in ["SPY", "QQQ", "SPX"]){
-            var tradeExp = new Date().toISOString().split('T')[0]; // expires today 0dte default
-          }
-          else if (tradeTicker in ["MES", "ES", "MNQ", "NQ", "MYM", "RTY", "MCL"]){
-            var tradeExp = null // futures dont expire
-          }
-          else{
-            var tradeExp = this.calculateFridayDate();  // Function to calculate this coming Friday date
-          }
-        } else {
-            // Check if the input matches the second format
-            var format2Match = tradeContract.match(format2Pattern);
-
-            if (format2Match) {
-                // Assign values for format 2
-                var tradeTicker = format2Match[1];
-                var expirationDate = format2Match[2];
-                var tradeStrike = format2Match[4] + format2Match[3];
-                var tradeExp = this.formatDate(expirationDate);  // Function to format date as "YYYY-MM-DD"
-            } else {
-                $('#tradeErrorMessage').text("Invalid trade contract format");
-                return false;  // Exit the function if the format is invalid
-            }
-        }
-        
 
         // Create a new entry in the database for this user's trade
         var userDocRef = this.firestore_db.collection("users").doc(email);
@@ -2034,25 +2078,25 @@ class Trades {
 
         // Define the data to be saved
         var tradeData = {
-            "entry_date": tradeDatetime,
-            "num_contracts": tradeNumCons,
-            "entry_price": tradePrice,
+            "entry_date": new Date(),
+            // "num_contracts": tradeNumCons,
+            "entry_price": objTrade.price,
             "exit_date_max": null,
             "exit_price_max": null,
-            "expiration": tradeExp,
-            "notes": tradeNotes,
-            "strike": tradeStrike,
-            "ticker": tradeTicker,
+            "expiration": objTrade.expiration,
+            "notes": objTrade.notes,
+            "strike": objTrade.strike,
+            "ticker": objTrade.symbol,
             "userid": userid,
             "username": email,
         };
 
         // create the entry record also
         var entryData = {
-          "date_time": tradeDatetime,
-          "notes": tradeNotes,
-          "price": tradePrice,
-          "num_contracts": tradeNumCons
+          "date_time": tradeData.entry_date,
+          "notes": tradeData.notes,
+          "price": tradeData.entry_price,
+          // "num_contracts": tradeNumCons
         }
 
 
@@ -2081,81 +2125,46 @@ class Trades {
           try {
               // Create the trade exit (or average in) trade record
               var tradeID = $("#txtTradeExecutionID").val();
-              var tradeExecutionAction = $("#txtTradeExecutionAction").val()
-              var tradeExecutionDate = $("#txtTradeExecutionDate").val();
-              var tradeExecutionTime = $("#txtTradeExecutionTime").val();
-              var tradeDatetime = new Date(tradeExecutionDate + ' ' + tradeExecutionTime);
-              var tradeNumCons = $("#txtTradeExecutionContracts").val();
-              var tradePrice = $("#txtTradeExecutionPrice").val();
-              var tradeNotes = $("#txtTradeExecutionNotes").val();
-  
-              if (tradeExecutionAction == "TRIM") {
-                  // Create the exit/trim record
-                  var tradeExitData = {
-                      "date_time": tradeDatetime,
-                      "notes": tradeNotes,
-                      "price": tradePrice,
-                      "num_contracts": tradeNumCons
-                  }
-  
-                  console.log("Saving trim for ", tradeID, tradeExitData)
-  
-                  var tradeDocRef = this.tradesCollection.doc(tradeID);
-                  var exitCollectionRef = tradeDocRef.collection("exits");
-  
-                  // Add the trade exit data
-                  await exitCollectionRef.add(tradeExitData);
-  
-                  // Query the exits subcollection to find the maximum exit price
-                  var exitQuery = exitCollectionRef.orderBy('price', 'desc').limit(1);
-  
-                  var querySnapshot = await exitQuery.get();
-  
-                  var maxExitPrice = null;
-                  var maxExitDate = null;
-  
-                  querySnapshot.forEach(function(exitDoc) {
-                      maxExitPrice = exitDoc.get('price');
-                      maxExitDate = exitDoc.get('date_time');
-                  });
-  
-                  // Update the parent document with the max exit price and date
-                  await tradeDocRef.update({
-                      exit_price_max: maxExitPrice,
-                      exit_date_max: maxExitDate
-                  });
-  
-                  console.log('Max exit price and date updated successfully');
-                  return true;
-              } else if (tradeExecutionAction == "AVG IN") {
-                  // Create the averaged in entry record
-                  // Create the exit/trim record
-                  var tradeEntryData = {
-                    "date_time": tradeDatetime,
-                    "notes": tradeNotes,
-                    "price": tradePrice,
-                    "num_contracts": tradeNumCons
-                  }
 
-                  console.log("Saving Avg In for ", tradeID, tradeEntryData)
+              var objTradeExit = this.parseExitCommand($("#txtOutCommand").val())
 
-                  var tradeDocRef = this.tradesCollection.doc(tradeID);
-                  var entryCollectionRef = tradeDocRef.collection("entries");
-
-                  // Add the trade exit data
-                  await entryCollectionRef.add(tradeEntryData);
-
-                  // Update the parent document with the entry price
-                  await tradeDocRef.update({
-                      entry_price: tradePrice
-                  });
-
-                  console.log('Entry price updated successfully');
-                  return true;
-              } else {
-                  $('#tradeExecutionErrorMessage').text("Unknown Action");
-                  return false;
+              // Create the exit/trim record
+              var tradeExitData = {
+                  "date_time": new Date(),
+                  "notes": objTradeExit.notes,
+                  "price": objTradeExit.price,
+                  // "num_contracts": tradeNumCons
               }
+
+              console.log("Saving trim for ", tradeID, objTradeExit)
+
+              var tradeDocRef = this.tradesCollection.doc(tradeID);
+              var exitCollectionRef = tradeDocRef.collection("exits");
+
+              // Add the trade exit data
+              await exitCollectionRef.add(tradeExitData);
+
+              // Query the exits subcollection to find the maximum exit price
+              var exitQuery = exitCollectionRef.orderBy('price', 'desc').limit(1);
+
+              var querySnapshot = await exitQuery.get();
+
+              var maxExitPrice = null;
+              var maxExitDate = null;
+
+              querySnapshot.forEach(function(exitDoc) {
+                  maxExitPrice = exitDoc.get('price');
+                  maxExitDate = exitDoc.get('date_time');
+              });
+
+              // Update the parent document with the max exit price and date
+              await tradeDocRef.update({
+                  exit_price_max: maxExitPrice,
+                  exit_date_max: maxExitDate
+              });
+
+              console.log('Max exit price and date updated successfully');
+              return true;
           } catch (error) {
               console.error('Error in addExecutionTrade:', error);
               return false;
@@ -2441,7 +2450,7 @@ class Trades {
   }
 
 
-  async fetchEarningsCalendar() {
+  async fetchEarningsCalendar(numDays = 5) {
     const apiUrlThisWeek = "https://production-market-api.herokuapp.com/earnings/this-week";
     const apiUrlNextWeek = "https://production-market-api.herokuapp.com/earnings/next-week";
 
@@ -2451,7 +2460,7 @@ class Trades {
       
       let earningsData = responseOne.concat(responseTwo); // Directly use the response data
 
-      await this.displayEarningsData(earningsData);
+      await this.displayEarningsData(earningsData, numDays);
       await this.updateIVData(earningsData); // Step 2: Asynchronously update with IV data
 
     } catch (error) {
@@ -2477,7 +2486,7 @@ class Trades {
     });
   }
 
-  displayEarningsCalendarSkeleton(data) {
+  displayEarningsCalendarSkeleton(data, numDays = 5) {
     let startDate = new Date();
     // If today is Sunday (0), set to Monday. If it's Saturday (6), also adjust to next Monday.
     if (startDate.getDay() === 0) {
@@ -2490,7 +2499,7 @@ class Trades {
     let weekdaysAdded = 0;
 
     // Loop until 5 weekdays have been added
-    while (weekdaysAdded < 5) {
+    while (weekdaysAdded < numDays) {
         const dayOfWeek = startDate.getDay();
         const dayName = startDate.toLocaleDateString('en-US', { weekday: 'long' });
         const formattedDate = startDate.toISOString().split('T')[0];
@@ -2526,11 +2535,12 @@ class Trades {
 
 
   
-  async displayEarningsData(data) {
-    this.displayEarningsCalendarSkeleton(data); // Display the calendar skeleton
+  async displayEarningsData(data, numDays) {
+    this.displayEarningsCalendarSkeleton(data, numDays); // Display the calendar skeleton
     this.sortEarningsData(data); // Sort the data first
   
     for (const earning of data) {
+      
       if (earning.marketCap >= 50000000000) {
         const formattedMarketCap = this.formatMarketCap(earning.marketCap);
         const whenClass = earning.when === 'post market' ? "bg-blue-light" : "";

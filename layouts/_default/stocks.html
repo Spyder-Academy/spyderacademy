@@ -3,8 +3,14 @@
 
   <section class="section blog-single py-5">
     <div class="container">
-
+      <div class="row justify-content-center">
+        <div class="col-12 pb-5">
+          {{ partial "shared/stock_ticker.html" }}
+        </div>
+      </div>
+      
       <div class="row justify-content-center pb-0">
+        
         <div class="col-12">
           {{ with .Title }}
             <h1 class="display-1 fw-bold text-center text-primary pb-3">{{ . }}</h1>
