@@ -2822,6 +2822,7 @@ class Trades {
                       color: '#fff',
                       background: '#999'
                   },
+                  orientation: 'horizontal',
                   text: 'Current Price'
               }
           }]
@@ -2850,7 +2851,7 @@ class Trades {
         title: { text: chartTitle },
         subtitle: { text: chartSubTitle },
       });
-      
+
       this.chartGEX.updateSeries([{
         data: seriesData,
       }])
