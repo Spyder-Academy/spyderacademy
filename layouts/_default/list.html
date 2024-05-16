@@ -23,10 +23,13 @@
               <div class="blog-content ">
                 <h2>Gamma Exposure</h2>
               </div>
-              <div class="card shadow p-3 mb-5 w-100 d-none" id="spyGammaChart"></div>
+              <div class="card shadow p-3 mb-5">
+                <div class="w-100 d-none"  id="spyGammaChart"></div>
+                <input type="range" class="form-range" id="gex_slider" min="0" max="16" step="1" value="16">
+              </div>
             </div>
             <div class="col-12">
-              <div class="container p-3 m-0">
+              <div class="container p-0 m-0">
                 <div class="blog-content ">
                   <h2>Upcoming Earnings</h2>
                 </div>
@@ -123,7 +126,19 @@
         $(document).ready(
           function() {
             userTrades = new Trades();
-            userTrades.fetchGEXByStrike("SPY", "#spyGammaChart");
+            userTrades.fetchGEXByStrike("SPY", "#spyGammaChart", idx=0, historicals=false);
+
+            // Get a reference to the range input element
+            const slider = document.getElementById('gex_slider');
+
+            // Add an event listener to detect changes in the range input value
+            slider.addEventListener('input', function() {
+                // Calculate the index of the snapshot to display based on the range input value
+                const selectedIndex = parseInt(slider.max) - parseInt(slider.value);
+
+                // Retrieve the corresponding snapshot data from your dataset
+                userTrades.fetchGEXByStrike("SPY", "#spyGammaChart", idx=selectedIndex, historicals=true);
+            });
           }
         );
     </script>

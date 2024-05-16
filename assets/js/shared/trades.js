@@ -249,6 +249,7 @@ class Trades {
         this.tradeGainsDOWRadar = null;
         this.chartTrims = null;
         this.chartDrawdowns = null;
+        this.snapshotGexData = null
 
         this.tradesCollection = this.firestore_db.collection("trades");
         this.userMode = false;
@@ -2507,7 +2508,7 @@ class Trades {
         // Check if the day is a weekday
         if (dayOfWeek !== 0 && dayOfWeek !== 6) {
             // Add to calendarHtml
-            calendarHtml += `<div class="row mb-3" id="earnings-${formattedDate}">`;
+            calendarHtml += `<div class="row mb-3 m-0 p-0" id="earnings-${formattedDate}">`;
             calendarHtml += ` <div class="col-12">`;
             calendarHtml += `   <div class="card shadow m-0">`;
             calendarHtml += `     <div class="card-header">${dayName} ${formattedDate}</div>`;
@@ -2541,7 +2542,7 @@ class Trades {
   
     for (const earning of data) {
       
-      if (earning.marketCap >= 50000000000) {
+      if (earning.marketCap >= 50000000000 && !earning.symbol.includes(".") && !earning.symbol.includes("-")) {
         const formattedMarketCap = this.formatMarketCap(earning.marketCap);
         const whenClass = earning.when === 'post market' ? "bg-blue-light" : "";
         const whenIcon = earning.when === 'post market' ? "fa-moon" : "fa-sun";
@@ -2593,10 +2594,10 @@ class Trades {
     }
   }
 
-  async fetchGEXByStrike(ticker, chartid="#gammaChart") {
+  async fetchGEXByStrike(ticker, chartid="#gammaChart", idx=0, historicals=false) {
 
     ticker = ticker.toUpperCase();
-    const jsonData = await this._fetchGEXData(ticker);
+    const jsonData = await this._fetchGEXData(ticker, idx, historicals);
     if (jsonData) {
       this._renderGEXByStrike(ticker, jsonData, chartid);
     } else {
@@ -2604,21 +2605,108 @@ class Trades {
     }
   }
 
-  async _fetchGEXData(ticker) {
-    const url = `https://us-central1-spyder-academy.cloudfunctions.net/gex?ticker=${ticker}`;
+  async _fetchGEXData(ticker, idx=0, historicals=false) {
+
+    if (!historicals){
+      var url = `https://us-central1-spyder-academy.cloudfunctions.net/gex?ticker=${ticker}`;
+      
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const responseData = await response.json();
+        var data = responseData
+        var timestamp = ""
+
+
+        return {
+          "data": data,
+          "timestamp": timestamp
+        };
+
+      } catch (error) {
+          console.error("Could not fetch data:", error);
+      }
+    }
+    else{
+      var url = `https://us-central1-spyder-academy.cloudfunctions.net/gex_snapshots?ticker=${ticker}`;
+      try {
+        if (this.snapshotGexData == null)
+        {
+          const response = await fetch(url);
+          if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const responseData = await response.json();
+          this.snapshotGexData = responseData
+        }
+       
+        var data = {}
+        var timestamp = ""
+
+        if (this.snapshotGexData[idx] != null){
+          data = this.snapshotGexData[idx]["data"]
+          timestamp = this.snapshotGexData[idx]["timestamp"]
+        }
+        else{
+          data = this.snapshotGexData[this.snapshotGexData.length - 1]["data"]
+          timestamp = this.snapshotGexData[this.snapshotGexData.length - 1]["timestamp"]
+        }
+
+        return {
+          "data": data,
+          "timestamp": timestamp
+        };
+
+      } catch (error) {
+          console.error("Could not fetch data:", error);
+      }
+    }
+
+
+
     try {
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data = await response.json();
-        return data;
+        const responseData = await response.json();
+        var data = responseData
+        var timestamp = ""
+
+        if (historicals){
+          this.snapshotGexData = data
+        }
+
+        // change this to return data at index, where 0 is the latest data.
+
+        if (historicals){
+          if (responseData[idx] != null){
+            data = this.snapshotGexData[idx]["data"]
+            timestamp = this.snapshotGexData[idx]["timestamp"]
+          }
+          else{
+            data = responseData[responseData.length - 1]["data"]
+            timestamp = responseData[responseData.length - 1]["timestamp"]
+          }
+        }
+       
+
+        return {
+          "data": data,
+          "timestamp": timestamp
+        };
+
     } catch (error) {
         console.error("Could not fetch data:", error);
     }
   }
 
-  async _renderGEXByStrike(ticker, jsonData, chartid) {
+  async _renderGEXByStrike(ticker, gexData, chartid) {
+
+    const jsonData = gexData["data"]
+    const timestamp = gexData["timestamp"]
 
     // Prepare your data for ApexCharts
     var seriesData = jsonData.map(
@@ -2731,14 +2819,31 @@ class Trades {
       }
     };
 
-    $(chartid).removeClass("d-none")
-    $(chartid).empty()
     
-    if (this.chartGEX != null) this.chartGEX.destroy();
+    
+    if (this.chartGEX == null) {
+      $(chartid).removeClass("d-none")
+      $(chartid).empty()
 
-    this.chartGEX = new ApexCharts(document.querySelector(chartid), options);
-    this.chartGEX.render();
+      // this.chartGEX.destroy();
+      this.chartGEX = new ApexCharts(document.querySelector(chartid), options);
+      this.chartGEX.render();
+    }
+    else{
+
+      this.chartGEX.updateSeries([{
+        data: seriesData
+      }])
+
+      this.chartGEX.updateOptions({
+        title: {
+            text: ticker.toUpperCase() + " Gamma Exposure By Strike - " + timestamp
+        }
+      });
+    }
+
   }
+
 
   async fetchGEXOverlay(ticker, expectedMove = null) {
     ticker = ticker.toUpperCase();
