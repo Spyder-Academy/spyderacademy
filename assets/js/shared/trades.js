@@ -2846,15 +2846,18 @@ class Trades {
       this.chartGEX.render();
     }
     else{
-
-      this.chartGEX.updateSeries([{
-        data: seriesData
-      }])
-
       this.chartGEX.updateOptions({
         title: { text: chartTitle },
-        subtitle: { text: chartSubTitle }
+        subtitle: { text: chartSubTitle },
       });
+      
+      this.chartGEX.updateSeries([{
+        data: seriesData,
+      }])
+
+     
+
+      
     }
 
   }
