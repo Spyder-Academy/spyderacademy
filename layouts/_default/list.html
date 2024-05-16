@@ -126,7 +126,7 @@
         $(document).ready(
           function() {
             userTrades = new Trades();
-            userTrades.fetchGEXByStrike("SPY", "#spyGammaChart", idx=0, historicals=false);
+            userTrades.fetchGEXByStrike("SPY", "#spyGammaChart", idx=0, historicals=true);
 
             // Get a reference to the range input element
             const slider = document.getElementById('gex_slider');

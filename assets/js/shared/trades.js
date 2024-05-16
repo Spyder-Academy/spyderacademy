@@ -2740,8 +2740,23 @@ class Trades {
     $(".largestGammaLevelText").text("$" + maxGEXItem.Strike.toFixed(2));
     $(".gammaOutlook").text(bearbull);
 
+    var formattedTimestampStr = ""
+    if (timestamp != ""){
+      formattedTimestampStr = (new Date(timestamp)).toLocaleString('en-US', {
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true
+      })
 
+      formattedTimestampStr += " ET"
+    }
 
+    var chartTitle =  ticker.toUpperCase() + " Gamma Exposure By Strike"
+    var chartSubTitle = formattedTimestampStr
 
     var options = {
       chart: {
@@ -2773,7 +2788,8 @@ class Trades {
       dataLabels: {
         enabled: false,
       },
-      title: { text: ticker.toUpperCase() + " Gamma Exposure By Strike"},
+      title: { text: chartTitle},
+      subtitle: { text: chartSubTitle },
       xaxis: {
           type: 'category',
           title: {
@@ -2836,9 +2852,8 @@ class Trades {
       }])
 
       this.chartGEX.updateOptions({
-        title: {
-            text: ticker.toUpperCase() + " Gamma Exposure By Strike - " + timestamp
-        }
+        title: { text: chartTitle },
+        subtitle: { text: chartSubTitle }
       });
     }
 
