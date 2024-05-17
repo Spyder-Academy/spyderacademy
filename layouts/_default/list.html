@@ -63,7 +63,35 @@
                   });
                </script>
               </div>
+            </div>
           </div>
+
+          <div class="row pb-5">
+            <div class="col-12">
+              <div class="container p-0 m-0">
+                <div class="blog-content ">
+                  <h2>Trade Ideas</h2>
+                </div>
+                <div class="container">
+                  <div class="row justify-content-center">
+                    <div class="col-lg-4 col-12 shadow p-0 m-0 justify-content-center" style="border-radius: 15px">
+                      <a class="twitter-timeline" height="800" href="https://twitter.com/TrendSpider?ref_src=twsrc%5Etfw">Charts by TrendSpider</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    </div>
+                    <div class="col-lg-4 col-12 justify-content-center">
+                    </div>
+                    <div class="col-lg-4 col-12 justify-content-center">
+                    </div>
+                  </div>
+                </div>
+                <script>
+                  $(document).ready(function() {
+                     userTrades = new Trades();
+                     userTrades.fetchEarningsCalendar(2);
+                  });
+               </script>
+              </div>
+          </div>
+
         </div>
         {{ end }}
 
@@ -142,6 +170,17 @@
     <script>
         $(document).ready(
           function() {
+            queryString = window.location.search;
+
+            // Check if the query string contains the "tvwidgetsymbol" parameter
+            if (queryString.includes("tvwidgetsymbol")) {
+                // Extract the value of the "tvwidgetsymbol" parameter from the query string
+                symbol = queryString.slice(1).split("&")[0].split("=")[1]
+                symbol = symbol.split("%3A")[1]
+                window.location = "/stocks/" + symbol.toLowerCase()
+            }
+
+            
             userTrades = new Trades();
             userTrades.fetchGEXByStrike("SPY", "#spyGammaChart", idx=0, historicals=true);
 

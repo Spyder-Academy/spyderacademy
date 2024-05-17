@@ -2683,6 +2683,19 @@ class Trades {
     let maxGEXItem = jsonData.reduce((prev, current) => {
       return (Math.abs(prev.GEX) > Math.abs(current.GEX)) ? prev : current;
     });
+    // Find the item with the lowest GEX value
+    let minGEXItem = jsonData.reduce((prev, current) => {
+      return ((prev.GEX) < (current.GEX)) ? prev : current;
+    });
+
+    let maxX = jsonData.reduce((prev, current) => {
+      return ((prev.Strike) > (current.Strike)) ? prev : current;
+    });
+    // Find the item with the lowest GEX value
+    let minX = jsonData.reduce((prev, current) => {
+      return (prev.Strike) < (current.Strike) ? prev : current;
+    });
+
     let netGEX = jsonData.reduce((acc, item) => acc + item.GEX, 0);
 
     var currentSpotPrice = jsonData[0].Spot;
@@ -2760,12 +2773,16 @@ class Trades {
             formatter: function (x) {
               return "$" + x.toFixed(0) ;
             }
-          }
+          },
+          min: minX.Strike,
+          max: maxX.Strike
       },
       yaxis: {
           title: {
               text: 'Gamma Exposure (Bn$/%)'
           },
+          min: minGEXItem.GEX * 1.5,
+          max: maxGEXItem.GEX * 1.5,
           forceNiceScale: true,
           labels: {
             formatter: function (y) {
