@@ -2370,35 +2370,6 @@ class Trades {
       console.error('Error fetching data from the API:', error);
     }
   }
-
-  async fetchIVMove(ticker) {
-    var sentTicker = ticker.toUpperCase();
-    var url = "https://api.options.ai/expected-moves/" + sentTicker;
-
-    try {
-      let response = await $.ajax({url: url, method: 'GET'});
-      if (response && response.length > 0) {
-        var item = response[0];
-        var movePercent = (item.movePercent * 100).toFixed(2) + '%';
-        var moveAmount = '$' + item.moveAmount.toFixed(2);
-        var rangeTop = '$' + item.moveUpper.toFixed(2);
-        var rangeBottom = '$' + item.moveLower.toFixed(2);
-        var ivRange = rangeBottom + ' - ' + rangeTop;
-        var closePrice = '$' + (item.moveLower + item.moveAmount).toFixed(2);
-
-        return {
-          movePercent: movePercent, 
-          moveAmount: moveAmount, 
-          rangeTop: rangeTop, 
-          rangeBottom: rangeBottom, 
-          ivRange: ivRange, 
-          closePrice: closePrice
-        };
-      } 
-    } catch (error) {
-      console.error('Error fetching data from the API:', error);
-    }
-  }
   
   async fetchBondAuctions() {
     const apiUrl = "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/upcoming_auctions?fields=security_term,security_type,offering_amt,auction_date&sort=auction_date&format=json";
@@ -2452,15 +2423,11 @@ class Trades {
 
 
   async fetchEarningsCalendar(numDays = 5) {
-    const apiUrlThisWeek = "https://production-market-api.herokuapp.com/earnings/this-week";
-    const apiUrlNextWeek = "https://production-market-api.herokuapp.com/earnings/next-week";
+    const apiUrl = "https://us-central1-spyder-academy.cloudfunctions.net/earnings_calendar";
 
     try {
-      let responseOne = await $.ajax({ url: apiUrlThisWeek, method: 'GET' });
-      let responseTwo = await $.ajax({ url: apiUrlNextWeek, method: 'GET' });
+      let earningsData = await $.ajax({ url: apiUrl, method: 'GET' });
       
-      let earningsData = responseOne.concat(responseTwo); // Directly use the response data
-
       await this.displayEarningsData(earningsData, numDays);
       await this.updateIVData(earningsData); // Step 2: Asynchronously update with IV data
 
@@ -2487,57 +2454,72 @@ class Trades {
     });
   }
 
-  displayEarningsCalendarSkeleton(data, numDays = 5) {
-    let startDate = new Date();
-    // If today is Sunday (0), set to Monday. If it's Saturday (6), also adjust to next Monday.
-    if (startDate.getDay() === 0) {
-        startDate.setDate(startDate.getDate() + 1); // Next day (Monday)
-    } else if (startDate.getDay() === 6) {
-        startDate.setDate(startDate.getDate() + 2); // Skip to Monday
-    }
-
+  displayEarningsCalendarSkeleton(data) {
     let calendarHtml = '';
-    let weekdaysAdded = 0;
 
-    // Loop until 5 weekdays have been added
-    while (weekdaysAdded < numDays) {
-        const dayOfWeek = startDate.getDay();
-        const dayName = startDate.toLocaleDateString('en-US', { weekday: 'long' });
-        const formattedDate = startDate.toISOString().split('T')[0];
+    // Get list of unique dates from data
+    const earningsDateList = [...new Set(data.map(item => item.date))];
 
-        // Check if the day is a weekday
-        if (dayOfWeek !== 0 && dayOfWeek !== 6) {
-            // Add to calendarHtml
-            calendarHtml += `<div class="row mb-3 m-0 p-0" id="earnings-${formattedDate}">`;
-            calendarHtml += ` <div class="col-12">`;
-            calendarHtml += `   <div class="card shadow m-0">`;
-            calendarHtml += `     <div class="card-header">${dayName} ${formattedDate}</div>`;
-            calendarHtml += `     <div class="card-body" id="earnings-data-${formattedDate}">`;
-            calendarHtml += `       <div class="row">`;
-            calendarHtml += `         <div class="col-lg-2 col-6 fw-bold">Symbol</div>`;
-            calendarHtml += `         <div class="col-lg-2 col-6 fw-bold d-none d-md-block">Market Cap</div>`;
-            calendarHtml += `         <div class="col-lg-3 col-6 fw-bold">Implied Move</div>`;
-            calendarHtml += `         <div class="col-lg-4 col-6 fw-bold d-none d-md-block">Bull/Bear Range</div>`;
-            calendarHtml += `         <div class="col-lg-1 col-6 fw-bold d-none d-md-block"></div>`;      
-            calendarHtml += `       </div>`;
-            calendarHtml += `     </div>`;
-            calendarHtml += `   </div>`;
-            calendarHtml += ` </div>`;
-            calendarHtml += `</div>`;
-            weekdaysAdded++; // Only increment on weekdays
+    // Get today's date
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0); // Set to beginning of the day in UTC
+
+    // Loop to show each unique date in data
+    for (const earningsDate of earningsDateList) {
+        const earningsDt = new Date(earningsDate);
+        earningsDt.setUTCHours(0, 0, 0, 0); // Set to beginning of the day in UTC
+
+        const dayName = earningsDt.toLocaleDateString('en-US', { weekday: 'long' });
+        const formattedDate = earningsDt.toISOString().split('T')[0];
+
+        // Check if the date is in the past
+        if (earningsDt < today) {
+          continue; // Skip dates in the past
         }
 
-        // Always move to the next day
-        startDate.setDate(startDate.getDate() + 1);
+        // Check if the day is a weekday
+        calendarHtml += `<div class="row mb-3 m-0 p-0" id="earnings-${formattedDate}">`;
+        calendarHtml += ` <div class="col-12">`;
+        calendarHtml += `   <div class="card shadow m-0">`;
+        calendarHtml += `     <div class="card-header">${dayName} ${formattedDate}</div>`;
+        calendarHtml += `     <div class="card-body" id="earnings-data-${formattedDate}">`;
+        calendarHtml += `       <div class="row">`;
+        calendarHtml += `         <div class="col-lg-2 col-6 fw-bold">Symbol</div>`;
+        calendarHtml += `         <div class="col-lg-2 col-6 fw-bold d-none d-md-block">Market Cap</div>`;
+        calendarHtml += `         <div class="col-lg-3 col-6 fw-bold">Implied Move</div>`;
+        calendarHtml += `         <div class="col-lg-4 col-6 fw-bold d-none d-md-block">Bull/Bear Range</div>`;
+        calendarHtml += `         <div class="col-lg-1 col-6 fw-bold d-none d-md-block"></div>`;      
+        calendarHtml += `       </div>`;
+        calendarHtml += `     </div>`;
+        calendarHtml += `   </div>`;
+        calendarHtml += ` </div>`;
+        calendarHtml += `</div>`;
+    }
+
+    if (calendarHtml == ""){
+      calendarHtml += `<div class="row mb-3 m-0 p-0" id="earnings-empty">`;
+      calendarHtml += ` <div class="col-12">`;
+      calendarHtml += `   <div class="card shadow m-0">`;
+      calendarHtml += `     <div class="card-body" id="earnings-data-empty">`;
+      calendarHtml += `       <div class="row">`;
+      calendarHtml += `         <div class="col-12">No More Major Earnings Scheduled This Week</div>`;
+      calendarHtml += `       </div>`;
+      calendarHtml += `     </div>`;
+      calendarHtml += `   </div>`;
+      calendarHtml += ` </div>`;
+      calendarHtml += `</div>`;
     }
 
     $('#earningsCalendar').html(calendarHtml);
   }
 
+  
+
 
   
   async displayEarningsData(data, numDays) {
-    this.displayEarningsCalendarSkeleton(data, numDays); // Display the calendar skeleton
+    console.log("display Earnings Data", data)
+    this.displayEarningsCalendarSkeleton(data); // Display the calendar skeleton
     this.sortEarningsData(data); // Sort the data first
   
     for (const earning of data) {
@@ -2546,9 +2528,10 @@ class Trades {
         const formattedMarketCap = this.formatMarketCap(earning.marketCap);
         const whenClass = earning.when === 'post market' ? "bg-blue-light" : "";
         const whenIcon = earning.when === 'post market' ? "fa-moon" : "fa-sun";
+        const symbol = earning.symbol.toLowerCase()
   
         let earningsEntryHtml = `<div class="row ${whenClass} py-2" style="border-bottom: 1px solid rgba(0,0,0,0.3);" id="earning-${earning.symbol}">`;
-        earningsEntryHtml += ` <div class="col-lg-2 col-6 ">${earning.symbol}</div>`;
+        earningsEntryHtml += ` <div class="col-lg-2 col-6 "><a href="/stocks/${symbol}/">${earning.symbol}</a></div>`;
         earningsEntryHtml += ` <div class="col-lg-2 col-6  d-none d-md-block">${formattedMarketCap}</div>`;
         earningsEntryHtml += ` <div class="col-lg-3 col-6 " id="iv-move-${earning.symbol}">Loading...</div>`;
         earningsEntryHtml += ` <div class="col-lg-4 col-6  d-none d-md-block" id="iv-range-${earning.symbol}"></div>`; // Placeholder for IV range
@@ -2565,32 +2548,16 @@ class Trades {
       // Parse the earning's date string to a Date object
       let earningDate = new Date(earning.date);
 
-      // Get today's date without the time part
-      let today = new Date();
-      today.setHours(0, 0, 0, 0);
-
-      // Calculate yesterday and tomorrow's dates based on today
-      let yesterday = new Date(today);
-      yesterday.setDate(today.getDate() - 1);
-
-      let tomorrow = new Date(today);
-      tomorrow.setDate(today.getDate() + 1);
-
-      if (earning.marketCap >= 50000000000 && earningDate >= yesterday && earningDate <= tomorrow) {
-        const iv = await this.fetchIVMove(earning.symbol); // Fetch data asynchronously
-        if (iv && iv.movePercent != "0.00%"){
-          $(`#iv-move-${earning.symbol}`).text(`${iv.movePercent} (${iv.moveAmount})`); // Update IV data
-          $(`#iv-range-${earning.symbol}`).text(`${iv.rangeBottom} - ${iv.rangeTop}`);  // Update IV data
-        }
-        else{
-          $(`#iv-move-${earning.symbol}`).text(`N/A`); // Update IV data
-          $(`#iv-range-${earning.symbol}`).text(`N/A`);  // Update IV data
-        }
+      const iv = earning.implied_move
+      if (iv ){
+        $(`#iv-move-${earning.symbol}`).text(`${(iv.percent * 100).toFixed(2)}% ($${iv.amount.toFixed(2)})`); // Update IV data
+        $(`#iv-range-${earning.symbol}`).text(`$${iv.lower.toFixed(2)} - $${iv.upper.toFixed(2)}`);  // Update IV data
       }
       else{
-        $(`#iv-move-${earning.symbol}`).text(`TBD`); // Update IV data
-        $(`#iv-range-${earning.symbol}`).text(`TBD`);  // Update IV data
+        $(`#iv-move-${earning.symbol}`).text(`N/A`); // Update IV data
+        $(`#iv-range-${earning.symbol}`).text(`N/A`);  // Update IV data
       }
+     
     }
   }
 
