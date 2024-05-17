@@ -2353,7 +2353,7 @@ class Trades {
 
         // Update the HTML elements
         $('.movePercent').text(movePercent);
-        $('.moveAmount').text("(" + moveAmount + ")");
+        $('.moveAmount').text(moveAmount);
         $('.ivRange').text(ivRange);
         $('.closePrice').text(closePrice);
         $('.bullRange').text("$" + item.moveUpper.toFixed(2));

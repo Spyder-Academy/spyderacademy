@@ -36,7 +36,7 @@
             <div class="row">
               <div class="col-4">
                   <div id="movePercentTitle">Expected Move</div>
-                  <span class="movePercent"></span> <span class="moveAmount"> </span>
+                  <span class="movePercent"></span> (<span class="moveAmount"> </span>)
               </div>
               <div class="col-4">
                   <div id="closePriceTitle">Last Close Price</div>
@@ -52,8 +52,21 @@
     </div>
 
     <div class="row justify-content-center pb-5">
-      <div class="card shadow p-3 mb-5 w-100 d-none" id="gammaChart"></div>
-      <div class="card shadow p-3 mb-5 w-100 d-none" id="gammaChartOverlay"></div>
+      <div class="col-12">
+        <div class="blog-content ">
+          <h2>Gamma Exposure</h2>
+        </div>
+        <div class="card shadow p-3 mb-5">
+          <div class="w-100 d-none"  id="gammaChart"></div>
+          <input type="range" class="form-range" id="gex_slider" min="0" max="16" step="1" value="16">
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="card shadow p-3 mb-5">
+          <div class="w-100 d-none"  id="gammaChartOverlay"></div>
+        </div>
+      </div>
     </div>  
       
     <section class="section problem p-3 my-5" style="background-color: #313131; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);">
@@ -62,9 +75,8 @@
           <div class="col-12 justify-content-center">
             <div class="card d-flex flex-row align-items-start border-0 p-5  justify-content-center  text-center"  style="background-color: #313131;">
               <span class="card-text text-light fs-3">
-                The Options Market has priced in an expected move on {{ .Page.Params.ticker }} of <span class="movePercent"></span>.<br/>
-                The Bulls want to see <span class="bullRange"></span>, while the Bears are betting on <span class="bearRange"></span>.<br/> 
-                The largest Gamma Exposure Level on {{ .Page.Params.ticker }} is currently at <span class="largestGammaLevelText"></span>, with options traders positioned with a <span class="gammaOutlook"></span> outlook on the stock based on the Net Gamma.
+                The largest Gamma Level on {{ .Page.Params.ticker }} is currently at <span class="largestGammaLevelText"></span>, with Net <span class="gammaOutlook"></span> positioning.<br/>
+                Bulls want to see <span class="bullRange"></span>, while Bears are betting on <span class="bearRange"></span>, offering a <span class="moveAmount"></span> range.<br/> 
               </span>
             </div>
           </div>
@@ -87,7 +99,19 @@
            userTrades = new Trades();
            
            var ticker = {{ .Page.Params.ticker }};
-           userTrades.fetchGEXByStrike(ticker);
+           userTrades.fetchGEXByStrike(ticker, "#gammaChart", idx=0, historicals = true);
+
+           // Get a reference to the range input element
+           const slider = document.getElementById('gex_slider');
+
+          // Add an event listener to detect changes in the range input value
+          slider.addEventListener('input', function() {
+              // Calculate the index of the snapshot to display based on the range input value
+              const selectedIndex = parseInt(slider.max) - parseInt(slider.value);
+
+              // Retrieve the corresponding snapshot data from your dataset
+              userTrades.fetchGEXByStrike(ticker, "#gammaChart", idx=selectedIndex, historicals=true);
+          });
 
           // Use an async IIFE (Immediately Invoked Function Expression) to use await
           (async function() {
