@@ -2429,7 +2429,6 @@ class Trades {
       let earningsData = await $.ajax({ url: apiUrl, method: 'GET' });
       
       await this.displayEarningsData(earningsData, numDays);
-      await this.updateIVData(earningsData); // Step 2: Asynchronously update with IV data
 
     } catch (error) {
       console.error('Error fetching earnings data:', error);
@@ -2486,8 +2485,9 @@ class Trades {
         calendarHtml += `       <div class="row">`;
         calendarHtml += `         <div class="col-lg-2 col-6 fw-bold">Symbol</div>`;
         calendarHtml += `         <div class="col-lg-2 col-6 fw-bold d-none d-md-block">Market Cap</div>`;
-        calendarHtml += `         <div class="col-lg-3 col-6 fw-bold">Implied Move</div>`;
-        calendarHtml += `         <div class="col-lg-4 col-6 fw-bold d-none d-md-block">Bull/Bear Range</div>`;
+        calendarHtml += `         <div class="col-lg-2 col-6 fw-bold">Implied Move</div>`;
+        calendarHtml += `         <div class="col-lg-3 col-6 fw-bold d-none d-md-block">Bull/Bear Range</div>`;
+        calendarHtml += `         <div class="col-lg-2 col-6 fw-bold d-none d-md-block">Current Price</div>`;
         calendarHtml += `         <div class="col-lg-1 col-6 fw-bold d-none d-md-block"></div>`;      
         calendarHtml += `       </div>`;
         calendarHtml += `     </div>`;
@@ -2524,40 +2524,34 @@ class Trades {
   
     for (const earning of data) {
       
-      if (earning.marketCap >= 50000000000 && !earning.symbol.includes(".") && !earning.symbol.includes("-")) {
+      if (earning.marketCap >= 50000000000) {
         const formattedMarketCap = this.formatMarketCap(earning.marketCap);
         const whenClass = earning.when === 'post market' ? "bg-blue-light" : "";
         const whenIcon = earning.when === 'post market' ? "fa-moon" : "fa-sun";
         const symbol = earning.symbol.toLowerCase()
-  
+        
+        var implied_move = "N/A"
+        var implied_range = "N/A"
+        var flushable = ""
+        const iv = earning.implied_move
+        if (iv){
+          implied_move = "$" + (iv.percent * 100).toFixed(2) + "% ($" + iv.amount.toFixed(2) + ")"
+          implied_range = "$" + iv.lower.toFixed(2) + " - $" + iv.upper.toFixed(2)
+          flushable =  earning.current_price > iv.lower && earning.current_price < iv.upper ? "<span title='IV Flush Candidate'>💰</span>" : "";
+        }
+
+
         let earningsEntryHtml = `<div class="row ${whenClass} py-2" style="border-bottom: 1px solid rgba(0,0,0,0.3);" id="earning-${earning.symbol}">`;
         earningsEntryHtml += ` <div class="col-lg-2 col-6 "><a href="/stocks/${symbol}/">${earning.symbol}</a></div>`;
         earningsEntryHtml += ` <div class="col-lg-2 col-6  d-none d-md-block">${formattedMarketCap}</div>`;
-        earningsEntryHtml += ` <div class="col-lg-3 col-6 " id="iv-move-${earning.symbol}">Loading...</div>`;
-        earningsEntryHtml += ` <div class="col-lg-4 col-6  d-none d-md-block" id="iv-range-${earning.symbol}"></div>`; // Placeholder for IV range
+        earningsEntryHtml += ` <div class="col-lg-2 col-6 " id="iv-move-${earning.symbol}">${implied_move}</div>`;
+        earningsEntryHtml += ` <div class="col-lg-3 col-6  d-none d-md-block" id="iv-range-${earning.symbol}">${implied_range}</div>`; 
+        earningsEntryHtml += ` <div class="col-lg-2 col-6  d-none d-md-block" id="current_price-${earning.current_price}">${iv ? "$" + earning.current_price.toFixed(2) : ""} ${flushable}</div>`;
         earningsEntryHtml += ` <div class="col-lg-1 col-6  d-none d-md-block"><i class="fa-solid ${whenIcon}"></i></div>`;
         earningsEntryHtml += `</div>`;
   
         $(`#earnings-data-${earning.date}`).append(earningsEntryHtml); // Append the data to the respective day
       }
-    }
-  }
-
-  async updateIVData(data) {
-    for (const earning of data) {
-      // Parse the earning's date string to a Date object
-      let earningDate = new Date(earning.date);
-
-      const iv = earning.implied_move
-      if (iv ){
-        $(`#iv-move-${earning.symbol}`).text(`${(iv.percent * 100).toFixed(2)}% ($${iv.amount.toFixed(2)})`); // Update IV data
-        $(`#iv-range-${earning.symbol}`).text(`$${iv.lower.toFixed(2)} - $${iv.upper.toFixed(2)}`);  // Update IV data
-      }
-      else{
-        $(`#iv-move-${earning.symbol}`).text(`N/A`); // Update IV data
-        $(`#iv-range-${earning.symbol}`).text(`N/A`);  // Update IV data
-      }
-     
     }
   }
 
