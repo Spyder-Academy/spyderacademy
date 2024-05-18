@@ -2967,7 +2967,7 @@ class Trades {
     
     var options = {
       chart: {
-          height: 350,
+          height: 375,
           type: 'area',
           stacked: false,
           toolbar: false,

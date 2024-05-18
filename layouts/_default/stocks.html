@@ -56,13 +56,15 @@
         <div class="blog-content ">
           <h2>Gamma Exposure</h2>
         </div>
+      </div>
+      <div class="col-lg-6 col-12">
         <div class="card shadow p-3 mb-5">
           <div class="w-100 d-none"  id="gammaChart"></div>
           <input type="range" class="form-range" id="gex_slider" min="0" max="16" step="1" value="16">
         </div>
       </div>
 
-      <div class="col-12">
+      <div class="col-lg-6 col-12">
         <div class="card shadow p-3 m-0">
           <div class="w-100 d-none"  id="gammaChartOverlay"></div>
         </div>
@@ -93,7 +95,7 @@
     <section class="section problem p-3 " style="background-color: #313131; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);">
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-12 justify-content-center">
+          <div class="col-12 justify-content-center p-0">
             <div class="card d-flex flex-row align-items-start border-0 p-5  justify-content-center  text-center"  style="background-color: #313131;">
               <span class="card-text text-light fs-3">
                 The largest Gamma Level on {{ .Page.Params.ticker }} is currently at <span class="largestGammaLevelText"></span>, with Net <span class="gammaOutlook"></span> positioning.<br/>
@@ -105,10 +107,35 @@
       </div>
     </section>
 
-     <div class="row pb-5">
-      <div class="col-12 justify-content-center">
-        <div class="fs-5">
-          {{ partial "shared/stock-widgets" (dict "symbol" .Page.Params.ticker "Site" .Site) }}
+    <div class="row py-5">
+      <div class="col-12 justify-content-center p-0 m-0">
+        {{ partial "shared/stock-chart" (dict "symbol" .Page.Params.ticker "Site" .Site) }}
+      </div>  
+    </div>
+
+     <div class="row mb-5 shadow" style="border-radius: 15px;">
+      <div class="col-12 p-0 justify-content-center">
+        <ul class="nav nav-pills p-3 m-0" id="pills-tab" role="tablist">
+          <li class="nav-item m-0" role="presentation">
+            <button class="nav-link active" id="pills-financials-tab" data-bs-toggle="pill" data-bs-target="#pills-financials" type="button" role="tab" aria-controls="pills-financials" aria-selected="true">Financials</button>
+          </li>
+          <li class="nav-item m-0" role="presentation">
+            <button class="nav-link" id="pills-companyinfo-tab" data-bs-toggle="pill" data-bs-target="#pills-companyinfo" type="button" role="tab" aria-controls="pills-companyinfo" aria-selected="false">Company Info</button>
+          </li>
+          <li class="nav-item m-0" role="presentation">
+            <button class="nav-link" id="pills-news-tab" data-bs-toggle="pill" data-bs-target="#pills-news" type="button" role="tab" aria-controls="pills-news" aria-selected="false">News</button>
+          </li>
+        </ul>
+        <div class="tab-content " id="pills-tabContent">
+          <div class="tab-pane fade show active" id="pills-financials" role="tabpanel" aria-labelledby="pills-financials-tab">
+            {{ partial "shared/stock-financials" (dict "symbol" .Page.Params.ticker "Site" .Site) }}
+          </div>
+          <div class="tab-pane fade" id="pills-companyinfo" role="tabpanel" aria-labelledby="pills-companyinfo-tab">
+            {{ partial "shared/stock-companyinfo" (dict "symbol" .Page.Params.ticker "Site" .Site) }}
+          </div>
+          <div class="tab-pane fade" id="pills-news" role="tabpanel" aria-labelledby="pills-news-tab">
+            {{ partial "shared/stock-news" (dict "symbol" .Page.Params.ticker "Site" .Site) }}
+          </div>
         </div>
       </div>
     </div>
