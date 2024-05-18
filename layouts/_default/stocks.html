@@ -30,26 +30,26 @@
 
       </div>
 
-      <div class="row justify-content-center pb-5">
-        <div class="col-lg-6 col-12 justify-content-center">
-          <div class="card shadow p-3 mb-5 justify-content-center d-none" id="iv_results" style="border-radius: 15px; background-color: #BFE1CF; ">
-            <div class="row">
-              <div class="col-4">
-                  <div id="movePercentTitle">Expected Move</div>
-                  <span class="movePercent"></span> (<span class="moveAmount"> </span>)
-              </div>
-              <div class="col-4">
-                  <div id="closePriceTitle">Last Close Price</div>
-                  <span class="closePrice"></span>
-              </div>
-              <div class="col-4">
-                  <div id="ivRangeTitle">Expectations</div>
-                  <span class="ivRange"></span>
-              </div>
-            </div>
+      <div class="row">
+        <div class="col-12 p-0">
+          <!-- TradingView Widget BEGIN -->
+          <div class="card shadow border-0 p-0 mb-3 d-flex tradingview-widget-container" style="border-radius: 15px;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="application/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js" async>
+              {
+                "symbol" : "{{  .Page.Params.ticker }}",
+                "width" : "100%",
+                "locale" : "en",
+                "colorTheme" : "light",
+                "isTransparent" : false
+              }
+            </script>
+          </div>
+          <!-- TradingView Widget END -->
         </div>
       </div>
-    </div>
+
+      
 
     <div class="row justify-content-center pb-5">
       <div class="col-12">
@@ -63,13 +63,34 @@
       </div>
 
       <div class="col-12">
-        <div class="card shadow p-3 mb-5">
+        <div class="card shadow p-3 m-0">
           <div class="w-100 d-none"  id="gammaChartOverlay"></div>
         </div>
       </div>
     </div>  
+
+    <div class="row justify-content-center pb-5">
+      <div class="col-lg-6 col-12 justify-content-center">
+        <div class="card shadow p-3 mb-5 justify-content-center d-none" id="iv_results" style="border-radius: 15px; background-color: #BFE1CF; ">
+          <div class="row">
+            <div class="col-4">
+                <div id="movePercentTitle">Expected Move</div>
+                <span class="movePercent"></span> (<span class="moveAmount"> </span>)
+            </div>
+            <div class="col-4">
+                <div id="closePriceTitle">Last Close Price</div>
+                <span class="closePrice"></span>
+            </div>
+            <div class="col-4">
+                <div id="ivRangeTitle">Expectations</div>
+                <span class="ivRange"></span>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
       
-    <section class="section problem p-3 my-5" style="background-color: #313131; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);">
+    <section class="section problem p-3 " style="background-color: #313131; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);">
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-12 justify-content-center">
