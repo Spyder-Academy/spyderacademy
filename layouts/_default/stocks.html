@@ -125,6 +125,9 @@
           <li class="nav-item m-0" role="presentation">
             <button class="nav-link" id="pills-news-tab" data-bs-toggle="pill" data-bs-target="#pills-news" type="button" role="tab" aria-controls="pills-news" aria-selected="false">News</button>
           </li>
+          <li class="nav-item m-0" role="presentation">
+            <button class="nav-link" id="pills-signals-tab" data-bs-toggle="pill" data-bs-target="#pills-signals" type="button" role="tab" aria-controls="pills-signals" aria-selected="false">Signals</button>
+          </li>
         </ul>
         <div class="tab-content " id="pills-tabContent">
           <div class="tab-pane fade show active" id="pills-financials" role="tabpanel" aria-labelledby="pills-financials-tab">
@@ -135,6 +138,9 @@
           </div>
           <div class="tab-pane fade" id="pills-news" role="tabpanel" aria-labelledby="pills-news-tab">
             {{ partial "shared/stock-news" (dict "symbol" .Page.Params.ticker "Site" .Site) }}
+          </div>
+          <div class="tab-pane fade" id="pills-signals" role="tabpanel" aria-labelledby="pills-signals-tab">
+            {{ partial "shared/stock-signals" (dict "symbol" .Page.Params.ticker "Site" .Site) }}
           </div>
         </div>
       </div>
