@@ -2465,10 +2465,11 @@ class Trades {
 
     // Loop to show each unique date in data
     for (const earningsDate of earningsDateList) {
-        const earningsDt = new Date(earningsDate);
-        earningsDt.setUTCHours(0, 0, 0, 0); // Set to beginning of the day in UTC
+        const earningsDt = new Date(earningsDate + 'T00:00:00-05:00');
+        earningsDt.setHours(0, 0, 0, 0); // Set to beginning of the day in UTC
 
-        const dayName = earningsDt.toLocaleDateString('en-US', { weekday: 'long' });
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const dayName = earningsDt.toLocaleDateString('en-US', options);
         const formattedDate = earningsDt.toISOString().split('T')[0];
 
         // Check if the date is in the past
@@ -2476,12 +2477,14 @@ class Trades {
           continue; // Skip dates in the past
         }
 
+        console.log(formattedDate, earningsDate, earningsDt)
+
         // Check if the day is a weekday
-        calendarHtml += `<div class="row mb-3 m-0 p-0" id="earnings-${formattedDate}">`;
+        calendarHtml += `<div class="row mb-3 m-0 p-0" id="earnings-${earningsDate}">`;
         calendarHtml += ` <div class="col-12">`;
         calendarHtml += `   <div class="card shadow m-0">`;
-        calendarHtml += `     <div class="card-header">${dayName} ${formattedDate}</div>`;
-        calendarHtml += `     <div class="card-body" id="earnings-data-${formattedDate}">`;
+        calendarHtml += `     <div class="card-header">${dayName}</div>`;
+        calendarHtml += `     <div class="card-body" id="earnings-data-${earningsDate}">`;
         calendarHtml += `       <div class="row">`;
         calendarHtml += `         <div class="col-lg-2 col-6 fw-bold">Symbol</div>`;
         calendarHtml += `         <div class="col-lg-2 col-6 fw-bold d-none d-md-block">Market Cap</div>`;
