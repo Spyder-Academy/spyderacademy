@@ -2506,7 +2506,7 @@ class Trades {
         calendarHtml += `       <div class="row">`;
         calendarHtml += `         <div class="col-lg-2 col-6 fw-bold">Symbol</div>`;
         calendarHtml += `         <div class="col-lg-2 col-6 fw-bold d-none d-md-block">Market Cap</div>`;
-        calendarHtml += `         <div class="col-lg-2 col-6 fw-bold">Implied Move</div>`;
+        calendarHtml += `         <div class="col-lg-2 col-6 fw-bold" title="The Implied Move going into Earnings. This value is set at market close on the date of earnings.">Exp Earnings Move</div>`;
         calendarHtml += `         <div class="col-lg-3 col-6 fw-bold d-none d-md-block">Bull/Bear Range</div>`;
         calendarHtml += `         <div class="col-lg-2 col-6 fw-bold d-none d-md-block">Current Price</div>`;
         calendarHtml += `         <div class="col-lg-1 col-6 fw-bold d-none d-md-block"></div>`;      
