@@ -41,12 +41,15 @@
             </div>
         </div>
         <div class="col-lg-3 col-sm-6 mb-2">
-            <div class="card shadow border-0 p-3 text-center" style="border-radius: 15px; background-color: #BFE1CF; ">
+            <div class="card shadow border-0 p-3 text-center" style="border-radius: 15px; background-color: #E9E4D7; ">
                 <div class="card-body p-0">
                     <div class="container-fluid">
                     <div class="row  align-items-center ">
-                        <div class="col-12">
-                            <strong><a href="/stocks/dia/" class="text-decoration-none" title="SPY">DIA</a></strong>
+                        <div class="col-8">
+                            <strong><input id="ticketInput" name="query" autocomplete="off" class="form-control-borderless no-border-transparent-bg  text-uppercase text-center w-100" type="text" placeholder="SEARCH TICKER"></strong>
+                        </div>
+                        <div class="col-2">
+                            <button class="btn btn-sm py-0" onclick="handleSymbolSearch(); return false;">🔎</button>
                         </div>
                     </div>
                     </div>
@@ -56,3 +59,27 @@
     </div>
     {{- end }}
 {{- end }}
+
+<script>
+    // Function to handle the key press event
+    function handleKeyPress(event) {
+        // Check if the Enter key was pressed
+        if (event.key === 'Enter') {
+            handleSymbolSearch()
+        }
+    }
+
+    function handleSymbolSearch(){
+        // Get the value entered by the user
+        var symbol = document.getElementById('ticketInput').value.trim().toLowerCase();
+            
+        // Check if the symbol is not empty
+        if (symbol) {
+            // Redirect to the desired URL
+            window.location.href = "/stocks/" + symbol + "/";
+        }
+    }
+
+    // Add event listener to the input box
+    document.getElementById('ticketInput').addEventListener('keypress', handleKeyPress);
+</script>

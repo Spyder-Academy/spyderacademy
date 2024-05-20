@@ -117,7 +117,7 @@
       <div class="col-12 p-0 justify-content-center">
         <ul class="nav nav-pills p-3 m-0" id="pills-tab" role="tablist">
           <li class="nav-item m-0" role="presentation">
-            <button class="nav-link active" id="pills-financials-tab" data-bs-toggle="pill" data-bs-target="#pills-financials" type="button" role="tab" aria-controls="pills-financials" aria-selected="true">Financials</button>
+            <button class="nav-link" id="pills-financials-tab" data-bs-toggle="pill" data-bs-target="#pills-financials" type="button" role="tab" aria-controls="pills-financials" aria-selected="true">Financials</button>
           </li>
           <li class="nav-item m-0" role="presentation">
             <button class="nav-link" id="pills-companyinfo-tab" data-bs-toggle="pill" data-bs-target="#pills-companyinfo" type="button" role="tab" aria-controls="pills-companyinfo" aria-selected="false">Company Info</button>
@@ -126,11 +126,11 @@
             <button class="nav-link" id="pills-news-tab" data-bs-toggle="pill" data-bs-target="#pills-news" type="button" role="tab" aria-controls="pills-news" aria-selected="false">News</button>
           </li>
           <li class="nav-item m-0" role="presentation">
-            <button class="nav-link" id="pills-signals-tab" data-bs-toggle="pill" data-bs-target="#pills-signals" type="button" role="tab" aria-controls="pills-signals" aria-selected="false">Signals</button>
+            <button class="nav-link active" id="pills-signals-tab" data-bs-toggle="pill" data-bs-target="#pills-signals" type="button" role="tab" aria-controls="pills-signals" aria-selected="false">Signals</button>
           </li>
         </ul>
         <div class="tab-content " id="pills-tabContent">
-          <div class="tab-pane fade show active" id="pills-financials" role="tabpanel" aria-labelledby="pills-financials-tab">
+          <div class="tab-pane fade" id="pills-financials" role="tabpanel" aria-labelledby="pills-financials-tab">
             {{ partial "shared/stock-financials" (dict "symbol" .Page.Params.ticker "Site" .Site) }}
           </div>
           <div class="tab-pane fade" id="pills-companyinfo" role="tabpanel" aria-labelledby="pills-companyinfo-tab">
@@ -139,7 +139,7 @@
           <div class="tab-pane fade" id="pills-news" role="tabpanel" aria-labelledby="pills-news-tab">
             {{ partial "shared/stock-news" (dict "symbol" .Page.Params.ticker "Site" .Site) }}
           </div>
-          <div class="tab-pane fade" id="pills-signals" role="tabpanel" aria-labelledby="pills-signals-tab">
+          <div class="tab-pane fade show active" id="pills-signals" role="tabpanel" aria-labelledby="pills-signals-tab">
             {{ partial "shared/stock-signals" (dict "symbol" .Page.Params.ticker "Site" .Site) }}
           </div>
         </div>
