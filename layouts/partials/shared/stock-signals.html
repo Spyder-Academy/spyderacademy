@@ -12,7 +12,7 @@
                 <div class="card h-100  p-3 mb-5" style="border-radius: 15px;">
                     <div class="card-body">
                         <h4 class="card-title fw-semibold">{{ $symbol }} GAMMA EXPOSURE</h4>
-                        <p class="card-text text-danger"><span class="gammaOutlook"></span></p>
+                        <p class="card-text" id="signalGammaOutlook"><span class="gammaOutlook"></span></p>
                         <p class="card-text text-black-61">The largest Gamma Level is currently at <span class="largestGammaLevelText"></span>, with Net <span class="gammaOutlook"></span> positioning.<br/></p>
                     </div>
 
@@ -24,7 +24,7 @@
                         <h4 class="card-title fw-semibold">EXPECTED INTRADAY MOVE</h4>
                         <p class="card-text text-black-61" id="movePercentTitle">{{ $symbol }} Expected Move: <span class="movePercent"></p>
                         <p class="card-text text-black-61" id="ivRangeTitle">Bulls Want: <span class="bullRange"  style="color: #bfe1cf" ></p>
-                        <p class="card-text text-black-61" id="ivRangeTitle">Bears Want: <span class="bearRange text-danger" ></p>
+                        <p class="card-text text-black-61" id="ivRangeTitle">Bears Want: <span class="bearRange" style="color: #ad0000" ></p>
                     </div>
                 </div>
             </div>

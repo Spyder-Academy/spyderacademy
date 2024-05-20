@@ -2770,6 +2770,10 @@ class Trades {
 
     $(".largestGammaLevelText").text("$" + maxGEXItem.Strike.toFixed(2));
     $(".gammaOutlook").text(bearbull);
+    if (bearbull == "Bullish")
+      $("#signalGammaOutlook").attr("style", "color: #bfe1cf")
+    else
+      $("#signalGammaOutlook").attr("style", "color: #ad0000")
 
     var formattedTimestampStr = ""
     if (timestamp != ""){
