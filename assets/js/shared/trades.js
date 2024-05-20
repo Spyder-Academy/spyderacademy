@@ -2548,10 +2548,13 @@ class Trades {
             const whenClass = earning.when === 'post market' ? "bg-blue-light" : "";
             const whenIcon = earning.when === 'post market' ? "fa-moon" : "fa-sun";
             const symbol = earning.symbol.toLowerCase();
+            
 
             var implied_move = "N/A";
             var implied_range = "N/A";
             var flushable = "";
+            var current_price = earning.current_price;
+
             var iv = earning.implied_move;
             if (iv){
               implied_move = (iv.percent * 100).toFixed(2) + "%";
@@ -2564,22 +2567,16 @@ class Trades {
             earningsEntryHtml += ` <div class="col-lg-2 col-6  d-none d-md-block">${formattedMarketCap}</div>`;
             earningsEntryHtml += ` <div class="col-lg-2 col-6 " id="iv-move-${earning.symbol}">${implied_move}</div>`;
             earningsEntryHtml += ` <div class="col-lg-3 col-6  d-none d-md-block" id="iv-range-${earning.symbol}">${implied_range}</div>`; 
-            earningsEntryHtml += ` <div class="col-lg-2 col-6  d-none d-md-block" id="current-price-${earning.symbol}"></div>`;
+            earningsEntryHtml += ` <div class="col-lg-2 col-6  d-none d-md-block" id="current-price-${earning.symbol}">${current_price.toFixed(2)}</div>`;
             earningsEntryHtml += ` <div class="col-lg-1 col-6  d-none d-md-block"><i class="fa-solid ${whenIcon}"></i></div>`;
             earningsEntryHtml += `</div>`;
 
             $(`#earnings-data-${earning.date}`).append(earningsEntryHtml); // Append the data to the respective day
 
-            // Fetch the current price asynchronously
-            this.getClosePrice(earning.symbol).then(current_price => {
-              $(`#current-price-${earning.symbol}`).html(`${"$" + current_price}`);
-                if (iv){
-                    flushable =  current_price > iv.lower && current_price < iv.upper ? "<span title='IV Flush Candidate'>💰</span>" : "";
-                    $(`#current-price-${earning.symbol}`).html(`${iv ? "$" + current_price.toFixed(2) : ""} ${flushable}`);
-                } 
-            }).catch(error => {
-                console.error(`Failed to fetch the current price for ${earning.symbol}:`, error);
-            });
+            if (iv){
+              flushable =  current_price > iv.lower && current_price < iv.upper ? "<span title='IV Flush Candidate as current price is inside the implied move going into Earnings.'>💰</span>" : "";
+              $(`#current-price-${earning.symbol}`).html(`${iv ? "$" + current_price.toFixed(2) : ""} ${flushable}`);
+            } 
         }
     }
   }
