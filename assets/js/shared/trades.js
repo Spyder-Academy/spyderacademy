@@ -2574,8 +2574,21 @@ class Trades {
             $(`#earnings-data-${earning.date}`).append(earningsEntryHtml); // Append the data to the respective day
 
             if (iv){
-              flushable =  current_price > iv.lower && current_price < iv.upper ? "<span title='IV Flush Candidate as current price is inside the implied move going into Earnings.'>💰</span>" : "";
-              $(`#current-price-${earning.symbol}`).html(`${iv ? "$" + current_price.toFixed(2) : ""} ${flushable}`);
+              var isRocket = current_price > iv.upper
+              var isTrash = current_price < iv.lower
+              var isFlushable = current_price > iv.lower && current_price < iv.upper 
+
+              var icon = ""
+              if (isRocket)
+                icon = "<span title='Huge buy up above its expected move!'>🚀</span>"
+              else if (isTrash)
+                icon = "<span title='Big sell off below its expected move!'>🩸</span>"
+              else if (isFlushable)
+                icon = "<span title='Current price is still inside its implied move. May be an IV Flush Candidate!'>💦</span>"
+              else
+                icon = ""
+
+              $(`#current-price-${earning.symbol}`).html(`${iv ? "$" + current_price.toFixed(2) : ""} ${icon}`);
             } 
         }
     }
