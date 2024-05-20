@@ -2871,10 +2871,11 @@ class Trades {
   async fetchGEXOverlay(ticker, expectedMove = null) {
     ticker = ticker.toUpperCase();
     const jsonData = await this._fetchGEXOverlayData(ticker);
-    if (jsonData) {
+    if (jsonData && jsonData.stock_price.length > 0) {
       this._renderGEXOverlay(ticker, jsonData, expectedMove);
     } else {
         console.log("No data to render.");
+        $("#gammaChartOverlay").text("Gamma Price Overlay is currently unavailable")
     }
   }
 
@@ -2897,7 +2898,8 @@ class Trades {
     const estOffset = 5 * 60 * 60 * 1000; // 5 hours in milliseconds
     
     // Prepare stock price series
-    const stockSeries = data.stock_price.map(item => ({
+    var stockSeries = {} 
+    stockSeries = data.stock_price.map(item => ({
         x: new Date(new Date(item.begins_at).getTime() - estOffset).getTime(),
         y: parseFloat(item.close_price)
     }));
@@ -3070,7 +3072,7 @@ class Trades {
       
     };
 
-    $("#gammaChartOverlay").removeClass("d-none")
+    // $("#gammaChartOverlay").removeClass("d-none")
     $("#gammaChartOverlay").empty()
     
     if (this.chartGEXOverlay != null) this.chartGEXOverlay.destroy();
