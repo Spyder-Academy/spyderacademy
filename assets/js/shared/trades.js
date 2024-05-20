@@ -2553,6 +2553,10 @@ class Trades {
             var implied_range = "N/A";
             var flushable = "";
             var iv = earning.implied_move;
+            if (iv){
+              implied_move = (iv.percent * 100).toFixed(2) + "%";
+              implied_range = "$" + iv.lower.toFixed(2) + " - $" + iv.upper.toFixed(2);
+            }
 
             // Render the basic HTML structure first
             let earningsEntryHtml = `<div class="row ${whenClass} py-2" style="border-bottom: 1px solid rgba(0,0,0,0.3);" id="earning-${earning.symbol}">`;
