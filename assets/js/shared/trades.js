@@ -2333,6 +2333,25 @@ class Trades {
     } 
   }
 
+  async getClosePrice(ticker){
+    var sentTicker = ticker.toUpperCase();
+    var url = "https://api.options.ai/expected-moves/" + sentTicker;
+
+    try {
+      let response = await $.ajax({url: url, method: 'GET'});
+      if (response && response.length > 0) {
+        var item = response[0];
+        var closePrice = (item.moveLower + item.moveAmount).toFixed(2);
+
+        return closePrice
+
+      } else {
+        console.error('No data received from API.');
+      }
+    } catch (error) {
+      console.error('Error fetching data from the API:', error);
+    }
+  }
 
   async fetchIVData(ticker) {
     $("#iv_results").addClass("d-none");
@@ -2477,7 +2496,6 @@ class Trades {
           continue; // Skip dates in the past
         }
 
-        console.log(formattedDate, earningsDate, earningsDt)
 
         // Check if the day is a weekday
         calendarHtml += `<div class="row mb-3 m-0 p-0" id="earnings-${earningsDate}">`;
@@ -2521,42 +2539,47 @@ class Trades {
 
   
   async displayEarningsData(data, numDays) {
-    console.log("display Earnings Data", data)
     this.displayEarningsCalendarSkeleton(data); // Display the calendar skeleton
     this.sortEarningsData(data); // Sort the data first
-  
+
     for (const earning of data) {
-      
-      if (earning.marketCap >= 50000000000) {
-        const formattedMarketCap = this.formatMarketCap(earning.marketCap);
-        const whenClass = earning.when === 'post market' ? "bg-blue-light" : "";
-        const whenIcon = earning.when === 'post market' ? "fa-moon" : "fa-sun";
-        const symbol = earning.symbol.toLowerCase()
-        
-        var implied_move = "N/A"
-        var implied_range = "N/A"
-        var flushable = ""
-        const iv = earning.implied_move
-        if (iv){
-          implied_move = "$" + (iv.percent * 100).toFixed(2) + "% ($" + iv.amount.toFixed(2) + ")"
-          implied_range = "$" + iv.lower.toFixed(2) + " - $" + iv.upper.toFixed(2)
-          flushable =  earning.current_price > iv.lower && earning.current_price < iv.upper ? "<span title='IV Flush Candidate'>💰</span>" : "";
+        if (earning.marketCap >= 50000000000) {
+            const formattedMarketCap = this.formatMarketCap(earning.marketCap);
+            const whenClass = earning.when === 'post market' ? "bg-blue-light" : "";
+            const whenIcon = earning.when === 'post market' ? "fa-moon" : "fa-sun";
+            const symbol = earning.symbol.toLowerCase();
+
+            var implied_move = "N/A";
+            var implied_range = "N/A";
+            var flushable = "";
+            var iv = earning.implied_move;
+
+            // Render the basic HTML structure first
+            let earningsEntryHtml = `<div class="row ${whenClass} py-2" style="border-bottom: 1px solid rgba(0,0,0,0.3);" id="earning-${earning.symbol}">`;
+            earningsEntryHtml += ` <div class="col-lg-2 col-6 "><a href="/stocks/${symbol}/">${earning.symbol}</a></div>`;
+            earningsEntryHtml += ` <div class="col-lg-2 col-6  d-none d-md-block">${formattedMarketCap}</div>`;
+            earningsEntryHtml += ` <div class="col-lg-2 col-6 " id="iv-move-${earning.symbol}">${implied_move}</div>`;
+            earningsEntryHtml += ` <div class="col-lg-3 col-6  d-none d-md-block" id="iv-range-${earning.symbol}">${implied_range}</div>`; 
+            earningsEntryHtml += ` <div class="col-lg-2 col-6  d-none d-md-block" id="current-price-${earning.symbol}"></div>`;
+            earningsEntryHtml += ` <div class="col-lg-1 col-6  d-none d-md-block"><i class="fa-solid ${whenIcon}"></i></div>`;
+            earningsEntryHtml += `</div>`;
+
+            $(`#earnings-data-${earning.date}`).append(earningsEntryHtml); // Append the data to the respective day
+
+            // Fetch the current price asynchronously
+            this.getClosePrice(earning.symbol).then(current_price => {
+              $(`#current-price-${earning.symbol}`).html(`${"$" + current_price}`);
+                if (iv){
+                    flushable =  current_price > iv.lower && current_price < iv.upper ? "<span title='IV Flush Candidate'>💰</span>" : "";
+                    $(`#current-price-${earning.symbol}`).html(`${iv ? "$" + current_price.toFixed(2) : ""} ${flushable}`);
+                } 
+            }).catch(error => {
+                console.error(`Failed to fetch the current price for ${earning.symbol}:`, error);
+            });
         }
-
-
-        let earningsEntryHtml = `<div class="row ${whenClass} py-2" style="border-bottom: 1px solid rgba(0,0,0,0.3);" id="earning-${earning.symbol}">`;
-        earningsEntryHtml += ` <div class="col-lg-2 col-6 "><a href="/stocks/${symbol}/">${earning.symbol}</a></div>`;
-        earningsEntryHtml += ` <div class="col-lg-2 col-6  d-none d-md-block">${formattedMarketCap}</div>`;
-        earningsEntryHtml += ` <div class="col-lg-2 col-6 " id="iv-move-${earning.symbol}">${implied_move}</div>`;
-        earningsEntryHtml += ` <div class="col-lg-3 col-6  d-none d-md-block" id="iv-range-${earning.symbol}">${implied_range}</div>`; 
-        earningsEntryHtml += ` <div class="col-lg-2 col-6  d-none d-md-block" id="current_price-${earning.current_price}">${iv ? "$" + earning.current_price.toFixed(2) : ""} ${flushable}</div>`;
-        earningsEntryHtml += ` <div class="col-lg-1 col-6  d-none d-md-block"><i class="fa-solid ${whenIcon}"></i></div>`;
-        earningsEntryHtml += `</div>`;
-  
-        $(`#earnings-data-${earning.date}`).append(earningsEntryHtml); // Append the data to the respective day
-      }
     }
   }
+
 
   async fetchGEXByStrike(ticker, chartid="#gammaChart", idx=0, historicals=false) {
 
