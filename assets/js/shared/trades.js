@@ -2581,6 +2581,37 @@ class Trades {
   }
 
 
+  async fetchEMASignals(ticker){
+    ticker = ticker.toUpperCase();
+    var url = `https://us-central1-spyder-academy.cloudfunctions.net/emas?ticker=${ticker}`;
+      
+    fetch(url)
+    .then(response => response.json())
+    .then(emaData => {
+        const emaList = $('#emaSignals');
+
+        emaData.forEach(data => {
+            const status = data.latest_price > data.value ? 'Bullish' : 'Bearish';
+            const statusClass = data.latest_price > data.value ? '#bfe1cf' : '#a30000';
+
+            const emaItem =$("<div>")
+            var emaItemHTML = ""
+
+            if (status == "Bullish"){
+              emaItemHTML = $(`<p>${data.ema}: <span style='color: ${statusClass}'>${status}</span> while above <span class='${statusClass}'>$${data.value.toFixed(2)}</span> </p>`);
+            }
+            else{
+              emaItemHTML = $(`<p>${data.ema}: <span style='color: ${statusClass}'>${status}</span> while below <span class='${statusClass}'>$${data.value.toFixed(2)}</span> </p>`);
+            }
+            emaItem.html(emaItemHTML);
+            emaList.append(emaItem);
+        });
+    })
+    .catch(error => console.error('Error fetching EMA data:', error));
+  }
+
+
+
   async fetchGEXByStrike(ticker, chartid="#gammaChart", idx=0, historicals=false) {
 
     ticker = ticker.toUpperCase();
