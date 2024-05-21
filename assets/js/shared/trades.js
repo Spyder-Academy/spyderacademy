@@ -2443,15 +2443,8 @@ class Trades {
 
   async fetchEarningsCalendar(numDays = 5) {
     const apiUrl = "https://us-central1-spyder-academy.cloudfunctions.net/earnings_calendar";
-
-    try {
-      let earningsData = await $.ajax({ url: apiUrl, method: 'GET' });
-      
-      await this.displayEarningsData(earningsData, numDays);
-
-    } catch (error) {
-      console.error('Error fetching earnings data:', error);
-    }
+    let earningsData = await $.ajax({ url: apiUrl, method: 'GET' });
+    await this.displayEarningsData(earningsData, numDays);
   }
 
   formatMarketCap(marketCap) {
@@ -2478,11 +2471,19 @@ class Trades {
     // Get list of unique dates from data
     const earningsDateList = [...new Set(data.map(item => item.date))];
 
-    // Get today's date
-    const today = new Date();
-    today.setUTCHours(0, 0, 0, 0); // Set to beginning of the day in UTC
+    // Get yesterdays's date
+    var today = new Date()
+    today.setHours(0,0,0,0)
 
-    // Loop to show each unique date in data
+    var yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+
+    var tomorrow = new Date(today)
+    tomorrow.setDate(today.getDate() + 1);
+
+    // var earningsDate = yesterday.setHours(0,0,0,0)
+
+    // Show a table of companies that have earnings after hours today and pre market tomorrow
     for (const earningsDate of earningsDateList) {
         const earningsDt = new Date(earningsDate + 'T00:00:00-05:00');
         earningsDt.setHours(0, 0, 0, 0); // Set to beginning of the day in UTC
@@ -2491,8 +2492,9 @@ class Trades {
         const dayName = earningsDt.toLocaleDateString('en-US', options);
         const formattedDate = earningsDt.toISOString().split('T')[0];
 
+       
         // Check if the date is in the past
-        if (earningsDt < today) {
+        if (earningsDt < yesterday || earningsDt > tomorrow) {
           continue; // Skip dates in the past
         }
 
@@ -2504,12 +2506,12 @@ class Trades {
         calendarHtml += `     <div class="card-header">${dayName}</div>`;
         calendarHtml += `     <div class="card-body" id="earnings-data-${earningsDate}">`;
         calendarHtml += `       <div class="row">`;
-        calendarHtml += `         <div class="col-lg-2 col-6 fw-bold">Symbol</div>`;
-        calendarHtml += `         <div class="col-lg-2 col-6 fw-bold d-none d-md-block">Market Cap</div>`;
-        calendarHtml += `         <div class="col-lg-2 col-6 fw-bold" title="The Implied Move going into Earnings. This value is set at market close on the date of earnings.">Exp Earnings Move</div>`;
-        calendarHtml += `         <div class="col-lg-3 col-6 fw-bold d-none d-md-block">Bull/Bear Range</div>`;
-        calendarHtml += `         <div class="col-lg-2 col-6 fw-bold d-none d-md-block">Current Price</div>`;
-        calendarHtml += `         <div class="col-lg-1 col-6 fw-bold d-none d-md-block"></div>`;      
+        calendarHtml += `         <div class="col-lg-2 col-4 fw-bold">Symbol</div>`;
+        calendarHtml += `         <div class="col-lg-2       fw-bold d-none d-md-block">Market Cap</div>`;
+        calendarHtml += `         <div class="col-lg-2 col-4 fw-bold" title="The Implied Move going into Earnings. This value is set at market close on the date of earnings.">Exp Earnings Move</div>`;
+        calendarHtml += `         <div class="col-lg-3       fw-bold d-none d-md-block">Bull/Bear Range</div>`;
+        calendarHtml += `         <div class="col-lg-2 col-4 fw-bold d-md-block">Current Price</div>`;
+        calendarHtml += `         <div class="col-lg-1       fw-bold d-none d-md-block"></div>`;      
         calendarHtml += `       </div>`;
         calendarHtml += `     </div>`;
         calendarHtml += `   </div>`;
@@ -2517,6 +2519,10 @@ class Trades {
         calendarHtml += `</div>`;
     }
 
+    
+
+
+    // if there is no calendar to display, show the message that there are no earnings this week.
     if (calendarHtml == ""){
       calendarHtml += `<div class="row mb-3 m-0 p-0" id="earnings-empty">`;
       calendarHtml += ` <div class="col-12">`;
@@ -2542,13 +2548,35 @@ class Trades {
     this.displayEarningsCalendarSkeleton(data); // Display the calendar skeleton
     this.sortEarningsData(data); // Sort the data first
 
+     // Create an object to store earnings data organized by weekday and time
+     const earningsCalendar = {
+      Monday: { premarket: [], afterhours: [] },
+      Tuesday: { premarket: [], afterhours: [] },
+      Wednesday: { premarket: [], afterhours: [] },
+      Thursday: { premarket: [], afterhours: [] },
+      Friday: { premarket: [], afterhours: [] },
+    };
+
     for (const earning of data) {
         if (earning.marketCap >= 50000000000) {
             const formattedMarketCap = this.formatMarketCap(earning.marketCap);
             const whenClass = earning.when === 'post market' ? "bg-blue-light" : "";
             const whenIcon = earning.when === 'post market' ? "fa-moon" : "fa-sun";
             const symbol = earning.symbol.toLowerCase();
+
+            const earningsDt = new Date(earning.date + 'T00:00:00-05:00');
+            earningsDt.setHours(0, 0, 0, 0); // Set to beginning of the day in UTC
+            const options = { weekday: 'long'};
+            const dayName = earningsDt.toLocaleDateString('en-US', options);
             
+            if (earningsCalendar[dayName]) {
+              if (earning.when === 'pre market'){
+                earningsCalendar[dayName]['premarket'].push(earning.symbol);
+              }
+              else if (earning.when === 'post market'){
+                earningsCalendar[dayName]['afterhours'].push(earning.symbol);
+              }
+            }
 
             var implied_move = "N/A";
             var implied_range = "N/A";
@@ -2563,12 +2591,12 @@ class Trades {
 
             // Render the basic HTML structure first
             let earningsEntryHtml = `<div class="row ${whenClass} py-2" style="border-bottom: 1px solid rgba(0,0,0,0.3);" id="earning-${earning.symbol}">`;
-            earningsEntryHtml += ` <div class="col-lg-2 col-6 "><a href="/stocks/${symbol}/">${earning.symbol}</a></div>`;
-            earningsEntryHtml += ` <div class="col-lg-2 col-6  d-none d-md-block">${formattedMarketCap}</div>`;
-            earningsEntryHtml += ` <div class="col-lg-2 col-6 " id="iv-move-${earning.symbol}">${implied_move}</div>`;
-            earningsEntryHtml += ` <div class="col-lg-3 col-6  d-none d-md-block" id="iv-range-${earning.symbol}">${implied_range}</div>`; 
-            earningsEntryHtml += ` <div class="col-lg-2 col-6  d-none d-md-block" id="current-price-${earning.symbol}">${current_price.toFixed(2)}</div>`;
-            earningsEntryHtml += ` <div class="col-lg-1 col-6  d-none d-md-block"><i class="fa-solid ${whenIcon}"></i></div>`;
+            earningsEntryHtml += ` <div class="col-lg-2 col-4 "><a href="/stocks/${symbol}/">${earning.symbol}</a></div>`;
+            earningsEntryHtml += ` <div class="col-lg-2 d-none d-md-block">${formattedMarketCap}</div>`;
+            earningsEntryHtml += ` <div class="col-lg-2 col-4 " id="iv-move-${earning.symbol}">${implied_move}</div>`;
+            earningsEntryHtml += ` <div class="col-lg-3 d-none d-md-block" id="iv-range-${earning.symbol}">${implied_range}</div>`; 
+            earningsEntryHtml += ` <div class="col-lg-2 col-4 " id="current-price-${earning.symbol}">$${current_price.toFixed(2)}</div>`;
+            earningsEntryHtml += ` <div class="col-lg-1 d-none d-md-block"><i class="fa-solid ${whenIcon}"></i></div>`;
             earningsEntryHtml += `</div>`;
 
             $(`#earnings-data-${earning.date}`).append(earningsEntryHtml); // Append the data to the respective day
@@ -2592,8 +2620,59 @@ class Trades {
             } 
         }
     }
+
+    // TODO: show a 5 column grid (one column for each day of the week - eg Monday | Tuesday | Wednesday | Thursday | Friday)
+    // each column should consist of a row for premarket and a row for after hours.
+    // each row will then contain a list of symbol names that has earnings on that day in the appropriate row for premarket or after hours.
+    await this.displayEarningsCalendarLogos(earningsCalendar)
   }
 
+  async displayEarningsCalendarLogos(data){
+    const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+    let calendarHtml = '';
+
+    // calendarHtml += `<div class="col-lg-2 col-md-4 col-sm-6 mb-3">`;
+    // calendarHtml += ` <div class="card shadow">`;
+    // calendarHtml += `   <div class="card-header fs-5"><small>Something</small></div>`;
+    // calendarHtml += `   <div class="card-body">`;
+    // calendarHtml += `   </div>`;
+    // calendarHtml += ` </div>`;
+    // calendarHtml += `</div>`;
+
+    weekdays.forEach(day => {
+        calendarHtml += `<div class="col-lg-2 col-md-4 col-sm-6 mb-3">`;
+        calendarHtml += ` <div class="card shadow">`;
+        calendarHtml += `   <div class="card-header fs-5"><small>${day}</small></div>`;
+        calendarHtml += `   <div class="card-body">`;
+
+        // Premarket row
+        calendarHtml += `     <div><strong>Morning</strong></div>`;
+        if (data[day].premarket.length > 0) {
+            data[day].premarket.forEach(symbol => {
+                calendarHtml += ` <div><a class="text-decoration-none" href="/stocks/${symbol.toLowerCase()}/"><img class="p-0 m-0 " src="/images/logos/${symbol.toUpperCase()}.png" style="width: 25px"></img> ${symbol}</a></div>`;
+            });
+        } else {
+            calendarHtml += ` <div>-</div>`;
+        }
+
+        // After hours row
+        calendarHtml += `     <div class="mt-2"><strong>Evening</strong></div>`;
+        if (data[day].afterhours.length > 0) {
+            data[day].afterhours.forEach(symbol => {
+                calendarHtml += ` <div><a class="text-decoration-none" href="/stocks/${symbol.toLowerCase()}/"><img class="p-0 m-0 " src="/images/logos/${symbol.toUpperCase()}.png" style="width: 25px"></img> ${symbol}</a></div>`;
+            });
+        } else {
+            calendarHtml += ` <div>-</div>`;
+        }
+
+        calendarHtml += `   </div>`;
+        calendarHtml += ` </div>`;
+        calendarHtml += `</div>`;
+    });
+
+
+    $('#earningsCalendar').append(calendarHtml);
+  }
 
   async fetchEMASignals(ticker){
     ticker = ticker.toUpperCase();

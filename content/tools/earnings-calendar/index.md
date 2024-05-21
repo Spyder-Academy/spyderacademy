@@ -19,6 +19,8 @@ Instead, trade the [IV Flush](/education/how-to-trade-the-iv-flush-strategy/) af
 
 Compare the actual move in premarket/after hours with the implied move, then trade the reaction when bulls/bears are both being IV crushed.  The ideal companies to trade in this scenario is when the actual post earnings move has stayed within the Implied Range.
 
+### IV FLUSH CANDIDATES
+
 <div class="container p-0 m-0">
    <div class="row" id="earningsCalendar">
       <div class="card shadow p-5">

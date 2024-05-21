@@ -47,15 +47,14 @@
           <div class="row pb-5">
             <div class="col-12">
               <div class="container p-0 m-0">
-                <div class="blog-content ">
+                <div class="blog-content pb-3">
                   <h2>Upcoming Earnings</h2>
+                  <a href="/tools/earnings-calendar">Learn about the IV Flush</a>
                 </div>
                 <div class="row" id="earningsCalendar">
                   <div class="card shadow"> </div>
                 </div>
-                <div class="blog-content ">
-                  <a href="/tools/earnings-calendar">See More Upcoming Earnings</a>
-                </div>
+                
                 <script>
                   $(document).ready(function() {
                      userTrades = new Trades();
@@ -94,12 +93,6 @@
                     </div>
                   </div>
                 </div>
-                <script>
-                  $(document).ready(function() {
-                     userTrades = new Trades();
-                     userTrades.fetchEarningsCalendar(2);
-                  });
-               </script>
               </div>
           </div>
 
