@@ -2558,7 +2558,7 @@ class Trades {
     };
 
     for (const earning of data) {
-        if (earning.marketCap >= 50000000000) {
+        if (earning.marketCap >= 10000000000) {
             const formattedMarketCap = this.formatMarketCap(earning.marketCap);
             const whenClass = earning.when === 'post market' ? "bg-blue-light" : "";
             const whenIcon = earning.when === 'post market' ? "fa-moon" : "fa-sun";
@@ -2581,7 +2581,7 @@ class Trades {
             var implied_move = "N/A";
             var implied_range = "N/A";
             var flushable = "";
-            var current_price = earning.current_price;
+            var current_price = earning.current_price ?  earning.current_price : 0;
 
             var iv = earning.implied_move;
             if (iv){
