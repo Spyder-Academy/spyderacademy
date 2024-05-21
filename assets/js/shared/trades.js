@@ -2631,13 +2631,13 @@ class Trades {
     const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
     let calendarHtml = '';
 
-    // calendarHtml += `<div class="col-lg-2 col-md-4 col-sm-6 mb-3">`;
-    // calendarHtml += ` <div class="card shadow">`;
-    // calendarHtml += `   <div class="card-header fs-5"><small>Something</small></div>`;
-    // calendarHtml += `   <div class="card-body">`;
-    // calendarHtml += `   </div>`;
-    // calendarHtml += ` </div>`;
-    // calendarHtml += `</div>`;
+    calendarHtml += `<div class="col-lg-2 d-none d-md-block mb-3">`;
+    calendarHtml += ` <div class="card shadow">`;
+    calendarHtml += `   <div class="card-header fs-5"><strong>EARNINGS</strong></div>`;
+    calendarHtml += `   <div class="card-body" style="background-image: url('/images/blacklogo.png'); height: 14em; width: 100%; background-size: contain; background-repeat: no-repeat; background-color: #000">`;
+    calendarHtml += `   </div>`;
+    calendarHtml += ` </div>`;
+    calendarHtml += `</div>`;
 
     weekdays.forEach(day => {
         calendarHtml += `<div class="col-lg-2 col-md-4 col-sm-6 mb-3">`;
@@ -2649,7 +2649,7 @@ class Trades {
         calendarHtml += `     <div><strong>Morning</strong></div>`;
         if (data[day].premarket.length > 0) {
             data[day].premarket.forEach(symbol => {
-                calendarHtml += ` <div><a class="text-decoration-none" href="/stocks/${symbol.toLowerCase()}/"><img class="p-0 m-0 " src="/images/logos/${symbol.toUpperCase()}.png" style="width: 25px"></img> ${symbol}</a></div>`;
+                calendarHtml += ` <div class="py-1"><a class="text-decoration-none" href="/stocks/${symbol.toLowerCase()}/"><img class="p-0 m-0 " src="/images/logos/${symbol.toUpperCase()}.png" style="width: 25px"></img> ${symbol}</a></div>`;
             });
         } else {
             calendarHtml += ` <div>-</div>`;
@@ -2659,7 +2659,7 @@ class Trades {
         calendarHtml += `     <div class="mt-2"><strong>Evening</strong></div>`;
         if (data[day].afterhours.length > 0) {
             data[day].afterhours.forEach(symbol => {
-                calendarHtml += ` <div><a class="text-decoration-none" href="/stocks/${symbol.toLowerCase()}/"><img class="p-0 m-0 " src="/images/logos/${symbol.toUpperCase()}.png" style="width: 25px"></img> ${symbol}</a></div>`;
+                calendarHtml += ` <div class="py-1"><a class="text-decoration-none" href="/stocks/${symbol.toLowerCase()}/"><img class="p-0 m-0 " src="/images/logos/${symbol.toUpperCase()}.png" style="width: 25px"></img> ${symbol}</a></div>`;
             });
         } else {
             calendarHtml += ` <div>-</div>`;
