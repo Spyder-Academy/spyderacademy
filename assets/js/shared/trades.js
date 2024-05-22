@@ -2638,8 +2638,10 @@ class Trades {
                 icon = "<span title='Huge buy up above its expected move!'>🚀</span>"
               else if (isTrash)
                 icon = "<span title='Big sell off below its expected move!'>🩸</span>"
-              else if (isFlushable)
-                icon = "<span title='Current price is still inside its implied move. May be an IV Flush Candidate!'>💦</span>"
+              else if (isFlushable && volumeColor == "#bfe1cf")
+                icon = "<span title='Current price is still inside its implied move, and with good volume!'>💦</span>"
+              else if (isFlushable && volumeColor == "#a30000")
+                icon = "<span title='Current price is still inside its implied move. \n\nBut the volume conditions suck!'>🐌</span>"
               else
                 icon = ""
 
