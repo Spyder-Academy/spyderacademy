@@ -2482,6 +2482,7 @@ class Trades {
     tomorrow.setDate(today.getDate() + 1);
 
     // var earningsDate = yesterday.setHours(0,0,0,0)
+    var currentHour = (new Date()).getHours()
 
     // Show a table of companies that have earnings after hours today and pre market tomorrow
     for (const earningsDate of earningsDateList) {
@@ -2494,7 +2495,10 @@ class Trades {
 
        
         // Check if the date is in the past
-        if (earningsDt < yesterday || earningsDt > tomorrow) {
+        // hide yesterdays earnings if we are past 11am
+        // or it is for tomorrow
+        var hideEarningsDate = (earningsDt < today && currentHour >= 11) || (earningsDt > tomorrow)
+        if (hideEarningsDate) {
           continue; // Skip dates in the past
         }
 
@@ -2508,8 +2512,9 @@ class Trades {
         calendarHtml += `       <div class="row">`;
         calendarHtml += `         <div class="col-lg-2 col-4 fw-bold">Symbol</div>`;
         calendarHtml += `         <div class="col-lg-2       fw-bold d-none d-md-block">Market Cap</div>`;
-        calendarHtml += `         <div class="col-lg-2 col-4 fw-bold" title="The Implied Move going into Earnings. This value is set at market close on the date of earnings.">Exp Earnings Move</div>`;
-        calendarHtml += `         <div class="col-lg-3       fw-bold d-none d-md-block">Bull/Bear Range</div>`;
+        calendarHtml += `         <div class="col-lg-2 col-4 fw-bold" title="The Implied Move going into Earnings. This value is set at market close on the date of earnings.">Exp Move</div>`;
+        calendarHtml += `         <div class="col-lg-2       fw-bold d-none d-md-block">Bull/Bear Range</div>`;
+        calendarHtml += `         <div class="col-lg-1       fw-bold d-none d-md-block">Vol</div>`;
         calendarHtml += `         <div class="col-lg-2 col-4 fw-bold d-md-block">Current Price</div>`;
         calendarHtml += `         <div class="col-lg-1       fw-bold d-none d-md-block"></div>`;      
         calendarHtml += `       </div>`;
@@ -2578,15 +2583,36 @@ class Trades {
               }
             }
 
-            var implied_move = "N/A";
-            var implied_range = "N/A";
+            var implied_move = "";
+            var implied_range = "";
             var flushable = "";
             var current_price = earning.current_price ?  earning.current_price : 0;
+            var volume = ""
+            var volumeDesc = ""
+            var volumeColor = "#000"
 
             var iv = earning.implied_move;
             if (iv){
               implied_move = (iv.percent * 100).toFixed(2) + "%";
               implied_range = "$" + iv.lower.toFixed(2) + " - $" + iv.upper.toFixed(2);
+              volume = (iv.volume_today / 1000000).toFixed(1) + "M";
+              var avgVolume = (iv.volume_20d / 1000000).toFixed(1) + "M";
+
+              if (iv.volume_today > iv.volume_20d){
+                volumeDesc = "Today's volume of " + volume + " is above the 20 day average volume of " + avgVolume + "."
+                volumeColor = '#bfe1cf'
+              }
+              else{
+                volumeDesc = "Today's volume of " + volume + " is below the 20 day average volume of " + avgVolume + "."
+                volumeColor = '#a30000'
+              }
+
+              if (iv.volume_today <= 3000000){
+                volumeDesc += "\n\nVolume on $" + symbol.toUpperCase() + " is below 3M which indicates low demand, making it a poor IV flush candidate."
+                volumeColor = '#a30000'
+              }
+
+                
             }
 
             // Render the basic HTML structure first
@@ -2594,7 +2620,8 @@ class Trades {
             earningsEntryHtml += ` <div class="col-lg-2 col-4 "><a href="/stocks/${symbol}/">${earning.symbol}</a></div>`;
             earningsEntryHtml += ` <div class="col-lg-2 d-none d-md-block">${formattedMarketCap}</div>`;
             earningsEntryHtml += ` <div class="col-lg-2 col-4 " id="iv-move-${earning.symbol}">${implied_move}</div>`;
-            earningsEntryHtml += ` <div class="col-lg-3 d-none d-md-block" id="iv-range-${earning.symbol}">${implied_range}</div>`; 
+            earningsEntryHtml += ` <div class="col-lg-2 d-none d-md-block" id="iv-range-${earning.symbol}">${implied_range}</div>`; 
+            earningsEntryHtml += ` <div class="col-lg-1 d-none d-md-block" id="iv-volume-${earning.symbol}" style="color: ${volumeColor}" title="${volumeDesc}">${volume}</div>`; 
             earningsEntryHtml += ` <div class="col-lg-2 col-4 " id="current-price-${earning.symbol}">$${current_price.toFixed(2)}</div>`;
             earningsEntryHtml += ` <div class="col-lg-1 d-none d-md-block"><i class="fa-solid ${whenIcon}"></i></div>`;
             earningsEntryHtml += `</div>`;
