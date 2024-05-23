@@ -2865,11 +2865,15 @@ class Trades {
 
     // Find the item with the largest absolute GEX value
     let maxGEXItem = jsonData.reduce((prev, current) => {
-      return (Math.abs(prev.GEX) > Math.abs(current.GEX)) ? prev : current;
+      return (prev.GEX) > (current.GEX) ? prev : current;
     });
     // Find the item with the lowest GEX value
     let minGEXItem = jsonData.reduce((prev, current) => {
       return ((prev.GEX) < (current.GEX)) ? prev : current;
+    });
+
+    let largestGEX = jsonData.reduce((prev, current) => {
+      return Math.abs(prev.GEX) > Math.abs(current.GEX) ? prev : current;
     });
 
     let maxX = jsonData.reduce((prev, current) => {
@@ -2895,7 +2899,7 @@ class Trades {
     //   bearbull =  "Bearish";
     // }
 
-    $(".largestGammaLevelText").text("$" + maxGEXItem.Strike.toFixed(2));
+    $(".largestGammaLevelText").text("$" + largestGEX.Strike.toFixed(2));
     $(".gammaOutlook").text(bearbull);
     if (bearbull == "Bullish")
       $("#signalGammaOutlook").attr("style", "color: #bfe1cf")
