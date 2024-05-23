@@ -2712,6 +2712,11 @@ class Trades {
     .then(emaData => {
         const emaList = $('#emaSignals');
 
+        if (emaData.length > 0){
+          $("#currentPriceWidget").html("$" + emaData[0].latest_price.toFixed(2))
+          $("#currentPriceWidgetTimeValue").html((new Date()).toLocaleTimeString())
+        }
+
         emaData.forEach(data => {
             const status = data.latest_price > data.value ? 'Bullish' : 'Bearish';
             const statusClass = data.latest_price > data.value ? '#bfe1cf' : '#a30000';
