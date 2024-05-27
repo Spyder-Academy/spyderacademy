@@ -2799,6 +2799,57 @@ class Trades {
 
         thestrat.append(triggersTable)
 
+        // append the FTFC continuity table
+        var ftfcTable = $(`<table class="table text-center">`)
+        var ftfcHeader = $(`<thead class="thead-dark">`);
+        var ftfcHeaderRow = $(`<tr>`);
+        var ftfcHeaderC =   $(`<th scope="col">Timeframe Continuity</th>`);
+        var ftfcHeaderD =   $(`<th scope="col">D</th>`);
+        var ftfcHeaderW =   $(`<th scope="col">W</th>`);
+        var ftfcHeaderM =   $(`<th scope="col">M</th>`);
+        ftfcHeaderRow.append(ftfcHeaderC)
+        ftfcHeaderRow.append(ftfcHeaderD)
+        ftfcHeaderRow.append(ftfcHeaderW)
+        ftfcHeaderRow.append(ftfcHeaderM)
+        ftfcHeader.append(ftfcHeaderRow)
+        ftfcTable.append(ftfcHeader)
+
+        var continuityStatus = "Neutral"
+        if (stratData.continuity.is_continuous && stratData.continuity.daily_trend == "Up" ){
+          continuityStatus = "Bullish"
+        }
+        else if (stratData.continuity.is_continuous && stratData.continuity.daily_trend == "Down" ){
+          continuityStatus = "Bearish"
+        }
+
+        const bullishStyle = "style='background-color: #bfe1cf'"
+        const bearishStyle = "style='background-color: #a30000; color: #fff;'"
+
+        var dailyStyle = (stratData.continuity.daily_trend == "Up") ? bullishStyle : bearishStyle 
+        var weeklyStyle = (stratData.continuity.weekly_trend == "Up") ? bullishStyle : bearishStyle 
+        var monthlyStyle = (stratData.continuity.monthly_trend == "Up") ? bullishStyle : bearishStyle 
+
+        const upArrow = "&#x21E7;"
+        const downArrow = "&#x21E9;"
+
+        var dailyIcon = (stratData.continuity.daily_trend == "Up") ? upArrow : downArrow 
+        var weeklyIcon = (stratData.continuity.weekly_trend == "Up") ? upArrow : downArrow 
+        var monthlyIcon = (stratData.continuity.monthly_trend == "Up") ? upArrow : downArrow 
+
+        var ftfcRow = $(`<tr>`)
+        var ftfcC = $(`<td>${continuityStatus}</td>`)
+        var ftfcD = $(`<td ${dailyStyle}>${dailyIcon}</td>`)
+        var ftfcW = $(`<td ${weeklyStyle}>${weeklyIcon}</td>`)
+        var ftfcM = $(`<td ${monthlyStyle}>${monthlyIcon}</td>`)
+        ftfcRow.append(ftfcC)
+        ftfcRow.append(ftfcD)
+        ftfcRow.append(ftfcW)
+        ftfcRow.append(ftfcM)
+        ftfcTable.append(ftfcRow)
+
+        thestrat.append(ftfcTable)
+        
+        // show the Chart Combos
         const thestratCombos = $('#theStratCombos');
         if (stratData.thestrat_combo == "2-1-2 Bullish Continuation or Bearish Reversal"){
           thestratCombos.append($("<img class='w-100 h-100' src='/images/stratcombos/212b.png'>"))
