@@ -161,6 +161,7 @@
            var ticker = {{ .Page.Params.ticker }};
            userTrades.fetchGEXByStrike(ticker, "#gammaChart", idx=0, historicals = true);
            userTrades.fetchEMASignals(ticker);
+           userTrades.fetchTheStratSignals(ticker)
 
            // Get a reference to the range input element
            const slider = document.getElementById('gex_slider');

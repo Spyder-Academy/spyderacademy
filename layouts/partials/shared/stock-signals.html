@@ -2,7 +2,7 @@
 
 <div class="p-0">
     <div class="container">
-        <div class="row pb-5">
+        <div class="row ">
             <div class="col-12 text-danger">
                 Stock Signals is currently in Beta.  Not Financial Advise!
             </div>
@@ -11,7 +11,7 @@
             <div class="col-lg-4 col-12">
                 <div class="card h-100  p-3 mb-5" style="border-radius: 15px;">
                     <div class="card-body">
-                        <h4 class="card-title fw-semibold">{{ $symbol }} GAMMA EXPOSURE</h4>
+                        <h4 class="card-title fw-semibold text-uppercase">{{ $symbol }} GAMMA EXPOSURE</h4>
                         <p class="card-text" id="signalGammaOutlook"><span class="gammaOutlook"></span></p>
                         <p class="card-text text-black-61">The largest Gamma Level is currently at <span class="largestGammaLevelText"></span>, with Net <span class="gammaOutlook"></span> positioning.<br/></p>
                     </div>
@@ -21,7 +21,7 @@
             <div class="col-lg-4 col-12">
                 <div class="card h-100  p-3 mb-5" style="border-radius: 15px;">
                     <div class="card-body">
-                        <h4 class="card-title fw-semibold">EXPECTED INTRADAY MOVE</h4>
+                        <h4 class="card-title fw-semibold text-uppercase">EXPECTED INTRADAY MOVE</h4>
                         <p class="card-text text-black-61" id="movePercentTitle">{{ $symbol }} Expected Move: <span class="movePercent"></p>
                         <p class="card-text text-black-61" id="ivRangeTitle">Bulls Want: <span class="bullRange"  style="color: #bfe1cf" ></p>
                         <p class="card-text text-black-61" id="ivRangeTitle">Bears Want: <span class="bearRange" style="color: #ad0000" ></p>
@@ -31,8 +31,56 @@
             <div class="col-lg-4 col-12">
                 <div class="card h-100  p-3 mb-5" style="border-radius: 15px;">
                     <div class="card-body">
-                        <h4 class="card-title fw-semibold">{{ $symbol }} MOVING AVERAGES</h4>
+                        <h4 class="card-title fw-semibold text-uppercase">{{ $symbol }} MOVING AVERAGES</h4>
                         <div class="card-text text-black-61" id="emaSignals">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pb-5">
+            <div class="col-lg-4 col-12">
+                <div class="card h-100  p-3 mb-5" style="border-radius: 15px;">
+                    <div class="card-body">
+                        <h4 class="card-title fw-semibold text-uppercase">{{ $symbol }} - Technical Analysis</h4>
+                        <div class="card-text text-black-61" id="theStratSignals">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12">
+                <div class="card h-100" style="border-radius: 15px;">
+                    <div class="card-body">
+                        <div class="card-text text-black-61" id="theStratCombos">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12">
+                <div class="card h-100" style="border-radius: 15px;">
+                    <div class="card-body">
+                        <div class="card-text text-black-61">
+                            <div class="tradingview-widget-container__widget"></div>
+                            <script type="application/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                            {
+                                "symbol": "{{ $symbol }}",
+                                "width": "100%",
+                                "height": "400",
+                                "interval": "D",
+                                "timezone": "America/New_York",
+                                "theme": "light",
+                                "style": "1",
+                                "locale": "en",
+                                "hide_top_toolbar": true,
+                                "hide_legend": false,
+                                "hide_volume": true,
+                                "allow_symbol_change": false,
+                                "gridColor" : "rgba(255,255,255, 0)",
+                                "enable_publishing": false,
+                                "save_image": false,
+                                "support_host": "https://www.tradingview.com"
+                            }
+                            </script>
                         </div>
                     </div>
                 </div>

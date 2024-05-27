@@ -2737,6 +2737,95 @@ class Trades {
     .catch(error => console.error('Error fetching EMA data:', error));
   }
 
+  async fetchTheStratSignals(ticker){
+    ticker = ticker.toUpperCase();
+    var url = `https://us-central1-spyder-academy.cloudfunctions.net/thestrat?ticker=${ticker}`;
+      
+    fetch(url)
+    .then(response => response.json())
+    .then(stratData => {
+        const thestrat = $('#theStratSignals');
+        var candleType = ""
+        if (stratData.thestrat_candle_type == "1"){
+          candleType = "Inside Bar"
+        }
+        else if (stratData.thestrat_candle_type == "2u"){
+          candleType = "Higher High"
+        }
+        else if (stratData.thestrat_candle_type == "2d"){
+          candleType = "Lower Low" 
+        }
+        else if (stratData.thestrat_candle_type == "3"){
+          candleType = "Broadening Formation" 
+        }
+
+        if (stratData.candlestick_pattern != ""){
+          candleType = candleType + " with " + stratData.candlestick_pattern
+        }
+
+        thestrat.append($(`<div><p>Daily Candle: ${candleType}</p></div>`));
+        thestrat.append($(`<div><p>Potential Combo: ${stratData.thestrat_combo}</p></div>`));
+       
+        
+        var triggersTable = $(`<table class="table text-center">`);
+        var triggersHeader = $(`<thead class="thead-dark">`);
+        var triggersHeaderRow = $(`<tr>`);
+        var triggersTargetsHeader = $(`<th scope="col"></th>`);
+        var triggersCallsHeader =   $(`<th scope="col" style="background-color: #bfe1cf">Calls > $${stratData.long_trigger}</th>`);
+        var triggersPutsHeader =    $(`<th scope="col" style="background-color: #a30000; color: #fff">Puts < $${stratData.short_trigger}</th>`);
+
+        triggersHeaderRow.append(triggersTargetsHeader)
+        triggersHeaderRow.append(triggersCallsHeader)
+        triggersHeaderRow.append(triggersPutsHeader)
+
+        triggersHeader.append(triggersHeaderRow)
+        triggersTable.append(triggersHeader)
+
+        // append the price targets
+        for (var i = 0; i < stratData.long_targets.length; i++){
+          var callPriceTarget = stratData.long_targets[i].toFixed(2)
+          var putPriceTarget = stratData.short_targets[i].toFixed(2)
+
+          var targetRow = $(`<tr>`)
+          var targetLabel = $(`<td>PT${i + 1}</td>`)
+          var targetCall = $(`<td>$${callPriceTarget}</td>`)
+          var targetPut = $(`<td>$${putPriceTarget}</td>`)
+
+          targetRow.append(targetLabel)
+          targetRow.append(targetCall)
+          targetRow.append(targetPut)
+          triggersTable.append(targetRow)
+        }
+
+        thestrat.append(triggersTable)
+
+        const thestratCombos = $('#theStratCombos');
+        if (stratData.thestrat_combo == "2-1-2 Bullish Continuation or Bearish Reversal"){
+          thestratCombos.append($("<img class='w-100 h-100' src='/images/stratcombos/212b.png'>"))
+        }
+        else  if (stratData.thestrat_combo == "2-1-2 Bullish Reversal or Bearish Continuation"){
+          thestratCombos.append($("<img class='w-100 h-100' src='/images/stratcombos/212a.png'>"))
+        }
+        else  if (stratData.thestrat_combo == "3-1-2 Bullish or Bearish"){
+          thestratCombos.append($("<img class='w-100 h-100' src='/images/stratcombos/312.png'>"))
+        }
+        else  if (stratData.thestrat_combo == "2-2 Bullish Reversal or Bearish Continuation"){
+          thestratCombos.append($("<img class='w-100 h-100' src='/images/stratcombos/22a.png'>"))
+        }
+        else  if (stratData.thestrat_combo == "2-2 Bearish Reversal or Bullish Continuation"){
+          thestratCombos.append($("<img class='w-100 h-100' src='/images/stratcombos/22b.png'>"))
+        }
+        else  if (stratData.thestrat_combo == "3-2-2 Bullish Reversal"){
+          thestratCombos.append($("<img class='w-100 h-100' src='/images/stratcombos/322.png'>"))
+        }
+        else  if (stratData.thestrat_combo == "3-2-2 Bearish Reversal"){
+          thestratCombos.append($("<img class='w-100 h-100' src='/images/stratcombos/322.png'>"))
+        }
+        
+    })
+    .catch(error => console.error('Error fetching The Strat data:', error));
+  }
+
 
 
   async fetchGEXByStrike(ticker, chartid="#gammaChart", idx=0, historicals=false) {
