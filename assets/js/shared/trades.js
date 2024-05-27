@@ -2782,14 +2782,14 @@ class Trades {
         triggersTable.append(triggersHeader)
 
         // append the price targets
-        for (var i = 0; i < stratData.long_targets.length; i++){
-          var callPriceTarget = stratData.long_targets[i].toFixed(2)
-          var putPriceTarget = stratData.short_targets[i].toFixed(2)
+        for (var i = 0; i < 3; i++){
+          var callPriceTarget = stratData.long_targets[i] ? "$" + stratData.long_targets[i].toFixed(2) : ""
+          var putPriceTarget =stratData.short_targets[i] ? "$" + stratData.short_targets[i].toFixed(2) : ""
 
           var targetRow = $(`<tr>`)
           var targetLabel = $(`<td>PT${i + 1}</td>`)
-          var targetCall = $(`<td>$${callPriceTarget}</td>`)
-          var targetPut = $(`<td>$${putPriceTarget}</td>`)
+          var targetCall = $(`<td>${callPriceTarget}</td>`)
+          var targetPut = $(`<td>${putPriceTarget}</td>`)
 
           targetRow.append(targetLabel)
           targetRow.append(targetCall)
