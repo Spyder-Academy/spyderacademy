@@ -44,16 +44,19 @@
             <div class="card shadow border-0 p-3 text-center" style="border-radius: 15px; background-color: #E9E4D7; ">
                 <div class="card-body p-0">
                     <div class="container-fluid">
-                    <div class="row  align-items-center ">
-                        <div class="col-8">
-                            <strong><input id="ticketInput" name="query" autocomplete="off" class="form-control-borderless no-border-transparent-bg  text-uppercase text-center w-100" type="text" placeholder="SEARCH TICKER"></strong>
+                        <div class="row  align-items-center ">
+                            <div class="col-8">
+                                <strong><input id="tickerInput" name="query" autocomplete="off" class="form-control-borderless no-border-transparent-bg  text-uppercase text-center w-100" type="text" placeholder="SEARCH TICKER"></strong>
+                            </div>
+                            <div class="col-2">
+                                <button class="btn btn-sm py-0">🔎</button>
+                            </div>
                         </div>
-                        <div class="col-2">
-                            <button class="btn btn-sm py-0" onclick="handleSymbolSearch(); return false;">🔎</button>
-                        </div>
-                    </div>
+                        
                     </div>
                 </div>
+            </div>
+            <div class="search-dropdown-menu shadow card p-3" style="border-radius: 15px; display: none; position: absolute; width: 200px; z-index: 1000;">
             </div>
         </div>
     </div>
@@ -63,23 +66,59 @@
 <script>
     // Function to handle the key press event
     function handleKeyPress(event) {
+        // Get the current input value
+        var searchString = $("#tickerInput").val().toUpperCase();
+        if (searchString.length === 0) return;
+        
+        // Filter tickers that start with the searchString
+        var matchingTickers = tickers.filter(ticker => ticker.startsWith(searchString));
+        
         // Check if the Enter key was pressed
-        if (event.key === 'Enter') {
-            handleSymbolSearch()
+        if (event.key === 'Enter' && matchingTickers.length == 1) {
+            $('#tickerInput').val(matchingTickers[0])
+            handleSymbolSearch();
+        }
+
+        else {
+            // show the dropdown with auto suggested symbols
+            $(".search-dropdown-menu").hide()
+            $(".search-dropdown-menu").empty()
+
+            
+           
+            // Append matching tickers to the dropdown menu
+            for (let t of matchingTickers) {
+                $(".search-dropdown-menu").append(
+                    `<a class="text-decoration-none" href="/stocks/${t.toLowerCase()}/">
+                        <img src="/images/logos/${t.toUpperCase()}.png" style="width: 20px; height: 20px; margin-right: 10px;">
+                        ${t}
+                    </a>`
+                );
+            }
+
+            // Show the menu if there are matching tickers
+            if (matchingTickers.length > 0) {
+                $(".search-dropdown-menu").show();
+            }
         }
     }
 
     function handleSymbolSearch(){
         // Get the value entered by the user
-        var symbol = document.getElementById('ticketInput').value.trim().toLowerCase();
+        var symbol = document.getElementById('tickerInput').value.trim().toLowerCase();
             
         // Check if the symbol is not empty
         if (symbol) {
             // Redirect to the desired URL
-            window.location.href = "/stocks/" + symbol + "/";
+            document.location.href = "/stocks/" + symbol + "/";
         }
     }
 
-    // Add event listener to the input box
-    document.getElementById('ticketInput').addEventListener('keypress', handleKeyPress);
+    $(document).ready(function() {
+        // Add event listener to the input box using jQuery
+        $('#tickerInput').on('keyup', handleKeyPress);
+    });
+
+    // List of tickers and their corresponding logos
+    const tickers = ['A', 'AA', 'AAL', 'AAPL', 'ABBV', 'ABNB', 'ABT', 'ACGL', 'ACGLN', 'ACGLO', 'ADBE', 'ADI', 'ADSK', 'AFRM', 'AI', 'AMAT', 'AMC', 'AMD', 'AMZN', 'ARKF', 'ARKG', 'ARKK', 'ARKW', 'ARKX', 'ARM', 'ASO', 'AVGO', 'AXP', 'AZN', 'AZO', 'BA', 'BABA', 'BAC', 'BAH', 'BB', 'BBY', 'BEKE', 'BJ', 'BMO', 'BNS', 'BSX', 'BURL', 'BYND', 'C', 'CAVA', 'CCEP', 'CCL', 'CELH', 'CHPT', 'CHWY', 'CLF', 'CM', 'COIN', 'COO', 'COST', 'CRM', 'CRWD', 'CSCO', 'CSX', 'CVNA', 'CVS', 'CVX', 'DAL', 'DASH', 'DECK', 'DELL', 'DG', 'DIA', 'DIS', 'DKNG', 'DKS', 'DLTR', 'DOCU', 'DVN', 'ENPH', 'ENVX', 'ES', 'ESTC', 'F', 'FCEL', 'FCX', 'FDX', 'FITB', 'FITBP', 'FNGD', 'FSLR', 'FSR', 'FTNT', 'FUTU', 'GE', 'GFI', 'GIS', 'GLD', 'GM', 'GME', 'GOOG', 'GOOGL', 'GPS', 'GS', 'GTLB', 'HAL', 'HD', 'HEI', 'HOOD', 'HPQ', 'HRL', 'INTC', 'INTU', 'IRBT', 'ISRG', 'IWM', 'JBLU', 'JD', 'JHX', 'JNJ', 'JPM', 'JWN', 'KEYS', 'KMX', 'KR', 'KRE', 'KSS', 'LCID', 'LI', 'LMND', 'LMT', 'LOW', 'LULU', 'LUV', 'LVS', 'LYFT', 'M', 'MARA', 'MCD', 'MDB', 'MDT', 'MES', 'META', 'MFG', 'MNQ', 'MO', 'MOS', 'MP', 'MRNA', 'MRVL', 'MS', 'MSFT', 'MU', 'NCLH', 'NDSN', 'NET', 'NFLX', 'NGG', 'NIO', 'NKE', 'NOK', 'NOW', 'NQ', 'NTAP', 'NTES', 'NTNX', 'NVDA', 'NVO', 'NXPI', 'OKTA', 'ON', 'OPEN', 'ORCL', 'OXY', 'PANW', 'PARA', 'PATH', 'PDD', 'PEP', 'PFE', 'PG', 'PGR', 'PINS', 'PLTR', 'PSTG', 'PTON', 'PYPL', 'QCOM', 'QQQ', 'RBLX', 'RCL', 'RDDT', 'RIOT', 'RIVN', 'RKT', 'RL', 'ROKU', 'ROSS', 'ROST', 'RTX', 'RUN', 'RY', 'S', 'SBUX', 'SCHW', 'SE', 'SHG', 'SHOP', 'SLV', 'SNAP', 'SNOW', 'SNPS', 'SOFI', 'SOUN', 'SOXL', 'SPCE', 'SPDR', 'SPLK', 'SPOT', 'SPX', 'SPY', 'SQ', 'SQM', 'STX', 'T', 'TCOM', 'TD', 'TDOC', 'TGT', 'TJX', 'TLRY', 'TLT', 'TMUS', 'TOL', 'TQQQ', 'TSLA', 'TSM', 'U', 'UAL', 'UBER', 'UHAL', 'ULTA', 'UNH', 'UPS', 'UPST', 'USB', 'UVXY', 'V', 'VALE', 'VEEV', 'VISA', 'VIX', 'VMW', 'VZ', 'WBD', 'WDAY', 'WFC', 'WMB', 'WMT', 'WOOF', 'WSM', 'XLE', 'XOM', 'XP', 'XPO', 'Z', 'ZM', 'ZS'];
 </script>
