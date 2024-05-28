@@ -2641,7 +2641,7 @@ class Trades {
               else if (isFlushable && volumeColor == "#bfe1cf")
                 icon = "<span title='Current price is still inside its implied move, and with good volume!'>💦</span>"
               else if (isFlushable && volumeColor == "#a30000")
-                icon = "<span title='Current price is still inside its implied move. \n\nBut the volume conditions suck!'>🐌</span>"
+                icon = "<span title='Current price is still inside its implied move. \n\nBut the volume on this name sucks!'>🐌</span>"
               else
                 icon = ""
 
