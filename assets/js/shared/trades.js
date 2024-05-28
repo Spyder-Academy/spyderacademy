@@ -2719,7 +2719,7 @@ class Trades {
 
         emaData.forEach(data => {
             const status = data.latest_price > data.value ? 'Bullish' : 'Bearish';
-            const statusClass = data.latest_price > data.value ? '#bfe1cf' : '#a30000';
+            const statusClass = data.latest_price > data.value ? '#29741D' : '#a30000';
 
             const emaItem =$("<div>")
             var emaItemHTML = ""
@@ -3042,7 +3042,7 @@ class Trades {
     $(".largestGammaLevelText").text("$" + largestGEX.Strike.toFixed(2));
     $(".gammaOutlook").text(bearbull);
     if (bearbull == "Bullish")
-      $("#signalGammaOutlook").attr("style", "color: #bfe1cf")
+      $("#signalGammaOutlook").attr("style", "color: #29741D")
     else
       $("#signalGammaOutlook").attr("style", "color: #ad0000")
 
