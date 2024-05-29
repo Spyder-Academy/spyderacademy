@@ -2741,6 +2741,12 @@ class Trades {
           case "morning star at lows":
             imageName = "morningstar.png"
             break;
+          case "hammer at highs":
+            imageName = "hangman.png"
+            break;
+          case "inverted hammer at lows":
+            imageName = "bottoming.png"
+            break;
         }
         var imgSrc = `/images/stratcombos/${imageName}`;
         var img = $(`<img src="${imgSrc}" class="card-img-top" alt="${group.group}">`);
