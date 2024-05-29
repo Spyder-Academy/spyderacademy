@@ -2708,14 +2708,78 @@ class Trades {
 
   async fetchScreener(){
     var url = `https://us-central1-spyder-academy.cloudfunctions.net/screener`;
-      
+    
     fetch(url)
     .then(response => response.json())
     .then(watchlist => {
-      console.log(watchlist)
-    });
+      console.log(watchlist);
 
+      // Clear any existing content
+      $("#reversalsWatchlist").empty();
+
+      var watchlistRow = $(`<div class="row"></div>`)
+      
+      // Iterate over each group
+      watchlist.forEach(group => {
+        // Create a Bootstrap card
+        var cardCol = $('<div class="col-lg-3 col-sm-12"></div>');
+        var card = $('<div class="card m-1"></div>');
+        var cardBody = $('<div class="card-body"></div>');
+
+        // Add image of the setup
+        var imageName = ""
+        switch (group.group){
+          case "hammer at lows":
+            imageName = "hammer.png"
+            break;
+          case "shooting star at highs":
+            imageName = "shootingstar.png"
+            break;
+          case "evening star at highs":
+            imageName = "eveningstar.png"
+            break;
+          case "morning star at lows":
+            imageName = "morningstar.png"
+            break;
+        }
+        var imgSrc = `/images/stratcombos/${imageName}`;
+        var img = $(`<img src="${imgSrc}" class="card-img-top" alt="${group.group}">`);
+        card.append(img);
+
+        // Add the group title
+        var title = $(`<h5 class="card-title text-uppercase">${group.group}</h5>`);
+        cardBody.append(title);
+
+        // Add the list of tickers
+        if (group.tickers.length > 0) {
+          var tickerList = $('<div></div>');
+          group.tickers.forEach(ticker => {
+            var listItem = $(`<div class="py-1"><a class="text-decoration-none" href="/stocks/${ticker.ticker.toLowerCase()}/"><img class="p-0 m-0 " src="/images/logos/${ticker.ticker.toUpperCase()}.png" style="width: 25px"></img> ${ticker.ticker}</a></div>`);
+            tickerList.append(listItem);
+          });
+          cardBody.append(tickerList);
+        } else {
+          var noTickers = $('<p class="card-text">No tickers available.</p>');
+          cardBody.append(noTickers);
+        }
+
+        card.append(cardBody);
+        cardCol.append(card)
+
+        // Append the card to "#reversalsWatchlist" element
+        if (group.tickers.length > 0) {
+          watchlistRow.append(cardCol)
+        }
+      });
+
+      $("#reversalsWatchlist").append(watchlistRow);
+
+    })
+    .catch(error => {
+      console.error('Error fetching screener data:', error);
+    });
   }
+
 
   async fetchEMASignals(ticker){
     ticker = ticker.toUpperCase();
