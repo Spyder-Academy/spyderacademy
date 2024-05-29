@@ -21,7 +21,7 @@
             </div>
             <div class="col-lg-7 col-12">
               <div class="blog-content ">
-                <h2>Gamma Exposure</h2>
+                <h2>Market Pressure</h2>
               </div>
               <div class="card shadow p-3 mb-5">
                 <div class="w-100 d-none"  id="spyGammaChart"></div>
@@ -43,27 +43,78 @@
               </div>
             </div>
           </div>
-        
-          <div class="row pb-5">
+
+
+
+          <div class="row">
             <div class="col-12">
               <div class="container p-0 m-0">
-                <div class="blog-content pb-3">
-                  <h2>Upcoming Earnings</h2>
-                  <a href="/tools/earnings-calendar">Learn about the IV Flush</a>
-                </div>
-                <div class="row" id="earningsCalendar">
-                  <div class="card shadow"> </div>
+                <div class="blog-content">
+                  <h2>Your Watchlists</h2>
                 </div>
                 
-                <script>
-                  $(document).ready(function() {
-                     userTrades = new Trades();
-                     userTrades.fetchEarningsCalendar(2);
-                  });
-               </script>
               </div>
             </div>
           </div>
+
+          <div class="row mb-5 shadow" style="border-radius: 15px;">
+            <div class="col-12 p-0 justify-content-center">
+              <ul class="nav nav-pills p-3 m-0" id="pills-tab" role="tablist">
+                <li class="nav-item m-0" role="presentation">
+                  <button class="nav-link active" id="pills-earnings-tab" data-bs-toggle="pill" data-bs-target="#pills-earnings" type="button" role="tab" aria-controls="pills-earnings" aria-selected="true">Upcoming Earnings</button>
+                </li>
+                <li class="nav-item m-0" role="presentation">
+                  <button class="nav-link" id="pills-ivflush-tab" data-bs-toggle="pill" data-bs-target="#pills-ivflush" type="button" role="tab" aria-controls="pills-ivflush" aria-selected="true">IV Flush</button>
+                </li>
+                <li class="nav-item m-0" role="presentation">
+                  <button class="nav-link" id="pills-dojiwatchlist-tab" data-bs-toggle="pill" data-bs-target="#pills-dojiwatchlist" type="button" role="tab" aria-controls="pills-dojiwatchlist" aria-selected="false"></button>
+                </li>
+                <li class="nav-item m-0" role="presentation">
+                  <button class="nav-link" id="pills-news-tab" data-bs-toggle="pill" data-bs-target="#pills-news" type="button" role="tab" aria-controls="pills-news" aria-selected="false"></button>
+                </li>
+                <li class="nav-item m-0" role="presentation">
+                  <button class="nav-link" id="pills-signals-tab" data-bs-toggle="pill" data-bs-target="#pills-signals" type="button" role="tab" aria-controls="pills-signals" aria-selected="false"></button>
+                </li>
+              </ul>
+            </div>
+            <div class="col-12 p-0 justify-content-center">
+              <div class="tab-content " id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-earnings" role="tabpanel" aria-labelledby="pills-earnings-tab">
+                  <div class="mb-3" id="earningsCalendar">
+                    <div class="card  p-3">Loading...</div>
+                  </div>
+                  
+                  <script>
+                    $(document).ready(function() {
+                       userTrades = new Trades();
+                       userTrades.fetchEarningsCalendar(2);
+                    });
+                 </script>
+                </div>
+                <div class="tab-pane fade" id="pills-ivflush" role="tabpanel" aria-labelledby="pills-ivflush-tab">
+                  <div class="p-2"><a href="/tools/earnings-calendar">Learn about the IV Flush</a></div>
+                  <div class="mb-3" id="ivflushCalendar">
+                    <div class="card  p-3">Loading...</div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="pills-dojiwatchlist" role="tabpanel" aria-labelledby="pills-dojiwatchlist-tab">
+                  <div class="mb-3" id="dojiWatchlist">
+                    <div class="card  p-3">Loading...</div>
+                  </div>
+
+                  <script>
+                    $(document).ready(function() {
+                       userTrades = new Trades();
+                       userTrades.fetchScreener();
+                    });
+                 </script>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+
+        
 
         
 

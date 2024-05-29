@@ -2542,7 +2542,7 @@ class Trades {
       calendarHtml += `</div>`;
     }
 
-    $('#earningsCalendar').html(calendarHtml);
+    $('#ivflushCalendar').html(calendarHtml);
   }
 
   
@@ -2700,7 +2700,21 @@ class Trades {
     });
 
 
-    $('#earningsCalendar').append(calendarHtml);
+    var calRow = $(`<div class="row mb-3 m-0 p-0">`)
+    calRow.append(calendarHtml)
+    $('#earningsCalendar').empty();
+    $('#earningsCalendar').append(calRow);
+  }
+
+  async fetchScreener(){
+    var url = `https://us-central1-spyder-academy.cloudfunctions.net/screener`;
+      
+    fetch(url)
+    .then(response => response.json())
+    .then(watchlist => {
+      console.log(watchlist)
+    });
+
   }
 
   async fetchEMASignals(ticker){
@@ -2859,6 +2873,12 @@ class Trades {
         }
         else  if (stratData.thestrat_combo == "3-1-2 Bullish or Bearish"){
           thestratCombos.append($("<img class='w-100 h-100' src='/images/stratcombos/312.png'>"))
+        }
+        else  if (stratData.thestrat_combo == "1-2-2 Bearish Reversal"){
+          thestratCombos.append($("<img class='w-100 h-100' src='/images/stratcombos/122.png'>"))
+        }
+        else  if (stratData.thestrat_combo == "1-2-2 Bullish Reversal"){
+          thestratCombos.append($("<img class='w-100 h-100' src='/images/stratcombos/122.png'>"))
         }
         else  if (stratData.thestrat_combo == "2-2 Bullish Reversal or Bearish Continuation"){
           thestratCombos.append($("<img class='w-100 h-100' src='/images/stratcombos/22a.png'>"))

@@ -46,7 +46,7 @@
                     <div class="container-fluid">
                         <div class="row  align-items-center ">
                             <div class="col-8">
-                                <strong><input id="tickerInput" name="query" autocomplete="off" class="form-control-borderless no-border-transparent-bg  text-uppercase text-center w-100" type="text" placeholder="SEARCH TICKER"></strong>
+                                <strong><input id="tickerInput" name="query" autocomplete="off" class="form-control-borderless no-border-transparent-bg  text-uppercase text-center w-100" type="text" placeholder="SEARCH TICKER" onfocus="this.placeholder = ''" onblur="this.placeholder = 'SEARCH TICKER'; $('.search-dropdown-menu').hide()"></strong>
                             </div>
                             <div class="col-2">
                                 <button class="btn btn-sm py-0">🔎</button>
