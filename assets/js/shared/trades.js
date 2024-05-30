@@ -2760,13 +2760,20 @@ class Trades {
         if (group.tickers.length > 0) {
           var tickerList = $('<div></div>');
           group.tickers.forEach(ticker => {
-            var listItem = $(`<div class="py-1"><a class="text-decoration-none" href="/stocks/${ticker.ticker.toLowerCase()}/"><img class="p-0 m-0 " src="/images/logos/${ticker.ticker.toUpperCase()}.png" style="width: 25px"></img> ${ticker.ticker}</a></div>`);
-            tickerList.append(listItem);
+              var listItem = $(`
+                  <div class="py-1">
+                      <a class="text-decoration-none" href="/stocks/${ticker.ticker.toLowerCase()}/" data-toggle="popover" data-html="true" data-content="" data-ticker="${ticker.ticker}">
+                          <img class="p-0 m-0 " src="/images/logos/${ticker.ticker.toUpperCase()}.png" style="width: 25px"></img> ${ticker.ticker}
+                      </a>
+                  </div>
+              `);
+
+              tickerList.append(listItem);
           });
           cardBody.append(tickerList);
         } else {
-          var noTickers = $('<p class="card-text">No tickers available.</p>');
-          cardBody.append(noTickers);
+            var noTickers = $('<p class="card-text">No tickers available.</p>');
+            cardBody.append(noTickers);
         }
 
         card.append(cardBody);
@@ -2779,6 +2786,43 @@ class Trades {
       });
 
       $("#reversalsWatchlist").append(watchlistRow);
+
+      // Initialize Bootstrap popovers
+      $('[data-toggle="popover"]').popover({
+        trigger: 'hover',
+        placement: 'right',
+        html: true,
+        content: function() {
+            var ticker = $(this).data('ticker');
+            return `<div class="tradingview-widget-container">
+                        <div id="tradingview_${ticker.toLowerCase()}"></div>
+                    </div>`;
+        }
+      });
+
+      // Add event listener to initialize the TradingView widget when the popover is shown
+      $('[data-toggle="popover"]').on('shown.bs.popover', function () {
+        var ticker = $(this).data('ticker').toUpperCase();
+          new TradingView.widget({
+              "autosize": true,
+              "symbol": ticker,
+              "interval": "D",
+              "timezone": "America/New_York",
+              "theme": "light",
+              "style": "1",
+              "locale": "en",
+              "backgroundColor": "rgba(255, 255, 255, 1)",
+              "gridColor": "rgba(255, 255, 255, 0.06)",
+              "hide_top_toolbar": true,
+              "hide_legend": true,
+              "allow_symbol_change": false,
+              "save_image": false,
+              "calendar": false,
+              "hide_volume": true,
+              "support_host": "https://www.tradingview.com",
+              "container_id": "tradingview_" + ticker.toLowerCase()
+          });
+      });
 
     })
     .catch(error => {
