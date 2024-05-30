@@ -2494,11 +2494,21 @@ class Trades {
         const formattedDate = earningsDt.toISOString().split('T')[0];
 
        
+        var today = new Date()
+        today.setHours(0, 0, 0, 0)
+        
+        var yesterday = new Date(today);
+        yesterday.setDate(today.getDate() - 1);
+        yesterday.setHours(0,0,0,0)
+
+        
         // Check if the date is in the past
         // hide yesterdays earnings if we are past 11am
         // or it is for tomorrow
-        var hideEarningsDate = (earningsDt < today && currentHour >= 11) || (earningsDt > tomorrow)
-        if (hideEarningsDate) {
+        var showEarnings = (earningsDt >= yesterday)
+        // console.log(today, tomorrow, earningsDt, currentHour, showEarnings)
+
+        if (!showEarnings) {
           continue; // Skip dates in the past
         }
 
@@ -2583,6 +2593,8 @@ class Trades {
               }
             }
 
+            
+
             var implied_move = "";
             var implied_range = "";
             var flushable = "";
@@ -2626,9 +2638,22 @@ class Trades {
             earningsEntryHtml += ` <div class="col-lg-1 d-none d-md-block"><i class="fa-solid ${whenIcon}"></i></div>`;
             earningsEntryHtml += `</div>`;
 
-            $(`#earnings-data-${earning.date}`).append(earningsEntryHtml); // Append the data to the respective day
+            var today = new Date()
+            today.setHours(0, 0, 0, 0)
+            
+            var yesterday = new Date(today);
+            yesterday.setDate(today.getDate() - 1);
+            yesterday.setHours(0,0,0,0)
+    
+            
+            // Check if the date is in the past
+            // hide yesterdays earnings if we are past 11am
+            // or it is for tomorrow
+            var showEarnings = ((earningsDt >= yesterday && earning.when === 'post market') || earningsDt >= today &&  earning.when === 'pre market')
 
-            if (iv){
+            if (iv && showEarnings){
+              $(`#earnings-data-${earning.date}`).append(earningsEntryHtml); // Append the data to the respective day
+
               var isRocket = current_price > iv.upper
               var isTrash = current_price < iv.lower
               var isFlushable = current_price > iv.lower && current_price < iv.upper 
