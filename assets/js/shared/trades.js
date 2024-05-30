@@ -2758,10 +2758,10 @@ class Trades {
 
         // Add the list of tickers
         if (group.tickers.length > 0) {
-          var tickerList = $('<div></div>');
+          var tickerList = $('<div class="row"></div>');
           group.tickers.forEach(ticker => {
               var listItem = $(`
-                  <div class="py-1">
+                  <div class="py-1 col-6">
                       <a class="text-decoration-none" href="/stocks/${ticker.ticker.toLowerCase()}/" data-toggle="popover" data-html="true" data-content="" data-ticker="${ticker.ticker}">
                           <img class="p-0 m-0 " src="/images/logos/${ticker.ticker.toUpperCase()}.png" style="width: 25px"></img> ${ticker.ticker}
                       </a>
