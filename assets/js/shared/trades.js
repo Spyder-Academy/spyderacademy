@@ -2522,7 +2522,7 @@ class Trades {
         // Check if the date is in the past
         // hide yesterdays earnings if we are past 11am
         // or it is for tomorrow
-        var showEarnings = ((earningsDt >= yesterday && (new Date()).hour < 11) || ((earningsDt >= today)))
+        var showEarnings = ((earningsDt >= yesterday && currentHour < 11) || ((earningsDt >= today)))
         // console.log(today, tomorrow, earningsDt, currentHour, showEarnings)
 
         if (!showEarnings) {
