@@ -2646,7 +2646,7 @@ class Trades {
 
             // Render the basic HTML structure first
             let earningsEntryHtml = `<div class="row ${whenClass} py-2" style="border-bottom: 1px solid rgba(0,0,0,0.3);" id="earning-${earning.symbol}">`;
-            earningsEntryHtml += ` <div class="col-lg-2 col-4 "><a href="/stocks/${symbol}/">${earning.symbol}</a></div>`;
+            earningsEntryHtml += ` <div class="col-lg-2 col-4 "><a href="/stocks/${symbol}/" data-toggle="flush_popover" data-html="true" data-content="" data-ticker="${earning.symbol}">${earning.symbol}</a></div>`;
             earningsEntryHtml += ` <div class="col-lg-2 d-none d-md-block">${formattedMarketCap}</div>`;
             earningsEntryHtml += ` <div class="col-lg-2 col-4 " id="iv-move-${earning.symbol}">${implied_move}</div>`;
             earningsEntryHtml += ` <div class="col-lg-2 d-none d-md-block" id="iv-range-${earning.symbol}">${implied_range}</div>`; 
@@ -2691,6 +2691,46 @@ class Trades {
             } 
         }
     }
+
+    // Initialize Bootstrap popovers
+    $('[data-toggle="flush_popover"]').popover({
+      trigger: 'hover',
+      placement: 'right',
+      html: true,
+      content: function() {
+          var ticker = $(this).data('ticker');
+          return `<div class="tradingview-widget-container">
+                      <div id="tradingview_${ticker.toLowerCase()}"></div>
+                  </div>`;
+      }
+    });
+
+    // Add event listener to initialize the TradingView widget when the popover is shown
+    $('[data-toggle="flush_popover"]').on('shown.bs.popover', function () {
+      var ticker = $(this).data('ticker').toUpperCase();
+        new TradingView.widget({
+            "autosize": true,
+            "symbol": ticker,
+            "range": "5D",
+            "timezone": "America/New_York",
+            "theme": "light",
+            "style": "1",
+            "locale": "en",
+            "backgroundColor": "rgba(255, 255, 255, 1)",
+            "gridColor": "rgba(255, 255, 255, 0.06)",
+            "hide_top_toolbar": true,
+            "hide_legend": true,
+            "allow_symbol_change": false,
+            "save_image": false,
+            "calendar": false,
+            "hide_volume": true,
+            "overrides": {
+              "mainSeriesProperties.sessionId": "extended",
+            },
+            "support_host": "https://www.tradingview.com",
+            "container_id": "tradingview_" + ticker.toLowerCase()
+        });
+    });
 
     // TODO: show a 5 column grid (one column for each day of the week - eg Monday | Tuesday | Wednesday | Thursday | Friday)
     // each column should consist of a row for premarket and a row for after hours.
