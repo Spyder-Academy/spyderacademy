@@ -21,10 +21,25 @@
             <div class="col-lg-4 col-12">
                 <div class="card h-100  p-3 mb-5" style="border-radius: 15px;">
                     <div class="card-body">
-                        <h4 class="card-title fw-semibold text-uppercase">EXPECTED INTRADAY MOVE</h4>
+                        <h4 class="card-title fw-semibold text-uppercase">EXPECTED MOVE</h4>
+                        <p class="card-text text-black-61 small" id="expectedMoveBy"></p>
                         <p class="card-text text-black-61" id="movePercentTitle">{{ $symbol }} Expected Move: <span class="movePercent"></span> (<span class="moveAmount"></span>)</p>
-                        <p class="card-text text-black-61" id="ivRangeTitle">Bulls Want: <span class="bullRange"  style="color: #29741D" ></p>
-                        <p class="card-text text-black-61" id="ivRangeTitle">Bears Want: <span class="bearRange" style="color: #ad0000" ></p>
+
+                        <table class="table text-center">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col" style="background-color: #bfe1cf">Bulls Want</th>
+                                    <th scope="col" style="background-color:  #a30000; color: #fff">Bears Want</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="bullRange"  style="color: #29741D" ></span><span class="bullRangeHit d-none"> 🎯</span></td>
+                                    <td><span class="bearRange" style="color: #ad0000" ></span><span class="bearRangeHit d-none"> 🎯</span></td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

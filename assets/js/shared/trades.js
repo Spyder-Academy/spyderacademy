@@ -2355,20 +2355,27 @@ class Trades {
 
   async fetchIVData(ticker) {
     $("#iv_results").addClass("d-none");
+  
 
     var sentTicker = ticker.toUpperCase();
-    var url = "https://api.options.ai/expected-moves/" + sentTicker;
+    var url = `https://us-central1-spyder-academy.cloudfunctions.net/implied_move?ticker=${sentTicker}`;
 
     try {
       let response = await $.ajax({url: url, method: 'GET'});
-      if (response && response.length > 0) {
-        var item = response[0];
+
+      if (response) {
+        var item = response;
         var movePercent = (item.movePercent * 100).toFixed(2) + '%';
         var moveAmount = '$' + item.moveAmount.toFixed(2);
         var rangeTop = '$' + item.moveUpper.toFixed(2);
         var rangeBottom = '$' + item.moveLower.toFixed(2);
         var ivRange = rangeBottom + ' - ' + rangeTop;
         var closePrice = '$' + (item.moveLower + item.moveAmount).toFixed(2);
+        
+        var moveByDate = new Date(item.date)
+        moveByDate.setUTCHours(5,0,0,0)
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'America/New_York'};
+        var moveBy = moveByDate.toLocaleDateString('en-US', options);
 
         // Update the HTML elements
         $('.movePercent').text(movePercent);
@@ -2378,7 +2385,17 @@ class Trades {
         $('.bullRange').text("$" + item.moveUpper.toFixed(2));
         $('.bearRange').text("$" + item.moveLower.toFixed(2));
 
+        $('#expectedMoveBy').text(`By Market Close on ${moveBy}`)
+
         $("#iv_results").removeClass("d-none");
+
+        // if we have the actuals, we can update the bullseyes
+        if (item.actualHigh && item.actualHigh >= item.moveUpper){
+          $(".bullRangeHit").removeClass("d-none");
+        }
+        if (item.actualLow && item.actualLow <= item.moveLower){
+          $(".bearRangeHit").removeClass("d-none");
+        }
 
         return {"bears": item.moveLower.toFixed(2), "bulls": item.moveUpper.toFixed(2)}
 
@@ -2505,7 +2522,7 @@ class Trades {
         // Check if the date is in the past
         // hide yesterdays earnings if we are past 11am
         // or it is for tomorrow
-        var showEarnings = (earningsDt >= yesterday)
+        var showEarnings = ((earningsDt >= yesterday && (new Date()).hour < 11) || ((earningsDt >= today)))
         // console.log(today, tomorrow, earningsDt, currentHour, showEarnings)
 
         if (!showEarnings) {
