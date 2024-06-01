@@ -2835,7 +2835,7 @@ class Trades {
         card.append(img);
 
         // Add the group title
-        var title = $(`<h5 class="card-title text-uppercase">${group.group}</h5>`);
+        var title = $(`<div class="card-title text-uppercase text-center bg-secondary text-white fw-bold p-3">${group.group}</div>`);
         cardBody.append(title);
 
         // Add the list of tickers
@@ -2925,6 +2925,9 @@ class Trades {
         if (emaData.length > 0){
           $("#currentPriceWidget").html("$" + emaData[0].latest_price.toFixed(2))
           $("#currentPriceWidgetTimeValue").html((new Date()).toLocaleTimeString())
+        }
+        else{
+          $("#currentPriceWidgetTime").hide()
         }
 
         emaData.forEach(data => {
@@ -3081,6 +3084,9 @@ class Trades {
         }
         else  if (stratData.thestrat_combo == "2-2 Bearish Reversal or Bullish Continuation"){
           thestratCombos.append($("<img class='w-100 h-100' src='/images/stratcombos/22b.png'>"))
+        }
+        else  if (stratData.thestrat_combo == "3-2 Continuation or Reversal"){
+          thestratCombos.append($("<img class='w-100 h-100' src='/images/stratcombos/32.png'>"))
         }
         else  if (stratData.thestrat_combo == "3-2-2 Bullish Reversal"){
           thestratCombos.append($("<img class='w-100 h-100' src='/images/stratcombos/322.png'>"))
@@ -3393,9 +3399,13 @@ class Trades {
   async fetchGEXOverlay(ticker, expectedMove = null) {
     ticker = ticker.toUpperCase();
     const jsonData = await this._fetchGEXOverlayData(ticker);
-    if (jsonData && jsonData.stock_price.length > 0) {
+    if (ticker == "SPX"){
+      $("#gammaOverlayContainer").hide()
+    }
+    else if (jsonData && jsonData.stock_price.length > 0) {
       this._renderGEXOverlay(ticker, jsonData, expectedMove);
-    } else {
+    } 
+    else {
         console.log("No data to render.");
         $("#gammaChartOverlay").text("Gamma Price Overlay is currently unavailable")
     }

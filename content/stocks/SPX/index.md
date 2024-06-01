@@ -7,6 +7,6 @@ tags = [
    "Stocks",
 ]
 layout = "stocks"
-ticker = "SPX500"
-disableListPage = true
+ticker = "SPX"
+tv_override = "SPX500"
 +++

@@ -1,5 +1,6 @@
 {{ define "main" }}
 
+{{ $tvSymbol := .Page.Params.tv_override | default .Page.Params.ticker }}
 
   <section class="section blog-single py-5">
     <div class="container">
@@ -37,7 +38,7 @@
             <div class="tradingview-widget-container__widget"></div>
             <script type="application/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js" async>
               {
-                "symbol" : "{{  .Page.Params.ticker }}",
+                "symbol" : "{{  $tvSymbol }}",
                 "width" : "100%",
                 "locale" : "en",
                 "colorTheme" : "light",
@@ -57,21 +58,21 @@
           <h2>Gamma Exposure</h2>
         </div>
       </div>
-      <div class="col-lg-6 col-12">
+      <div id="gammaChartContainer" class="col-lg-6 col-12">
         <div class="card shadow p-3 mb-5">
           <div class="w-100"  id="gammaChart">Loading Gamma Exposure...</div>
           <input type="range" class="form-range" id="gex_slider" min="0" max="16" step="1" value="16">
         </div>
       </div>
 
-      <div class="col-lg-6 col-12">
+      <div id="gammaOverlayContainer" class="col-lg-6 col-12">
         <div class="card shadow p-3 m-0">
           <div class="w-100"  id="gammaChartOverlay">Loading Gamma Overlay...</div>
         </div>
       </div>
     </div>  
 
-    <div class="row justify-content-center pb-5">
+    <!-- <div class="row justify-content-center pb-5">
       <div class="col-lg-6 col-12 justify-content-center">
         <div class="card shadow p-3 mb-5 justify-content-center d-none" id="iv_results" style="border-radius: 15px; background-color: #BFE1CF; ">
           <div class="row">
@@ -90,7 +91,7 @@
           </div>
       </div>
     </div>
-  </div>
+  </div> -->
       
     <section class="section problem p-3 " style="background-color: #313131; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);">
       <div class="container">
@@ -109,7 +110,7 @@
 
     <div class="row py-5">
       <div class="col-12 justify-content-center p-0 m-0">
-        {{ partial "shared/stock-chart" (dict "symbol" .Page.Params.ticker "Site" .Site) }}
+        {{ partial "shared/stock-chart" (dict "symbol" $tvSymbol "Site" .Site) }}
       </div>  
     </div>
 
@@ -137,16 +138,16 @@
       <div class="col-12 p-0 justify-content-center">
         <div class="tab-content " id="pills-tabContent">
           <div class="tab-pane fade" id="pills-financials" role="tabpanel" aria-labelledby="pills-financials-tab">
-            {{ partial "shared/stock-financials" (dict "symbol" .Page.Params.ticker "Site" .Site) }}
+            {{ partial "shared/stock-financials" (dict "symbol" $tvSymbol "Site" .Site) }}
           </div>
           <div class="tab-pane fade" id="pills-companyinfo" role="tabpanel" aria-labelledby="pills-companyinfo-tab">
-            {{ partial "shared/stock-companyinfo" (dict "symbol" .Page.Params.ticker "Site" .Site) }}
+            {{ partial "shared/stock-companyinfo" (dict "symbol" $tvSymbol "Site" .Site) }}
           </div>
           <div class="tab-pane fade" id="pills-news" role="tabpanel" aria-labelledby="pills-news-tab">
             {{ partial "shared/stock-news" (dict "symbol" .Page.Params.ticker "Site" .Site) }}
           </div>
           <div class="tab-pane fade show active" id="pills-signals" role="tabpanel" aria-labelledby="pills-signals-tab">
-            {{ partial "shared/stock-signals" (dict "symbol" .Page.Params.ticker "Site" .Site) }}
+            {{ partial "shared/stock-signals" (dict "symbol" .Page.Params.ticker "tvSymbol" $tvSymbol  "Site" .Site) }}
           </div>
         </div>
       </div>
