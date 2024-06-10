@@ -58,16 +58,6 @@ content:
       button:
         label: "Follow on Twitter"
         url: "https://x.com/CashMoneyTrades"
-
-    - image: "images/teachers-linksnipes.png"
-      name: "Link Snipes"
-      title: "Mentor"
-      text: "Technical Analysis Trader specializing in volume price analysis, supply & demand, and relative weakness/strength."
-      tickers: "Trades $SPY and Mega Cap Tech"
-      button:
-        label: "Follow on Twitter"
-        url: "https://x.com/link_0002"
-
     - image: "images/teachers-ape.png"
       name: "Anonymous Ape"
       title: "Mentor"
