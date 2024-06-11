@@ -2397,7 +2397,7 @@ class Trades {
           $(".bearRangeHit").removeClass("d-none");
         }
 
-        return {"bears": item.moveLower.toFixed(2), "bulls": item.moveUpper.toFixed(2)}
+        return {"bears": item.moveLower.toFixed(2), "bulls": item.moveUpper.toFixed(2), "timestamp": item.timestamp}
 
       } else {
         console.error('No data received from API.');
@@ -3112,6 +3112,7 @@ class Trades {
     }
   }
 
+  isFetchingSnapshotData = false;
   async _fetchGEXData(ticker, idx=0, historicals=false) {
 
     if (!historicals){
@@ -3139,14 +3140,23 @@ class Trades {
     else{
       var url = `https://us-central1-spyder-academy.cloudfunctions.net/gex_snapshots?ticker=${ticker}`;
       try {
-        if (this.snapshotGexData == null)
+        if (this.snapshotGexData == null && !this.isFetchingSnapshotData)
         {
+          this.isFetchingSnapshotData = true;
+
           const response = await fetch(url);
           if (!response.ok) {
               throw new Error(`HTTP error! status: ${response.status}`);
           }
           const responseData = await response.json();
           this.snapshotGexData = responseData
+
+          // update the slider max and steps values
+          $("#gex_slider").attr("max", this.snapshotGexData.length - 1);
+          $("#gex_slider").attr("value", this.snapshotGexData.length - 1);
+          $("#gex_slider").removeAttr("disabled");
+
+          this.isFetchingSnapshotData = false;
         }
        
         var data = {}
@@ -3161,6 +3171,8 @@ class Trades {
           timestamp = this.snapshotGexData[this.snapshotGexData.length - 1]["timestamp"]
         }
 
+        
+
         return {
           "data": data,
           "timestamp": timestamp
@@ -3169,44 +3181,6 @@ class Trades {
       } catch (error) {
           console.error("Could not fetch data:", error);
       }
-    }
-
-
-
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const responseData = await response.json();
-        var data = responseData
-        var timestamp = ""
-
-        if (historicals){
-          this.snapshotGexData = data
-        }
-
-        // change this to return data at index, where 0 is the latest data.
-
-        if (historicals){
-          if (responseData[idx] != null){
-            data = this.snapshotGexData[idx]["data"]
-            timestamp = this.snapshotGexData[idx]["timestamp"]
-          }
-          else{
-            data = responseData[responseData.length - 1]["data"]
-            timestamp = responseData[responseData.length - 1]["timestamp"]
-          }
-        }
-       
-
-        return {
-          "data": data,
-          "timestamp": timestamp
-        };
-
-    } catch (error) {
-        console.error("Could not fetch data:", error);
     }
   }
 
@@ -3397,6 +3371,7 @@ class Trades {
 
 
   async fetchGEXOverlay(ticker, expectedMove = null) {
+    console.log("overlay data", expectedMove)
     ticker = ticker.toUpperCase();
     const jsonData = await this._fetchGEXOverlayData(ticker);
     if (ticker == "SPX"){
@@ -3455,6 +3430,8 @@ class Trades {
           }
       };
     });
+
+    // Prepare Gamma Snapshot Series
 
 
     return { stockSeries, gexAnnotations };
