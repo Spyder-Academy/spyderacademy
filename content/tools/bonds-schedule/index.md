@@ -13,10 +13,19 @@ tags = [
 Discover the Spyder Academy's Bonds command, a powerful tool designed to enhance your understanding of market events around Treasury Sales.
 
 
-## Upcoming Treasury Auctions
 
+## Upcoming Treasury Auctions
 <div class="container">
    <div class="row" id="bondCalendar">
+   </div>
+</div>
+
+## Economic Calendar
+<div class="container">
+ <div class="row">
+      <div class="col-12">
+         {{< economic_calendar >}}
+      </div>
    </div>
 </div>
 
