@@ -55,7 +55,11 @@
     <div class="row justify-content-center pb-5">
       <div class="col-12">
         <div class="blog-content ">
-          <h2>Market Pressure</h2>
+          <h2>Market Pressure
+            <span id="marketPressureTooltip" style="background-color: lightgray; border-color: lightgray;" class="btn btn-secondary" data-toggle="tooltip" data-placement="auto" data-html="true" >
+              <i class="fa-solid fa-question"></i>
+            </span>
+          </h2>
         </div>
       </div>
       <div id="gammaChartContainer" class="col-lg-6 col-12">
@@ -190,6 +194,14 @@
                   console.error('Error fetching IV data:', error);
               }
           })();
+
+          marketPressureTooltip = "<h6>MARKET PRESSURE</h6>It's a measure of how much buying or selling pressure there is on a stock due to options trading, becoming a magnet for where the price may move toward.<br/><br/>Positive net gamma means traders might buy more stock as the price goes up.<br/><br/>Negative net gamma means they might sell more as the price goes down.<br/><br/>"
+
+          $('#marketPressureTooltip').tooltip({
+              title: marketPressureTooltip,
+              html: true
+          });
+          
         });
      </script>
 

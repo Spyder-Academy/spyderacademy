@@ -15,13 +15,21 @@
           <div class="row pb-5">
             <div class="col-lg-5 col-12">
               <div class="blog-content ">
-                  <h2>Economic Calendar</h2>
+                  <h2>Economic Calendar
+                    <span id="economicCalendarTooltip" style="background-color: lightgray; border-color: lightgray;" class="btn btn-secondary" data-toggle="tooltip" data-placement="auto" data-html="true" >
+                      <i class="fa-solid fa-question"></i>
+                    </span>
+                  </h2>
               </div>
               {{ partial "shared/economic_calendar.html" }}
             </div>
             <div class="col-lg-7 col-12">
               <div class="blog-content ">
-                <h2>Market Pressure</h2>
+                <h2>Market Pressure
+                  <span id="marketPressureTooltip" style="background-color: lightgray; border-color: lightgray;" class="btn btn-secondary" data-toggle="tooltip" data-placement="auto" data-html="true" >
+                    <i class="fa-solid fa-question"></i>
+                  </span>
+                </h2> 
               </div>
               <div class="card shadow p-3 mb-5">
                 <div class="w-100 d-none"  id="spyGammaChart"></div>
@@ -218,6 +226,16 @@
     <script>
         $(document).ready(
           function() {
+            $('#marketPressureTooltip').tooltip({
+                title: "<h6>MARKET PRESSURE</h6>It's a measure of how much buying or selling pressure there is on a stock due to options trading, becoming a magnet for where the price may move toward.<br/><br/>Positive net gamma means traders might buy more stock as the price goes up.<br/><br/>Negative net gamma means they might sell more as the price goes down.",
+                html: true
+            });
+
+            $('#economicCalendarTooltip').tooltip({
+                title: "<h6>ECONOMIC CALENDAR</h6>This calendar shows important financial events that can affect the stock market. <br/><br/>High impact events, like interest rate decisions or inflation reports, can cause big price movements. <br/><br/>Keep an eye on these to stay informed and make better trading decisions.",
+                html: true
+            });
+
             queryString = window.location.search;
 
             // Check if the query string contains the "tvwidgetsymbol" parameter

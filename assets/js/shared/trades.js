@@ -3257,7 +3257,7 @@ class Trades {
       formattedTimestampStr += " ET"
     }
 
-    var chartTitle =  ticker.toUpperCase() + " Gamma Exposure By Strike"
+    var chartTitle =  ticker.toUpperCase() + " Market Pressure"
     var chartSubTitle = formattedTimestampStr
 
     var options = {
