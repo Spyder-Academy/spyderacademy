@@ -12,7 +12,7 @@
             <div class="col-lg-4 col-12">
                 <div class="card h-100  p-3 mb-5" style="border-radius: 15px;">
                     <div class="card-body">
-                        <h4 class="card-title fw-semibold text-uppercase">{{ $symbol }} MARKET PRESSURE</h4>
+                        <h4 id="marketPressureHeader" class="card-title fw-semibold text-uppercase">{{ $symbol }} MARKET PRESSURE</h4>
                         <p class="card-text" id="signalGammaOutlook"><span class="gammaOutlook"></span></p>
                         <p class="card-text text-black-61">The market price for {{ $symbol }} is currently attracted to <span class="largestGammaLevelText"></span>, and the overall sentiment is <span class="gammaOutlook"></span><br/></p>
                     </div>
@@ -22,7 +22,7 @@
             <div class="col-lg-4 col-12">
                 <div class="card h-100  p-3 mb-5" style="border-radius: 15px;">
                     <div class="card-body">
-                        <h4 class="card-title fw-semibold text-uppercase">EXPECTED MOVE</h4>
+                        <h4 id="expectedMoveHeader" class="card-title fw-semibold text-uppercase" data-toggle="tooltip" data-placement="auto">EXPECTED MOVE FOR {{ $symbol }}</h4>
                         <p class="card-text text-black-61 small" id="expectedMoveBy"></p>
                         <p class="card-text text-black-61" id="movePercentTitle">{{ $symbol }} Expected Move: <span class="movePercent"></span> (<span class="moveAmount"></span>)</p>
 
@@ -47,7 +47,7 @@
             <div class="col-lg-4 col-12">
                 <div class="card h-100  p-3 mb-5" style="border-radius: 15px;">
                     <div class="card-body">
-                        <h4 class="card-title fw-semibold text-uppercase">{{ $symbol }} MOVING AVERAGES</h4>
+                        <h4 id="movingAveragesHeader" class="card-title fw-semibold text-uppercase">{{ $symbol }} MOVING AVERAGES</h4>
                         <div class="card-text text-black-61" id="emaSignals">
                         </div>
                     </div>
@@ -104,3 +104,27 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    $(document).ready(function() {
+        
+        marketPressureTooltip = "<h6>MARKET PRESSURE</h6><p>It's a measure of how much buying or selling pressure there is on a stock due to options trading, becoming a magnet for where the price may move toward.</p><p>Positive net gamma means traders might buy more stock as the price goes up.</p><p>Negative net gamma means they might sell more as the price goes down.</p>"
+        $('#marketPressureHeader').tooltip({
+            title: marketPressureTooltip,
+            html: true
+        });
+        
+        $('#expectedMoveHeader').tooltip({
+            title: "<h6>EXPECTED MOVE:</h6><p>This indicator predicts the potential price range within which a stock or asset is expected to fluctuate over a certain period, based on options pricing models.</p><p>It's a valuable tool for traders to gauge potential price movements and make informed decisions.</p><p>Keep in mind that actual market fluctuations may differ from this prediction due to various factors.</p>",
+            html: true
+        });
+
+        $('#movingAveragesHeader').tooltip({
+            title: "<h6>MOVING AVERAGES:</h6><p>This card shows the current price position of " + {{ $symbol }} + " relative to its key moving averages.</p><p>When the price is above an average, it's bullish; below, it's bearish.</p><p>Mixed signals, with some averages bullish and others bearish, can indicate potential consolidation or a trend change.</p><p>Use this information to gauge overall market trends and potential support/resistance levels.</p>",
+            html: true
+        });
+        
+
+    });
+</script>
