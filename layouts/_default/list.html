@@ -45,6 +45,7 @@
                   <div class="card d-flex flex-row align-items-start border-0 p-5  justify-content-center  text-center"  style="background-color: #313131;">
                     <span class="card-text text-light fs-3">
                       The market for SPY is currently attracted to <span class="largestGammaLevelText"></span>, and the overall sentiment is <span class="gammaOutlook"></span>.
+                      <p class="lowRangeDayWarning d-none">Today may be a low range day, so take quick scalps, or you may want to go touch grass instead.</p>
                     </span>
                   </div>
                 </div>
@@ -249,6 +250,7 @@
             
             userTrades = new Trades();
             userTrades.fetchGEXByStrike("SPY", "#spyGammaChart", idx=0, historicals=true);
+            var range = userTrades.fetchIVData("SPY");
 
             // Get a reference to the range input element
             const slider = document.getElementById('gex_slider');

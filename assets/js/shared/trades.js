@@ -2391,6 +2391,7 @@ class Trades {
 
         if (item.movePercent < 0.005){
           $("#expectedMoveChop").removeClass("d-none");
+          $(".lowRangeDayWarning").removeClass("d-none");
         }
 
         // if we have the actuals, we can update the bullseyes
