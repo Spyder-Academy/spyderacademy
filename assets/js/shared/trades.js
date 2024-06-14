@@ -2389,6 +2389,10 @@ class Trades {
 
         $("#iv_results").removeClass("d-none");
 
+        if (item.movePercent < 0.005){
+          $("#expectedMoveChop").removeClass("d-none");
+        }
+
         // if we have the actuals, we can update the bullseyes
         if (item.actualHigh && item.actualHigh >= item.moveUpper){
           $(".bullRangeHit").removeClass("d-none");
