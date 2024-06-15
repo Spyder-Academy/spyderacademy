@@ -2,7 +2,7 @@
 author = "CashMoneyTrades"
 title = "XYL |  Xylem Inc. (XYL): Water Solutions for a Changing World - Stock Analysis & Investment Outlook"
 date = "2024-01-12T10:00:00"
-description = "Xylem Inc. (XYL) tackles water challenges. Explore our stock analysis & investment outlook for this critical industry leader. WaterSolutions XYLStock"
+description = "Xylem Inc. (XYL) tackles water challenges. Explore our stock analysis & investment outlook for this critical industry leader."
 tags = [
 "Stocks",
 ]
