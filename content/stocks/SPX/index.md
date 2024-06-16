@@ -8,6 +8,7 @@ tags = [
 ]
 layout = "stocks"
 ticker = "SPX"
+ tv_override = "SPX500" 
 company = "S&P 500 Index (SPX)"
 +++
         

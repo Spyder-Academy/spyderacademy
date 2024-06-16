@@ -8,6 +8,7 @@ tags = [
 ]
 layout = "stocks"
 ticker = "SCI"
+tv_override = "NYSE:SCI" 
 company = "Service Corp. International (SCI)"
 +++
         
