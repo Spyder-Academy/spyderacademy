@@ -46,7 +46,7 @@
                     <div class="container-fluid">
                         <div class="row  align-items-center ">
                             <div class="col-8">
-                                <strong><input id="tickerInput" name="query" autocomplete="off" class="form-control-borderless no-border-transparent-bg  text-uppercase text-center w-100" type="text" placeholder="SEARCH TICKER" onfocus="this.placeholder = ''" onblur="this.placeholder = 'SEARCH TICKER'; $('.search-dropdown-menu').hide()"></strong>
+                                <strong><input id="tickerInput" name="query" autocomplete="off" class="form-control-borderless no-border-transparent-bg  text-uppercase text-center w-100" type="text" placeholder="SEARCH TICKER"></strong>
                             </div>
                             <div class="col-2">
                                 <button class="btn btn-sm py-0">🔎</button>
@@ -74,7 +74,7 @@
         var matchingTickers = tickers.filter(ticker => ticker.startsWith(searchString));
         
         // Check if the Enter key was pressed
-        if (event.key === 'Enter' && matchingTickers.length == 1) {
+        if (event.key === 'Enter' && (matchingTickers.length == 1 || matchingTickers[0] == searchString)) {
             $('#tickerInput').val(matchingTickers[0])
             handleSymbolSearch();
         }
@@ -104,6 +104,7 @@
     }
 
     function handleSymbolSearch(){
+        console.log("search symbol")
         // Get the value entered by the user
         var symbol = document.getElementById('tickerInput').value.trim().toLowerCase();
             
@@ -117,6 +118,30 @@
     $(document).ready(function() {
         // Add event listener to the input box using jQuery
         $('#tickerInput').on('keyup', handleKeyPress);
+        $('#tickerInput').on('blur', function(){
+            setTimeout(function() {
+                $("#tickerInput").attr("placeholder", 'SEARCH TICKER');
+                $('.search-dropdown-menu').hide();
+            }, 200); // Delay of 200 milliseconds
+        });
+        // Add event listener to links in the dropdown to ensure they are clickable
+        $(document).on('mousedown', '.search-dropdown-menu a', function() {
+            // Prevent blur event when a link is clicked
+            $('#tickerInput').off('blur');
+        });
+        // Re-add blur event after clicking a link
+        $(document).on('mouseup', '.search-dropdown-menu a', function() {
+            $('#tickerInput').on('blur', function(){
+                setTimeout(function() {
+                    $("#tickerInput").attr("placeholder", 'SEARCH TICKER');
+                    $('.search-dropdown-menu').hide();
+                }, 200); // Delay of 200 milliseconds
+            });
+        });
+        
+        $('#tickerInput').on('focus', function(){
+            $("#tickerInput").attr("placeholder", '');
+        });
     });
 
     // List of tickers and their corresponding logos
