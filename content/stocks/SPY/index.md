@@ -8,6 +8,7 @@ tags = [
 ]
 layout = "stocks"
 ticker = "SPY"
+company = "S&P 500 ETF Fund (SPY)"
 +++
         
 
