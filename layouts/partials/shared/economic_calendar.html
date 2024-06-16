@@ -63,6 +63,11 @@
 
                 calendarDiv.append(dayHeader + table);
             });
+
+            if (calendarDiv.html() == "")
+            {
+                calendarDiv.append("<div class='p-5'>There's nothing scheduled right now, get some fresh air!</div>");
+            }
         }
     });
 
