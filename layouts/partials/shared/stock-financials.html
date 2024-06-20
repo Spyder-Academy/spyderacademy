@@ -2,7 +2,7 @@
 {{ $stocks := .Site.Data.stocks.stocks }}
 {{ $profile := where $stocks "symbol" $symbol }}
 
-<div class="tradingview-widget-container__widget"></div>
+<div class="tradingview-financials-widget-container__widget"></div>
 <script type="application/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-financials.js" async>
   {
     "isTransparent": false,
