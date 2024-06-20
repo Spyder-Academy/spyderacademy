@@ -2377,6 +2377,9 @@ class Trades {
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'America/New_York'};
         var moveBy = moveByDate.toLocaleDateString('en-US', options);
 
+        const tsOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', timeZone: 'America/New_York'};
+        var timestamp = (new Date(item.timestamp)).toString('en-US', tsOptions);
+
         // Update the HTML elements
         $('.movePercent').text(movePercent);
         $('.moveAmount').text(moveAmount);
@@ -2386,6 +2389,7 @@ class Trades {
         $('.bearRange').text("$" + item.moveLower.toFixed(2));
 
         $('#expectedMoveBy').text(`By Market Close on ${moveBy}`)
+        $('#expectedMoveBy').attr('title', `Expected Move as of ${timestamp}`)
 
         $("#iv_results").removeClass("d-none");
 
