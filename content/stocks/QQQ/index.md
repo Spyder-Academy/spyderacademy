@@ -15,7 +15,7 @@ company = "Invescro QQQ Trust (QQQ)"
 
 ##  QQQ: The Tech Titan's Secret Weapon (Or Maybe Just a Really Cool ETF)
 
-Hey there, fellow investors!  Ever heard of QQQ?  It's not a sound you make when you're happy (although, investing *can* make you happy), but an actual thing: the Invesco QQQ Trust.  Think of it as a magic portal to the world of tech giants, where Apple, Microsoft, and Tesla (just to name a few) hang out.  But is it all glitz and glamour?  Let's dive in and see what this ETF is all about!
+Hey there, fellow investors!  Ever heard of QQQ?  It's not a sound you make when you're happy (although, investing *can* make you happy), but an actual thing: the Invesco QQQ Trust.  Think of it as a magic portal to the world of tech giants, where [Apple](/stocks/aapl/), [Microsoft](/stocks/msft/), and [Tesla](/stocks/tsla/) (just to name a few) hang out.  But is it all glitz and glamour?  Let's dive in and see what this ETF is all about!
 
 **The Nasdaq 100: Where the Big Dogs Play**
 

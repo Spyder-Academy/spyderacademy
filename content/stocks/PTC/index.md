@@ -33,7 +33,7 @@ They've got two main ways of making money:
 Now, let's talk about why some folks believe PTC is poised for growth:
 
 * **Industry 4.0:**  It's the future of manufacturing, and PTC is riding the wave.  With more and more companies adopting digital technology, there's a huge demand for software like PLM, CAD, and IoT.  PTC is perfectly positioned to capitalize on this trend.
-* **Innovation Station:** They're always pushing boundaries and developing new technologies. They're like the cool kids in the science lab, experimenting with Augmented Reality (AR) and Virtual Reality (VR), taking their software to a whole new level. And they're not afraid to partner with giants like Microsoft, Amazon Web Services, and Siemens,  which gives them even more firepower.
+* **Innovation Station:** They're always pushing boundaries and developing new technologies. They're like the cool kids in the science lab, experimenting with Augmented Reality (AR) and Virtual Reality (VR), taking their software to a whole new level. And they're not afraid to partner with giants like [Microsoft](/stocks/msft/), [Amazon](/stocks/amzn/) Web Services, and Siemens,  which gives them even more firepower.
 * **Financially Fit:** PTC has a strong track record of steady revenue growth and profitability. They're financially stable and ready to invest in new projects and acquisitions.  
 
 But, like every good story, there's another side to the coin:

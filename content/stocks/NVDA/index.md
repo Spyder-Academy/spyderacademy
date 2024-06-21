@@ -60,7 +60,7 @@ So, why should investors be excited about NVIDIA? Here's the bullish case:
 
 But remember, every investment comes with risks, and NVIDIA is no exception.  Here's the bearish case:
 
-* **Competition is Heating Up:**  AMD, Intel, and other players are challenging NVIDIA's dominance in the GPU market. This could eat into NVIDIA's market share and profits.
+* **Competition is Heating Up:**  [AMD](/stocks/amd/), [Intel](/stocks/intc/), and other players are challenging NVIDIA's dominance in the GPU market. This could eat into NVIDIA's market share and profits.
 * **High Valuation:  A Risk for Investors**  NVIDIA's stock has skyrocketed, which means it's also carrying a high valuation. If growth slows down, the stock could take a tumble.
 * **Tech Sector Volatility:**  The tech sector is known for its ups and downs, and NVIDIA's stock is no exception. It can fluctuate significantly based on market sentiment and economic conditions.
 * **Reliance on Gaming:  A Potential Bottleneck?**  While the gaming market is expanding, there's a possibility of saturation in the high-end GPU market. If gaming growth slows down, it could impact NVIDIA's revenue.

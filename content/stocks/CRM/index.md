@@ -29,7 +29,7 @@ company = "Salesforce Inc (CRM)"
 
 **But wait, there's more!**  Salesforce is known for its **recurring revenue model**, which means they get paid every month like clockwork. Think of it like a loyal subscription box, but instead of bath bombs, it's CRM magic! 
 
-**Now, let's get real for a second.**  While Salesforce is a powerhouse, they're not the only players in the game. Companies like Microsoft, Oracle, and SAP are breathing down their necks.  And honestly, Salesforce has a tendency to get a little spendy.  
+**Now, let's get real for a second.**  While Salesforce is a powerhouse, they're not the only players in the game. Companies like [Microsoft](/stocks/msft/), [Oracle](/stocks/orcl/), and SAP are breathing down their necks.  And honestly, Salesforce has a tendency to get a little spendy.  
 
 **But hey, who doesn't love a little drama?** 
 

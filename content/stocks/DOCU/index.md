@@ -29,7 +29,7 @@ They've got a whole system in place to make sure businesses run smoothly and agr
 
 Like any good story, DocuSign's future has its share of twists and turns.  On the one hand, their position as the e-signature leader is pretty strong.  Businesses are constantly going digital, and DocuSign is there to help them make the transition.
 
-But there are some challenges too.  Competition is getting fierce, with other players like Adobe and Microsoft trying to snag their share of the digital document pie.  Plus, new technologies like AI and blockchain are changing the game.  
+But there are some challenges too.  Competition is getting fierce, with other players like [Adobe](/stocks/adbe/) and [Microsoft](/stocks/msft/) trying to snag their share of the digital document pie.  Plus, new technologies like AI and blockchain are changing the game.  
 
 So, while DocuSign is in a great position, they need to stay agile and innovative to keep their crown. 
 

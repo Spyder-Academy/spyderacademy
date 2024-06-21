@@ -19,7 +19,7 @@ company = "FiServ Inc (FI)"
 
 Fiserv is basically the behind-the-scenes tech wizard for a whole lot of financial institutions – think banks, credit unions, even merchants.  They’ve got this crazy arsenal of software, payment processing, and all sorts of cool stuff that makes the whole financial world a lot more digital.  
 
-But, like any good Wild West town, things are a little chaotic.  Fiserv is constantly battling it out with other big players like Apple Pay, Google Pay, and even the old-school banks that are finally stepping up their game. 
+But, like any good Wild West town, things are a little chaotic.  Fiserv is constantly battling it out with other big players like [Apple](/stocks/aapl/) Pay, [Google](/stocks/goog/) Pay, and even the old-school banks that are finally stepping up their game. 
 
 **So, who’s got the upper hand?**
 

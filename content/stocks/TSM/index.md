@@ -23,7 +23,7 @@ Now, you might be wondering: "Why should I care about a company that makes thing
 
 **They're Not Like Intel (That's Important)**
 
-First, let's clear up some confusion. Unlike Intel, which designs AND builds its own chips, TSMC is a "foundry" - they're basically the chip-making factory for the entire tech world. Think of them like the ultimate bakery, churning out delicious, custom-made chips for companies like Apple, Qualcomm, Nvidia, and even AMD.  
+First, let's clear up some confusion. Unlike Intel, which designs AND builds its own chips, TSMC is a "foundry" - they're basically the chip-making factory for the entire tech world. Think of them like the ultimate bakery, churning out delicious, custom-made chips for companies like [Apple](/stocks/aapl/), [Qualcomm](/stocks/qcom/), [NVIDIA](/stocks/nvda/), and even [AMD](/stocks/amd/).  
 
 And this bakery is seriously popular, with a bigger slice of the chip market than anyone else. How do they do it?  Well, it's all about the tech.
 
@@ -33,7 +33,7 @@ This company is obsessed with staying ahead of the game, always pushing the boun
 
 They're constantly churning out new and improved chips, making things faster, smaller, and more efficient.  Their latest creations, like 5nm and 3nm chips, are mind-blowingly tiny yet incredibly powerful.
 
-**The Future is Bright (Unless...?**
+**The Future is Bright - Unless...?**
 
 So, all this sounds pretty great, right? A chip-making giant that's constantly innovating, with a customer list that reads like a who's who of tech titans. But even the most powerful king has to watch his back. 
 

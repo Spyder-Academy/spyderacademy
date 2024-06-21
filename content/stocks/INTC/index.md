@@ -25,11 +25,11 @@ Imagine Intel as the champion wrestler of the semiconductor world, a powerhouse 
 
 * **They're still the king of the PC and server markets,  a position that brings in a ton of cash.** 
 * **They're focusing on exciting,  fast-growing areas like AI, cloud computing, and the Internet of Things (IoT).** Think of it like branching out from wrestling into other,  lucrative sports.
-* **Intel is constantly churning out new technologies like the Intel Xe GPU, which is giving rival NVIDIA a run for its money.** 
+* **Intel is constantly churning out new technologies like the Intel Xe GPU, which is giving rival [NVIDIA](/stocks/nvda/) a run for its money.** 
 
 **But here's the catch:**
 
-* **The competition is fierce, with companies like AMD and NVIDIA snapping at their heels.** This is like a bunch of hungry wrestlers waiting for their chance to dethrone the champ.
+* **The competition is fierce, with companies like [AMD](/stocks/amd/) and [NVIDIA](/stocks/nvda/) snapping at their heels.** This is like a bunch of hungry wrestlers waiting for their chance to dethrone the champ.
 * **Intel has had some setbacks with manufacturing, causing delays and hiccups in its product launches.** Imagine getting knocked down a few times in the ring.
 * **They're still very dependent on the PC market, which isn't exactly booming these days.**  
 

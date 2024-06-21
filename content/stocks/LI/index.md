@@ -43,7 +43,7 @@ So, how's LI Auto doing financially?  Well, they've been seeing some pretty impr
 
 **But Wait, There's a Catch:**
 
-* **The Big, Bad Competition:**  The Chinese EV market is like a jungle – fierce and crowded. LI Auto is up against established giants like NIO, BYD, and even Tesla.  Can they hold their own in this cutthroat game? 
+* **The Big, Bad Competition:**  The Chinese EV market is like a jungle – fierce and crowded. LI Auto is up against established giants like [Tesla](/stocks/nio/), BYD, and even [Tesla](/stocks/tsla/).  Can they hold their own in this cutthroat game? 
 * **Chinese Dependence:**  For now, LI Auto's eggs are all in one basket – the Chinese market.  If something happens in China that throws a wrench in the works, LI Auto could feel the sting.  
 * **Government Twists and Turns:**  Rules around EVs are constantly evolving, which could impact LI Auto's plans and profitability.  It's a game of chess, and they need to keep up with the changing landscape. 
 * **Supply Chain Headaches:**  Getting all the parts needed to build cars is a global puzzle, and things can get tricky in a world where tensions are high.  LI Auto needs to find a way to ensure smooth production despite potential disruptions.

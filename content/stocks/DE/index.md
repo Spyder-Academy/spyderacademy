@@ -23,7 +23,7 @@ It all started with a self-scouring steel plow, an invention that revolutionized
 
 **The Deere Family:**
 
-* **John Deere:**  The flagship brand, known for quality and reliability in both farming and construction. Think of it like the "Apple" of agriculture. 
+* **John Deere:**  The flagship brand, known for quality and reliability in both farming and construction. Think of it like the "[Apple](/stocks/aapl/)" of agriculture. 
 * **Case IH:** A popular choice for farmers, offering a broad range of tractors, combines, and other equipment. Think of it as the "Samsung" of the farming world.
 * **Steiger:**  Built for power and big jobs, these tractors are perfect for large-scale farming operations. 
 * **Wacker Neuson:**  These compact construction machines are great for smaller projects and urban areas. 

@@ -16,7 +16,7 @@ company = "Micro E-Mini Nasdaq-100 Index Futures (MNQ)"
 
 ## Tech Titans: Your Guide to Trading the Nasdaq 100 (With MNQ Futures)
 
-**Ever heard of the Nasdaq 100?** This index is like a tech-filled party, packed with some of the biggest names in innovation.  Think Apple, Microsoft, Amazon...the whole shebang! Over the last couple of decades, it's practically skyrocketed, proving that tech is a force to be reckoned with.  
+**Ever heard of the Nasdaq 100?** This index is like a tech-filled party, packed with some of the biggest names in innovation.  Think [Apple](/stocks/aapl/), [Microsoft](/stocks/msft/), [Amazon](/stocks/amzn/)...the whole shebang! Over the last couple of decades, it's practically skyrocketed, proving that tech is a force to be reckoned with.  
 
 But how do you get in on the action? **Enter MNQ Futures, the secret weapon of tech traders.** These contracts are like a VIP pass to the Nasdaq 100, letting you bet on whether those tech giants will keep soaring or take a tumble.
 

@@ -40,7 +40,7 @@ Now, let's look at how Berkshire Hathaway invests:
 
 **Value Hunting:**  They have a team of experts who meticulously analyze companies, their finances, their markets, and even their management. They're like a detective squad, searching for companies undervalued by the market.
 
-**Moat Detectives:**  Berkshire Hathaway is always on the lookout for companies with "moats", those protective barriers. It can be brand recognition (like Coca-Cola), cost advantages (like Walmart), or even things like switching costs (imagine switching from Microsoft Word to something else, it's a pain!).
+**Moat Detectives:**  Berkshire Hathaway is always on the lookout for companies with "moats", those protective barriers. It can be brand recognition (like Coca-Cola), cost advantages (like Walmart), or even things like switching costs (imagine switching from [Microsoft](/stocks/msft/) Word to something else, it's a pain!).
 
 **Long-Term Vision:**  They don't panic-sell at the first sign of market turbulence. Instead, they hold their investments for the long haul, letting their companies grow and flourish, like a gardener nurturing a precious flower. 
 

@@ -29,7 +29,7 @@ Akamai's customer base is a who's who of the internet's biggest players. From me
 
 So, what's the secret to Akamai's success? Well, they're making a pretty penny from their subscription-based model. The more data they deliver, the more money they make. And with the internet continuing to grow at an explosive pace, the future looks bright for Akamai.
 
-However, there are a few things to keep in mind. Like any big player, Akamai faces some competition, mainly from the tech giants like Google, Amazon, and Microsoft. But with their expertise and vast network, Akamai is more than ready to face the challenge.
+However, there are a few things to keep in mind. Like any big player, Akamai faces some competition, mainly from the tech giants like [Google](/stocks/goog/), [Amazon](/stocks/amzn/), and [Microsoft](/stocks/msft/). But with their expertise and vast network, Akamai is more than ready to face the challenge.
 
 In the end, Akamai is a company that's constantly evolving to keep up with the ever-changing world of the internet. They're the backstage crew making sure your online experience is as smooth as butter. And with the internet showing no signs of slowing down, it's safe to say Akamai will be a player to watch for years to come. 
 

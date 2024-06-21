@@ -36,11 +36,11 @@ Nutanix has become a household name (okay, maybe just in the IT world) for its u
 * **Nutanix is a Market Leader:**  They've built a strong reputation for their HCI solutions, and their products are widely used across various industries.
 * **They're Betting Big on the Cloud:**  Nutanix is all in on cloud-native solutions, positioning themselves to be a major player in the future of cloud computing. 
 * **They're All About Efficiency:**  Their HCI solutions can help businesses save a ton of money on IT costs, which always makes a CFO happy. 
-* **Partnering Up:** Nutanix has made some strategic alliances with giants like VMware, Microsoft, and AWS, which gives them access to a wider market and opens up new opportunities for growth.
+* **Partnering Up:** Nutanix has made some strategic alliances with giants like [VMWare](/stocks/vmw/), [Microsoft](/stocks/msft/), and [AWS](/stocks/amzn/), which gives them access to a wider market and opens up new opportunities for growth.
 
 **But wait, there are some clouds on the horizon...**
 
-* **The Competition is Fierce:**  Nutanix is not alone in the HCI game. Giants like VMware, Dell Technologies, and Cisco Systems are breathing down their necks.
+* **The Competition is Fierce:**  Nutanix is not alone in the HCI game. Giants like [VMWare](/stocks/vmw/), [Dell Technologies](/stocks/dell/), and [Cisco Systems](/stocks/csco/) are breathing down their necks.
 * **Profitability is Still a Challenge:**  While Nutanix is making strides, their profit margins are still lower than some of their competitors.
 * **Partnering Up Can Be Tricky:**  Nutanix relies on hardware partners for their solutions.  This dependence could lead to issues like supply chain disruptions or changes in partner relationships. 
 * **Valuation is a Hot Topic:**  The stock price of NTNX has been a roller coaster ride, making some investors hesitant. 

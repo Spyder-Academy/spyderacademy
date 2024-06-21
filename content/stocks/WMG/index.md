@@ -27,7 +27,7 @@ WMG operates in two main areas: Recorded Music and Music Publishing. Recorded Mu
 WMG earns money primarily through:
 
 * **Record Sales:**  Physical and digital sales of music recordings.
-* **Streaming Royalties:**  Licensing agreements with streaming services like Spotify and Apple Music.
+* **Streaming Royalties:**  Licensing agreements with streaming services like [Spotify](/stocks/spot/) and [Apple](/stocks/aapl/) Music.
 * **Licensing:**  Fees earned from licensing music for use in films, television, commercials, and video games. 
 * **Merchandise and Other:** Sales of artist merchandise and other revenue streams related to live events and brand partnerships.
 

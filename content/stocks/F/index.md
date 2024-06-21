@@ -41,7 +41,7 @@ Here are some of Ford's biggest strengths, or as we like to call them, their "wi
 
 Ford's got its work cut out for them, as the road ahead is paved with a few bumps:
 
-* **The Competition is Fierce:**  General Motors, Toyota, Volkswagen, Tesla – the list goes on.  It's a dog-eat-dog world out there, especially in the EV race.
+* **The Competition is Fierce:**  [General Motors](/stocks/gm/), Toyota, Volkswagen, [Tesla](/stocks/tsla/) – the list goes on.  It's a dog-eat-dog world out there, especially in the EV race.
 * **The Economy's a Rollercoaster:** Nobody knows what the economy will do next. If things go south, people might put off buying new cars, and that could impact Ford's bottom line.
 * **Supply Chain Blues:**  Getting parts to build cars has been a challenge lately.  This can lead to production delays and higher costs, which can make things tough.
 * **Consumers Want It All:**  People are expecting more from their cars these days – they want EVs, they want autonomous driving, and they want cars that are connected to the internet. Ford needs to keep up with the times to stay in the game.

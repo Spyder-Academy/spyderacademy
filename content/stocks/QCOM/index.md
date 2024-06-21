@@ -29,7 +29,7 @@ So, what makes Qualcomm tick? Well, they've got a few tricks up their sleeve:
 
 It's not just about selling chips though. Qualcomm's also got this licensing model where they share their amazing technology with other companies.  Think of it like a royalty system.  It's a win-win situation,  they get more money, and other companies get access to cool technology!
 
-Qualcomm has built a strong network of partnerships with other big names like Apple (despite those legal battles!), Samsung, and even leading car manufacturers. They're making sure they stay ahead of the game!
+Qualcomm has built a strong network of partnerships with other big names like [Apple](/stocks/aapl/) (despite those legal battles!), Samsung, and even leading car manufacturers. They're making sure they stay ahead of the game!
 
 So, are you ready to dive into the world of Qualcomm? It's a wild ride with lots of exciting possibilities. Just remember, it's a complex world with its own set of challenges. But with its innovative spirit and impressive track record,  Qualcomm's definitely a player to keep an eye on! 
 

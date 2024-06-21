@@ -27,7 +27,7 @@ Think about it:  You're worried about hackers stealing your data?  Blackberry's 
 
 * **Automotive Software:**  We're talking self-driving cars, connected cars, cars that know your favorite playlist and can order your coffee.  Blackberry's got the QNX software, which is like the brains of the car, making sure everything runs smoothly and securely.  Think of it as the car's little assistant, but way more advanced.  They've even got a platform called IVY that lets cars chat with the internet, making everything super smooth and connected. 
 
-**But wait, there's more!**  Blackberry's not without its challenges.  Big players like Microsoft and Symantec are also in the cybersecurity game, so it's a bit of a scrum.  And self-driving cars are still a bit of a mystery, so that market is still figuring itself out.
+**But wait, there's more!**  Blackberry's not without its challenges.  Big players like [Microsoft](/stocks/msft/) and Symantec are also in the cybersecurity game, so it's a bit of a scrum.  And self-driving cars are still a bit of a mystery, so that market is still figuring itself out.
 
 **The Bottom Line:**  Blackberry is a company trying to find its place in a rapidly changing tech world.  They've got some exciting ideas and are already a player in some key areas.  Whether they'll be the next big thing or fade into the background again, only time will tell.  But one thing's for sure: it's an interesting story to watch unfold.  
 

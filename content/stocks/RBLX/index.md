@@ -35,7 +35,7 @@ Roblox isn't a traditional game company. It's a platform where users create, pla
 
 **Why Roblox Might Just Be a Flash in the Pan**
 
-* **Competition is a Real Thing:** Companies like Meta and Microsoft are throwing money at the metaverse, hoping to steal Roblox's thunder. It's going to be a tough battle to stay on top.
+* **Competition is a Real Thing:** Companies like [Meta](/stocks/meta/) and [Microsoft](/stocks/msft/) are throwing money at the metaverse, hoping to steal Roblox's thunder. It's going to be a tough battle to stay on top.
 * **The "Content is King" Dilemma:** Roblox depends on users creating cool stuff. If the content quality drops, so does the user base. Keeping things fresh and exciting is key to staying afloat.
 * **Money Talks (and Sometimes It Runs Out):** Roblox makes a lot of money from users spending Robux. But if people stop buying virtual items, things could get tough.  
 

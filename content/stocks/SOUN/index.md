@@ -29,7 +29,7 @@ But SoundHound isn't just about finding the right tune. They've created Houndify
 
 **SoundHound vs. the Tech Titans**
 
-SoundHound is going up against some serious heavyweights like Google, Amazon, and Apple. They're battling for a place in the ever-growing world of voice technology.  
+SoundHound is going up against some serious heavyweights like [Google](/stocks/goog/), [Amazon](/stocks/amzn/), and [Apple](/stocks/aapl/). They're battling for a place in the ever-growing world of voice technology.  
 
 **How Does SoundHound Make Money?**
 

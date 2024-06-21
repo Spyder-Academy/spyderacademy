@@ -15,11 +15,11 @@ company = "Albemarle Corp. (ALB)"
 
 ## Lithium: The Fuel of the Future, and Albemarle is Driving the Car
 
-The electric vehicle revolution is a-roarin', and it's thirsty for lithium. Think of it as the "crude oil" of the clean energy world. And guess who's got the biggest, most luxurious, battery-powered gas station? That's right, Albemarle! They're digging, refining, and selling lithium faster than you can say "Tesla." But hold on to your electric hats, folks, because this ride ain't always smooth.
+The electric vehicle revolution is a-roarin', and it's thirsty for lithium. Think of it as the "crude oil" of the clean energy world. And guess who's got the biggest, most luxurious, battery-powered gas station? That's right, Albemarle! They're digging, refining, and selling lithium faster than you can say "[Tesla](/stocks/tsla/)." But hold on to your electric hats, folks, because this ride ain't always smooth.
 
 **Albemarle: From Alkali to Awesome**
 
-This company's got a history longer than a Tesla charging queue. They started back in the 1800s, making stuff like bleach. But they saw the future – a future that was electric, and it needed lithium. So they took a sharp turn, bought up mines, and became the lithium king. They're basically the "King Midas" of the battery world, turning everything they touch into…well, lithium.  
+This company's got a history longer than a [Tesla](/stocks/tsla/) charging queue. They started back in the 1800s, making stuff like bleach. But they saw the future – a future that was electric, and it needed lithium. So they took a sharp turn, bought up mines, and became the lithium king. They're basically the "King Midas" of the battery world, turning everything they touch into…well, lithium.  
 
 **What Makes Albemarle Tick?**
 

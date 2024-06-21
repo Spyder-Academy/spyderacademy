@@ -37,7 +37,7 @@ Spotify’s got a lot going for it:
 
 But every band has its critics. Here's where Spotify might be hitting a sour note:
 
-* **The Great Streaming War:** Apple Music, Amazon Music, YouTube Music, and everyone else are trying to steal their thunder. It’s a musical battle royale, and Spotify has to keep up. 
+* **The Great Streaming War:** [Apple](/stocks/aapl/) Music, [Amazon](/stocks/amzn/) Music, YouTube Music, and everyone else are trying to steal their thunder. It’s a musical battle royale, and Spotify has to keep up. 
 * **Paying the Band:** Spotify spends a lot of money on licensing fees. They’re paying a pretty penny to get all that awesome music, and it’s cutting into their profits. 
 * **Rules of the Game:**  Spotify’s facing regulatory pressure, with legal battles and lawsuits about copyright and how they compensate artists. It’s a tricky dance. 
 * **The Great Escape:** Even with a huge fanbase, Spotify is always fighting to keep people from jumping ship to other platforms. 

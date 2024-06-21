@@ -25,7 +25,7 @@ It's a wild ride, this fitness and navigation market. Everyone's obsessed with h
 
 **The good news for Garmin?** They're a name you can trust. They're like the steady, reliable friend who always knows the way.  They're always innovating, adding new features and gadgets to their arsenal.  And they're doing pretty well financially - they're not just surviving, they're thriving. 
 
-**But there's a catch.** This market is super competitive. Everyone's trying to be the next big thing in fitness and navigation. Apple, Fitbit, Samsung, and a whole bunch of startups are throwing their hats in the ring. And let's face it, the prices for these fancy gadgets are going down, which could squeeze Garmin's profits. 
+**But there's a catch.** This market is super competitive. Everyone's trying to be the next big thing in fitness and navigation. [Apple](/stocks/aapl/), Fitbit, Samsung, and a whole bunch of startups are throwing their hats in the ring. And let's face it, the prices for these fancy gadgets are going down, which could squeeze Garmin's profits. 
 
 **The Bottom Line:** 
 

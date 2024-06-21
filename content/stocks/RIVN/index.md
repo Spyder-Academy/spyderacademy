@@ -21,7 +21,7 @@ Rivian's got everyone buzzing about their sleek, electric trucks and SUVs. They'
 
 Rivian's current lineup is all about getting off the beaten path (and looking good doing it):
 
-* **R1T:** This electric pickup truck is like a Tesla Model S, but with the ruggedness of a Jeep Wrangler. Think luxury meets off-road adventure.
+* **R1T:** This electric pickup truck is like a [Tesla](/stocks/tsla/) Model S, but with the ruggedness of a Jeep Wrangler. Think luxury meets off-road adventure.
 * **R1S:** If you prefer a more family-friendly approach, the R1S SUV is your ride. It's got all the luxury and tech of the R1T, but in a more spacious package.
 
 But Rivian's ambitions don't stop there. They're also partnering with Amazon to build electric delivery vans, which could be a game-changer for the whole delivery industry.
@@ -41,7 +41,7 @@ There are also some concerns about Rivian that investors need to consider:
 
 * **The Price Tag:** Rivian's stock has skyrocketed, but the company's profits haven't kept up.  Some investors are worried that the price is too high compared to what the company actually makes.
 * **Production Problems:** Rivian's struggling to get enough trucks built to keep up with demand. Production delays and quality issues have been a headache.
-* **The Competition is Catching Up:** Companies like Tesla, Ford, and General Motors are entering the electric truck market, and they're not messing around. Rivian will need to step up its game to stay ahead.
+* **The Competition is Catching Up:** Companies like [Tesla](/stocks/tsla/), [Ford](/stocks/f/), and [General Motors](/stocks/gm/) are entering the electric truck market, and they're not messing around. Rivian will need to step up its game to stay ahead.
 
 **The Bottom Line: Rivian's Got Potential, But It's Still Early Days**
 

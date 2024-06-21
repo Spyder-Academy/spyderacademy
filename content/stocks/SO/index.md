@@ -25,7 +25,7 @@ Southern Company is like that reliable friend who always pays their share of the
 
 **The Bullish Case: Sunshine and Electric Cars, Oh My!**
 
-Southern Company is trying to get in good with Mother Nature. They're throwing money at solar and wind energy, hoping to lessen their reliance on coal and natural gas. They're even jumping on the electric vehicle bandwagon, building charging stations for those trendy Tesla drivers. This is a good look, and it might just save them from getting kicked out of the sustainability club.
+Southern Company is trying to get in good with Mother Nature. They're throwing money at solar and wind energy, hoping to lessen their reliance on coal and natural gas. They're even jumping on the electric vehicle bandwagon, building charging stations for those trendy [Tesla](/stocks/tsla/) drivers. This is a good look, and it might just save them from getting kicked out of the sustainability club.
 
 **The Bearish Case: Fossil Fuel Fumbles and Debt Dilemmas**
 

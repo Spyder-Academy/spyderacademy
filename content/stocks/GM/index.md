@@ -35,7 +35,7 @@ Well, they've been making a pretty good living selling your dad's favorite Silve
 
 **The Bearish Case:  Hold Your Horses**
 
-* **Competition:**  GM's got some tough competition, like Tesla, which is like a lightning-fast, electric bronco, and a bunch of new EV startups trying to steal the spotlight.
+* **Competition:**  GM's got some tough competition, like [Tesla](/stocks/tsla/), which is like a lightning-fast, electric bronco, and a bunch of new EV startups trying to steal the spotlight.
 * **EV Market Uncertainty:**  EVs are still a new thing, like a wild horse that might not always be easy to tame.  There are questions about how long batteries last, how to charge them, and whether everyone's ready to ditch gas.
 * **Economic Recession:**  If the economy goes down, people might not be buying cars as much, which could be like the rodeo going bankrupt.
 * **High Debt:**  They still owe a lot of money, which could make it harder to invest in new things, like a cowboy who can't afford a fancy new saddle.

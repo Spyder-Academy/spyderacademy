@@ -48,11 +48,11 @@ So, is HPE poised for greatness, or will they be left behind in the digital dust
 
 * **Strong Market Position:** HPE is a dominant force in key areas like servers, storage, and networking. They know their stuff and have a deep understanding of customer needs.
 * **Growth Opportunities:** The hybrid cloud market is booming, and HPE is right in the thick of it. They're also riding the edge computing wave and helping businesses navigate the complex world of digital transformation.
-* **Recent Acquisitions and Partnerships:** HPE has been busy making strategic moves, acquiring companies like Aruba Networks and Supermicro and partnering with giants like Microsoft. This helps them expand their portfolio and reach new markets.
+* **Recent Acquisitions and Partnerships:** HPE has been busy making strategic moves, acquiring companies like Aruba Networks and Supermicro and partnering with giants like [Microsoft](/stocks/msft/). This helps them expand their portfolio and reach new markets.
 
 **Why HPE Might Struggle:**
 
-* **Competitive Landscape:** Cloud giants like Amazon, Microsoft, and Google are making serious inroads into HPE's territory. It's a tough battle for market share.
+* **Competitive Landscape:** Cloud giants like [Amazon](/stocks/amzn/), [Microsoft](/stocks/msft/), and [Google](/stocks/goog/) are making serious inroads into HPE's territory. It's a tough battle for market share.
 * **Declining Hardware Sales:** The traditional hardware market is shifting towards cloud solutions. While HPE is diversifying, they still need to keep up with this changing landscape.
 * **Technological Disruption:** Emerging technologies like quantum computing could eventually disrupt HPE's core businesses. It's important to stay ahead of the curve and adapt to these changes.
 

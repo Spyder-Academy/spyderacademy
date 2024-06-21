@@ -41,7 +41,7 @@ Some people are betting on IBM's comeback. Why? Here's the scoop:
 But not everyone is so optimistic. Here's why some folks are taking a wait-and-see approach:
 
 * **Legacy Businesses:  **IBM's traditional hardware and software businesses have been losing ground, which could be a drag on its overall performance.
-* **Intense Competition:**  It's a tough market out there!  IBM's got to battle it out with the cloud giants like Amazon and Microsoft, who are constantly innovating and pushing the boundaries.
+* **Intense Competition:**  It's a tough market out there!  IBM's got to battle it out with the cloud giants like [Amazon](/stocks/amzn/) and [Microsoft](/stocks/msft/), who are constantly innovating and pushing the boundaries.
 * **Shifting Business Model:**  IBM is trying to change its game to keep up with the evolving tech landscape.  That can be a tricky dance, especially when you have a big, established business to manage.
 * **Valuation and Stock Performance:**  IBM's stock hasn't exactly been on fire lately.  Investors are still figuring out if IBM's future is worth a bet.
 * **Emerging Threats:**  The tech world is always changing, and new technologies like quantum computing could disrupt IBM's business.

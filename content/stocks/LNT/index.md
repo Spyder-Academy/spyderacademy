@@ -25,7 +25,7 @@ Alliant Energy is making a big push towards renewable energy, investing heavily 
 
 **The Downside: Regulatory Rollercoaster & Fossil Fuel Fiddling**
 
-The utility sector is a bit of a wild ride when it comes to regulations. New rules and policies can pop up out of nowhere, potentially affecting Alliant Energy's bottom line.  The company also still relies on fossil fuels like coal, which could be a problem as the world shifts towards cleaner energy sources. Think of it as trying to keep up with the Joneses when they've bought a Tesla, and you're still driving a gas guzzler.
+The utility sector is a bit of a wild ride when it comes to regulations. New rules and policies can pop up out of nowhere, potentially affecting Alliant Energy's bottom line.  The company also still relies on fossil fuels like coal, which could be a problem as the world shifts towards cleaner energy sources. Think of it as trying to keep up with the Joneses when they've bought a [Tesla](/stocks/tsla/), and you're still driving a gas guzzler.
 
 **The Bottom Line: A Balancing Act**
 

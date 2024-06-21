@@ -19,7 +19,7 @@ The Nasdaq-100 (NQ) is like a tech-fueled rocket ship, carrying some of the bigg
 
 **Let's Break Down the Basics:**
 
-* **The NQ is a club for the tech elite:** Imagine a party with Apple, Microsoft, Amazon, and Tesla all on the guest list. That's basically the NQ, filled with the movers and shakers of the tech world. 
+* **The NQ is a club for the tech elite:** Imagine a party with [Apple](/stocks/aapl/), [Microsoft](/stocks/msft/), [Amazon](/stocks/amzn/), and [Tesla](/stocks/tsla/) all on the guest list. That's basically the NQ, filled with the movers and shakers of the tech world. 
 * **E-mini futures are the party favors:**  They're smaller and easier to handle than their full-sized counterparts, making them a good fit for everyday investors.  Think of them as the mini-bottles of champagne at the end of a big night out.
 * **Trading E-minis is like playing with fire (but in a good way):**  You can control a bigger chunk of the NQ with a smaller investment, but that also means bigger potential losses.  So, think twice before going all-in. 
 

@@ -27,7 +27,7 @@ Cadence's software is like a Swiss Army knife for semiconductor designers. It co
 
 **Who's Got Cadence on Speed Dial?**
 
-Everyone who's anyone in the tech world is using Cadence’s software.  From semiconductor giants like Intel and Samsung to tech wizards like Apple and Qualcomm, they all rely on Cadence to make sure their chips are top-notch. 
+Everyone who's anyone in the tech world is using Cadence’s software.  From semiconductor giants like Intel and Samsung to tech wizards like [Apple](/stocks/aapl/) and [Qualcomm](/stocks/qcom/), they all rely on Cadence to make sure their chips are top-notch. 
 
 But hey, it’s not all sunshine and rainbows.  Cadence faces some fierce competition from companies like Synopsys and Siemens, so they’re always pushing boundaries to stay ahead of the curve. And let's not forget, the economy has a funny way of throwing curveballs, so a global slowdown could impact the semiconductor industry and ultimately, Cadence's bottom line.
 

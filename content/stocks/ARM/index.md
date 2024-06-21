@@ -17,7 +17,7 @@ company = "ARM Holdings (ARM)"
 
 Remember those days when "ARM" meant a weapon? Well, forget that. Now it's a **global tech titan**. From the phone in your pocket to the supercomputer crunching numbers for the latest AI breakthrough, ARM's influence is everywhere. 
 
-So, what's the secret sauce? **ARM doesn't actually make chips.** Instead, it acts like a blueprint designer.  Companies like Qualcomm, Samsung, and Apple pay ARM to use its cutting-edge plans. They then turn these plans into powerful chips for their devices. Talk about a smart business model!
+So, what's the secret sauce? **ARM doesn't actually make chips.** Instead, it acts like a blueprint designer.  Companies like [Qaulcomm](/stocks/qcom/), Samsung, and [Apple](/stocks/aapl/) pay ARM to use its cutting-edge plans. They then turn these plans into powerful chips for their devices. Talk about a smart business model!
 
 **Think of ARM as the king of efficiency.** Its processors are like tiny powerhouses –  powerful but with a low appetite for energy. This is why they're perfect for battery-powered gadgets like your smartphone, smartwatch, and even your car's dashboard!
 

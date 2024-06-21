@@ -26,7 +26,7 @@ Micron's bread and butter is making two types of memory chips: DRAM and NAND fla
 
 **Who's Buying?**
 
-Micron's chips are hot commodities, with tech giants like Apple, Samsung, and even your trusty PC makers all lining up for a piece of the action.  With the rise of cloud computing, even data centers are clamoring for Micron's memory magic.  
+Micron's chips are hot commodities, with tech giants like [Apple](/stocks/aapl/), Samsung, and even your trusty PC makers all lining up for a piece of the action.  With the rise of cloud computing, even data centers are clamoring for Micron's memory magic.  
 
 **The Price is Right?**
 

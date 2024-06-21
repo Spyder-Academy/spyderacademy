@@ -28,7 +28,7 @@ Microsoft's got its fingers in a lot of pies. Their main money-makers include:
 * **Office 365:** This is the productivity suite everyone loves to hate. From Word and Excel to PowerPoint and Outlook, it's the digital backbone for many businesses and individuals. And thanks to subscriptions, Microsoft gets a steady stream of cash from it.
 * **LinkedIn:** You know, the professional networking site where people post their accomplishments and maybe even find a new job? Yep, that's Microsoft's.
 * **Xbox:** Microsoft's gaming console is giving Sony a run for their money. They've even got a subscription service called Xbox Game Pass, which lets you play a huge library of games for a monthly fee. It's like Netflix for video games.
-* **Surface Devices:** You can't forget the hardware! Microsoft's Surface line of laptops and tablets are designed to work perfectly with their software. Think of them as the Apple products of the Microsoft world. 
+* **Surface Devices:** You can't forget the hardware! Microsoft's Surface line of laptops and tablets are designed to work perfectly with their software. Think of them as the [Apple](/stocks/aapl/) products of the Microsoft world. 
 
 **What's Driving Growth?**
 

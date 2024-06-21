@@ -23,7 +23,7 @@ Let's dive in and see what makes Nasdaq tick.
 
 Nasdaq isn't just one thing. It's a triple threat:
 
-* **The Stock Exchange:** You've probably heard of the Nasdaq Stock Market, the place where tech giants like Apple and Google make their home. But did you know that Nasdaq also runs exchanges in Europe, from Iceland to Denmark? Talk about a global empire!
+* **The Stock Exchange:** You've probably heard of the Nasdaq Stock Market, the place where tech giants like [Apple](/stocks/aapl/) and [Google](/stocks/goog/) make their home. But did you know that Nasdaq also runs exchanges in Europe, from Iceland to Denmark? Talk about a global empire!
 * **Data is King:** Nasdaq isn't just about buying and selling. It also churns out a ton of market data, like real-time prices and trading stats, that's hotter than a tech startup in Silicon Valley. Think of it as the market's own personal gossip columnist. 
 * **Tech Wizards:**  Nasdaq is a tech company at its core. It builds the software that keeps the financial markets humming, from trading platforms to risk management tools. It's like the back-end brain that makes the whole thing work.
 

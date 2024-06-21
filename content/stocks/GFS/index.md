@@ -17,7 +17,7 @@ company = "GlobalFoundries Inc (GFS)"
 
 The world runs on tiny chips, and GlobalFoundries (GFS) is the company making them happen. Think smartphones, your car's fancy dashboard, even the fridge that orders groceries for you - chances are GFS had a hand in the chip that makes it tick. 
 
-So who are these chip wizards?  GFS started as a merger of AMD's manufacturing arm and Chartered Semiconductor in 2009, making a big splash in the chip-making world.  Since then, they've been on a roll, snagging IBM's microelectronics division in 2015 and solidifying their position as a global powerhouse.
+So who are these chip wizards?  GFS started as a merger of [AMD](/stocks/amd/)'s manufacturing arm and Chartered Semiconductor in 2009, making a big splash in the chip-making world.  Since then, they've been on a roll, snagging IBM's microelectronics division in 2015 and solidifying their position as a global powerhouse.
 
 They're not just building chips, they're building relationships. GFS is a "foundry," which means they create chips for other companies, like a custom-made chip bakery.  They offer everything from designing and building the chip to packaging it up and sending it out the door.
 

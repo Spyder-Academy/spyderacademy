@@ -30,7 +30,7 @@ But is GitLab the real deal or just a hype train? Let's break down its strengths
 
 **GitLab's Achilles' Heel:**
 
-* **The Big Guys are Watching:** GitLab has some serious competition from giants like GitHub (owned by Microsoft) and Azure DevOps. 
+* **The Big Guys are Watching:** GitLab has some serious competition from giants like GitHub (owned by [Microsoft](/stocks/msft/)) and Azure DevOps. 
 * **Price Tag:** While GitLab has a free tier, its premium features come with a price tag. 
 * **Learning Curve:**  While GitLab is designed to be user-friendly, it can still take some time to master its full potential. 
 

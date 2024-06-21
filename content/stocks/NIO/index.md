@@ -15,7 +15,7 @@ company = "Nio Inc (NIO)"
 
 ## Nio: Blue Sky Dreams or Electric Hype Machine? 
 
-The electric vehicle market is hotter than a Tesla on a sunny day, and Nio, the Chinese EV maker, is definitely making waves.  They're known for their sleek designs, techy features, and expansion plans that are more ambitious than a teenager's summer bucket list. But the real question is: are they a legit game-changer, or are investors caught up in a bit of electric hype? 
+The electric vehicle market is hotter than a [Tesla](/stocks/tsla/) on a sunny day, and Nio, the Chinese EV maker, is definitely making waves.  They're known for their sleek designs, techy features, and expansion plans that are more ambitious than a teenager's summer bucket list. But the real question is: are they a legit game-changer, or are investors caught up in a bit of electric hype? 
 
 Buckle up, because we're taking a deep dive into the world of Nio, exploring its strengths, weaknesses, and whether they're on the path to dominating the global EV scene. 
 
@@ -68,7 +68,7 @@ There's plenty of reason to be optimistic about Nio:
 It's not all sunshine and rainbows for Nio:
 
 * **Valuation Concerns:**  Nio's stock price is pretty high compared to its competitors, which makes some investors wonder if it's a bit overvalued. 
-* **Competition:**  The EV market is crowded, with established players like Tesla and newer players like other Chinese EV companies all vying for a piece of the pie. 
+* **Competition:**  The EV market is crowded, with established players like [Tesla](/stocks/tsla/) and newer players like other Chinese EV companies all vying for a piece of the pie. 
 * **Financial Performance:**  Nio hasn't been profitable yet, which has some investors wondering about its long-term sustainability.  
 * **Dependence on Subsidies:**  The government's support is great, but it also means Nio's success is tied to those subsidies, which could change in the future. 
 * **International Challenges:**  Breaking into established markets like the US and Europe is tough – it's a whole new ball game with different regulations and competition.

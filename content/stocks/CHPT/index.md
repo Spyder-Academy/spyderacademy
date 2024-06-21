@@ -25,7 +25,7 @@ ChargePoint isn't just selling charging stations. Think of them as the Uber of E
 
 **The Competition: A Charging Battle Royale!**
 
-ChargePoint isn't alone in this electric playground. There are some big names out there, like EVgo and Electrify America, all fighting for their piece of the charging pie. And let's not forget Tesla, with its own Supercharger network that's got a lot of EV fans hooked.
+ChargePoint isn't alone in this electric playground. There are some big names out there, like EVgo and Electrify America, all fighting for their piece of the charging pie. And let's not forget [Tesla](/stocks/tsla/), with its own Supercharger network that's got a lot of EV fans hooked.
 
 **ChargePoint: The Good, the Bad, and the Electric**
 

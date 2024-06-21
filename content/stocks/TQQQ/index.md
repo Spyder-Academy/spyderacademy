@@ -21,7 +21,7 @@ So, is TQQQ the key to unlocking unimaginable riches?  Or a rollercoaster ride y
 
 **The Allure of Leverage:  Riding the Tech Wave**
 
-TQQQ is like a turbocharged version of the NASDAQ 100, packed with tech giants like Apple, Microsoft, and Amazon.  When these companies are booming, TQQQ promises to deliver a triple-digit boost to your returns.  Imagine a tech bull market – it could feel like you're sitting on a rocket to the moon! 
+TQQQ is like a turbocharged version of the NASDAQ 100, packed with tech giants like [Apple](/stocks/aapl/), [Microsoft](/stocks/msft/), and [Amazon](/stocks/amzn/).  When these companies are booming, TQQQ promises to deliver a triple-digit boost to your returns.  Imagine a tech bull market – it could feel like you're sitting on a rocket to the moon! 
 
 **The Price of Leverage:  Amplifying Risks**
 

@@ -22,7 +22,7 @@ Vinfast started its journey in 2017 when Vietnamese conglomerate Vingroup, known
 
 **Market Position**
 
-Vinfast currently has a small market share in the global EV industry, but it has a strong presence in Vietnam and is aggressively targeting international markets. It faces stiff competition from established giants like Tesla, Volkswagen, and other emerging EV players.
+Vinfast currently has a small market share in the global EV industry, but it has a strong presence in Vietnam and is aggressively targeting international markets. It faces stiff competition from established giants like [Tesla](/stocks/tsla/), Volkswagen, and other emerging EV players.
 
 **Key Products and Technologies**
 
@@ -42,7 +42,7 @@ Vinfast's main revenue comes from selling its electric vehicles. It also offers 
 **Reasons to be Skeptical about Vinfast**
 
 * **Limited Brand Recognition:**  Vinfast faces the challenge of building global brand recognition and trust, especially against well-established competitors.
-* **Competition from Established Players:**  The EV market is fiercely competitive, with well-funded and established players like Tesla and Volkswagen posing a significant challenge to Vinfast's growth.
+* **Competition from Established Players:**  The EV market is fiercely competitive, with well-funded and established players like [Tesla](/stocks/tsla/) and Volkswagen posing a significant challenge to Vinfast's growth.
 * **Financial Viability and Profitability:**  While Vinfast has demonstrated significant investments, its financial performance and ability to achieve sustained profitability remain a key concern for investors.
 * **Supply Chain and Manufacturing Challenges:**  Securing crucial resources, scaling up production, and managing a complex supply chain are challenges that Vinfast must overcome to meet its ambitious targets.
 

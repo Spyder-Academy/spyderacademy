@@ -23,7 +23,7 @@ So how's Sirius XM handling this digital audio revolution? They're throwing on t
 
 **Here's the good news:** Sirius XM has a huge, loyal fanbase. They've got a pretty solid brand and are trying to diversify their revenue streams - not just relying on those satellite radio subscriptions. 
 
-**But here's the catch:** The competition is fierce! Spotify, Apple Music, even your friendly neighborhood Amazon is vying for our ears. And those younger generations? They're all about streaming and might not be as interested in that old-school satellite radio experience. 
+**But here's the catch:** The competition is fierce! [Spotify](/stocks/spot/), [Apple](/stocks/aapl/) Music, even your friendly neighborhood [Amazon](/stocks/amzn/) is vying for our ears. And those younger generations? They're all about streaming and might not be as interested in that old-school satellite radio experience. 
 
 **The bottom line:** Sirius XM is facing some serious challenges in this new era of audio, but they're not giving up without a fight. Whether they'll be able to stay relevant and keep their subscribers hooked is the big question. Only time will tell! 
 

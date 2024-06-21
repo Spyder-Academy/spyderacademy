@@ -32,7 +32,7 @@ Atlassian's business model is as smooth as their software. They offer their prod
 Atlassian is a company on a roll, with some pretty convincing arguments in its favor:
 
 * **The Market is Booming:**  The software development market is exploding, and Atlassian is right at the heart of it.  With everyone going digital, the demand for software is higher than ever.
-* **A Brand You Can Trust:**  Atlassian has built a reputation for quality and innovation. It's like the Apple of software collaboration, attracting users who crave the best.
+* **A Brand You Can Trust:**  Atlassian has built a reputation for quality and innovation. It's like the [Apple](/stocks/aapl/) of software collaboration, attracting users who crave the best.
 * **The Power of the Cloud:**  Atlassian has embraced the cloud, making their software accessible from anywhere.  This move has opened up a whole new world of users and opportunities.
 * **Growth Machine:**  Atlassian has consistently grown its revenue, showing that people are eager to join their collaborative world.
 

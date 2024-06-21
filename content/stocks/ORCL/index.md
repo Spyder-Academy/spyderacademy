@@ -46,7 +46,7 @@ Oracle's got multiple ways to make a buck, but the cloud is increasingly their b
 
 **The Bears:**
 
-* **Competition:** The cloud market is a jungle, with giants like Amazon, Microsoft, and Google fighting for every customer. Oracle is trying to catch up, but it's not easy.
+* **Competition:** The cloud market is a jungle, with giants like [Amazon](/stocks/amzn/), [Microsoft](/stocks/msft/), and [Google](/stocks/goog/) fighting for every customer. Oracle is trying to catch up, but it's not easy.
 * **Market Share:**  Oracle is still behind the leaders in terms of market share, especially in IaaS. They have to keep pushing to gain ground.
 * **Evolving Customer Needs:** Businesses want more than just basic cloud services. They want innovation, cost savings, and agility. Oracle has to keep up.
 * **Valuation:**  Oracle's stock price is a topic of debate. Some think it's undervalued, while others say it's overpriced.

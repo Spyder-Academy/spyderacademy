@@ -34,7 +34,7 @@ Palantir has two main products: Gotham and Foundry. Think of Gotham as the super
 
 * **Pricey Party:** Palantir's stock price has gone through the roof, and some folks are wondering if it's worth all the hype.
 * **Government Dependence:** Palantir relies heavily on government contracts, and that can be a risky business. What if the government changes its mind or cuts back on spending? 
-* **Competition:**  The data world is crowded with big players like Microsoft, Google, and Amazon all vying for a piece of the pie. Palantir needs to stay ahead of the curve to keep its crown.
+* **Competition:**  The data world is crowded with big players like [Microsoft](/stocks/msft/), [Google](/stocks/goog/), and [Amazon](/stocks/amzn/) all vying for a piece of the pie. Palantir needs to stay ahead of the curve to keep its crown.
 * **Profitability Puzzle:** Palantir is spending a lot of money on research and development, acquisitions, and other growth strategies. While that's great for the future, it's not always good for short-term profits. 
 
 **So, what's the verdict? Is Palantir a data powerhouse or a hype machine?** 

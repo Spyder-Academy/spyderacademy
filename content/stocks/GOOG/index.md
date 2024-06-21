@@ -38,7 +38,7 @@ company = "Alphabet Inc (GOOG)"
 **Is It All Sunshine and Rainbows?**  Of course not! Every tech titan has its challenges:
 
 * **The Regulatory Storm:**  Antitrust investigations and privacy concerns could create some choppy waters for Alphabet.  Think of it as a digital "Game of Thrones" with Alphabet vying for power amidst a sea of regulations.
-* **The Competition is Heating Up:**  The cloud computing market is crowded with players like Amazon Web Services (AWS) and Microsoft Azure.  And in the advertising world, TikTok and other social media platforms are making a splash.  It's like a tech race where everyone is trying to be the fastest and most innovative.
+* **The Competition is Heating Up:**  The cloud computing market is crowded with players like [Amazon](/stocks/amzn/) Web Services (AWS) and [Microsoft](/stocks/msft/) Azure.  And in the advertising world, TikTok and other social media platforms are making a splash.  It's like a tech race where everyone is trying to be the fastest and most innovative.
 * **Data Privacy: The Public Debate Rages On:**  People are increasingly concerned about data privacy, and Alphabet has been at the center of this debate.  Think of it as a public spotlight shining on how companies handle our data.
 * **Market Saturation: The Limits of Growth:**  As the online advertising market matures, it might be tougher for Alphabet to maintain its current growth rate.  It's like reaching the top of the mountain and wondering where to go from there.
 * **Economic Uncertainty: A Global Worry:**  Economic downturns can hurt any business, especially one as reliant on advertising and cloud services as Alphabet. It's like navigating a tech storm with unpredictable waves.
