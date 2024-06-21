@@ -2,13 +2,15 @@
 author: "CashMoneyTrades"
 title: "Understanding Orderflow and 90m Time Cycles"
 date: 2024-06-20T00:00:00-04:00
-description: "Learn how to trade with 90m Time Cycles and Order Flow"
+description: "Learn how to read the chart with 90m Time Cycles and Order Flow to understand how Market Maker algorithms manipulate the market with their algo's."
 course: "Trading Strategies"
 time: "5 min"
 tags:
   - "Strategies"
 ---
 
+
+90m Time Cycles are windows of time where the algo's shift with their buy and sell algorithms.  It provides the trader with multiple windows of opportunity throughout the day to determine trend direction and reversals.
 
 ## Introducing 90m Cycles
 
@@ -48,21 +50,39 @@ For example,
 - 1:00pm - Treasury Bond Auctions occur.  
 - 2:30pm - Then on FOMC days, the Fed Chair begins his remarks, and most days the Market Makers are returning from the pub and power hour starts where price action becomes volatile again.
 
-Due to these high impactful events, the boundaries of the cycle times also over key times where reversals can occur.
+Due to these high impactful events, the boundaries of the cycle times occur at key moments where reversals can occur.
+
+Each cycle has **Accumulation**, **Manipulation**, and **Distribution** characteristics, as defined by Wyckoff Market Phases.
+
+![Wyckoff Market Phases](images/wyckoff.jpeg)
+
+In this diagram, you can see the market moves in phases.  
+
+There is **Accumulation** where the market is filling their factories with the stock.  
+
+There may be **Manipulation** where they drop the price below the support level, before ripping upwards.  
+
+Eventually, the market finds a buying climax within the timeframe, and the market will start to **Distribute** (buyers run out, sellers stepping in).  
+
+Again, there may be market **Manipulation** here where there is a failed rally/breakout, before moving lower again.
+
+The time cycles help us see these market phases and identify the key pivot areas for when to get into a trade.
 
 ### How do I draw the 90m Cycles?
 
-Using your trading platform (eg TradingView), draw vertical boundaries at each of these time windows.  That will allow you to see when each 90m cycle starts and ends.
+Using your trading platform (eg TradingView), draw vertical boundaries at each of these time windows (7am, 830am, 10am, 1130am, 1pm, 230pm, 4pm).  That will allow you to see when each 90m cycle starts and ends.
 
 Then, each time a new cycle starts, mark a horizontal line at the high and low of that previous cycle.  This marks your Cycle High (PxH) and Cycle Low (PxL), also known as your **Key Pivot Points**.
 
 With 90m Cycles we usually look at the previous two cycles to make our trading decisions.
 
+A nice advantage of these time cycles is that even if you miss an initial move on a strong trend day, every 90 minutes you have an opportunity to determine where price is likely to move to (continuation/reversal) and determine your trade entry.
+
 ![Marking 90m Cycles](images/marking_cycles.png)
 
 ### How do I trade these 90m Cycle levels?
 
-Great, now that you have your 90m cycle time boundaries, and you have your highs and lows marked, there are a few ways to trade this.
+Great, now that you have your 90m cycle time boundaries, and you have your highs and lows marked, there are a few ways to trade this.  I personally use the 3 minute chart (5 minute works great too!).  Look for a candle close over the level, followed by a retest or continuation to confirm the move.
 
 #### Continuations
 
@@ -96,7 +116,7 @@ For Example, if you entered a short on the break of the 830am Cycle Low, then yo
 
 #### Isn't this basically #TheStrat?
 
-Yeh pretty much.  It is basically using 90m candles, and applying TheStrat concepts to it.
+Yeh sort of!  90 minute cycles are analagous to using 90m candles, and then applying TheStrat concepts to it to entry combo's and targets.
 
 ![The Strat](images/thestrat.png)
 
@@ -114,5 +134,7 @@ I won't use Cycle Times in isolation.  Keep an eye on other indicators like wher
 
 #### How strict is the stop rule?
 
-My rule is usually a 3 minute close below the level and i will set a hard stop to prevent a lower low.  On the Zeussy video, he will set a range box using the 1 minute high and low candle that made that cycle high/low.  Always trade to your risk tolerance.
+My rule is usually a 3 minute close below the level and i will set a hard stop to prevent a lower low.  On the Zeussy video, he will set a range box using the 1 minute high and low candle that made that cycle high/low.  Then use that range box as a fuzzier support/resistance level.
+
+Always trade to your risk tolerance.
 
