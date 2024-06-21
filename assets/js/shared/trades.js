@@ -3420,6 +3420,12 @@ class Trades {
         y: parseFloat(item.close_price)
     }));
 
+    var gammaSeries = {}
+    gammaSeries = data.stock_price.map(item => ({
+        x: new Date(new Date(item.begins_at).getTime() - estOffset).getTime(),
+        y: parseFloat(item.max_gamma)
+    }));
+
     // Prepare GEX data series
     const gexAnnotations = data.gex_data.map(item => {
       const GEXValue = parseFloat(item.GEX);
@@ -3440,15 +3446,12 @@ class Trades {
       };
     });
 
-    // Prepare Gamma Snapshot Series
-
-
-    return { stockSeries, gexAnnotations };
+    return { stockSeries, gammaSeries, gexAnnotations };
   }
 
   async _renderGEXOverlay(ticker, jsonData, expectedMove = null) {
 
-    const { stockSeries, gexAnnotations } = this._prepareGEXOverlayChartData(jsonData);
+    const { stockSeries, gammaSeries, gexAnnotations } = this._prepareGEXOverlayChartData(jsonData);
     const forecastPoints = 0 // chart prediction (not using right now)
 
     let lastDataPoint = stockSeries[stockSeries.length - forecastPoints - 1];
@@ -3511,6 +3514,25 @@ class Trades {
         y: lastActualPrice  // Last actual stock price
     }, bearProjection];
     
+    // modify the gamma series to include null points to create breaks in the lines.
+    let previousGamma = null;
+    let previousTimestamp = null;
+    const gammaSeriesWithBreaks = [];
+
+    gammaSeries.forEach((point, index) => {
+      if (previousTimestamp !== null && point.y !== previousGamma) {
+        // Add a null value to create a break
+        gammaSeriesWithBreaks.push({ x: point.x, y: point.y});
+        // console.log('inserting null as changed gamma from/to ', previousGamma, point.y)
+      }
+      gammaSeriesWithBreaks.push({ x: point.x, y: isNaN(point.y) ? null : point.y });
+
+      previousGamma = point.y;
+      previousTimestamp = point.x;
+    });
+
+    console.log(gammaSeriesWithBreaks, stockSeries)
+
     var options = {
       chart: {
           height: 375,
@@ -3538,17 +3560,23 @@ class Trades {
           type: 'line',
           data: bearSeries,
           dashArray: 5, // Dotted line for projection
-        }
+        },
+        {
+          name: 'Market Pressure',
+          type: 'line',
+          data: gammaSeriesWithBreaks,
+        },
       ],
       markers: {
-        size: 0, // Hide markers for projection lines
+        size: [0, 0, 0, 8], // Hide markers for projection lines
+        shape: "square"
       },
       stroke: {
-        width: [4, 4, 4], // Set stroke width for each series
-        dashArray: [0, 5, 5], // Solid line for actual data, dotted lines for projections
-        curve: "smooth",
+        width: [4, 4, 4, 1], // Set stroke width for each series
+        dashArray: [0, 5, 5, 1], // Solid line for actual data, dotted lines for projections
+        curve: ["smooth", "smooth", "smooth", "straight"],
       },
-      colors: ['#008FFB', '#00E396', '#FF4560'],
+      colors: ['#008FFB', '#00E396', '#FF4560', '#000000'],
       dataLabels: {
         enabled: false
       },
@@ -3587,7 +3615,6 @@ class Trades {
       annotations: {
         yaxis: gexAnnotations
       },
-      
     };
 
     // $("#gammaChartOverlay").removeClass("d-none")
