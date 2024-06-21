@@ -138,3 +138,10 @@ My rule is usually a 3 minute close below the level and i will set a hard stop t
 
 Always trade to your risk tolerance.
 
+#### Exclusive Trading View Indicator for 90min Time Cycles
+
+If you are a paid member of the Spyder Academy classroom, then you will have access to our **exclusive members only** TradingView Indicator available that will plot these 90m cycles and each cycle high/low automatically for you.
+
+Just connect your TradingView account with your Whop account, and claim the indicator "Orderflow Time Cycles".
+
+Our TradingView indicator for 90m Time Cycles streamlines the plotting of the cycle highs and lows, so you can focus on the price action and your trade entries/exits.
