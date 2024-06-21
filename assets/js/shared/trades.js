@@ -3580,7 +3580,7 @@ class Trades {
       dataLabels: {
         enabled: false
       },
-      title: { text: ticker.toUpperCase() + " (5min) Gamma Exposure Overlay with Expected Move Projection"},
+      title: { text: ticker.toUpperCase() + " (5min) Market Pressure Walls"},
       xaxis: {
           type: 'datetime',
           tickPlacement: 'on'
