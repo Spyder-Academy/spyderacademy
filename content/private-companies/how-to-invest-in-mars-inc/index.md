@@ -4,7 +4,7 @@ title = "How to Invest in Mars Inc - The Candy Company"
 date = "2024-06-21T10:00:00"
 description = "Want to sweeten your portfolio? Learn how to invest in Mars Inc., the candy giant behind M&Ms, Snickers, and more. Discover strategies for accessing this private company."
 tags = [
-    ""Not Publicly Traded",
+    "Not Publicly Traded",
 ]
 +++
         
