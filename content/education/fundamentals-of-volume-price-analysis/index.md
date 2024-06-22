@@ -2,7 +2,7 @@
 author: "CashMoneyTrades"
 title: "Understanding Volume in Trading: The Foundation of Volume Price Analysis"
 date: 2024-01-26T00:01:03
-description: ""
+description: "Volume is a key component in Volume Price Analysis (VPA) and serves as a primary indicator of market activity. This article aims to demystify volume and its significance in trading, providing a clear foundation for beginners."
 course: "Volume Price Analysis"
 module: "Module 1: Fundamentals of Volume Price Analysis" 
 time: "5 min"
