@@ -177,16 +177,9 @@
 
      
       {{ if ne .Section "education" }}
-        <div class="row g-4 pb-5">
+      <div class="row g-4 pb-5">
           {{ range (.Paginate .RegularPages).Pages.ByDate }}
-
-
-          {{ if eq .Layout "stocks" }}
-            {{ if ne .Params.disableListPage true }}
-
-            
-            {{ end }}
-          {{ else }} 
+            {{ if ne .Layout "stocks" }}
             <div class="col-12 col-md-6 col-lg-4">
               <a class="card shadow border-0 p-4 text-decoration-none h-100" style="border-radius: 15px;" href="{{ .Permalink }}">
                 <div class="aspect-ratio-full">
@@ -220,8 +213,18 @@
           {{ .Content }}
         </div>
       </div>
-    </div>    
+    </div>  
+    
+    <div class="col-12 justify-content-center text-center">
+        {{ range (.Paginate .RegularPages).Pages.ByDate }}
+          {{ if eq .Layout "stocks" }}
+            <a class="text-decoration-none text-black-50" href="{{ .Permalink }}" title="{{ .Title }}">{{ .Param "ticker" }}</a>
+          {{ end }}
+        {{ end }}
+
     </div>
+
+  </div>
 
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script>
