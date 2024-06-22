@@ -35,7 +35,7 @@ Before making any investment decisions, conduct thorough research on the stocks 
 
 #### Investing in Non Publicly Traded Companies
 
-Sometimes we see success stories in companies that we want to invest in (eg SpaceX, Marvel Comics, OnlyFans, etc) but are unable to do so directly.  Read our [list on non publicly traded stocks](/tags/not-publicly-traded) and how you can invest in them.
+Sometimes we see success stories in companies that we want to invest in (eg SpaceX, Marvel Comics, OnlyFans, etc) but are unable to do so directly.  Read our [list on non publicly traded stocks](/private-companies/) and how you can invest in them.
 
 ### Stay Updated
 
