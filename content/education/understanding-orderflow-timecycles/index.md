@@ -7,6 +7,7 @@ course: "Trading Strategies"
 time: "5 min"
 tags:
   - "Strategies"
+  - "TradingView"
 ---
 
 
