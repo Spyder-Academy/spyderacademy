@@ -1,5 +1,5 @@
 +++
-title = "Publicly Traded Stocks: A Comprehensive List"
+title = "Trade Planner - Insights into the stock market for today!"
 description = "Whether you're an experienced investor or just starting your journey into the world of stocks, our comprehensive list provides a valuable resource to explore and analyze various companies. Each stock represents a unique opportunity for investment, and we've curated essential details to guide your financial decisions."
 author = "Spyder Academy"
 layout = "list"
