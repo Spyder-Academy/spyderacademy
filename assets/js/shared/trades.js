@@ -1700,6 +1700,7 @@ class Trades {
 
             var king_image = "/images/logos/" + trade.ticker.toUpperCase() + ".png"
             tradeCardRow.find(".tradeLogo").attr("src", king_image)
+            tradeCardRow.find(".tradeLogo").attr("alt", trade.ticker.toUpperCase())
             tradeCardRow.find(".tradeRow").attr("tradeid", trade.tradeid)
             tradeCardRow.find(".tradeRow").removeAttr("onclick")
             tradeCardRow.find(".stockLink").attr("href", "/stocks/" + trade.ticker.toLowerCase() + "/")

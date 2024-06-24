@@ -1,5 +1,5 @@
 +++
-title = "Our Privacy Policy"
+title = "The Spyder Academy Privacy Policy"
 description = "This Privacy Policy describes Our policies and procedures."
 date = "2023-05-05"
 disableShare = true

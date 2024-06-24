@@ -10,10 +10,10 @@ content:
     pretitle: "Mission"
     title: "Our Mission"
     text: "
-    Our mission is to empower traders of all levels with the knowledge and skills they need to achieve their financial goals. <br/> <br/>
+    Our mission is to empower traders of all levels with the <strong class='text-danger fw-bold'>knowledge and skills</strong> they need to achieve their financial goals. <br/> <br/>
     We aim to provide a supportive community where traders can learn from each other, share insights, and stay up-to-date on the latest market trends and trading strategies.  <br/> <br/>
-    Our focus is on education, and we are committed to delivering high-quality resources, and expert guidance to help our members become more confident, disciplined, and successful traders.  <br/> <br/>
-    Whether you are a novice or an experienced trader, Spyder Academy is the place to be if you are passionate about trading and want to take your skills to the next level."
+    Our focus is on <strong class='text-danger fw-bold'>education</strong>, and we are committed to delivering high-quality resources, and expert guidance to help our members become more confident, disciplined, and successful traders.  <br/> <br/>
+    Whether you are a novice or an experienced trader, Spyder Academy is the place to be if you are passionate about trading and want to take your skills to the <strong class='text-danger fw-bold'>next level</strong>."
 
   
   - image: "images/portfolio-background.png"
@@ -21,9 +21,9 @@ content:
     title: "Why Us?"
     text: "
     The Spyder Academy community offers high-quality trading education for traders of all levels, with a supportive and collaborative environment.  <br/> <br/>
-    We provide a range of resources, including screenshares, market analysis, and expert insights, to help members stay informed and up-to-date on the latest trends and strategies.  <br/> <br/>
-    Our mentorship offers personalized guidance to help traders achieve their financial goals. Our community is education-focused and dedicated to providing value to our members.  <br/> <br/>
-    By joining our community, traders can learn from experienced traders, share insights, and grow their skills in a supportive environment that is committed to their success."
+    We provide a range of resources, including <strong class='text-danger fw-bold'>Spot Gamma</strong> (GEX), <strong class='text-danger fw-bold'>Trade Plans</strong>, Market Analysis, and Expert Insights, to help members stay informed and up-to-date on the latest trends and strategies.  <br/> <br/>
+    Our mentorship offers <strong class='text-danger fw-bold'>personalized guidance</strong> to help traders achieve their financial goals. Our community is education-focused and dedicated to providing value to our members.  <br/> <br/>
+    By joining our community, traders can learn from experienced traders, share insights, and <strong class='text-danger fw-bold'>grow their skills</strong> in a supportive environment that is committed to their success."
 
   - image: "images/portfolio-background.png"
     pretitle: "Our Advantage"

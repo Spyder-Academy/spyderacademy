@@ -63,7 +63,7 @@ When it comes to choosing the right delta in options trading, avoiding extreme v
 
 At Spyder Academy, we understand the nuances of options trading. Our expert analysis empowers you to navigate the complexities of delta and make choices aligned with your trading goals.
 
-Learn more about the [5 Greeks you need to know with Options Trading](/education/five-greeks-you-need-to-know-with-options-trading).
+Learn more about the [5 Greeks you need to know with Options Trading](/education/five-greeks-you-need-to-know-with-options-trading/).
 
 ## **Conclusion**
 

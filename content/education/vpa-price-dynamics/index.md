@@ -31,7 +31,7 @@ Understanding market sentiment is key to predicting future price movements.
 
 ## Recognizing Price Patterns
 
-- **Chart Patterns:** Traders use various chart patterns to predict future price movements. Common patterns include '[head and shoulders](/education/how-to-trade-a-head-and-shoulders-pattern/)', '[double tops and bottoms](/education/how-to-trade-double-tops-and-double-bottoms)', 'triangles', and 'flags'. These patterns, formed by the price movements, can signal potential reversals or continuations in the market trend.
+- **Chart Patterns:** Traders use various chart patterns to predict future price movements. Common patterns include '[head and shoulders](/education/how-to-trade-a-head-and-shoulders-pattern/)', '[double tops and bottoms](/education/how-to-trade-double-tops-and-double-bottoms/)', 'triangles', and 'flags'. These patterns, formed by the price movements, can signal potential reversals or continuations in the market trend.
 
 - **Candlestick Patterns:** Another tool for price analysis is [candlestick patterns](/education/how-to-trade-doji-candles/). These patterns can provide insight into market sentiment and potential price movements in the short term.
 

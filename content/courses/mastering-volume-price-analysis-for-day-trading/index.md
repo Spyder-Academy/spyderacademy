@@ -2,7 +2,7 @@
 author = "CashMoneyTrades"
 title = "Mastering Volume Price Analysis for Day Trading & Forex"
 date = "2023-01-26T00:00:00"
-description = ""
+description = "This course is crafted to transform your trading approach, offering you an in-depth understanding of Volume Price Analysis (VPA), a method that combines the power of price and volume data to provide a clearer picture of market dynamics."
 coursetime = "32 min"
 level = "Intermediate"
 course = "Volume Price Analysis"

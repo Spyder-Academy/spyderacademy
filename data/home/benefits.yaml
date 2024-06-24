@@ -19,11 +19,14 @@ content:
             "
 
   - image: "images/portfolio-background.png"
-    pretitle: "Analyze the Charts with Better"
+    pretitle: "Plan your Trades with Smarter"
     title: "Intelligence"
     text: "
+          <i class='fas fa-clipboard-list'></i> <a href='/stocks/'>Trade Planner</a><br/>
+          <i class='fas fa-atom'></i> <a href='/stocks/'>Spot Gamma and Expected Moves</a><br/>
+          <i class='fas fa-binoculars'></i> <a href='/education/stocks-watchlists/'>Stock Watchlists</a><br/>
           <i class='fas fa-robot'></i> <a href='#services'>Algo Alerts</a><br/>
-          <i class='fas fa-spider'></i> <a href='/members/'>SpyderWeb Analytics</a><br/>
+          <i class='fas fa-spider'></i> <a href='/members/'>Trade Analytics (SpyderWeb)</a><br/>
           <i class='fas fa-chess-rook'></i> <a href='/courses/trading-strategies/'>Backtested Strategies</a><br/>
           <i class='fas fa-chart-line'></i> <a href='/tools/'>TradingView Indicators</a><br/>
           <i class='fas fa-robot'></i> <a href='/tools/'>Options Trading Tools and AI</a><br/>
@@ -34,7 +37,7 @@ content:
     title: "Community"
     text: "
           <i class='fas fa-users'></i> <a href='#services'>Premium Community Chat</a><br/>
-          <i class='fas fa-phone'></i> <a href='#services'>Live Voice All Day</a><br/>
-          <i class='fas fa-clipboard-question'></i> <a href='#services'>Education with Q&A Sessions</a><br/>
+          <i class='fas fa-phone'></i> <a href='#services'>Live Voice</a><br/>
+          <i class='fas fa-clipboard-question'></i> <a href='#services'>Education with Q&A</a><br/>
           <i class='fas fa-face-dizzy'></i> <a href='/courses/trading-psychology/'>Trading Psychology</a><br/>
     "
