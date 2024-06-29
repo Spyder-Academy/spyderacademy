@@ -2893,7 +2893,7 @@ class Trades {
         }
     }
 
-    if ($("#WL_IVFlush").is(':empty')){
+    if ($("#WL_IVFlush").children().length === 0){
       var tweet_template = `
           <div class="card-body tweet-card">
               <div class="tweet-header">
@@ -2902,7 +2902,7 @@ class Trades {
                   </div>
               </div>
               <div class="tweet-body">
-                <p>No More Major Earnings Scheduled This Week</p>
+                <p>No IV Flush Candidates currently detected.</p>
               </div>
           </div>
         `;
