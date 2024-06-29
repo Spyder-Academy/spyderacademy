@@ -55,108 +55,123 @@
 
 
 
+
           <div class="row">
             <div class="col-12">
               <div class="container p-0 m-0">
                 <div class="blog-content">
                   <h2>Your Watchlists</h2>
+                  <p>Note - These are not recommendations to buy or sell a security, and is not to be considered financial advise.</p>
+                  <p>The intention of these ideas are to see potential setups.  No setup is guaranteed to work, and you must manage your own risk!</p>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-5">
+            <div class="col-12 justify-content-center">
+              <div class="row">
+                <div class="my-3 col-lg-4 col-sm-12 pr-3" >
+                  <div class="card shadow" style="border-radius: 15px">
+                    <div class="card-title bg-success text-white fw-bold p-3" style="border-radius:10px 10px 0px 0px">Earnings This Week</div>
+                    <div id="WL_Earnings" class="stock_tweets" style="height: 800px; overflow-y: scroll;">
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="my-3 col-lg-4 col-sm-12 pr-3" >
+                  <div class="card shadow" style="border-radius: 15px">
+                    <div class="card-title bg-secondary text-white fw-bold p-3" style="border-radius:10px 10px 0px 0px">Daily Reversals</div>
+                    <div id="WL_Reversals" class="stock_tweets" style="height: 800px; overflow-y: scroll;">
+                      
+                    </div>
+                  </div>
+                </div>
+
+                <div class="my-3 col-lg-4 col-sm-12 pr-3">
+                  <div class="card shadow" style="border-radius: 15px">
+                    <div class="card-title bg-primary text-white fw-bold p-3" style="border-radius:10px 10px 0px 0px">Post Earning Moves (<a class="text-white" href="/tools/earnings-calendar/">See More</a>)</div>
+                    <div id="WL_IVFlush" class="stock_tweets" style="height: 800px; overflow-y: scroll;">
+                    
+                    </div>
+                  </div>
+                </div>
+
                 
               </div>
             </div>
           </div>
 
-          <div class="row mb-5 shadow" style="border-radius: 15px;">
-            <div class="col-12 p-0 justify-content-center">
-              <ul class="nav nav-pills p-3 m-0" id="pills-tab" role="tablist">
-                <li class="nav-item m-0" role="presentation">
-                  <button class="nav-link" id="pills-earnings-tab" data-bs-toggle="pill" data-bs-target="#pills-earnings" type="button" role="tab" aria-controls="pills-earnings" aria-selected="true">Upcoming Earnings</button>
-                </li>
-                <li class="nav-item m-0" role="presentation">
-                  <button class="nav-link" id="pills-ivflush-tab" data-bs-toggle="pill" data-bs-target="#pills-ivflush" type="button" role="tab" aria-controls="pills-ivflush" aria-selected="true">IV Flush</button>
-                </li>
-                <li class="nav-item m-0" role="presentation">
-                  <button class="nav-link active" id="pills-dojiwatchlist-tab" data-bs-toggle="pill" data-bs-target="#pills-dojiwatchlist" type="button" role="tab" aria-controls="pills-dojiwatchlist" aria-selected="false">Daily Reversals</button>
-                </li>
-                <li class="nav-item m-0" role="presentation">
-                  <button class="nav-link" id="pills-news-tab" data-bs-toggle="pill" data-bs-target="#pills-news" type="button" role="tab" aria-controls="pills-news" aria-selected="false"></button>
-                </li>
-                <li class="nav-item m-0" role="presentation">
-                  <button class="nav-link" id="pills-signals-tab" data-bs-toggle="pill" data-bs-target="#pills-signals" type="button" role="tab" aria-controls="pills-signals" aria-selected="false"></button>
-                </li>
-              </ul>
-            </div>
-            <div class="col-12 p-0 justify-content-center">
-              <div class="tab-content " id="pills-tabContent">
-                <div class="tab-pane fade" id="pills-earnings" role="tabpanel" aria-labelledby="pills-earnings-tab">
-                  <div class="mb-3" id="earningsCalendar">
-                    <div class="card  p-3">Loading...</div>
-                  </div>
-                  
-                  <script>
-                    $(document).ready(function() {
-                       userTrades = new Trades();
-                       userTrades.fetchEarningsCalendar(2);
-                    });
-                 </script>
-                </div>
-                <div class="tab-pane fade" id="pills-ivflush" role="tabpanel" aria-labelledby="pills-ivflush-tab">
-                  <div class="p-2"><a href="/tools/earnings-calendar/">Learn about the IV Flush</a></div>
-                  <div class="mb-3" id="ivflushCalendar">
-                    <div class="card  p-3">Loading...</div>
-                  </div>
-                </div>
-                <div class="tab-pane fade show active" id="pills-dojiwatchlist" role="tabpanel" aria-labelledby="pills-dojiwatchlist-tab">
-                  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-
-                  <div class="mb-3" id="reversalsWatchlist">
-                    <div class="card  p-3">Loading...</div>
-                  </div>
-
-                  <script>
-                    $(document).ready(function() {
-                       userTrades = new Trades();
-                       userTrades.fetchScreener();
-                    });
-                 </script>
-                </div>
-                
-              </div>
-            </div>
-          </div>
+          <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+          <script>
+            $(document).ready(function() {
+               userTrades = new Trades();
+               userTrades.fetchEarningsCalendar();
+               userTrades.fetchScreener();
+            });
+          </script>
 
         
 
-        
-
-          <div class="row pb-5">
+          <div class="row">
             <div class="col-12">
               <div class="container p-0 m-0">
-                <div class="blog-content ">
-                  <h2>Trade Ideas From 𝕏</h2>
-                  <p>Make sure you are logged into 𝕏 to see recent posts.</p>
+                <div class="blog-content">
+                  <h2>𝕏 StockTweets</h2>
                 </div>
-                <div class="container">
-                  <div class="row justify-content-center">
-                    <div class="col-lg-4 col-12 p-0 m-0 justify-content-center" >
-                      <div class="shadow m-3" style="border-radius: 15px">
-                        <a class="twitter-timeline" height="800" href="https://twitter.com/TrendSpider?ref_src=twsrc%5Etfw">Posts from @TrendSpider</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                      </div>
-                    </div>
-                    <div class="col-lg-4 col-12  p-0 m-0 justify-content-center">
-                      <div class="shadow m-3" style="border-radius: 15px">
-                        <a class="twitter-timeline" height="800" href="https://twitter.com/JaviCharts?ref_src=twsrc%5Etfw">Posts from @JaviCharts</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                      </div>
-                    </div>
-                    <div class="col-lg-4 col-12  p-0 m-0 justify-content-center" >
-                      <div class="shadow m-3" style="border-radius: 15px">
-                        <a class="twitter-timeline" height="800" href="https://twitter.com/TLAMB91?ref_src=twsrc%5Etfw">Flow from @TLAMB</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                      </div>
+                <p>Note - These are not recommendations to buy or sell a security, not affiliated with Spyder Academy, and is not to be considered financial advise.</p>
+                <p>These tweets represent stock ideas on 𝕏 by traders who share free and helpful information. <i class="fas fa-refresh p-3" onclick="refreshTweets()"></i></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-5">
+            <div class="col-12 justify-content-center">
+              <div class="row">
+                <div class="my-3 col-lg-4 col-sm-12 pr-3" >
+                  <div class="card shadow" style="border-radius: 15px">
+                    <div class="card-title bg-warning text-black fw-bold p-3" style="border-radius:10px 10px 0px 0px">Trade Ideas</div>
+                    <div id="X_TradeIdeas" class="stock_tweets" style="height: 800px; overflow-y: scroll;">
+
                     </div>
                   </div>
                 </div>
+
+                <div class="my-3 col-lg-4 col-sm-12 pr-3">
+                  <div class="card shadow" style="border-radius: 15px">
+                    <div class="card-title bg-primary text-white fw-bold p-3" style="border-radius:10px 10px 0px 0px">Chart Setups</div>
+                    <div id="X_Charts" class="stock_tweets" style="height: 800px; overflow-y: scroll;">
+                    
+                    </div>
+                  </div>
+                </div>
+
+                <div class="my-3 col-lg-4 col-sm-12 pr-3" >
+                  <div class="card shadow" style="border-radius: 15px">
+                    <div class="card-title bg-secondary text-white fw-bold p-3" style="border-radius:10px 10px 0px 0px">Options Flow</div>
+                    <div id="X_OptionsFlow" class="stock_tweets" style="height: 800px; overflow-y: scroll;">
+                      
+                    </div>
+                  </div>
+                </div>
+                
+                <script>
+                  $(document).ready(function() {
+                    userTrades = new Trades();
+                    userTrades.fetchXPosts();
+                  });
+
+                  function refreshTweets(){
+                    userTrades = new Trades();
+                    userTrades.fetchXPosts();
+                  }
+                </script>
               </div>
+            </div>
           </div>
+
+          
 
         </div>
         {{ end }}

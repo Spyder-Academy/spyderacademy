@@ -2354,6 +2354,112 @@ class Trades {
     }
   }
 
+
+  async fetchXPosts(){
+    $(".stock_tweets").empty()
+    var url = `https://us-central1-spyder-academy.cloudfunctions.net/stock_tweets/`;
+
+    try {
+      let response = await $.ajax({url: url, method: 'GET'});
+      if (response && response.length > 0) {
+
+        // Sort the tweets by timestamp in descending order
+        response.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+        var tweets_Charts = $("#X_Charts")
+        var tweets_TradeIdeas= $("#X_TradeIdeas")
+        var tweets_OptionsFlow= $("#X_OptionsFlow")
+
+        // render the tweets in the correct columns
+        response.forEach(tweet => {
+          var author = tweet["author"]
+          var symbol = tweet["symbol"]
+          var message = tweet["message"].replace(/\n/g, "<br/>");
+          var tweet_link = tweet["url"] ? tweet["url"] : ""
+          
+          var price_difference = ""
+          var price_difference_detail = ""
+          var price_class = ""
+
+          if (tweet["current_price"] && tweet["price_when_posted"]){
+            var current_price = tweet["current_price"]
+            var price_when_posted = tweet["price_when_posted"]
+
+            price_difference_detail = `Price when posted was $${price_when_posted}.  Currently trading at $${current_price}`
+
+            if (current_price >= price_when_posted){
+              price_difference = "<i class='fa-regular fa-circle-up'></i> " + symbol.toUpperCase() + " is Up $" + Math.abs(current_price - price_when_posted).toFixed(2) + " since posted."
+              price_class = "text-success"
+            }
+            else{
+              price_difference = "<i class='fa-regular fa-circle-down'></i> " + symbol.toUpperCase() + " is Down $" + Math.abs(current_price - price_when_posted).toFixed(2) + " since posted."
+              price_class = "text-danger"
+            }
+
+          }
+
+          if (symbol) {
+            // var symbolLink = `<a href='/stocks/${lowerSymbol}/'>$${symbol}</a>`;
+            var symbolLink =`<a class="" href="/stocks/${symbol.toLowerCase()}/" data-toggle="popover" data-html="true" data-id_prefix="tweets" data-ticker="${symbol}">$${symbol}</a>`
+            
+            message = message.replace(new RegExp(`\\$${symbol}`, 'g'), symbolLink);
+          }
+
+          var image = tweet["image"]
+          var timestamp = moment(tweet["timestamp"]);
+          
+          // Calculate relative time and Eastern Time format
+          var relativeTime = timestamp.fromNow();
+          var easternTime = timestamp.tz("America/New_York").format('MMMM Do YYYY, h:mm:ss a');
+
+          var tweet_template = `
+                    <div class="card-body tweet-card">
+                        <div class="tweet-header">
+                            <div>
+                                <a href="${tweet_link}" target="_blank" class="text-decoration-none">𝕏 <strong>${author}</strong></a> <span class="text-muted"> - <span title="${easternTime}">${relativeTime}</span></span>
+                            </div>
+                        </div>
+                        <div class="tweet-body">
+                            <p>${message}</p>
+                            ${image ? `<a href="${image}" target="_blank"><img src="${image}" style="border-radius: 15px" class="img-fluid" alt="Tweet Image"></a>` : ''}
+                        </div>
+                        <div class="tweet-footer text-muted">
+                            ${price_difference  ? `<div class="${price_class}" title="${price_difference_detail}">${price_difference}</div>` : ``}
+                        </div>
+                    </div>
+                `;
+
+           // append the tweet to the correct author element
+          switch (author){
+            case "Javier 🤘":
+            case "TrendSpider":
+              tweets_Charts.append(tweet_template);
+              break;
+            
+            case "Banana3":
+              tweets_TradeIdeas.append(tweet_template);
+              break;
+
+            case "Taylor":
+            case "Trade Talk Media":
+              tweets_OptionsFlow.append(tweet_template);
+              break;
+          }
+         
+
+        });
+
+        this.init_tradingview_popovers()
+
+      } else {
+        console.error('No data received from stock tweets API.');
+      }
+    } catch (error) {
+      console.error('Error fetching data from the stock tweets API:', error);
+    }
+
+  }
+
   async fetchIVData(ticker) {
     $("#iv_results").addClass("d-none");
   
@@ -2654,9 +2760,104 @@ class Trades {
                 
             }
 
+            var today = new Date()
+            today.setHours(0, 0, 0, 0)
+            
+            var yesterday = new Date(today);
+            yesterday.setDate(today.getDate() - 1);
+            yesterday.setHours(0,0,0,0)
+
+            var showEarnings = ((earningsDt >= yesterday && earning.when === 'post market') || earningsDt >= today &&  earning.when === 'pre market')
+
+            if (iv && showEarnings){
+              var isRocket = current_price > iv.upper
+              var isTrash = current_price < iv.lower
+              var isFlushable = current_price > iv.lower && current_price < iv.upper 
+
+              var icon = ""
+              var moveDesc = ""
+              var title = "IV Flush Candidate"
+              if (isRocket){
+                moveDesc = "Huge buy up above its expected move!"
+                icon = `<span title='${moveDesc}'>🚀</span>`
+                title = "Exceeded The Expected Move"
+              }else if (isTrash){
+                moveDesc = "Big sell off below its expected move!"
+                icon = `<span title='${moveDesc}'>🩸</span>`
+                title = "Exceeded The Expected Move"
+              }else if (isFlushable && volumeColor == "#bfe1cf"){
+                moveDesc = "Current price is still inside its implied move, and with good volume, making this a potential IV Flush Candidate!"
+                icon = `<span title='${moveDesc}'>💦</span>`
+                title = "IV Flush Candidate"
+              }else if (isFlushable && volumeColor == "#a30000"){
+                moveDesc = "Current price is still inside its implied move. But the volume on this name sucks."
+                icon = `<span title='${moveDesc}'>🐌</span>`
+                title = "IV Flush Candidate, but volume is low"
+              }else{
+                moveDesc = ""
+                icon = ""
+              }
+
+              var price_difference = ""
+              var price_class = ""
+              var close_price = iv.upper - (iv.upper - iv.lower);
+              if (current_price >= close_price){
+                price_difference = "<i class='fa-regular fa-circle-up'></i> " + earning.symbol.toUpperCase() + " is Up " + Math.abs(((current_price - close_price) / close_price) * 100).toFixed(2) + "% from the close."
+                price_class = "text-success"
+              }
+              else{
+                price_difference = "<i class='fa-regular fa-circle-down'></i> " + earning.symbol.toUpperCase() + " is Down " +  Math.abs(((current_price - close_price) / close_price) * 100).toFixed(2) + "% from the close."
+                price_class = "text-danger"
+              }
+
+              // render the list of IV Flush Candidates
+              var tweet_template = `
+                <div class="card-body tweet-card">
+                    <div class="tweet-header">
+                        <div>
+                            <strong>${title}</strong>
+                        </div>
+                    </div>
+                    <div class="tweet-body">
+                      <p><a href="/stocks/${symbol}/" >${earning.symbol}</a> had an expected move of ${implied_move}, and its currently at $${current_price.toFixed(2)} ${icon}. </p>
+                      <p>${moveDesc}</p>
+                      <div class="tradingview-widget-container card p-1" style="border-radius: 15px; background-color: #000" ticker="${earning.symbol}">
+                          <div id="tradingview_${earning.symbol.toLowerCase()}"></div>
+                      </div>
+                    </div>
+                    <div class="tweet-footer text-muted">
+                        ${price_difference  ? `<div class="${price_class}">${price_difference}</div>` : ``}
+                    </div>
+                </div>
+              `;
+      
+              $("#WL_IVFlush").append(tweet_template);
+
+              // Initialize TradingView widget immediately after appending
+              var tickerSymbol = earning.symbol.toUpperCase();
+              new TradingView.widget({
+                "autosize": true,
+                "symbol": tickerSymbol,
+                "interval": "D",
+                "timezone": "America/New_York",
+                "theme": "dark",
+                "style": "1",
+                "locale": "en",
+                "hide_top_toolbar": true,
+                "hide_legend": true,
+                "allow_symbol_change": false,
+                "save_image": false,
+                "calendar": false,
+                "hide_volume": true,
+                "support_host": "https://www.tradingview.com",
+                "container_id": `tradingview_${tickerSymbol.toLowerCase()}`
+              });
+            } 
+
+    
             // Render the basic HTML structure first
             let earningsEntryHtml = `<div class="row ${whenClass} py-2" style="border-bottom: 1px solid rgba(0,0,0,0.3);" id="earning-${earning.symbol}">`;
-            earningsEntryHtml += ` <div class="col-lg-2 col-4 "><a href="/stocks/${symbol}/" data-toggle="flush_popover" data-html="true" data-content="" data-ticker="${earning.symbol}">${earning.symbol}</a></div>`;
+            earningsEntryHtml += ` <div class="col-lg-2 col-4 "><a href="/stocks/${symbol}/" data-toggle="popover" data-id_prefix="flush" data-html="true" data-content="" data-ticker="${earning.symbol}">${earning.symbol}</a></div>`;
             earningsEntryHtml += ` <div class="col-lg-2 d-none d-md-block">${formattedMarketCap}</div>`;
             earningsEntryHtml += ` <div class="col-lg-2 col-4 " id="iv-move-${earning.symbol}">${implied_move}</div>`;
             earningsEntryHtml += ` <div class="col-lg-2 d-none d-md-block" id="iv-range-${earning.symbol}">${implied_range}</div>`; 
@@ -2664,20 +2865,10 @@ class Trades {
             earningsEntryHtml += ` <div class="col-lg-2 col-4 " id="current-price-${earning.symbol}">$${current_price.toFixed(2)}</div>`;
             earningsEntryHtml += ` <div class="col-lg-1 d-none d-md-block"><i class="fa-solid ${whenIcon}"></i></div>`;
             earningsEntryHtml += `</div>`;
-
-            var today = new Date()
-            today.setHours(0, 0, 0, 0)
-            
-            var yesterday = new Date(today);
-            yesterday.setDate(today.getDate() - 1);
-            yesterday.setHours(0,0,0,0)
-    
             
             // Check if the date is in the past
             // hide yesterdays earnings if we are past 11am
             // or it is for tomorrow
-            var showEarnings = ((earningsDt >= yesterday && earning.when === 'post market') || earningsDt >= today &&  earning.when === 'pre market')
-
             if (iv && showEarnings){
               $(`#earnings-data-${earning.date}`).append(earningsEntryHtml); // Append the data to the respective day
 
@@ -2702,45 +2893,25 @@ class Trades {
         }
     }
 
-    // Initialize Bootstrap popovers
-    $('[data-toggle="flush_popover"]').popover({
-      trigger: 'hover',
-      placement: 'right',
-      html: true,
-      content: function() {
-          var ticker = $(this).data('ticker');
-          return `<div class="tradingview-widget-container">
-                      <div id="tradingview_${ticker.toLowerCase()}"></div>
-                  </div>`;
-      }
-    });
+    if ($("#WL_IVFlush").is(':empty')){
+      var tweet_template = `
+          <div class="card-body tweet-card">
+              <div class="tweet-header">
+                  <div>
+                      <strong>Upcoming Earnings</strong>
+                  </div>
+              </div>
+              <div class="tweet-body">
+                <p>No More Major Earnings Scheduled This Week</p>
+              </div>
+          </div>
+        `;
+
+        $("#WL_IVFlush").append(tweet_template);
+    }
 
     // Add event listener to initialize the TradingView widget when the popover is shown
-    $('[data-toggle="flush_popover"]').on('shown.bs.popover', function () {
-      var ticker = $(this).data('ticker').toUpperCase();
-        new TradingView.widget({
-            "autosize": true,
-            "symbol": ticker,
-            "range": "5D",
-            "timezone": "America/New_York",
-            "theme": "light",
-            "style": "1",
-            "locale": "en",
-            "backgroundColor": "rgba(255, 255, 255, 1)",
-            "gridColor": "rgba(255, 255, 255, 0.06)",
-            "hide_top_toolbar": true,
-            "hide_legend": true,
-            "allow_symbol_change": false,
-            "save_image": false,
-            "calendar": false,
-            "hide_volume": true,
-            "overrides": {
-              "mainSeriesProperties.sessionId": "extended",
-            },
-            "support_host": "https://www.tradingview.com",
-            "container_id": "tradingview_" + ticker.toLowerCase()
-        });
-    });
+    this.init_tradingview_popovers();
 
     // TODO: show a 5 column grid (one column for each day of the week - eg Monday | Tuesday | Wednesday | Thursday | Friday)
     // each column should consist of a row for premarket and a row for after hours.
@@ -2750,52 +2921,51 @@ class Trades {
 
   async displayEarningsCalendarLogos(data){
     const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-    let calendarHtml = '';
-
-    calendarHtml += `<div class="col-lg-2 d-none d-md-block mb-3">`;
-    calendarHtml += ` <div class="card shadow">`;
-    calendarHtml += `   <div class="card-header fs-5"><strong>EARNINGS</strong></div>`;
-    calendarHtml += `   <div class="card-body" style="background-image: url('/images/blacklogo.png'); height: 14em; width: 100%; background-size: contain; background-repeat: no-repeat; background-color: #000">`;
-    calendarHtml += `   </div>`;
-    calendarHtml += ` </div>`;
-    calendarHtml += `</div>`;
 
     weekdays.forEach(day => {
-        calendarHtml += `<div class="col-lg-2 col-md-4 col-sm-6 mb-3">`;
-        calendarHtml += ` <div class="card shadow">`;
-        calendarHtml += `   <div class="card-header fs-5"><small>${day}</small></div>`;
-        calendarHtml += `   <div class="card-body">`;
-
-        // Premarket row
-        calendarHtml += `     <div><strong>Morning</strong></div>`;
+       
+        // new way with tweet cards
+        var author = day
+        var premarket = `<div class="py-1 ">Morning</div>`
+        var postmarket = `<div class="py-1 ">Evening</div>`
         if (data[day].premarket.length > 0) {
             data[day].premarket.forEach(symbol => {
-                calendarHtml += ` <div class="py-1"><a class="text-decoration-none" href="/stocks/${symbol.toLowerCase()}/"><img class="p-0 m-0 " src="/images/logos/${symbol.toUpperCase()}.png" style="width: 25px"></img> ${symbol}</a></div>`;
+              premarket += ` <div class="py-1"><a class="" href="/stocks/${symbol.toLowerCase()}/" data-toggle="popover" data-ticker="${symbol}" data-id_prefix="earnings"><img class="p-0 m-0 " src="/images/logos/${symbol.toUpperCase()}.png" style="width: 25px"></img> ${symbol}</a></div>`;
             });
-        } else {
-            calendarHtml += ` <div>-</div>`;
-        }
+        } 
 
         // After hours row
-        calendarHtml += `     <div class="mt-2"><strong>Evening</strong></div>`;
         if (data[day].afterhours.length > 0) {
             data[day].afterhours.forEach(symbol => {
-                calendarHtml += ` <div class="py-1"><a class="text-decoration-none" href="/stocks/${symbol.toLowerCase()}/"><img class="p-0 m-0 " src="/images/logos/${symbol.toUpperCase()}.png" style="width: 25px"></img> ${symbol}</a></div>`;
+              postmarket += ` <div class="py-1"><a class=" href="/stocks/${symbol.toLowerCase()}/" data-toggle="popover" data-ticker="${symbol}" data-id_prefix="earnings" "><img class="p-0 m-0 " src="/images/logos/${symbol.toUpperCase()}.png" style="width: 25px"></img> ${symbol}</a></div>`;
             });
-        } else {
-            calendarHtml += ` <div>-</div>`;
-        }
+        } 
 
-        calendarHtml += `   </div>`;
-        calendarHtml += ` </div>`;
-        calendarHtml += `</div>`;
+
+        var tweet_template = `
+          <div class="card-body tweet-card">
+              <div class="tweet-header">
+                  <div>
+                      <strong>${author}</strong>
+                  </div>
+              </div>
+              <div class="tweet-body">
+                  <div class="row">
+                    <div class="col-6">
+                      ${premarket}
+                    </div>
+                    <div class="col-6">
+                      ${postmarket}
+                    </div>
+                  </div>
+              </div>
+          </div>
+      `;
+
+      $("#WL_Earnings").append(tweet_template)
+      this.init_tradingview_popovers()
     });
 
-
-    var calRow = $(`<div class="row mb-3 m-0 p-0">`)
-    calRow.append(calendarHtml)
-    $('#earningsCalendar').empty();
-    $('#earningsCalendar').append(calRow);
   }
 
   async fetchScreener(){
@@ -2804,116 +2974,87 @@ class Trades {
     fetch(url)
     .then(response => response.json())
     .then(watchlist => {
-      console.log(watchlist);
-
-      // Clear any existing content
-      $("#reversalsWatchlist").empty();
-
-      var watchlistRow = $(`<div class="row"></div>`)
-      
-      // Iterate over each group
+      // console.log(watchlist);
+      // lets do it the new way now with the list view instead
+      $("#WL_Reversals").empty()
       watchlist.forEach(group => {
-        // Create a Bootstrap card
-        var cardCol = $('<div class="col-lg-3 col-sm-12"></div>');
-        var card = $('<div class="card m-1"></div>');
-        var cardBody = $('<div class="card-body"></div>');
-
-        // Add image of the setup
-        var imageName = ""
-        switch (group.group){
-          case "hammer at lows":
-            imageName = "hammer.png"
-            break;
-          case "shooting star at highs":
-            imageName = "shootingstar.png"
-            break;
-          case "evening star at highs":
-            imageName = "eveningstar.png"
-            break;
-          case "morning star at lows":
-            imageName = "morningstar.png"
-            break;
-          case "hammer at highs":
-            imageName = "hangman.png"
-            break;
-          case "inverted hammer at lows":
-            imageName = "bottoming.png"
-            break;
-        }
-        var imgSrc = `/images/stratcombos/${imageName}`;
-        var img = $(`<img src="${imgSrc}" class="card-img-top" alt="${group.group}">`);
-        card.append(img);
-
-        // Add the group title
-        var title = $(`<div class="card-title text-uppercase text-center bg-secondary text-white fw-bold p-3">${group.group}</div>`);
-        cardBody.append(title);
-
-        // Add the list of tickers
         if (group.tickers.length > 0) {
-          var tickerList = $('<div class="row"></div>');
           group.tickers.forEach(ticker => {
-              var listItem = $(`
-                  <div class="py-1 col-6">
-                      <a class="text-decoration-none" href="/stocks/${ticker.ticker.toLowerCase()}/" data-toggle="popover" data-html="true" data-content="" data-ticker="${ticker.ticker}">
-                          <img class="p-0 m-0 " src="/images/logos/${ticker.ticker.toUpperCase()}.png" style="width: 25px"></img> ${ticker.ticker}
-                      </a>
-                  </div>
-              `);
+            // add a card for each item
+            var author = "Trade Scanner"
+            var message = `<a href="/stocks/${ticker.ticker.toLowerCase()}/">$${ticker.ticker.toUpperCase()}</a> has a ${group.group}.` 
 
-              tickerList.append(listItem);
+            // Add image of the setup
+            var imageName = ""
+            var entryAction = ""
+
+            switch (group.group){
+              case "hammer at lows":
+                imageName = "hammer.png"
+                entryAction = "Consider a long on a break above the high of the hammer."
+                break;
+              case "shooting star at highs":
+                imageName = "shootingstar.png"
+                entryAction = "Consider a short on a break below the low of the hammer."
+                break;
+              case "evening star at highs":
+                imageName = "eveningstar.png"
+                entryAction = "Consider a short on a break below the low of the indecision doji."
+                break;
+              case "morning star at lows":
+                imageName = "morningstar.png"
+                entryAction = "Consider a long on a break above the high of the indecision doji."
+                break;
+              case "hammer at highs":
+                imageName = "hangman.png"
+                entryAction = "Consider a short on a break below the low of the hammer."
+                break;
+              case "inverted hammer at lows":
+                imageName = "bottoming.png"
+                entryAction = "Consider a long on a break above the high of the hammer."
+                break;
+            }
+            var imgSrc = `/images/stratcombos/${imageName}`;
+            
+            var tweet_template = `
+                        <div class="card-body tweet-card">
+                            <div class="tweet-header">
+                                <div>
+                                    <strong>${author}</strong>
+                                </div>
+                            </div>
+                            <div class="tweet-body">
+                                <p data-toggle="strat_popover" data-img="${imgSrc}">${message}<br/><br/>${entryAction}</p>
+                                <div class="tradingview-widget-container card p-1" style="border-radius: 15px; background-color: #000" ticker="${ticker.ticker}">
+                                    <div id="tradingview_reversals_${ticker.ticker.toLowerCase()}"></div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+              $("#WL_Reversals").append(tweet_template)
+
+              // Initialize TradingView widget immediately after appending
+              var tickerSymbol = ticker.ticker.toUpperCase();
+              new TradingView.widget({
+                "autosize": true,
+                "symbol": tickerSymbol,
+                "interval": "D",
+                "timezone": "America/New_York",
+                "theme": "dark",
+                "style": "1",
+                "locale": "en",
+                "hide_top_toolbar": true,
+                "hide_legend": true,
+                "allow_symbol_change": false,
+                "save_image": false,
+                "calendar": false,
+                "hide_volume": true,
+                "support_host": "https://www.tradingview.com",
+                "container_id": `tradingview_reversals_${tickerSymbol.toLowerCase()}`
+              });
           });
-          cardBody.append(tickerList);
-        } else {
-            var noTickers = $('<p class="card-text">No tickers available.</p>');
-            cardBody.append(noTickers);
         }
-
-        card.append(cardBody);
-        cardCol.append(card)
-
-        // Append the card to "#reversalsWatchlist" element
-        if (group.tickers.length > 0) {
-          watchlistRow.append(cardCol)
-        }
-      });
-
-      $("#reversalsWatchlist").append(watchlistRow);
-
-      // Initialize Bootstrap popovers
-      $('[data-toggle="popover"]').popover({
-        trigger: 'hover',
-        placement: 'right',
-        html: true,
-        content: function() {
-            var ticker = $(this).data('ticker');
-            return `<div class="tradingview-widget-container">
-                        <div id="tradingview_${ticker.toLowerCase()}"></div>
-                    </div>`;
-        }
-      });
-
-      // Add event listener to initialize the TradingView widget when the popover is shown
-      $('[data-toggle="popover"]').on('shown.bs.popover', function () {
-        var ticker = $(this).data('ticker').toUpperCase();
-          new TradingView.widget({
-              "autosize": true,
-              "symbol": ticker,
-              "interval": "D",
-              "timezone": "America/New_York",
-              "theme": "light",
-              "style": "1",
-              "locale": "en",
-              "backgroundColor": "rgba(255, 255, 255, 1)",
-              "gridColor": "rgba(255, 255, 255, 0.06)",
-              "hide_top_toolbar": true,
-              "hide_legend": true,
-              "allow_symbol_change": false,
-              "save_image": false,
-              "calendar": false,
-              "hide_volume": true,
-              "support_host": "https://www.tradingview.com",
-              "container_id": "tradingview_" + ticker.toLowerCase()
-          });
       });
 
     })
@@ -2921,6 +3062,62 @@ class Trades {
       console.error('Error fetching screener data:', error);
     });
   }
+
+  async init_tradingview_popovers(){
+     // Initialize Bootstrap popovers
+     $('[data-toggle="strat_popover"]').popover({
+      trigger: 'hover',
+      placement: 'auto',
+      html: true,
+      content: function() {
+          var img_src = $(this).data('img');
+          return `<div>
+                      <img src="${img_src}" width="250px"></img>
+                  </div>`;
+      }
+    });
+
+    // Initialize Bootstrap popovers
+    $('[data-toggle="popover"]').popover({
+      trigger: 'hover',
+      placement: 'right',
+      html: true,
+      content: function() {
+          var ticker = $(this).data('ticker');
+          var id_prefix = $(this).data('id_prefix');
+          return `<div class="tradingview-widget-container">
+                      <div id="tradingview_${id_prefix}_${ticker.toLowerCase()}"></div>
+                  </div>`;
+      }
+    });
+
+    // Add event listener to initialize the TradingView widget when the popover is shown
+    $('[data-toggle="popover"]').on('shown.bs.popover', function () {
+      var ticker = $(this).data('ticker').toUpperCase();
+      var id_prefix=$(this).data('id_prefix');
+      new TradingView.widget({
+          "autosize": true,
+          "symbol": ticker,
+          "interval": "D",
+          "timezone": "America/New_York",
+          "theme": "light",
+          "style": "1",
+          "locale": "en",
+          "backgroundColor": "rgba(255, 255, 255, 1)",
+          "gridColor": "rgba(255, 255, 255, 0.06)",
+          "hide_top_toolbar": true,
+          "hide_legend": true,
+          "allow_symbol_change": false,
+          "save_image": false,
+          "calendar": false,
+          "hide_volume": true,
+          "support_host": "https://www.tradingview.com",
+          "container_id": "tradingview_" + id_prefix + "_" + ticker.toLowerCase()
+      });
+    });
+  }
+
+  
 
 
   async fetchEMASignals(ticker){

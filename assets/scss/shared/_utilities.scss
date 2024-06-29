@@ -446,3 +446,35 @@ ul li {
 .no-border-transparent-bg::-ms-input-placeholder {
   color: black !important;
 }
+
+
+.tweet-card {
+  max-width: 600px;
+  // margin: 20px auto;
+  margin-top: 0px;
+  border: 0;
+  border-bottom: 1px solid #e1e8ed;
+  // border-radius: 10px;
+}
+.tweet-card:hover{
+  background-color: #f8f9fa;
+}
+.tweet-header {
+  display: flex;
+  align-items: center;
+}
+.tweet-header img {
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.tweet-body {
+  margin-top: 10px;
+}
+.tweet-footer {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+.tweet-footer i {
+  margin-right: 5px;
+}
