@@ -103,6 +103,8 @@
                 </div>
             </div>
         </div>
+        <div class="row pb-5 d-none" style="width: 100%; overflow-x: auto;" id="stock_social_row"></div>
+
     </div>
 </div>
 
@@ -130,6 +132,10 @@
             title: "<h6>POSSIBLE CHOP</h6><p>An expected move < 0.5% often indicates a low range day, which is less than ideal for options traders looking for range.</p><p>Trade quick scalps or look for other names.</p>",
             html: true
         });
+
+        var symbol = {{ $symbol }}
+        var userTrades = new Trades()
+        userTrades.showStockTweets(ticker=symbol);
         
 
     });

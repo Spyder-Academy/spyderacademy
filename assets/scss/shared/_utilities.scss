@@ -448,6 +448,22 @@ ul li {
 }
 
 
+#stock_social_row {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+#stock_social_row .social-card {
+  flex: 0 0 auto;
+}
+
+#stock_social_row .social-card .tweet-card {
+  border: 1px solid #e1e8ed;
+}
+
+
+
 .tweet-card {
   max-width: 600px;
   // margin: 20px auto;
@@ -478,3 +494,4 @@ ul li {
 .tweet-footer i {
   margin-right: 5px;
 }
+

@@ -2432,6 +2432,7 @@ class Trades {
            // append the tweet to the correct author element
           switch (author){
             case "Javier 🤘":
+            case "Jake Wujastyk":
             case "TrendSpider":
               tweets_Charts.append(tweet_template);
               break;
@@ -2442,6 +2443,7 @@ class Trades {
 
             case "Taylor":
             case "Trade Talk Media":
+            case "Alex Jones Industrial Average":
               tweets_OptionsFlow.append(tweet_template);
               break;
           }
@@ -2458,6 +2460,91 @@ class Trades {
       console.error('Error fetching data from the stock tweets API:', error);
     }
 
+  }
+
+  async showStockTweets(symbol){
+    $(".stock_social_row").empty()
+    var url = `https://us-central1-spyder-academy.cloudfunctions.net/stock_tweets?ticker=${symbol}`;
+    console.log("Loading tweets for ", url)
+    try {
+      let response = await $.ajax({url: url, method: 'GET'});
+      if (response && response.length > 0) {
+        $("#stock_social_row").removeClass("d-none")
+
+        // Sort the tweets by timestamp in descending order
+        response.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+        // render the tweets 
+        response.forEach(tweet => {
+          var author = tweet["author"]
+          var symbol = tweet["symbol"]
+          var message = tweet["message"].replace(/\n/g, "<br/>");
+          var tweet_link = tweet["url"] ? tweet["url"] : ""
+          
+          var price_difference = ""
+          var price_difference_detail = ""
+          var price_class = ""
+
+          if (tweet["current_price"] && tweet["price_when_posted"]){
+            var current_price = tweet["current_price"]
+            var price_when_posted = tweet["price_when_posted"]
+
+            price_difference_detail = `Price when posted was $${price_when_posted}.  Currently trading at $${current_price}`
+
+            if (current_price >= price_when_posted){
+              price_difference = "<i class='fa-regular fa-circle-up'></i> " + symbol.toUpperCase() + " is Up $" + Math.abs(current_price - price_when_posted).toFixed(2) + " since posted."
+              price_class = "text-success"
+            }
+            else{
+              price_difference = "<i class='fa-regular fa-circle-down'></i> " + symbol.toUpperCase() + " is Down $" + Math.abs(current_price - price_when_posted).toFixed(2) + " since posted."
+              price_class = "text-danger"
+            }
+
+          }
+
+          if (symbol) {
+            // var symbolLink = `<a href='/stocks/${lowerSymbol}/'>$${symbol}</a>`;
+            var symbolLink =`<a class="" href="/stocks/${symbol.toLowerCase()}/" data-toggle="popover" data-html="true" data-id_prefix="tweets" data-ticker="${symbol}">$${symbol}</a>`
+            message = message.replace(new RegExp(`\\$${symbol}`, 'g'), symbolLink);
+          }
+
+          var image = tweet["image"]
+          var timestamp = moment(tweet["timestamp"]);
+          
+          // Calculate relative time and Eastern Time format
+          var relativeTime = timestamp.fromNow();
+          var easternTime = timestamp.tz("America/New_York").format('MMMM Do YYYY, h:mm:ss a');
+
+          var tweet_template = `
+                  <div class="col-lg-3 col-6 social-card">
+                    <div class="card-body tweet-card shadow" style="border-radius: 15px">
+                        <div class="tweet-header">
+                            <div>
+                                <a href="${tweet_link}" target="_blank" class="text-decoration-none">𝕏 <strong>${author}</strong></a> <span class="text-muted"> - <span title="${easternTime}">${relativeTime}</span></span>
+                            </div>
+                        </div>
+                        <div class="tweet-body">
+                            <p>${message}</p>
+                            ${image ? `<a href="${image}" target="_blank"><img src="${image}" style="border-radius: 15px" class="img-fluid" alt="Tweet Image"></a>` : ''}
+                        </div>
+                        <div class="tweet-footer text-muted">
+                            ${price_difference  ? `<div class="${price_class}" title="${price_difference_detail}">${price_difference}</div>` : ``}
+                        </div>
+                    </div>
+                  </div>
+                `;
+
+          $("#stock_social_row").append(tweet_template);
+        });
+
+        this.init_tradingview_popovers()
+
+      } else {
+        console.error('No data received from stock tweets API.');
+      }
+    } catch (error) {
+      console.error('Error fetching data from the stock tweets API:', error);
+    }
   }
 
   async fetchIVData(ticker) {
@@ -3578,7 +3665,7 @@ class Trades {
 
 
   async fetchGEXOverlay(ticker, expectedMove = null) {
-    console.log("overlay data", expectedMove)
+    // console.log("overlay data", expectedMove)
     ticker = ticker.toUpperCase();
     const jsonData = await this._fetchGEXOverlayData(ticker);
     if (ticker == "SPX"){
@@ -3729,7 +3816,7 @@ class Trades {
       previousTimestamp = point.x;
     });
 
-    console.log(gammaSeriesWithBreaks, stockSeries)
+    // console.log(gammaSeriesWithBreaks, stockSeries)
 
     var options = {
       chart: {
