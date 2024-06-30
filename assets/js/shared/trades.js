@@ -2504,7 +2504,7 @@ class Trades {
 
           if (symbol) {
             // var symbolLink = `<a href='/stocks/${lowerSymbol}/'>$${symbol}</a>`;
-            var symbolLink =`<a class="" href="/stocks/${symbol.toLowerCase()}/" data-toggle="popover" data-html="true" data-id_prefix="tweets" data-ticker="${symbol}">$${symbol}</a>`
+            var symbolLink =`<a class="" href="/stocks/${symbol.toLowerCase()}/" >$${symbol}</a>`
             message = message.replace(new RegExp(`\\$${symbol}`, 'g'), symbolLink);
           }
 
