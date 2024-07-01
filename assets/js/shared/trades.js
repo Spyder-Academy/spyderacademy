@@ -2606,7 +2606,8 @@ class Trades {
         console.error('No data received from API.');
       }
     } catch (error) {
-      console.error('Error fetching data from the API:', error);
+      console.error('Error fetching Expected Move data from the API:', error);
+      $("#expected_move_signal_card").hide();
     }
   }
   
@@ -3222,6 +3223,7 @@ class Trades {
         }
         else{
           $("#currentPriceWidgetTime").hide()
+          $("#ema_signal_card").hide()
         }
 
         emaData.forEach(data => {
@@ -3241,7 +3243,10 @@ class Trades {
             emaList.append(emaItem);
         });
     })
-    .catch(error => console.error('Error fetching EMA data:', error));
+    .catch(error => {
+      console.error('Error fetching EMA data:', error)
+      $("#ema_signal_card").hide()
+    });
   }
 
   async fetchTheStratSignals(ticker){
@@ -3390,7 +3395,10 @@ class Trades {
         }
         
     })
-    .catch(error => console.error('Error fetching The Strat data:', error));
+    .catch(error => {
+      console.error('Error fetching The Strat data:', error)
+      $("#strat_signal_row").hide()
+    });
   }
 
 
@@ -3398,11 +3406,18 @@ class Trades {
   async fetchGEXByStrike(ticker, chartid="#gammaChart", idx=0, historicals=false) {
 
     ticker = ticker.toUpperCase();
-    const jsonData = await this._fetchGEXData(ticker, idx, historicals);
-    if (jsonData) {
-      this._renderGEXByStrike(ticker, jsonData, chartid);
-    } else {
-        console.log("No data to render.");
+
+    try{
+      const jsonData = await this._fetchGEXData(ticker, idx, historicals);
+      if (jsonData) {
+        this._renderGEXByStrike(ticker, jsonData, chartid);
+      } else {
+          console.log("No data to render.");
+      }
+    }
+    catch (error){
+      console.log("Error retrieving Gamma Exposure")
+      $("#market_pressure_signal_card").hide()
     }
   }
 
@@ -3473,7 +3488,10 @@ class Trades {
         };
 
       } catch (error) {
-          console.error("Could not fetch data:", error);
+          console.error("Could not fetch Historical Gamma Snapshot Data:", error);
+          $("#market_pressure_signal_card").hide()
+          $("#marketPressureStatement").hide()
+          $("#market_pressure").hide()
       }
     }
   }
@@ -3691,6 +3709,7 @@ class Trades {
         return data;
     } catch (error) {
         console.error("Could not fetch data:", error);
+        $("#gammaOverlayContainer").hide()
     }
   }
 

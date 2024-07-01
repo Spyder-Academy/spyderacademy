@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="row pb-5">
-            <div class="col-lg-4 col-12">
+            <div class="col-lg-4 col-12" id="market_pressure_signal_card">
                 <div class="card h-100  p-3 mb-5" style="border-radius: 15px;">
                     <div class="card-body">
                         <h4 id="marketPressureHeader" class="card-title fw-semibold text-uppercase">{{ $symbol }} MARKET PRESSURE</h4>
@@ -19,7 +19,7 @@
 
                 </div>
             </div>
-            <div class="col-lg-4 col-12">
+            <div class="col-lg-4 col-12" id="expected_move_signal_card">
                 <div class="card h-100  p-3 mb-5" style="border-radius: 15px;">
                     <div class="card-body">
                         <h4 id="expectedMoveHeader" class="card-title fw-semibold text-uppercase" data-toggle="tooltip" data-placement="auto">EXPECTED MOVE FOR {{ $symbol }}</h4>
@@ -45,7 +45,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-12">
+            <div class="col-lg-4 col-12" id="ema_signal_card">
                 <div class="card h-100  p-3 mb-5" style="border-radius: 15px;">
                     <div class="card-body">
                         <h4 id="movingAveragesHeader" class="card-title fw-semibold text-uppercase">{{ $symbol }} MOVING AVERAGES</h4>
@@ -55,8 +55,8 @@
                 </div>
             </div>
         </div>
-        <div class="row pb-5">
-            <div class="col-lg-4 col-12">
+        <div id="strat_signal_row" class="row pb-5">
+            <div class="col-lg-4 col-12" id="strat_signal_card">
                 <div class="card h-100  p-3 mb-5" style="border-radius: 15px;">
                     <div class="card-body">
                         <h4 class="card-title fw-semibold text-uppercase">{{ $symbol }} - Technical Analysis</h4>
@@ -65,7 +65,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-12">
+            <div class="col-lg-4 col-12" id="stratimg_signal_card">
                 <div class="card h-100" style="border-radius: 15px;">
                     <div class="card-body">
                         <div class="card-text text-black-61" id="theStratCombos">
@@ -103,7 +103,17 @@
                 </div>
             </div>
         </div>
-        <div class="row pb-5 d-none" style="width: 100%; overflow-x: auto;" id="stock_social_row"></div>
+        <div class="row pb-5 d-none" style="width: 100%; overflow-x: auto;" id="stock_social_row">
+            <div class="col-1 d-none d-lg-block">
+                <div class="card-body tweet-card shadow bg-dark text-white" style="border-radius: 15px">
+                    <div class="tweet-header verticaltext" style="height: 300px">
+                        <div class="verticaltext_content">
+                            STOCK TWEETS
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>
