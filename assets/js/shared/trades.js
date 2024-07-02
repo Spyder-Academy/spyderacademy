@@ -2433,6 +2433,7 @@ class Trades {
           switch (author){
             case "Javier 🤘":
             case "Jake Wujastyk":
+            case "7 Star Setups":
             case "TrendSpider":
               tweets_Charts.append(tweet_template);
               break;
