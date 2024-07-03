@@ -2548,6 +2548,171 @@ class Trades {
     }
   }
 
+  convertContract(contractString) {
+    // Split the string into parts
+    let parts = contractString.split('_');
+    let ticker = parts[0];
+    let rest = parts[1];
+
+    // Extract date, type, and strike price
+    let year = rest.substring(0, 2);
+    let month = rest.substring(2, 4);
+    let day = rest.substring(4, 6);
+    let type = rest.substring(6, 7).toLowerCase();
+    let strikePrice = rest.substring(7);
+
+    // Format the result string
+    let formattedDate = `${month}/${day}/${year}`;
+    let result = `${ticker} ${strikePrice}${type} ${formattedDate}`;
+
+    return result;
+  }
+
+  async fetchFlow(ticker){
+    var url = `https://us-central1-spyder-academy.cloudfunctions.net/flow?ticker=${ticker.toUpperCase()}`;
+
+    try {
+      let response = await $.ajax({url: url, method: 'GET'});
+
+      if (response) {
+        // loop through all flow returned for this ticker
+        response.forEach(flow => {
+          // for each flow tracked
+          // console.log(flow)
+
+          var contract = flow["contract"]
+          var parsedContract = this.convertContract(contract)
+          var timestamp = moment(flow["open_interest"][0]["date"])
+          var relativeTime = timestamp.fromNow();
+
+          var message = flow["status"]
+
+          // create the flow card
+          var flow_card = `<div class="col-lg-3 col-6 social-card">
+                <div class="card-body tweet-card shadow" style="border-radius: 15px">
+                    <div class="tweet-header">
+                        <div>
+                            <strong>${parsedContract}</strong> <span class="text-muted"> - <span >${relativeTime}</span></span>
+                        </div>
+                    </div>
+                    <div class="tweet-body">
+                        <div style="border-radius: 15px;">
+                            <div id="flow_chart_${contract}">
+                        </div>
+                    </div>
+                    <div class="tweet-footer text-muted">
+                        <div class="muted" title="">${message}</div>
+                    </div>
+                </div>
+              </div>`
+
+
+          //  append the flow card
+          $("#flow_tracker_row").append(flow_card);
+          $("#flow_tracker_row").removeClass("d-none");
+
+          // Extract and align data for the chart
+          let openInterestData = {};
+          flow["open_interest"].forEach(oi => {
+            let date = moment(oi.date).format('YYYY-MM-DD');
+            openInterestData[date] = oi.open_interest;
+          });
+
+          let optionsPriceData = {};
+          flow["options_price"].forEach(op => {
+            let date = moment(op.date).format('YYYY-MM-DD');
+            optionsPriceData[date] = op.close_price;
+          });
+
+          // Combine all dates from both openInterest and optionsPrice
+          let allDates = [...new Set([...Object.keys(openInterestData), ...Object.keys(optionsPriceData)])];
+          allDates.sort();
+
+          let alignedOpenInterestData = allDates.map(date => openInterestData[date] || 0);
+          let alignedOptionsPriceData = allDates.map(date => optionsPriceData[date] || null);
+          let labels = allDates.map(date => moment(date).format('DD MMM YYYY'));
+
+
+
+          // create the apexChart for this card
+          var options = {
+            series: [{
+                name: 'Open Interest',
+                type: 'column',
+                data: alignedOpenInterestData
+            }, {
+                name: 'Options Close Price',
+                type: 'line',
+                data: alignedOptionsPriceData
+            }],
+            chart: {
+                height: 240, // Smaller height for sparkline
+                type: 'line',
+                sparkline: {
+                  enabled: true
+                }
+            },
+            stroke: {
+                curve: 'straight',
+                width: [0, 4]
+            },
+            fill: {
+                opacity: [0.35, 1]
+            },
+            labels: labels,
+            yaxis: [
+                {
+                    title: {
+                    text: 'Open Interest',
+                    },
+                },
+                {
+                    opposite: true,
+                    title: {
+                    text: 'Options Close Price',
+                    },
+                },
+            ],
+            markers: {
+                size: 0
+            },
+            tooltip: {
+              enabled: true, // Enable tooltips for better interaction
+              shared: true, // Show tooltips for both series
+              intersect: false, // Ensure tooltips don't overlap
+              x: {
+                  formatter: function(value, { series, seriesIndex, dataPointIndex, w }) {
+                      return labels[dataPointIndex];
+                  }
+              },
+              y: {
+                  formatter: function(value, { series, seriesIndex, dataPointIndex, w }) {
+                      if (seriesIndex === 0) {
+                          return value ;
+                      } 
+                      else if (value == null){
+                        return "$ -"
+                      }
+                      else {
+                          return "$" + value;
+                      }
+                  }
+              }
+
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#flow_chart_" + contract), options);
+        chart.render();
+          
+        });
+      }
+    }
+    catch(error){
+
+    }
+  }
+
   async fetchIVData(ticker) {
     $("#iv_results").addClass("d-none");
   

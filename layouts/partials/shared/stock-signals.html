@@ -103,7 +103,20 @@
                 </div>
             </div>
         </div>
-        <div class="row pb-5 d-none" style="width: 100%; overflow-x: auto;" id="stock_social_row">
+        <div class="row pb-5 d-none"  id="flow_tracker_row">
+            <div class="col-1 d-lg-block">
+                <div class="card-body tweet-card shadow bg-dark text-white" style="border-radius: 15px">
+                    <div class="tweet-header verticaltext" style="height: 280px">
+                        <div id="trackedFlowHeader" class="verticaltext_content">
+                            TRACKED FLOW
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <div class="row py-5 d-none" style="width: 100%; overflow-x: auto;" id="stock_social_row">
             <div class="col-1 d-none d-lg-block">
                 <div class="card-body tweet-card shadow bg-dark text-white" style="border-radius: 15px">
                     <div class="tweet-header verticaltext" style="height: 300px">
@@ -114,7 +127,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
@@ -143,10 +155,15 @@
             html: true
         });
 
+        $('#trackedFlowHeader').tooltip({
+            title: "<h6>TRACKED FLOW</h6><p>Flow Tracking is currently in beta and may contain bugs.</p><p>When interesting flow is detected, Spyder Academy will start tracking the Open Interest on it to see how it changes over time.</p><p>Whale Flow will result in a large increase in the Open Interest. </p><p>When they sell their position, the Open Interest will reduce significantly, informing us that the whale is no longer interested in this position (took profit/loss and exited).</p>",
+            html: true
+        });
+
         var symbol = {{ $symbol }}
         var userTrades = new Trades()
         userTrades.showStockTweets(ticker=symbol);
+        userTrades.fetchFlow(ticker=symbol);
         
-
     });
 </script>
