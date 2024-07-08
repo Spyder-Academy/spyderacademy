@@ -91,8 +91,8 @@
 
                 <div class="my-3 col-lg-4 col-sm-12 pr-3">
                   <div class="card shadow" style="border-radius: 15px">
-                    <div class="card-title bg-primary text-white fw-bold p-3" style="border-radius:10px 10px 0px 0px">Post Earning Moves (<a class="text-white" href="/tools/earnings-calendar/">See More</a>)</div>
-                    <div id="WL_IVFlush" class="" style="height: 800px; overflow-y: scroll;">
+                    <div class="card-title bg-primary text-white fw-bold p-3" style="border-radius:10px 10px 0px 0px">Options Flow Tracker</div>
+                    <div id="WL_FlowTracker" class="" style="height: 800px; overflow-y: scroll;">
                     
                     </div>
                   </div>
@@ -109,6 +109,7 @@
                userTrades = new Trades();
                userTrades.fetchEarningsCalendar();
                userTrades.fetchScreener();
+               userTrades.fetchAllFlow();
             });
           </script>
 

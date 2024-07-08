@@ -509,7 +509,7 @@ ul li {
   -o-transform: rotate(-90deg);
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
   left: -70px;
-  top: 105px;
+  top: 145px;
   position: absolute;
   color: #FFF;
   text-transform: uppercase;
@@ -517,3 +517,17 @@ ul li {
   font-weight: bold;
   text-wrap: nowrap;
 }
+
+.popover {
+  max-width: 400px; /* Set the max width */
+  width: 400px; /* Set the width */
+}
+
+.popover-image {
+  max-width: 800px; /* Set the max width */
+  width: 800px; /* Set the width */
+}
+
+// .popover-body {
+//   height: 400px; /* Set the height */
+// }

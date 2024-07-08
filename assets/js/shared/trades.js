@@ -2568,6 +2568,110 @@ class Trades {
     return result;
   }
 
+  async fetchAllFlow(){
+    var url = `https://us-central1-spyder-academy.cloudfunctions.net/flow`;
+    
+    try {
+      let response = await $.ajax({url: url, method: 'GET'});
+
+      if (response) {
+        // loop through all flow returned
+        response.forEach(flow => {
+          // for each flow tracked
+          // console.log(flow)
+
+          function toTitleCase(str) {
+            return str.replace(/(?:^|\s)\w/g, function(match) {
+                return match.toUpperCase();
+            });
+          }
+
+          var contract = flow["contract"]
+          var parsedContract = this.convertContract(contract)
+          var timestamp = moment(flow["created_date"])
+          var relativeTime = timestamp.fromNow();
+          var easternTime = timestamp.tz("America/New_York").format('MMMM Do YYYY, h:mm:ss a');
+
+          var message = toTitleCase(flow["status"])
+
+          var price_when_posted = flow["options_price_when_posted"]
+          var current_price = 0
+          var price_difference = 0
+          var updown = "flat"
+          var updown_message = ""
+          var max_gain = 0
+          var max_loss = 0
+
+          if (price_when_posted != undefined){
+            current_price = parseFloat(flow["options_price"][0]["close_price"])
+            var today_low_price = parseFloat(flow["options_price"][0]["low_price"])
+            var today_high_price = parseFloat(flow["options_price"][0]["high_price"])
+            price_difference = ((current_price - price_when_posted) / price_when_posted) * 100
+            updown = price_difference >= 0 ? "up" : "down"
+            updown_message = `This contract is currently ${updown} about ${Math.abs(price_difference).toFixed(0)}%.`
+
+            max_gain = ((Math.max(flow["max_price"], today_high_price) - price_when_posted)  / price_when_posted) * 100
+            max_loss = ((Math.min(flow["min_price"], today_low_price) - price_when_posted)  / price_when_posted) * 100
+          }
+
+          var rating = undefined
+          var rating_el = ""
+          var rating  = 0
+          if (flow["rating"] != undefined){
+            rating = parseInt(flow["rating"])
+
+            switch (Math.ceil((rating/100) * 5)){
+              case 5:
+                rating_el = `<i class="fa-solid fa-fire text-secondary"></i>`
+                break;
+              case 4:
+                rating_el = `<i class="fa-solid fa-star text-warning"></i>`
+                break;
+              case 3:
+                rating_el = `<i class="fa-solid fa-star-half-stroke"></i>`
+                break;
+              case 2:
+                rating_el = `<i class="fa-solid fa-face-meh"></i>`
+                break;
+              case 1:
+                rating_el = `<i class="fa-solid fa-poop"></i>`
+                break;
+            }
+          }
+
+          // create the flow card
+          var flow_card = `
+                <div class="card-body tweet-card">
+                    <div class="tweet-header">
+                        <div>
+                            <strong><a href="/stocks/${flow["ticker"].toLowerCase()}/">${parsedContract}</a></strong> <span class="text-muted"> - <span title="${easternTime}" >${relativeTime}</span></span>
+                        </div>
+                    </div>
+                    <div class="tweet-body">
+                      <p>${message}</p>
+                      <p class="${updown == 'up' ? 'text-success' : 'text-danger'}">${updown_message}</p>
+                    </div>
+                    <div class="tweet-footer text-muted ${price_when_posted == undefined ? 'd-none' : ''}">
+                        <div class="muted" title="">
+                        <span class="px-3" title="This contract has seen a Maximum Gain of ${max_gain.toFixed(0)}%"><i class="fa fa-money-bill-trend-up text-success"></i> ${max_gain.toFixed(0)}%</span>
+                        <span class="px-3" title="The Lowest Price this contract has seen is ${max_loss.toFixed(0)}%"><i class="fa fa-sack-xmark pl-3 text-danger"></i> ${max_loss.toFixed(0)}%</span>
+                        <span class="px-3" title="The Current Value of this contract is about ${price_difference.toFixed(0)}%"><i class="fa ${updown == 'up' ? 'fa-arrow-up' : 'fa-arrow-down'} pl-3 ${updown == 'up' ? 'text-success' : 'text-danger'}"></i> ${Math.abs(price_difference).toFixed(0)}% </span>
+                        <span class="px-3" title="The Flow Strength is ${(Math.ceil((rating/100) * 5))}/5")>${rating_el}</span>
+                    </div>
+                </div>
+              `
+
+          // console.log(flow_card)
+          //  append the flow card
+          $("#WL_FlowTracker").append(flow_card);
+        });
+      }
+    }
+    catch(error){
+
+    }
+  }
+
   async fetchFlow(ticker){
     var url = `https://us-central1-spyder-academy.cloudfunctions.net/flow?ticker=${ticker.toUpperCase()}`;
 
@@ -2576,40 +2680,129 @@ class Trades {
 
       if (response) {
         // loop through all flow returned for this ticker
+        // console.log(response.json)
         response.forEach(flow => {
           // for each flow tracked
-          // console.log(flow)
+          // console.log("options price list", flow["options_price"])
 
           var contract = flow["contract"]
           var parsedContract = this.convertContract(contract)
-          var timestamp = moment(flow["open_interest"][0]["date"])
+          var timestamp = moment(flow["created_date"])
           var relativeTime = timestamp.fromNow();
 
-          var message = flow["status"]
+          var message = flow["status"].replace("/n", "<br/>")
+
+          var price_when_posted = flow["options_price_when_posted"]
+          var current_price = 0
+          var price_difference = 0
+          var updown = "flat"
+          var updown_message = ""
+          var max_gain = 0
+          var max_loss = 0
+
+          if (price_when_posted != undefined){
+            var options_prices = flow["options_price"]
+            var last_price = options_prices[options_prices.length - 1]
+            current_price = parseFloat(last_price["close_price"])
+            var today_low_price = parseFloat(last_price["low_price"])
+            var today_high_price = parseFloat(last_price["high_price"])
+
+            console.log(current_price, last_price, flow, price_when_posted)
+
+            price_difference = ((current_price - price_when_posted) / price_when_posted) * 100
+            updown = price_difference >= 0 ? "up" : "down"
+            updown_message = `This contract is currently ${updown} about ${Math.abs(price_difference).toFixed(0)}%.`
+
+            max_gain = ((Math.max(flow["max_price"], today_high_price) - price_when_posted)  / price_when_posted) * 100
+            max_loss = ((Math.min(flow["min_price"], today_low_price) - price_when_posted)  / price_when_posted) * 100
+          }
+
+          var rating = undefined
+          var rating_el = ""
+          var rating  = 0
+          var stu_size = 0, stu_time = 0, stu_urgency = 0, stu_conviction = 0, stu_value = 0, exp_from_now = ""
+
+          if (flow["rating"] != undefined){
+            rating = parseInt(flow["rating"])
+
+            switch (Math.ceil((rating/100) * 5)){
+              case 5:
+                rating_el = `<i class="fa-solid fa-fire text-secondary"></i>`
+                break;
+              case 4:
+                rating_el = `<i class="fa-solid fa-star text-warning"></i>`
+                break;
+              case 3:
+                rating_el = `<i class="fa-solid fa-star-half-stroke"></i>`
+                break;
+              case 2:
+                rating_el = `<i class="fa-solid fa-face-meh"></i>`
+                break;
+              case 1:
+              case 0:
+                rating_el = `<i class="fa-solid fa-poop"></i>`
+                break;
+            }
+
+
+            function formatNumber(num) {
+                if (num >= 1000000) {
+                    return (num / 1000000).toFixed(1) + 'M';
+                } else if (num >= 1000) {
+                    return (num / 1000).toFixed(1) + 'K';
+                }
+                return num;
+            }
+
+            // Get the breakdown for STU
+            if (flow["size_time_urgency"] !== undefined){
+              stu_size = (parseInt(flow["size_time_urgency"]["size_rating"]) / 5) * 100
+              stu_value = formatNumber(parseInt(flow["size_time_urgency"]["total_size"]))
+              stu_time = (parseInt(flow["size_time_urgency"]["time_rating"]) / 5) * 100
+              stu_urgency = (parseInt(flow["size_time_urgency"]["urgency_rating"]) / 5) * 100
+              stu_conviction = (parseInt(flow["size_time_urgency"]["conviction_rating"]) / 5) * 100
+              var daysUntilExpiration = (parseInt(flow["size_time_urgency"]["days_until_expiration"]))
+              var expirationDate = moment().add(daysUntilExpiration, 'day')
+              exp_from_now = "Expires " + expirationDate.fromNow()
+
+              var flow_image = flow["size_time_urgency"]["image_url"]
+              message = message.replace("flow", `<a data-toggle="img_popover" href="${flow_image}" data-img="${flow_image}" target="_blank">flow</a>`)
+            }
+          }
 
           // create the flow card
-          var flow_card = `<div class="col-lg-3 col-6 social-card">
-                <div class="card-body tweet-card shadow" style="border-radius: 15px">
-                    <div class="tweet-header">
-                        <div>
-                            <strong>${parsedContract}</strong> <span class="text-muted"> - <span >${relativeTime}</span></span>
-                        </div>
-                    </div>
-                    <div class="tweet-body">
-                        <div style="border-radius: 15px;">
-                            <div id="flow_chart_${contract}">
-                        </div>
-                    </div>
-                    <div class="tweet-footer text-muted">
-                        <div class="muted" title="">${message}</div>
-                    </div>
+          var flow_card = `
+                <div class="col-lg-4 col-6 social-card">
+                  <div class="card-body tweet-card shadow" style="border-radius: 15px">
+                      <div class="tweet-header">
+                          <div>
+                              <strong>${parsedContract}</strong> <span class="text-muted"> - <span >${relativeTime}</span></span>
+                          </div>
+                      </div>
+                      <div class="tweet-body">
+                          <div style="border-radius: 15px;">
+                              <div id="flow_chart_${contract}">
+                          </div>
+                          <p>${message}</p>
+                          <p class="${updown == 'up' ? 'text-success' : 'text-danger'}">${updown_message}</p>
+                      </div>
+                      <div class="tweet-footer text-muted ${price_when_posted == undefined ? 'd-none' : ''}">
+                          <div class="muted" title="">
+                          <span class="px-3" title="This contract has seen a Maximum Gain of ${max_gain.toFixed(0)}%"><i class="fa fa-money-bill-trend-up text-success"></i> ${max_gain.toFixed(0)}%</span>
+                          <span class="px-3" title="The Lowest Price this contract has seen is ${max_loss.toFixed(0)}%"><i class="fa fa-sack-xmark pl-3 text-danger"></i> ${max_loss.toFixed(0)}%</span>
+                          <span class="px-3" title="The Current Value of this contract is about ${price_difference.toFixed(0)}%"><i class="fa ${updown == 'up' ? 'fa-arrow-up' : 'fa-arrow-down'} pl-3 ${updown == 'up' ? 'text-success' : 'text-danger'}"></i> ${Math.abs(price_difference).toFixed(0)}% </span>
+                          <span class="px-3 stu_popover" title="The Flow Strength is ${(Math.ceil((rating/100) * 5))}/5" data-toggle="STU_popover" data-html="true" data-chart_id="stu_chart_${contract.replace(".", "")}" data-stu_size="${stu_size}" data-stu_time="${stu_time}" data-stu_urgency="${stu_urgency}" data-stu_conviction="${stu_conviction}" data-stu_value="${stu_value}" data-stu_exp_from_now="${exp_from_now}">${rating_el}</span>
+                      </div>
+                  </div>
                 </div>
-              </div>`
+              `
 
 
           //  append the flow card
           $("#flow_tracker_row").append(flow_card);
           $("#flow_tracker_row").removeClass("d-none");
+
+          this.init_tradingview_popovers()
 
           // Extract and align data for the chart
           let openInterestData = {};
@@ -2624,11 +2817,13 @@ class Trades {
             optionsPriceData[date] = op.close_price;
           });
 
+          // console.log(openInterestData, optionsPriceData, flow["options_price"], flow)
+
           // Combine all dates from both openInterest and optionsPrice
           let allDates = [...new Set([...Object.keys(openInterestData), ...Object.keys(optionsPriceData)])];
           allDates.sort();
 
-          let alignedOpenInterestData = allDates.map(date => openInterestData[date] || 0);
+          let alignedOpenInterestData = allDates.map(date => openInterestData[date] || null);
           let alignedOptionsPriceData = allDates.map(date => optionsPriceData[date] || null);
           let labels = allDates.map(date => moment(date).format('DD MMM YYYY'));
 
@@ -2704,7 +2899,6 @@ class Trades {
 
         var chart = new ApexCharts(document.querySelector("#flow_chart_" + contract), options);
         chart.render();
-          
         });
       }
     }
@@ -2831,7 +3025,7 @@ class Trades {
   async fetchEarningsCalendar(numDays = 5) {
     const apiUrl = "https://us-central1-spyder-academy.cloudfunctions.net/earnings_calendar";
     let earningsData = await $.ajax({ url: apiUrl, method: 'GET' });
-    await this.displayEarningsData(earningsData, numDays);
+    this.displayEarningsData(earningsData);
   }
 
   formatMarketCap(marketCap) {
@@ -2946,9 +3140,11 @@ class Trades {
 
 
   
-  async displayEarningsData(data, numDays) {
+  async displayEarningsData(data) {
     this.displayEarningsCalendarSkeleton(data); // Display the calendar skeleton
     this.sortEarningsData(data); // Sort the data first
+
+
 
      // Create an object to store earnings data organized by weekday and time
      const earningsCalendar = {
@@ -2960,7 +3156,39 @@ class Trades {
     };
 
     for (const earning of data) {
+      if (earning.marketCap >= 10000000000) {
+          
+
+          const earningsDt = new Date(earning.date + 'T00:00:00-05:00');
+          earningsDt.setHours(0, 0, 0, 0); // Set to beginning of the day in UTC
+          const options = { weekday: 'long'};
+          const dayName = earningsDt.toLocaleDateString('en-US', options);
+          
+          if (earningsCalendar[dayName]) {
+            if (earning.when === 'pre market'){
+              earningsCalendar[dayName]['premarket'].push(earning.symbol);
+            }
+            else if (earning.when === 'post market'){
+              earningsCalendar[dayName]['afterhours'].push(earning.symbol);
+            }
+          }
+        }
+    }
+
+    // display the earnings calendar
+    await this.displayEarningsCalendarLogos(earningsCalendar)
+
+    // display the IV Flush Candidates based on the earnings
+    for (const earning of data) {
         if (earning.marketCap >= 10000000000) {
+            var implied_move = "";
+            var implied_range = "";
+            // var flushable = "";
+            var current_price = earning.current_price ?  earning.current_price : 0;
+            var volume = ""
+            var volumeDesc = ""
+            var volumeColor = "#000"
+
             const formattedMarketCap = this.formatMarketCap(earning.marketCap);
             const whenClass = earning.when === 'post market' ? "bg-blue-light" : "";
             const whenIcon = earning.when === 'post market' ? "fa-moon" : "fa-sun";
@@ -2968,27 +3196,6 @@ class Trades {
 
             const earningsDt = new Date(earning.date + 'T00:00:00-05:00');
             earningsDt.setHours(0, 0, 0, 0); // Set to beginning of the day in UTC
-            const options = { weekday: 'long'};
-            const dayName = earningsDt.toLocaleDateString('en-US', options);
-            
-            if (earningsCalendar[dayName]) {
-              if (earning.when === 'pre market'){
-                earningsCalendar[dayName]['premarket'].push(earning.symbol);
-              }
-              else if (earning.when === 'post market'){
-                earningsCalendar[dayName]['afterhours'].push(earning.symbol);
-              }
-            }
-
-            
-
-            var implied_move = "";
-            var implied_range = "";
-            var flushable = "";
-            var current_price = earning.current_price ?  earning.current_price : 0;
-            var volume = ""
-            var volumeDesc = ""
-            var volumeColor = "#000"
 
             var iv = earning.implied_move;
             if (iv){
@@ -3022,6 +3229,8 @@ class Trades {
             yesterday.setHours(0,0,0,0)
 
             var showEarnings = ((earningsDt >= yesterday && earning.when === 'post market') || earningsDt >= today &&  earning.when === 'pre market')
+
+            
 
             if (iv && showEarnings){
               var isRocket = current_price > iv.upper
@@ -3066,7 +3275,7 @@ class Trades {
 
               // render the list of IV Flush Candidates
               var tweet_template = `
-                <div class="card-body tweet-card">
+                <div class="card-body tweet-card flush-candidate">
                     <div class="tweet-header">
                         <div>
                             <strong>${title}</strong>
@@ -3085,7 +3294,7 @@ class Trades {
                 </div>
               `;
       
-              $("#WL_IVFlush").append(tweet_template);
+              $("#WL_Earnings").append(tweet_template);
 
               // Initialize TradingView widget immediately after appending
               var tickerSymbol = earning.symbol.toUpperCase();
@@ -3147,12 +3356,12 @@ class Trades {
         }
     }
 
-    if ($("#WL_IVFlush").children().length === 0){
+    if ($(".flush-candidate").length === 0){
       var tweet_template = `
           <div class="card-body tweet-card">
               <div class="tweet-header">
                   <div>
-                      <strong>Upcoming Earnings</strong>
+                      <strong>IV Flush (<a class="text-black" href="/education/how-to-trade-the-iv-flush-strategy/">Learn More</a>)</strong>
                   </div>
               </div>
               <div class="tweet-body">
@@ -3161,16 +3370,12 @@ class Trades {
           </div>
         `;
 
-        $("#WL_IVFlush").append(tweet_template);
+        $("#WL_Earnings").append(tweet_template);
     }
 
     // Add event listener to initialize the TradingView widget when the popover is shown
     this.init_tradingview_popovers();
 
-    // TODO: show a 5 column grid (one column for each day of the week - eg Monday | Tuesday | Wednesday | Thursday | Friday)
-    // each column should consist of a row for premarket and a row for after hours.
-    // each row will then contain a list of symbol names that has earnings on that day in the appropriate row for premarket or after hours.
-    await this.displayEarningsCalendarLogos(earningsCalendar)
   }
 
   async displayEarningsCalendarLogos(data){
@@ -3216,7 +3421,10 @@ class Trades {
           </div>
       `;
 
-      $("#WL_Earnings").append(tweet_template)
+      if (data[day].premarket.length > 0 || data[day].afterhours.length > 0){
+        $("#WL_Earnings").append(tweet_template)
+      }
+
       this.init_tradingview_popovers()
     });
 
@@ -3311,6 +3519,23 @@ class Trades {
         }
       });
 
+      if ($("#WL_Reversals").is(":empty")){
+        var tweet_template = `
+          <div class="card-body tweet-card">
+              <div class="tweet-header">
+                  <div>
+                      <strong>Trade Scanner</strong>
+                  </div>
+              </div>
+              <div class="tweet-body">
+                  <p>No reversal candles were detected by our scanner today.</p>
+              </div>
+          </div>
+      `;
+
+        $("#WL_Reversals").append(tweet_template)
+      }
+
     })
     .catch(error => {
       console.error('Error fetching screener data:', error);
@@ -3330,6 +3555,134 @@ class Trades {
                   </div>`;
       }
     });
+
+    // Show the Image PopOvers
+    $('[data-toggle="img_popover"]').popover({
+      trigger: 'hover',
+      placement: 'auto',
+      html: true,
+      template: '<div class="popover popover-image" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>',
+      content: function() {
+          var img_src = $(this).data('img');
+          return `<div>
+                      <img src="${img_src}" width="100%"></img>
+                  </div>`;
+      }
+    });
+
+
+
+    // Show the STU Flow PopOvers
+    $('[data-toggle="STU_popover"]').popover({
+      trigger: 'hover',
+      placement: 'auto',
+      html: true,
+      content: function() {
+        var stu_id = $(this).data('chart_id');
+        var stu_value = $(this).data('stu_value');
+        var stu_exp_from_now = $(this).data('stu_exp_from_now');
+        return `<div class="container">
+                  <div class="row">
+                    <div class="col-12" id="${stu_id}"></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-6 text-center text-white">
+                      <div class="p-2 m-1 bg-info w-100 rounded">$${stu_value}</div>
+                    </div>
+                    <div class="col-6 text-center text-white">
+                      <div class="p-2 m-1 bg-success w-100 rounded">${stu_exp_from_now}</div>
+                    </div>
+                  </div>
+                </div>`;
+      }
+    });
+
+    // Show the popover and initialize the chart when the popover is shown
+    $('[data-toggle="STU_popover"]').on('shown.bs.popover', function () {
+      var chart_id = $(this).data('chart_id');
+      var stu_size =  parseInt($(this).data('stu_size'));
+      var stu_time =  parseInt($(this).data('stu_time'));
+      var stu_urgency = parseInt($(this).data('stu_urgency'));
+      var stu_conviction = parseInt($(this).data('stu_conviction'));
+
+      var chartOptions = {
+        chart: {
+          type: 'radialBar'
+        },
+        series: [stu_size, stu_time, stu_urgency, stu_conviction],
+        plotOptions: {
+          radialBar: {
+            offsetY: 0,
+            startAngle: 0,
+            endAngle: 270,
+            hollow: {
+              size: '30px',
+              background: 'transparent',
+              image: undefined,
+            },
+            dataLabels: {
+              name: {
+                show: false,
+              },
+              value: {
+                show: false,
+              }
+            },
+            track: {
+              background: '#fff',
+              strokeWidth: '90',
+              margin: 0, // margin is in pixels
+              dropShadow: {
+                enabled: true,
+                top: -3,
+                left: 0,
+                blur: 4,
+                opacity: 0.35
+              }
+            },
+          }
+        },
+        
+        labels: ['SIZE', 'TIME', 'URGENCY', 'CONVICTION'],
+        stroke: {
+          lineCap: 'round'
+        },
+        fill: {
+          color: "#0396FF"
+        },
+        legend: {
+          show: true,
+          floating: false,
+          fontSize: '8px',
+          offsetX: 10,
+          offsetY: -20,
+          markers: {
+            width: 8,
+            height: 8,
+          },
+          labels: {
+            useSeriesColors: true,
+          },
+          formatter: function(seriesName, opts) {
+            return seriesName 
+          },
+        },
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            legend: {
+                show: false
+            }
+          }
+        }]
+      };
+
+      $("#" + chart_id).empty()
+      var chart = new ApexCharts(document.querySelector("#" + chart_id), chartOptions);
+      chart.render();
+  });
+
+    
 
     // Initialize Bootstrap popovers
     $('[data-toggle="popover"]').popover({
