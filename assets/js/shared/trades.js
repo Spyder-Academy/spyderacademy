@@ -2517,7 +2517,7 @@ class Trades {
           var easternTime = timestamp.tz("America/New_York").format('MMMM Do YYYY, h:mm:ss a');
 
           var tweet_template = `
-                  <div class="col-lg-3 col-6 social-card">
+                  <div class="col-lg-3 col-12 social-card">
                     <div class="card-body tweet-card shadow" style="border-radius: 15px">
                         <div class="tweet-header">
                             <div>
@@ -2652,11 +2652,12 @@ class Trades {
                       <p class="${updown == 'up' ? 'text-success' : 'text-danger'}">${updown_message}</p>
                     </div>
                     <div class="tweet-footer text-muted ${price_when_posted == undefined ? 'd-none' : ''}">
-                        <div class="muted" title="">
-                        <span class="px-3" title="This contract has seen a Maximum Gain of ${max_gain.toFixed(0)}%"><i class="fa fa-money-bill-trend-up text-success"></i> ${max_gain.toFixed(0)}%</span>
-                        <span class="px-3" title="The Lowest Price this contract has seen is ${max_loss.toFixed(0)}%"><i class="fa fa-sack-xmark pl-3 text-danger"></i> ${max_loss.toFixed(0)}%</span>
-                        <span class="px-3" title="The Current Value of this contract is about ${price_difference.toFixed(0)}%"><i class="fa ${updown == 'up' ? 'fa-arrow-up' : 'fa-arrow-down'} pl-3 ${updown == 'up' ? 'text-success' : 'text-danger'}"></i> ${Math.abs(price_difference).toFixed(0)}% </span>
-                        <span class="px-3" title="The Flow Strength is ${(Math.ceil((rating/100) * 5))}/5")>${rating_el}</span>
+                        <div class="row w-100 ">
+                          <div class="col-3 p-0 text-center" title="This contract has seen a Maximum Gain of ${max_gain.toFixed(0)}%"><i class="fa fa-money-bill-trend-up text-success"></i> ${max_gain.toFixed(0)}%</div>
+                          <div class="col-3 p-0 text-center" title="The Lowest Price this contract has seen is ${max_loss.toFixed(0)}%"><i class="fa fa-sack-xmark pl-3 text-danger"></i> ${max_loss.toFixed(0)}%</div>
+                          <div class="col-3 p-0 text-center" title="The Current Value of this contract is about ${price_difference.toFixed(0)}%"><i class="fa ${updown == 'up' ? 'fa-arrow-up' : 'fa-arrow-down'} pl-3 ${updown == 'up' ? 'text-success' : 'text-danger'}"></i> ${Math.abs(price_difference).toFixed(0)}% </div>
+                          <div class="col-3 p-0 text-center" title="The Flow Strength is ${(Math.ceil((rating/100) * 5))}/5")>${rating_el}</div>
+                        </div>
                     </div>
                 </div>
               `
@@ -2772,7 +2773,7 @@ class Trades {
 
           // create the flow card
           var flow_card = `
-                <div class="col-lg-4 col-6 social-card">
+                <div class="col-lg-4 col-12 social-card">
                   <div class="card-body tweet-card shadow" style="border-radius: 15px">
                       <div class="tweet-header">
                           <div>
@@ -2787,11 +2788,12 @@ class Trades {
                           <p class="${updown == 'up' ? 'text-success' : 'text-danger'}">${updown_message}</p>
                       </div>
                       <div class="tweet-footer text-muted ${price_when_posted == undefined ? 'd-none' : ''}">
-                          <div class="muted" title="">
-                          <span class="px-3" title="This contract has seen a Maximum Gain of ${max_gain.toFixed(0)}%"><i class="fa fa-money-bill-trend-up text-success"></i> ${max_gain.toFixed(0)}%</span>
-                          <span class="px-3" title="The Lowest Price this contract has seen is ${max_loss.toFixed(0)}%"><i class="fa fa-sack-xmark pl-3 text-danger"></i> ${max_loss.toFixed(0)}%</span>
-                          <span class="px-3" title="The Current Value of this contract is about ${price_difference.toFixed(0)}%"><i class="fa ${updown == 'up' ? 'fa-arrow-up' : 'fa-arrow-down'} pl-3 ${updown == 'up' ? 'text-success' : 'text-danger'}"></i> ${Math.abs(price_difference).toFixed(0)}% </span>
-                          <span class="px-3 stu_popover" title="The Flow Strength is ${(Math.ceil((rating/100) * 5))}/5" data-toggle="STU_popover" data-html="true" data-chart_id="stu_chart_${contract.replace(".", "")}" data-stu_size="${stu_size}" data-stu_time="${stu_time}" data-stu_urgency="${stu_urgency}" data-stu_conviction="${stu_conviction}" data-stu_value="${stu_value}" data-stu_exp_from_now="${exp_from_now}">${rating_el}</span>
+                        <div class="row w-100">
+                          <div class="col-3 p-0 text-center" title="This contract has seen a Maximum Gain of ${max_gain.toFixed(0)}%"><i class="fa fa-money-bill-trend-up text-success"></i> ${max_gain.toFixed(0)}%</div>
+                          <div class="col-3 p-0 text-center" title="The Lowest Price this contract has seen is ${max_loss.toFixed(0)}%"><i class="fa fa-sack-xmark pl-3 text-danger"></i> ${max_loss.toFixed(0)}%</div>
+                          <div class="col-3 p-0 text-center" title="The Current Value of this contract is about ${price_difference.toFixed(0)}%"><i class="fa ${updown == 'up' ? 'fa-arrow-up' : 'fa-arrow-down'} pl-3 ${updown == 'up' ? 'text-success' : 'text-danger'}"></i> ${Math.abs(price_difference).toFixed(0)}% </div>
+                          <div class="col-3 p-0 text-center stu_popover" title="The Flow Strength is ${(Math.ceil((rating/100) * 5))}/5" data-toggle="STU_popover" data-html="true" data-chart_id="stu_chart_${contract.replace(".", "")}" data-stu_size="${stu_size}" data-stu_time="${stu_time}" data-stu_urgency="${stu_urgency}" data-stu_conviction="${stu_conviction}" data-stu_value="${stu_value}" data-stu_exp_from_now="${exp_from_now}">${rating_el}</div>
+                        </div>
                       </div>
                   </div>
                 </div>
