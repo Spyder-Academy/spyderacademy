@@ -3595,6 +3595,52 @@ class Trades {
         var stu_id = $(this).data('chart_id');
         var stu_value = $(this).data('stu_value');
         var stu_exp_from_now = $(this).data('stu_exp_from_now');
+
+        var stu_size_rating =  parseInt($(this).data('stu_size')) / 100 * 5;
+        var stu_time_rating =  parseInt($(this).data('stu_time')) / 100 * 5;
+        var stu_conviction_rating = parseInt($(this).data('stu_conviction')) / 100 * 5;
+        var stu_urgency_rating = parseInt($(this).data('stu_urgency')) / 100 * 5;
+
+
+        // Generate explanation based on data
+        let explanation = "";
+
+        // Size explanation
+        if (stu_size_rating >= 4) {
+            explanation += `<i class="fa-solid fa-sack-dollar"></i> This flow has a really good size of $${stu_value} going into it.<br/>`;
+        } else if (stu_size_rating >= 2) {
+            explanation += `<i class="fa-solid fa-sack-dollar"></i> This flow has a moderate size of $${stu_value}.<br/>`;
+        } else {
+            explanation += `<i class="fa-solid fa-sack-dollar"></i> There isn't that much money going into this flow.<br/>`;
+        }
+
+        // Time explanation
+        if (stu_time_rating >= 4) {
+            explanation += `<i class="fa-regular fa-clock"></i> The flow ${stu_exp_from_now}, with decent time to work.<br/>`;
+        } else if (stu_time_rating >= 2) {
+            explanation += `<i class="fa-regular fa-clock"></i> There is an okay amount of time until expiration.<br/>`;
+        } else {
+            explanation += `<i class="fa-regular fa-clock"></i> There's not much time, so will need to work quickly.<br/>`;
+        }
+
+        // Conviction explanation
+        if (stu_conviction_rating >= 4) {
+            explanation += `<i class="fa-solid fa-bolt"></i> There's high conviction due to the size vs time.<br/>`;
+        } else if (stu_conviction_rating >= 2) {
+            explanation += `<i class="fa-solid fa-bolt"></i> There's moderate conviction due to the size vs time.<br/>`;
+        } else {
+            explanation += `<i class="fa-solid fa-bolt"></i> There's low conviction due to the size vs time.<br/>`;
+        }
+
+        // Urgency explanation
+        if (stu_urgency_rating >= 4) {
+            explanation += `<i class="fa-solid fa-person-running"></i> There's high urgency in the flow (A/AA Sweeps, exceeding OI).<br/>`;
+        } else if (stu_urgency_rating >= 2) {
+            explanation += `<i class="fa-solid fa-person-running"></i> There's moderate urgency shown in the flow (A/AA, Sweeps, OI).<br/>`;
+        } else {
+            explanation += `<i class="fa-solid fa-person-running"></i> There's lower urgency in the flow, making it less reliable.<br/>`;
+        }
+
         return `<div class="container">
                   <div class="row">
                     <div class="col-12" id="${stu_id}"></div>
@@ -3605,6 +3651,11 @@ class Trades {
                     </div>
                     <div class="col-6 text-center text-white">
                       <div class="p-2 m-1 bg-success w-100 rounded">${stu_exp_from_now}</div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12 py-2">
+                        ${explanation}
                     </div>
                   </div>
                 </div>`;
