@@ -448,10 +448,13 @@ ul li {
 }
 
 
-#stock_social_row {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
+@media (min-width: 992px) { /* Large screens and up */
+  #stock_social_row {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    width: 100%;
+  }
 }
 
 #stock_social_row .social-card {
@@ -462,6 +465,16 @@ ul li {
   border: 1px solid #e1e8ed;
 }
 
+.post-column {
+  max-height: 700px;
+  overflow-y: scroll;
+}
+
+@media (min-width: 992px) { /* Large screens and up */
+  .post-column {
+      height: 700px;
+  }
+}
 
 
 .tweet-card {

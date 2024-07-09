@@ -2,10 +2,10 @@
 
 {{ $tvSymbol := .Page.Params.tv_override | default .Page.Params.ticker }}
 
-  <section class="section blog-single py-5">
+  <section class="section blog-single p-0">
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-12 pb-5">
+        <div class="col-12 pb-5 p-0">
           {{ partial "shared/stock_ticker.html" }}
         </div>
       </div>
@@ -52,24 +52,24 @@
 
       
 
-    <div id="market_pressure" class="row justify-content-center pb-5">
-      <div class="col-12">
+    <div id="market_pressure" class="row justify-content-center p-0 pb-lg-5">
+      <div class="col-12 p-0 px-lg-2">
         <div class="blog-content ">
-          <h2>Market Pressure
+          <h2 class="px-2 px-lg-0">Market Pressure
             <span id="marketPressureTooltip" style="background-color: lightgray; border-color: lightgray;" class="btn btn-secondary" data-toggle="tooltip" data-placement="auto" data-html="true" >
               <i class="fa-solid fa-question"></i>
             </span>
           </h2>
         </div>
       </div>
-      <div id="gammaChartContainer" class="col-lg-6 col-12">
-        <div class="card shadow p-3 mb-5">
+      <div id="gammaChartContainer" class="col-lg-6 col-12 p-0 px-lg-2">
+        <div class="card shadow p-3">
           <div class="w-100"  id="gammaChart">Loading Market Exposure...</div>
           <input type="range" class="form-range" id="gex_slider" min="0" max="40" step="1" value="40" disabled="true" />
         </div>
       </div>
 
-      <div id="gammaOverlayContainer" class="col-lg-6 col-12">
+      <div id="gammaOverlayContainer" class="col-lg-6 col-12 p-0">
         <div class="card shadow p-3 m-0">
           <div class="w-100"  id="gammaChartOverlay">Loading Gamma Overlay...</div>
         </div>
@@ -92,7 +92,7 @@
       </div>
     </section>
 
-    <div class="row py-5">
+    <div class="row p-0">
       <div class="col-12 justify-content-center p-0 m-0">
         {{ partial "shared/stock-chart" (dict "symbol" $tvSymbol "Site" .Site) }}
       </div>  
@@ -105,7 +105,7 @@
             <button class="nav-link" id="pills-financials-tab" data-bs-toggle="pill" data-bs-target="#pills-financials" type="button" role="tab" aria-controls="pills-financials" aria-selected="true">Financials</button>
           </li>
           <li class="nav-item m-0" role="presentation">
-            <button class="nav-link" id="pills-companyinfo-tab" data-bs-toggle="pill" data-bs-target="#pills-companyinfo" type="button" role="tab" aria-controls="pills-companyinfo" aria-selected="false">Company Info</button>
+            <button class="nav-link" id="pills-companyinfo-tab" data-bs-toggle="pill" data-bs-target="#pills-companyinfo" type="button" role="tab" aria-controls="pills-companyinfo" aria-selected="false">Info</button>
           </li>
           <li class="nav-item m-0" role="presentation">
             <button class="nav-link" id="pills-news-tab" data-bs-toggle="pill" data-bs-target="#pills-news" type="button" role="tab" aria-controls="pills-news" aria-selected="false">News</button>
@@ -116,8 +116,8 @@
         </ul>
       </div>
       <div class="col-md-2 col-sm-12 p-0 justify-content-right">
-        <div id="currentPriceWidget" class="p-3 pb-0 fs-1 text-end"></div>
-        <div id="currentPriceWidgetTime" class="p-3 py-0 text-end">Price as of <span id="currentPriceWidgetTimeValue"></span></div>
+        <div id="currentPriceWidget" class="p-3 pb-0 fs-1 text-start"></div>
+        <div id="currentPriceWidgetTime" class="p-3 py-0 text-start">Price as of <span id="currentPriceWidgetTimeValue"></span></div>
       </div>
       <div class="col-12 p-0 justify-content-center">
         <div class="tab-content " id="pills-tabContent">

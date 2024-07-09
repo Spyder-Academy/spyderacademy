@@ -1,21 +1,21 @@
 {{ define "main" }}
   <section class="section blog-list py-5">
-    <div class="container">
+    <div class="container p-0">
       
         
       <div class="row justify-content-center">
         {{ if eq .Params.nickname "Stocks List" }}
         <div class="row justify-content-center">
-          <div class="col-12 pb-5">
+          <div class="col-12 pb-5 p-0">
             {{ partial "shared/stock_ticker.html" }}
           </div>
-          <div class="row">
+          <div class="row p-0">
             {{ partial "shared/tickers.html" . }}
           </div>
-          <div class="row pb-5">
-            <div class="col-lg-5 col-12">
+          <div class="row p-0 pb-lg-5">
+            <div class="col-lg-5 col-12 p-0">
               <div class="blog-content ">
-                  <h2>Economic Calendar
+                  <h2 class="px-2 px-lg-0">Economic Calendar
                     <span id="economicCalendarTooltip" style="background-color: lightgray; border-color: lightgray;" class="btn btn-secondary" data-toggle="tooltip" data-placement="auto" data-html="true" >
                       <i class="fa-solid fa-question"></i>
                     </span>
@@ -23,22 +23,22 @@
               </div>
               {{ partial "shared/economic_calendar.html" }}
             </div>
-            <div class="col-lg-7 col-12">
+            <div class="col-lg-7 col-12 p-0 px-lg-2">
               <div class="blog-content ">
-                <h2>Market Pressure
+                <h2 class="px-2 px-lg-0">Market Pressure
                   <span id="marketPressureTooltip" style="background-color: lightgray; border-color: lightgray;" class="btn btn-secondary" data-toggle="tooltip" data-placement="auto" data-html="true" >
                     <i class="fa-solid fa-question"></i>
                   </span>
                 </h2> 
               </div>
-              <div class="card shadow p-3 mb-5">
+              <div class="card shadow p-3">
                 <div class="w-100 d-none"  id="spyGammaChart"></div>
                 <input type="range" class="form-range" id="gex_slider" min="0" max="16" step="1" value="16">
               </div>
             </div>
           </div>
 
-          <div class="problem p-3 mb-5" style="background-color: #313131;">
+          <div class="problem p-3" style="background-color: #313131;">
             <div class="container">
               <div class="row justify-content-center">
                 <div class="col-12 justify-content-center">
@@ -56,7 +56,7 @@
 
 
 
-          <div class="row">
+          <div class="row p-0">
             <div class="col-12">
               <div class="container p-0 m-0">
                 <div class="blog-content">
@@ -68,31 +68,31 @@
             </div>
           </div>
 
-          <div class="row mb-5">
-            <div class="col-12 justify-content-center">
+          <div class="row mb-5 p-0">
+            <div class="col-12 justify-content-center p-0">
               <div class="row">
-                <div class="my-3 col-lg-4 col-sm-12 pr-3" >
+                <div class="my-3 col-lg-4 col-sm-12" >
                   <div class="card shadow" style="border-radius: 15px">
                     <div class="card-title bg-success text-white fw-bold p-3" style="border-radius:10px 10px 0px 0px">Earnings This Week</div>
-                    <div id="WL_Earnings" class="" style="height: 800px; overflow-y: scroll;">
+                    <div id="WL_Earnings" class="post-column">
 
                     </div>
                   </div>
                 </div>
 
-                <div class="my-3 col-lg-4 col-sm-12 pr-3" >
+                <div class="my-3 col-lg-4 col-sm-12" >
                   <div class="card shadow" style="border-radius: 15px">
                     <div class="card-title bg-secondary text-white fw-bold p-3" style="border-radius:10px 10px 0px 0px">Daily Reversals</div>
-                    <div id="WL_Reversals" class="" style="height: 800px; overflow-y: scroll;">
+                    <div id="WL_Reversals" class="post-column">
                       
                     </div>
                   </div>
                 </div>
 
-                <div class="my-3 col-lg-4 col-sm-12 pr-3">
+                <div class="my-3 col-lg-4 col-sm-12">
                   <div class="card shadow" style="border-radius: 15px">
                     <div class="card-title bg-primary text-white fw-bold p-3" style="border-radius:10px 10px 0px 0px">Options Flow Tracker</div>
-                    <div id="WL_FlowTracker" class="" style="height: 800px; overflow-y: scroll;">
+                    <div id="WL_FlowTracker" class="post-column">
                     
                     </div>
                   </div>
@@ -127,31 +127,31 @@
             </div>
           </div>
 
-          <div class="row mb-5">
-            <div class="col-12 justify-content-center">
+          <div class="row mb-5 p-0">
+            <div class="col-12 justify-content-center p-0">
               <div class="row">
-                <div class="my-3 col-lg-4 col-sm-12 pr-3" >
+                <div class="my-3 col-lg-4 col-sm-12" >
                   <div class="card shadow" style="border-radius: 15px">
                     <div class="card-title bg-warning text-black fw-bold p-3" style="border-radius:10px 10px 0px 0px">Trade Ideas</div>
-                    <div id="X_TradeIdeas" class="stock_tweets" style="height: 800px; overflow-y: scroll;">
+                    <div id="X_TradeIdeas" class="stock_tweets post-column">
 
                     </div>
                   </div>
                 </div>
 
-                <div class="my-3 col-lg-4 col-sm-12 pr-3">
+                <div class="my-3 col-lg-4 col-sm-12">
                   <div class="card shadow" style="border-radius: 15px">
                     <div class="card-title bg-primary text-white fw-bold p-3" style="border-radius:10px 10px 0px 0px">Chart Setups</div>
-                    <div id="X_Charts" class="stock_tweets" style="height: 800px; overflow-y: scroll;">
+                    <div id="X_Charts" class="stock_tweets post-column">
                     
                     </div>
                   </div>
                 </div>
 
-                <div class="my-3 col-lg-4 col-sm-12 pr-3" >
+                <div class="my-3 col-lg-4 col-sm-12" >
                   <div class="card shadow" style="border-radius: 15px">
                     <div class="card-title bg-secondary text-white fw-bold p-3" style="border-radius:10px 10px 0px 0px">Options Flow</div>
-                    <div id="X_OptionsFlow" class="stock_tweets" style="height: 800px; overflow-y: scroll;">
+                    <div id="X_OptionsFlow" class="stock_tweets post-column">
                       
                     </div>
                   </div>
@@ -193,7 +193,7 @@
 
      
       {{ if ne .Section "education" }}
-      <div class="row g-4 pb-5">
+      <div class="row g-4 p-2">
           {{ range (.Paginate .RegularPages).Pages.ByDate }}
             {{ if ne .Layout "stocks" }}
             <div class="col-12 col-md-6 col-lg-4">
@@ -218,12 +218,12 @@
       </div>
     {{ end }}
 
-    <div class="row pb-5">
+    <div class="row pb-5 p-2">
       {{ template "_internal/pagination.html" . }}
     </div>
 
     
-    <div class="row pb-5">
+    <div class="row pb-5 p-2">
       <div class="col-12 d-flex justify-content-center">
         <div class="blog-content fs-5 ">
           {{ .Content }}
@@ -231,7 +231,7 @@
       </div>
     </div>  
     
-    <div class="col-12 justify-content-center text-center">
+    <div class="col-12 justify-content-center text-center p-2">
         {{ range (.Paginate .RegularPages).Pages.ByDate }}
           {{ if eq .Layout "stocks" }}
             <a class="text-decoration-none text-black-50" href="{{ .Permalink }}" title="{{ .Title }}">{{ .Param "ticker" }}</a>

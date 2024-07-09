@@ -2,15 +2,15 @@
 {{ $tvSymbol := .tvSymbol }}
 
 <div class="p-0">
-    <div class="container">
+    <div class="container p-0 m-0">
         <div class="row ">
-            <div class="col-12 text-danger">
+            <div class="col-12 text-danger p-3">
                 Stock Signals is currently in Beta.  Not Financial Advise!
             </div>
         </div>
-        <div class="row pb-5">
-            <div class="col-lg-4 col-12" id="market_pressure_signal_card">
-                <div class="card h-100  p-3 mb-5" style="border-radius: 15px;">
+        <div class="row pb-lg-2 m-0">
+            <div class="col-lg-4 col-12 p-0 p-lg-2" id="market_pressure_signal_card">
+                <div class="card h-100  p-3 mb-5">
                     <div class="card-body">
                         <h4 id="marketPressureHeader" class="card-title fw-semibold text-uppercase">{{ $symbol }} MARKET PRESSURE</h4>
                         <p class="card-text" id="signalGammaOutlook"><span class="gammaOutlook"></span></p>
@@ -19,8 +19,8 @@
 
                 </div>
             </div>
-            <div class="col-lg-4 col-12" id="expected_move_signal_card">
-                <div class="card h-100  p-3 mb-5" style="border-radius: 15px;">
+            <div class="col-lg-4 col-12 p-0 p-lg-2" id="expected_move_signal_card">
+                <div class="card h-100  p-3 mb-5">
                     <div class="card-body">
                         <h4 id="expectedMoveHeader" class="card-title fw-semibold text-uppercase" data-toggle="tooltip" data-placement="auto">EXPECTED MOVE FOR {{ $symbol }}</h4>
                         <p class="card-text text-black-61 small" id="expectedMoveBy"></p>
@@ -45,8 +45,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-12" id="ema_signal_card">
-                <div class="card h-100  p-3 mb-5" style="border-radius: 15px;">
+            <div class="col-lg-4 col-12 p-0 p-lg-2" id="ema_signal_card">
+                <div class="card h-100  p-3 mb-5">
                     <div class="card-body">
                         <h4 id="movingAveragesHeader" class="card-title fw-semibold text-uppercase">{{ $symbol }} MOVING AVERAGES</h4>
                         <div class="card-text text-black-61" id="emaSignals">
@@ -55,9 +55,9 @@
                 </div>
             </div>
         </div>
-        <div id="strat_signal_row" class="row pb-5">
-            <div class="col-lg-4 col-12" id="strat_signal_card">
-                <div class="card h-100  p-3 mb-5" style="border-radius: 15px;">
+        <div id="strat_signal_row" class="row pb-5 pb-lg-2 m-0">
+            <div class="col-lg-4 col-12 p-0 p-lg-2" id="strat_signal_card">
+                <div class="card h-100  p-3 mb-5">
                     <div class="card-body">
                         <h4 class="card-title fw-semibold text-uppercase">{{ $symbol }} - Technical Analysis</h4>
                         <div class="card-text text-black-61" id="theStratSignals">
@@ -65,16 +65,16 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-12" id="stratimg_signal_card">
-                <div class="card h-100" style="border-radius: 15px;">
+            <div class="col-lg-4 col-12 p-0 p-lg-2" id="stratimg_signal_card">
+                <div class="card h-100">
                     <div class="card-body">
                         <div class="card-text text-black-61" id="theStratCombos">
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-12">
-                <div class="card h-100" style="border-radius: 15px;">
+            <div class="col-lg-4 col-12 p-0 p-lg-2">
+                <div class="card h-100">
                     <div class="card-body">
                         <div class="card-text text-black-61">
                             <div class="tradingview-widget-container__widget"></div>
@@ -116,7 +116,7 @@
             
         </div>
         
-        <div class="row py-5 d-none" style="width: 100%; overflow-x: auto;" id="stock_social_row">
+        <div class="row py-5 d-none" id="stock_social_row">
             <div class="col-1 d-none d-lg-block">
                 <div class="card-body tweet-card shadow bg-dark text-white" style="border-radius: 15px">
                     <div class="tweet-header verticaltext" style="height: 350px">
