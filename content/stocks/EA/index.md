@@ -8,6 +8,7 @@ tags = [
 ]
 layout = "stocks"
 ticker = "EA"
+tv_override = "NASDAQ:EA"
 company = "Electronic Arts, Inc. (EA)"
 +++
         

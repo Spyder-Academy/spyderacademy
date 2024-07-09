@@ -2705,21 +2705,27 @@ class Trades {
           var max_gain = 0
           var max_loss = 0
 
-          if (price_when_posted != undefined){
+          if (price_when_posted != undefined ){
             var options_prices = flow["options_price"]
             var last_price = options_prices[options_prices.length - 1]
-            current_price = parseFloat(last_price["close_price"])
-            var today_low_price = parseFloat(last_price["low_price"])
-            var today_high_price = parseFloat(last_price["high_price"])
 
-            console.log(current_price, last_price, flow, price_when_posted)
+            var current_date = new Date().toISOString().split('T')[0];
+            console.log(last_price, current_date)
+            if (last_price["date"] == current_date)
+            {
+              current_price = parseFloat(last_price["close_price"])
+              var today_low_price = parseFloat(last_price["low_price"])
+              var today_high_price = parseFloat(last_price["high_price"])
 
-            price_difference = ((current_price - price_when_posted) / price_when_posted) * 100
-            updown = price_difference >= 0 ? "up" : "down"
-            updown_message = `This contract is currently ${updown} about ${Math.abs(price_difference).toFixed(0)}%.`
+              // console.log(current_price, last_price, flow, price_when_posted)
 
-            max_gain = ((Math.max(flow["max_price"], today_high_price) - price_when_posted)  / price_when_posted) * 100
-            max_loss = ((Math.min(flow["min_price"], today_low_price) - price_when_posted)  / price_when_posted) * 100
+              price_difference = ((current_price - price_when_posted) / price_when_posted) * 100
+              updown = price_difference >= 0 ? "up" : "down"
+              updown_message = `This contract is currently ${updown} about ${Math.abs(price_difference).toFixed(0)}%.`
+
+              max_gain = ((Math.max(flow["max_price"], today_high_price) - price_when_posted)  / price_when_posted) * 100
+              max_loss = ((Math.min(flow["min_price"], today_low_price) - price_when_posted)  / price_when_posted) * 100
+            }
           }
 
           var rating = undefined
