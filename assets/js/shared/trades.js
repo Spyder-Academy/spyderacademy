@@ -2593,7 +2593,7 @@ class Trades {
           var relativeTime = timestamp.fromNow();
           var easternTime = timestamp.tz("America/New_York").format('MMMM Do YYYY, h:mm:ss a');
 
-          var message = toTitleCase(flow["status"])
+          var message = toTitleCase(flow["status"]).replace("\n", "<br/>")
 
           var price_when_posted = flow["options_price_when_posted"]
           var current_price = 0
@@ -2693,7 +2693,8 @@ class Trades {
           var relativeTime = timestamp.fromNow();
           var easternTime = timestamp.tz("America/New_York").format('MMMM Do YYYY, h:mm:ss a');
 
-          var message = flow["status"].replace("/n", "<br/>")
+          var message = flow["status"].replace("\n", "<br/>")
+          console.log(message)
 
           var price_when_posted = flow["options_price_when_posted"]
           var current_price = 0
