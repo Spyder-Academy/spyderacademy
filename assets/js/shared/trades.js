@@ -1,4 +1,3 @@
-
 class TradeRecord {
     constructor(tradeid, userid, username, ticker, strike, expiration, entry_price, entry_date, notes, exit_price_max, exit_date_max, drawdown_max) {
       this.tradeid = tradeid;
@@ -2402,7 +2401,9 @@ class Trades {
             // var symbolLink = `<a href='/stocks/${lowerSymbol}/'>$${symbol}</a>`;
             var symbolLink =`<a class="" href="/stocks/${symbol.toLowerCase()}/" data-toggle="popover" data-html="true" data-id_prefix="tweets" data-ticker="${symbol}">$${symbol}</a>`
             
-            message = message.replace(new RegExp(`\\$${symbol}`, 'g'), symbolLink);
+            if (tickers.includes(symbol)){
+              message = message.replace(new RegExp(`\\$${symbol}`, 'g'), symbolLink);
+            }
           }
 
           var image = tweet["image"]
@@ -2690,6 +2691,7 @@ class Trades {
           var parsedContract = this.convertContract(contract)
           var timestamp = moment(flow["created_date"])
           var relativeTime = timestamp.fromNow();
+          var easternTime = timestamp.tz("America/New_York").format('MMMM Do YYYY, h:mm:ss a');
 
           var message = flow["status"].replace("/n", "<br/>")
 
@@ -2777,7 +2779,7 @@ class Trades {
                   <div class="card-body tweet-card shadow" style="border-radius: 15px">
                       <div class="tweet-header">
                           <div>
-                              <strong>${parsedContract}</strong> <span class="text-muted"> - <span >${relativeTime}</span></span>
+                              <strong>${parsedContract}</strong> <span class="text-muted"> - <span title="${easternTime}" >${relativeTime}</span></span>
                           </div>
                       </div>
                       <div class="tweet-body">
@@ -3165,13 +3167,15 @@ class Trades {
           earningsDt.setHours(0, 0, 0, 0); // Set to beginning of the day in UTC
           const options = { weekday: 'long'};
           const dayName = earningsDt.toLocaleDateString('en-US', options);
-          
-          if (earningsCalendar[dayName]) {
-            if (earning.when === 'pre market'){
-              earningsCalendar[dayName]['premarket'].push(earning.symbol);
-            }
-            else if (earning.when === 'post market'){
-              earningsCalendar[dayName]['afterhours'].push(earning.symbol);
+
+          if (tickers.includes(earning.symbol)) {
+            if (earningsCalendar[dayName]) {
+              if (earning.when === 'pre market'){
+                earningsCalendar[dayName]['premarket'].push(earning.symbol);
+              }
+              else if (earning.when === 'post market'){
+                earningsCalendar[dayName]['afterhours'].push(earning.symbol);
+              }
             }
           }
         }
@@ -3182,7 +3186,7 @@ class Trades {
 
     // display the IV Flush Candidates based on the earnings
     for (const earning of data) {
-        if (earning.marketCap >= 10000000000) {
+        if (earning.marketCap >= 10000000000 && (tickers.includes(earning.symbol))) {
             var implied_move = "";
             var implied_range = "";
             // var flushable = "";
