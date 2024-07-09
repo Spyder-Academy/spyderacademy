@@ -2579,7 +2579,7 @@ class Trades {
         // loop through all flow returned
         response.forEach(flow => {
           // for each flow tracked
-          // console.log(flow)
+          console.log(flow)
 
           function toTitleCase(str) {
             return str.replace(/(?:^|\s)\w/g, function(match) {
@@ -2603,7 +2603,8 @@ class Trades {
           var max_gain = 0
           var max_loss = 0
 
-          if (price_when_posted != undefined){
+          if (price_when_posted != undefined && flow["options_price"].length > 0){
+            console.log(flow["options_price"])
             current_price = parseFloat(flow["options_price"][0]["close_price"])
             var today_low_price = parseFloat(flow["options_price"][0]["low_price"])
             var today_high_price = parseFloat(flow["options_price"][0]["high_price"])
@@ -2670,7 +2671,7 @@ class Trades {
       }
     }
     catch(error){
-
+      throw error
     }
   }
 
