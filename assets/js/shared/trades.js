@@ -2792,7 +2792,7 @@ class Trades {
                       </div>
                       <div class="tweet-body">
                           <div style="border-radius: 15px;">
-                              <div id="flow_chart_${contract}">
+                              <div id="flow_chart_${contract.replace(".", "")}">
                           </div>
                           <p>${message}</p>
                           <p class="${updown == 'up' ? 'text-success' : 'text-danger'}">${updown_message}</p>
@@ -2909,7 +2909,7 @@ class Trades {
             }
         };
 
-        var chart = new ApexCharts(document.querySelector("#flow_chart_" + contract), options);
+        var chart = new ApexCharts(document.querySelector("#flow_chart_" + contract.replace(".", "")), options);
         chart.render();
         });
       }
