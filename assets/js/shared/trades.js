@@ -4016,9 +4016,9 @@ class Trades {
 
       } catch (error) {
           console.error("Could not fetch Historical Gamma Snapshot Data:", error);
-          $("#market_pressure_signal_card").hide()
-          $("#marketPressureStatement").hide()
-          $("#market_pressure").hide()
+          // $("#market_pressure_signal_card").hide()
+          // $("#marketPressureStatement").hide()
+          // $("#market_pressure").hide()
       }
     }
   }
