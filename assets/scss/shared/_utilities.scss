@@ -470,6 +470,11 @@ ul li {
   height: 520px;
   overflow-y: auto;
 }
+#news-feed .social-card .tweet-card
+{
+  border: 1px solid #e1e8ed;
+  overflow-y: auto;
+}
 
 .post-column {
   max-height: 700px;
@@ -550,3 +555,19 @@ ul li {
 // .popover-body {
 //   height: 400px; /* Set the height */
 // }
+
+.mobile_nav .active{
+  border-bottom: 5px solid #1DA1F2;
+  border-radius: 0;
+}
+
+// .content-section {
+//   display: none;
+// }
+
+// @media (min-width: 768px) {
+//   .content-section {
+//     display: block !important;
+//   }
+// }
+

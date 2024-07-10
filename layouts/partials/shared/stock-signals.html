@@ -3,9 +3,14 @@
 
 <div class="p-0">
     <div class="container p-0 m-0">
-        <div class="row ">
-            <div class="col-12 text-danger p-3">
-                Stock Signals is currently in Beta.  Not Financial Advise!
+        <div class="row flow_tracker_row d-none">
+            <div class="col-12 d-lg-block">
+                <div class="card-body tweet-header bg-dark text-white justify-content-center">
+                    <h4 class="card-title fw-semibold text-uppercase">STOCK SIGNALS</h4>
+                </div>
+                <div class="col-12 p-3 text-danger">
+                    Stock Signals is currently in Beta and should not be considered financial advise!
+                </div>
             </div>
         </div>
         <div class="row pb-lg-2 m-0">
@@ -15,6 +20,7 @@
                         <h4 id="marketPressureHeader" class="card-title fw-semibold text-uppercase">{{ $symbol }} MARKET PRESSURE</h4>
                         <p class="card-text" id="signalGammaOutlook"><span class="gammaOutlook"></span></p>
                         <p class="card-text text-black-61">The market price for {{ $symbol }} is currently attracted to <span class="largestGammaLevelText"></span>, and the overall sentiment is <span class="gammaOutlook"></span><br/></p>
+                        <p class="card-text text-black-61 p-3" style="background-color: #bfe1cf">Currently trading at <span id="currentPriceWidget" class="fw-bold"></span> as of <span id="currentPriceWidgetTimeValue"></span></p>
                     </div>
 
                 </div>
@@ -103,30 +109,6 @@
                 </div>
             </div>
         </div>
-
-        
-        <a name="flow"></a>
-        <div class="row flow_tracker_row d-none">
-            <div class="col-12 d-lg-block">
-                <div class="card-body tweet-header bg-dark text-white justify-content-center">
-                    <h4 class="card-title fw-semibold text-uppercase">TRACKED FLOW</h4>
-                </div>
-            </div>
-        </div>
-        <div class="row pb-lg-5 pb-0 d-none flow_tracker_row"  id="flow_tracker_row">
-            
-        </div>
-        
-        <div class="row d-none stock_social_row">
-            <div class="col-12 d-lg-block">
-                <div class="card-body tweet-header bg-dark text-white justify-content-center">
-                    <h4 class="card-title fw-semibold text-uppercase">STOCK TWEETS</h4>
-                </div>
-            </div>
-        </div>
-        <div class="row pb-5 d-none stock_social_row" id="stock_social_row">
-
-        </div>
     </div>
 </div>
 
@@ -155,15 +137,6 @@
             html: true
         });
 
-        $('#trackedFlowHeader').tooltip({
-            title: "<h6>TRACKED FLOW</h6><p>Flow Tracking is currently in beta and may contain bugs.</p><p>When interesting flow is detected, Spyder Academy will start tracking the Open Interest on it to see how it changes over time.</p><p>Whale Flow will result in a large increase in the Open Interest. </p><p>When they sell their position, the Open Interest will reduce significantly, informing us that the whale is no longer interested in this position (took profit/loss and exited).</p>",
-            html: true
-        });
-
-        var symbol = {{ $symbol }}
-        var userTrades = new Trades()
-        userTrades.showStockTweets(ticker=symbol);
-        userTrades.fetchFlow(ticker=symbol);
         
     });
 </script>

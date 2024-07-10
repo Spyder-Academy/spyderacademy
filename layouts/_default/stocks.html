@@ -50,32 +50,56 @@
         </div>
       </div>
 
+      <div class="mobile_nav row mb-1 shadow bg-dark text-white d-md-none d-sm-block sticky-top" style="font-size: 0.8em;">
+        <div class="col-md-10 col-sm-12 p-0 justify-content-center">
+          <ul class="nav nav-pills p-3 m-0 justify-content-center" id="pills-tab" role="tablist">
+            <li class="nav-item m-0" role="presentation">
+              <button class="nav-link text-white bg-dark active" data-bs-toggle="pill" data-bs-target="#pills-gamma" type="button" role="tab" aria-controls="pills-gamma" aria-selected="true">Gamma</button>
+            </li>
+            <li class="nav-item m-0" role="presentation">
+              <button class="nav-link text-white bg-dark"data-bs-toggle="pill" data-bs-target="#pills-signals" type="button" role="tab" aria-controls="pills-signals" aria-selected="false">Signals</button>
+            </li>
+            <li class="nav-item m-0" role="presentation">
+              <button class="nav-link  text-white bg-dark "  data-bs-toggle="pill" data-bs-target="#pills-flow" type="button" role="tab" aria-controls="pills-flow" aria-selected="false">Flow</button>
+            </li>
+            <li class="nav-item m-0" role="presentation">
+              <button class="nav-link  text-white bg-dark "  data-bs-toggle="pill" data-bs-target="#pills-tweets" type="button" role="tab" aria-controls="pills-tweets" aria-selected="false">Social</button>
+            </li>
+            <li class="nav-item m-0" role="presentation">
+              <button class="nav-link text-white bg-dark" data-bs-toggle="pill" data-bs-target="#pills-about" type="button" role="tab" aria-controls="pills-about" aria-selected="false">News</button>
+            </li>
+          </ul>
+        </div>
+      </div>
 
-    <div id="market_pressure" class="row justify-content-center p-0 pb-lg-5">
-      <div class="col-12 p-0 px-lg-2">
-        <div class="blog-content ">
-          <h2 class="px-2 px-lg-0">Market Pressure
-            <span id="marketPressureTooltip" style="background-color: lightgray; border-color: lightgray;" class="btn btn-secondary" data-toggle="tooltip" data-placement="auto" data-html="true" >
-              <i class="fa-solid fa-question"></i>
-            </span>
-          </h2>
-        </div>
-      </div>
-      <div id="gammaChartContainer" class="col-lg-6 col-12 p-0 px-lg-2">
-        <div class="card shadow p-3">
-          <div class="w-100"  id="gammaChart">Loading Market Exposure...</div>
-          <input type="range" class="form-range" id="gex_slider" min="0" max="40" step="1" value="40" disabled="true" />
-        </div>
-      </div>
 
-      <div id="gammaOverlayContainer" class="col-lg-6 col-12 p-0">
-        <div class="card shadow p-3 m-0">
-          <div class="w-100"  id="gammaChartOverlay">Loading Gamma Overlay...</div>
+    <div id="market_pressure" class="gamma-section content-section row justify-content-center p-0 pb-lg-5">
+        <div class="col-12 d-lg-block p-0 ">
+            <div class="card-body tweet-header bg-dark text-white justify-content-center">
+                <h4 class="card-title fw-semibold text-uppercase">
+                  GAMMA EXPOSURE 
+                  <span id="marketPressureTooltip" style="background-color: lightgray; border-color: lightgray;" class="btn btn-secondary" data-toggle="tooltip" data-placement="auto" data-html="true" >
+                    <i class="fa-solid fa-question"></i>
+                  </span>
+                </h4>
+            </div>
         </div>
-      </div>
+      
+        <div id="gammaChartContainer" class="col-lg-6 col-12 p-0 m-0">
+          <div class="card shadow p-3 mr-2">
+            <div class="w-100"  id="gammaChart">Loading Market Exposure...</div>
+            <input type="range" class="form-range" id="gex_slider" min="0" max="40" step="1" value="40" disabled="true" />
+          </div>
+        </div>
+
+        <div id="gammaOverlayContainer" class="col-lg-6 col-12 p-0 m-0">
+          <div class="card shadow p-3 m-0">
+            <div class="w-100"  id="gammaChartOverlay">Loading Gamma Overlay...</div>
+          </div>
+        </div>
     </div>  
       
-    <section id="marketPressureStatement" class="section problem p-3 " style="background-color: #313131; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);">
+    <section id="marketPressureStatement" class="gamma-section content-section section problem p-3 " style="background-color: #313131; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);">
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-12 justify-content-center p-0">
@@ -91,50 +115,54 @@
       </div>
     </section>
 
-    <div class="row p-0">
+    <div class="about-section content-section row p-0">
       <div class="col-12 justify-content-center p-0 m-0">
         {{ partial "shared/stock-chart" (dict "symbol" $tvSymbol "Site" .Site) }}
       </div>  
     </div>
 
-     <div class="row mb-5 shadow" style="border-radius: 15px;">
+    <div class="signals-section content-section row mb-5 shadow" style="border-radius: 15px;">
+      {{ partial "shared/stock-signals" (dict "symbol" .Page.Params.ticker "tvSymbol" $tvSymbol  "Site" .Site) }}
+    </div>
+
+    <div class="flow-section content-section row mb-5 shadow" style="border-radius: 15px;">
+      {{ partial "shared/stock-flow" (dict "symbol" .Page.Params.ticker "tvSymbol" $tvSymbol  "Site" .Site) }}
+    </div>
+
+    <div class="tweets-section content-section row mb-5 shadow" style="border-radius: 15px;">
+      {{ partial "shared/stock-tweets" (dict "symbol" .Page.Params.ticker "tvSymbol" $tvSymbol  "Site" .Site) }}
+    </div>
+
+     <div class="about-section content-section row mb-5 shadow" style="border-radius: 15px;">
       <div class="col-md-10 col-sm-12 p-0 justify-content-center">
         <ul class="nav nav-pills p-3 m-0" id="pills-tab" role="tablist">
+
           <li class="nav-item m-0" role="presentation">
-            <button class="nav-link" id="pills-financials-tab" data-bs-toggle="pill" data-bs-target="#pills-financials" type="button" role="tab" aria-controls="pills-financials" aria-selected="true">Financials</button>
+            <button class="nav-link active" id="pills-news-tab" data-bs-toggle="pill" data-bs-target="#pills-news" type="button" role="tab" aria-controls="pills-news" aria-selected="false">News</button>
           </li>
+
           <li class="nav-item m-0" role="presentation">
-            <button class="nav-link" id="pills-companyinfo-tab" data-bs-toggle="pill" data-bs-target="#pills-companyinfo" type="button" role="tab" aria-controls="pills-companyinfo" aria-selected="false">Info</button>
-          </li>
-          <li class="nav-item m-0" role="presentation">
-            <button class="nav-link" id="pills-news-tab" data-bs-toggle="pill" data-bs-target="#pills-news" type="button" role="tab" aria-controls="pills-news" aria-selected="false">News</button>
-          </li>
-          <li class="nav-item m-0" role="presentation">
-            <button class="nav-link active" id="pills-signals-tab" data-bs-toggle="pill" data-bs-target="#pills-signals" type="button" role="tab" aria-controls="pills-signals" aria-selected="false">Signals</button>
+            <button class="nav-link " id="pills-financials-tab" data-bs-toggle="pill" data-bs-target="#pills-financials" type="button" role="tab" aria-controls="pills-financials" aria-selected="true">Financial Profile</button>
           </li>
         </ul>
       </div>
-      <div class="col-md-2 col-sm-12 p-0 justify-content-right">
-        <div id="currentPriceWidget" class="p-3 pb-0 fs-1 text-start"></div>
-        <div id="currentPriceWidgetTime" class="p-3 py-0 text-start">Price as of <span id="currentPriceWidgetTimeValue"></span></div>
-      </div>
+      
       <div class="col-12 p-0 justify-content-center">
         <div class="tab-content " id="pills-tabContent">
+          
+          <div class="tab-pane fade show active" id="pills-news" role="tabpanel" aria-labelledby="pills-news-tab">
+            {{ partial "shared/stock-news" (dict "symbol" .Page.Params.ticker "Site" .Site) }}
+          </div>
+
           <div class="tab-pane fade" id="pills-financials" role="tabpanel" aria-labelledby="pills-financials-tab">
             {{ partial "shared/stock-financials" (dict "symbol" $tvSymbol "Site" .Site) }}
           </div>
-          <div class="tab-pane fade" id="pills-companyinfo" role="tabpanel" aria-labelledby="pills-companyinfo-tab">
-            {{ partial "shared/stock-companyinfo" (dict "symbol" $tvSymbol "Site" .Site) }}
-          </div>
-          <div class="tab-pane fade" id="pills-news" role="tabpanel" aria-labelledby="pills-news-tab">
-            {{ partial "shared/stock-news" (dict "symbol" .Page.Params.ticker "Site" .Site) }}
-          </div>
-          <div class="tab-pane fade show active" id="pills-signals" role="tabpanel" aria-labelledby="pills-signals-tab">
-            {{ partial "shared/stock-signals" (dict "symbol" .Page.Params.ticker "tvSymbol" $tvSymbol  "Site" .Site) }}
-          </div>
+         
         </div>
       </div>
     </div>
+
+    
      
      
      <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -180,11 +208,59 @@
               title: marketPressureTooltip,
               html: true
           });
-          
         });
+      </script>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          function updateSections() {
+            // Get current window width
+            const isMobile = window.innerWidth < 768;
+            
+            // Hide all sections for mobile
+            if (isMobile){
+              document.querySelectorAll('.content-section').forEach(section => {
+                section.style.display = 'none';
+              });
+            }
+           
+
+            if (isMobile) {
+              // Show the active section
+              const activeTab = document.querySelector('.nav-link.active');
+              if (activeTab) {
+                const target = activeTab.getAttribute('data-bs-target').replace('#pills-', '');
+                // console.log("target:", `.${target}-section`)
+                // document.querySelectorAll(`.${target}-section`).style.display = 'block';
+                $(`.${target}-section`).show()
+                document.querySelector(`.${target}-section`).scrollIntoView({ behavior: 'smooth' });
+
+              }
+            }
+          }
+
+          
+
+          // Add event listener for tab clicks
+          // console.log("trying to add click events")
+          document.querySelectorAll('.nav-link').forEach(tab => {
+            tab.addEventListener('shown.bs.tab', function(event) {
+              updateSections();
+            });
+          });
+
+          // Add event listener for window resize
+          window.addEventListener('resize', function() {
+            updateSections();
+          });
+
+          // Initial call to update sections
+          updateSections();
+        });
+
      </script>
 
-      <div class="row pb-5">
+      <div class="row pt-5 pb-5">
         <div class="col-12 d-flex justify-content-center">
           <div class="blog-content fs-5">
             {{ .Content }}

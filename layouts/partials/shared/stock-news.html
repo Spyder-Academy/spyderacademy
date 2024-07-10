@@ -2,8 +2,8 @@
 {{ $stocks := .Site.Data.stocks.stocks }}
 {{ $profile := where $stocks "symbol" $symbol }}
 
-<div class="p-5">
-  <div class="container">
+<div class="p-0">
+  <div class="container p-0">
     <div id="news-feed" class="row">Scanning the latest news ...</div> 
   </div>
 </div>
@@ -34,31 +34,45 @@
                 var title = item.title.split(" - ")[0]
                 var source = item.title.split(" - ")[1]
                 
-                var formattedTimestampStr = new Date(item.pubDate).toLocaleDateString()
-                if (item.pubDate != ""){
-                  formattedTimestampStr = (new Date(item.pubDate)).toLocaleString('en-US', {
-                    weekday: 'short',
-                    month: 'short',
-                    day: 'numeric',
-                    year: 'numeric',
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    hour12: true
-                  })
+                // var formattedTimestampStr = new Date(item.pubDate).toLocaleDateString()
+                
+                var timestamp = moment(item.pubDate)
+                var relativeTime = timestamp.fromNow();
+                var easternTime = timestamp.tz("America/New_York").format('MMMM Do YYYY, h:mm:ss a');
+                
+                // if (item.pubDate != ""){
+                //   formattedTimestampStr = (new Date(item.pubDate)).toLocaleString('en-US', {
+                //     weekday: 'short',
+                //     month: 'short',
+                //     day: 'numeric',
+                //     year: 'numeric',
+                //     hour: 'numeric',
+                //     minute: 'numeric',
+                //     hour12: true
+                //   })
 
-                  formattedTimestampStr += " ET"
-                }
+                //   formattedTimestampStr += " ET"
+                // }
+
+                
                 
                 const itemElement = document.createElement('div');
-                itemElement.className = 'col-md-6 col-sm-12 mb-4';
+                itemElement.className = 'col-md-4 col-sm-12 social-card';
                 itemElement.innerHTML = `
-                    <a class="card text-decoration-none h-100" href="${item.link}" target="_blank" style="border-radius: 15px">
-                        <div class="card-body">
-                            <h5 class="card-title fw-semibold">${title}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">${source}</h6>
-                            <p class="card-text">${formattedTimestampStr}</p>
+                    <div class="card-body tweet-card h-100">
+                        <div class="tweet-header">
+                            <div>
+                                <strong>${source}</strong> <span class="text-muted"> - <span title="${easternTime}" >${relativeTime}</span></span>
+                            </div>
                         </div>
-                    </a>`;
+                        <div class="tweet-body">
+                        <p>
+                            <a href="${item.link}" target="_blank">${title}</a>
+                        </p>
+                        </div>
+                    </div>
+                `
+                
                 feedContainer.appendChild(itemElement);
             });
         } catch (error) {
