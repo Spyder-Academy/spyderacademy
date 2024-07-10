@@ -2641,16 +2641,23 @@ class Trades {
             }
           }
 
+          var flow_tweet_author = flow["author"]
+          var flow_tweet_url = flow["url"]
+          var flow_tweet_msg = flow["post_message"]
+
           // create the flow card
           var flow_card = `
                 <div class="card-body tweet-card">
                     <div class="tweet-header">
                         <div>
-                            <strong><a href="/stocks/${flow["ticker"].toLowerCase()}/">${parsedContract}</a></strong> <span class="text-muted"> - <span title="${easternTime}" >${relativeTime}</span></span>
+                            <strong><a href="/stocks/${flow["ticker"].toLowerCase()}/#flow">${parsedContract}</a></strong> <span class="text-muted"> - <span title="${easternTime}" >${relativeTime}</span></span>
                         </div>
                     </div>
                     <div class="tweet-body">
-                      <p>${message}</p>
+                      <p>
+                        <a href="${flow_tweet_url}" target="_blank">${flow_tweet_author}</a> - ${flow_tweet_msg}<br/><br/>
+                        ${message}
+                      </p>
                       <p class="${updown == 'up' ? 'text-success' : 'text-danger'}">${updown_message}</p>
                     </div>
                     <div class="tweet-footer text-muted ${price_when_posted == undefined ? 'd-none' : ''}">
@@ -2777,9 +2784,14 @@ class Trades {
               exp_from_now = "Expires " + expirationDate.fromNow()
 
               var flow_image = flow["size_time_urgency"]["image_url"]
+              
               message = message.replace("flow", `<a data-toggle="img_popover" href="${flow_image}" data-img="${flow_image}" target="_blank">flow</a>`)
             }
           }
+
+          var flow_tweet_author = flow["author"]
+          var flow_tweet_url = flow["url"]
+          var flow_tweet_msg = flow["post_message"]
 
           // create the flow card
           var flow_card = `
@@ -2794,7 +2806,10 @@ class Trades {
                           <div style="border-radius: 15px;">
                               <div id="flow_chart_${contract.replace(".", "")}">
                           </div>
-                          <p>${message}</p>
+                          <p>
+                            <a href="${flow_tweet_url}" target="_blank">Posted By ${flow_tweet_author}</a> - ${flow_tweet_msg}<br/><br/>
+                            ${message}
+                          </p>
                           <p class="${updown == 'up' ? 'text-success' : 'text-danger'}">${updown_message}</p>
                       </div>
                       <div class="tweet-footer text-muted ${price_when_posted == undefined ? 'd-none' : ''}">
