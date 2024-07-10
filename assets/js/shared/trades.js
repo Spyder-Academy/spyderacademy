@@ -2716,8 +2716,8 @@ class Trades {
             var options_prices = flow["options_price"]
             var last_price = options_prices[options_prices.length - 1]
 
-            var current_date = new Date().toISOString().split('T')[0];
-            console.log(last_price, current_date)
+            let current_date = moment().tz("America/New_York").format('YYYY-MM-DD');
+            // console.log(last_price, current_date)
             if (last_price["date"] == current_date)
             {
               current_price = parseFloat(last_price["close_price"])
