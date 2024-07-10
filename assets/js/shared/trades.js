@@ -2465,13 +2465,13 @@ class Trades {
   }
 
   async showStockTweets(symbol){
-    $(".stock_social_row").empty()
+    $("#stock_social_row").empty()
     var url = `https://us-central1-spyder-academy.cloudfunctions.net/stock_tweets?ticker=${symbol}`;
     console.log("Loading tweets for ", url)
     try {
       let response = await $.ajax({url: url, method: 'GET'});
       if (response && response.length > 0) {
-        $("#stock_social_row").removeClass("d-none")
+        $(".stock_social_row").removeClass("d-none")
 
         // Sort the tweets by timestamp in descending order
         response.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
@@ -2519,7 +2519,7 @@ class Trades {
 
           var tweet_template = `
                   <div class="col-lg-3 col-12 social-card">
-                    <div class="card-body tweet-card shadow" style="border-radius: 15px">
+                    <div class="card-body tweet-card">
                         <div class="tweet-header">
                             <div>
                                 <a href="${tweet_link}" target="_blank" class="text-decoration-none">𝕏 <strong>${author}</strong></a> <span class="text-muted"> - <span title="${easternTime}">${relativeTime}</span></span>
@@ -2796,7 +2796,7 @@ class Trades {
           // create the flow card
           var flow_card = `
                 <div class="col-lg-4 col-12 social-card">
-                  <div class="card-body tweet-card shadow" style="border-radius: 15px">
+                  <div class="card-body tweet-card">
                       <div class="tweet-header">
                           <div>
                               <strong>${parsedContract}</strong> <span class="text-muted"> - <span title="${easternTime}" >${relativeTime}</span></span>
@@ -2827,7 +2827,7 @@ class Trades {
 
           //  append the flow card
           $("#flow_tracker_row").append(flow_card);
-          $("#flow_tracker_row").removeClass("d-none");
+          $(".flow_tracker_row").removeClass("d-none");
 
           this.init_tradingview_popovers()
 

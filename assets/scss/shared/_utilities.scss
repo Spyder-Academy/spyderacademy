@@ -449,6 +449,7 @@ ul li {
 
 
 @media (min-width: 992px) { /* Large screens and up */
+  #flow_tracker_row,
   #stock_social_row {
     display: flex;
     flex-wrap: nowrap;
@@ -457,12 +458,17 @@ ul li {
   }
 }
 
+
+#flow_tracker_row .social-card,
 #stock_social_row .social-card {
   flex: 0 0 auto;
 }
 
+#flow_tracker_row .social-card .tweet-card,
 #stock_social_row .social-card .tweet-card {
   border: 1px solid #e1e8ed;
+  height: 450px;
+  overflow-y: auto;
 }
 
 .post-column {
