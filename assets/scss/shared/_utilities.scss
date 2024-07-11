@@ -476,15 +476,23 @@ ul li {
   overflow-y: auto;
 }
 
-.post-column {
-  max-height: 700px;
-  overflow-y: scroll;
-}
+// .post-column {
+//   max-height: 700px;
+//   overflow-y: scroll;
+// }
 
 @media (min-width: 992px) { /* Large screens and up */
   .post-column {
       height: 700px;
+      max-height: 700px;
+      overflow-y: scroll;
   }
+
+  .calendar-column {
+    height: 425px;
+    max-height: 425px;
+    overflow-y: scroll;
+}
 }
 
 
@@ -560,14 +568,4 @@ ul li {
   border-bottom: 5px solid #1DA1F2;
   border-radius: 0;
 }
-
-// .content-section {
-//   display: none;
-// }
-
-// @media (min-width: 768px) {
-//   .content-section {
-//     display: block !important;
-//   }
-// }
 
