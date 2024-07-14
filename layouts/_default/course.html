@@ -3,6 +3,10 @@
 
   <section class="section blog-single py-5">
     <div class="container">
+      {{ if in (slice "education" "tags" "courses") .Section }}
+        {{ partial "shared/tags.html" }}
+      {{ end }}
+      
       <div class="row justify-content-center pb-0">
         <div class="col-12">
           {{ with .Title }}

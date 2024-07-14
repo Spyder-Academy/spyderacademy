@@ -213,6 +213,10 @@
         </div>
         {{ end }}
 
+        {{ if in (slice "education" "tags" "courses") .Section }}
+          {{ partial "shared/tags.html" . }}
+        {{ end }}
+
         <div class="col-12 col-xl-6">
           {{ with .Title }}
             <h1 class="fs-1 fw-bold text-center text-primary pb-3">{{ . }}</h1>
@@ -223,9 +227,7 @@
         </div>
       </div>
 
-      {{ if in (slice "education" "tags" "courses") .Section }}
-        {{ partial "shared/tags.html" . }}
-      {{ end }}
+     
 
      
       {{ if ne .Section "education" }}

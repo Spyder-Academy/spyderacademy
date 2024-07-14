@@ -1,12 +1,9 @@
 {{- if isset site.Taxonomies "tags" }}
     {{- if not (eq (len site.Taxonomies.tags) 0) }}
 
-    <div class="mobile_nav row shadow bg-dark text-white d-md-none d-sm-block sticky-top" style="font-size: 0.8em;">
+    <div class="mobile_nav row shadow bg-dark text-white d-md-none d-sm-block sticky-top mb-3" style="font-size: 0.8em;">
         <div class="col-md-10 col-sm-12 p-0 justify-content-center">
-          <ul class="nav nav-pills p-3 m-0 justify-content-center" id="pills-tab" role="tablist">
-            <li class="nav-item m-0" role="presentation">
-                <a href="/education/" class="nav-link text-white bg-dark {{ if eq .RelPermalink `/education/` }}active{{ end }}">Edu Home </a>
-            </li>
+          <ul class="nav nav-pills py-3 m-0 justify-content-center" id="pills-tab" role="tablist">
             <li class="nav-item m-0" role="presentation">
               <a href="/tags/getting-started/" class="nav-link text-white bg-dark {{ if eq .RelPermalink `/tags/getting-started/` }}active{{ end }}">Basics</a>
             </li>
