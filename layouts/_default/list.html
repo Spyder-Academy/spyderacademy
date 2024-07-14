@@ -1,16 +1,14 @@
 {{ define "main" }}
-  <section class="section blog-list py-5">
+  <section class="section blog-list pb-5">
     <div class="container p-0">
       
         
       <div class="row justify-content-center">
         {{ if eq .Params.nickname "Stocks List" }}
         <div class="row justify-content-center">
-          <div class="col-12 pb-5 p-0">
-            {{ partial "shared/stock_ticker.html" }}
-          </div>
+         
 
-          <div class="mobile_nav row mb-1 shadow bg-dark text-white d-md-none d-sm-block sticky-top" style="font-size: 0.8em;">
+          <div class="mobile_nav row shadow bg-dark text-white d-md-none d-sm-block sticky-top" style="font-size: 0.8em;">
             <div class="col-12 p-0">
               <div class="nav-container">
                 <ul class="nav nav-pills p-3 m-0" id="pills-tab" role="tablist">
@@ -39,8 +37,12 @@
               </div>
             </div>
           </div>
+
+          <div class="col-12 pb-5 p-0 plan-section content-section">
+            {{ partial "shared/stock_ticker.html" }}
+          </div>
           
-          <div class="row p-0">
+          <div class="row p-0 plan-section content-section">
             {{ partial "shared/tickers.html" . }}
           </div>
 
@@ -106,8 +108,8 @@
             <div class="col-12 justify-content-center p-0">
               <div class="row">
                 <div class="col-lg-4 col-sm-12 earnings-section content-section" >
-                  <div class="card shadow" style="border-radius: 15px">
-                    <div class="content-section card-title bg-success text-white fw-bold p-3" style="border-radius:10px 10px 0px 0px">Earnings This Week</div>
+                  <div class="card shadow" >
+                    <div class="content-section card-title bg-success text-white fw-bold p-3">Earnings This Week</div>
                     <div id="WL_Earnings" class="post-column">
 
                     </div>
@@ -115,8 +117,8 @@
                 </div>
 
                 <div class="col-lg-4 col-sm-12 scanner-section content-section " >
-                  <div class="card shadow" style="border-radius: 15px">
-                    <div class="content-section card-title bg-secondary text-white fw-bold p-3" style="border-radius:10px 10px 0px 0px">Daily Reversals</div>
+                  <div class="card shadow" >
+                    <div class="content-section card-title bg-secondary text-white fw-bold p-3">Daily Reversals</div>
                     <div id="WL_Reversals" class="post-column">
                       
                     </div>
@@ -124,8 +126,8 @@
                 </div>
 
                 <div class="col-lg-4 col-sm-12 oi-section content-section ">
-                  <div class="card shadow" style="border-radius: 15px">
-                    <div class="content-section card-title bg-primary text-white fw-bold p-3" style="border-radius:10px 10px 0px 0px">Options Flow Tracker</div>
+                  <div class="card shadow" >
+                    <div class="content-section card-title bg-primary text-white fw-bold p-3">Options Flow Tracker</div>
                     <div id="WL_FlowTracker" class="post-column">
                     
                     </div>
@@ -165,8 +167,8 @@
             <div class="col-12 justify-content-center p-0">
               <div class="row">
                 <div class="col-lg-4 col-sm-12 trades-section content-section " >
-                  <div class="card shadow" style="border-radius: 15px">
-                    <div class="content-section card-title bg-warning text-black fw-bold p-3" style="border-radius:10px 10px 0px 0px">Trade Ideas</div>
+                  <div class="card shadow" >
+                    <div class="content-section card-title bg-warning text-black fw-bold p-3" >Trade Ideas</div>
                     <div id="X_TradeIdeas" class="stock_tweets post-column">
 
                     </div>
@@ -174,8 +176,8 @@
                 </div>
 
                 <div class="col-lg-4 col-sm-12 charts-section content-section ">
-                  <div class="card shadow" style="border-radius: 15px">
-                    <div class="content-section card-title bg-primary text-white fw-bold p-3" style="border-radius:10px 10px 0px 0px">Chart Setups</div>
+                  <div class="card shadow">
+                    <div class="content-section card-title bg-primary text-white fw-bold p-3">Chart Setups</div>
                     <div id="X_Charts" class="stock_tweets post-column">
                     
                     </div>
@@ -183,8 +185,8 @@
                 </div>
 
                 <div class="col-lg-4 col-sm-12 flow-section content-section " >
-                  <div class="card shadow" style="border-radius: 15px">
-                    <div class="content-section card-title bg-secondary text-white fw-bold p-3" style="border-radius:10px 10px 0px 0px">Options Flow</div>
+                  <div class="card shadow">
+                    <div class="content-section card-title bg-secondary text-white fw-bold p-3">Options Flow</div>
                     <div id="X_OptionsFlow" class="stock_tweets post-column">
                       
                     </div>
@@ -221,8 +223,8 @@
         </div>
       </div>
 
-      {{ if in (slice "education" "tags") .Section }}
-        {{ partial "shared/tags.html" }}
+      {{ if in (slice "education" "tags" "courses") .Section }}
+        {{ partial "shared/tags.html" . }}
       {{ end }}
 
      

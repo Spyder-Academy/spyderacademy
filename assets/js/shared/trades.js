@@ -2542,7 +2542,28 @@ class Trades {
         this.init_tradingview_popovers()
 
       } else {
-        console.error('No data received from stock tweets API.');
+          // if there is no flow to display, show an empty card 
+          var flow_card = `
+                  <div class="col-lg-4 col-12 social-card">
+                    <div class="card-body tweet-card">
+                        <div class="tweet-header">
+                            <div>
+                                <strong>Come Back Later</strong></span>
+                            </div>
+                        </div>
+                        <div class="tweet-body">
+                            <p>
+                              We don't currently have any 𝕏 Posts for ${ticker}.
+                            </p>
+                        </div>
+                    </div>
+                  </div>
+                `
+
+
+            //  append the flow card
+            $("#stock_social_row").append(flow_card);
+            $(".stock_social_row").removeClass("d-none");
       }
     } catch (error) {
       console.error('Error fetching data from the stock tweets API:', error);
@@ -2687,6 +2708,7 @@ class Trades {
 
     try {
       let response = await $.ajax({url: url, method: 'GET'});
+
 
       if (response) {
         // loop through all flow returned for this ticker
@@ -2928,9 +2950,35 @@ class Trades {
         chart.render();
         });
       }
+
+      // if there is no flow to display, show an empty card 
+      if (response.length == 0){
+        var flow_card = `
+                <div class="col-lg-4 col-12 social-card">
+                  <div class="card-body tweet-card">
+                      <div class="tweet-header">
+                          <div>
+                              <strong>Come Back Later</strong></span>
+                          </div>
+                      </div>
+                      <div class="tweet-body">
+                          <p>
+                            We currently aren't tracking any flow for ${ticker}.
+                          </p>
+                      </div>
+                  </div>
+                </div>
+              `
+
+
+          //  append the flow card
+          $("#flow_tracker_row").append(flow_card);
+          $(".flow_tracker_row").removeClass("d-none");
+      }
     }
     catch(error){
-
+      console.log(error)
+      throw error
     }
   }
 

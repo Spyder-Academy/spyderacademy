@@ -488,6 +488,13 @@ ul li {
       overflow-y: scroll;
   }
 
+  .content-section .card{
+    border-radius:15px
+  }
+  .content-section .card-title{
+    border-radius:10px 10px 0px 0px
+  }
+
   .calendar-column {
     height: 425px;
     max-height: 425px;
