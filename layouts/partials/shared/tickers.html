@@ -1,6 +1,26 @@
 {{- if isset site.Taxonomies "tags" }}
     {{- if not (eq (len site.Taxonomies.tags) 0) }}
-    <div class="row p-0 m-0 pb-2" >
+    <div class="row py-2 m-0 p-0" >
+        <div class="col-lg-3 col-12 mb-2 p-0">
+            <div class="card shadow border-0 m-1 p-3 text-center bg-dark text-white" style="border-radius: 15px">
+                <div class="card-body p-0">
+                    <div class="container-fluid">
+                        <div class="row  align-items-center ">
+                            <div class="col-10">
+                                <strong><input id="tickerInput" name="query" autocomplete="off" class="form-control-borderless no-border-transparent-bg text-white text-uppercase text-center w-100" type="text" placeholder="SEARCH TICKER"></strong>
+                            </div>
+                            <div class="col-2 text-end">
+                                <button class="btn btn-sm py-0"><i class="fas fa-search text-white"></i></button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="search-dropdown-menu shadow card p-3" style="border-radius: 15px; display: none; position: absolute; width: 200px; z-index: 1000;">
+            </div>
+        </div>
+
         <div class="col-lg-3 col-4 mb-2 p-0">
             <div class="card shadow border-0 m-1 p-3 text-center" style="border-radius: 15px; background-color: #BFE1CF; ">
                 <div class="card-body p-0">
@@ -22,25 +42,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-12 mb-2 p-0">
-            <div class="card shadow border-0 m-1 p-3 text-center" style="border-radius: 15px; background-color: #E9E4D7; ">
-                <div class="card-body p-0">
-                    <div class="container-fluid">
-                        <div class="row  align-items-center ">
-                            <div class="col-8">
-                                <strong><input id="tickerInput" name="query" autocomplete="off" class="form-control-borderless no-border-transparent-bg  text-uppercase text-center w-100" type="text" placeholder="SEARCH TICKER"></strong>
-                            </div>
-                            <div class="col-2">
-                                <button class="btn btn-sm py-0">🔎</button>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-            <div class="search-dropdown-menu shadow card p-3" style="border-radius: 15px; display: none; position: absolute; width: 200px; z-index: 1000;">
-            </div>
-        </div>
+        
     </div>
     {{- end }}
 {{- end }}

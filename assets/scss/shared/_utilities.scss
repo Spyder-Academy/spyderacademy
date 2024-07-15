@@ -451,6 +451,8 @@ ul li {
 #search-input::-ms-input-placeholder {
   color: lightgray !important;
 }
+
+#tickerInput::placeholder,
 #search-input::placeholder {
   color: lightgray !important; /* Make placeholder text white */
   opacity: 1 !important; /* Ensure the color is not partially transparent */
