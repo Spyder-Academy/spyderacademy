@@ -1720,7 +1720,7 @@ class Trades {
         
         var recapRow = $("<div class='row'></div>")
  
-        var recapHeader = $("<div class='col-10'><h2 class='text-uppercase p-3'>" + formattedDate + "</h2></div>")
+        var recapHeader = $("<div class='col-12'><h2 class='text-uppercase p-3'>" + formattedDate + "</h2></div>")
         recapRow.append(recapHeader);
 
         if (this.userMode){
@@ -1769,11 +1769,13 @@ class Trades {
               dateString = today.setHours(0,0,0,0)
             }
             else{
-              // use yesterday
-              var yesterday = new Date(today);
-              yesterday.setDate(today.getDate() - 1);
+              dateString = today.setHours(0,0,0,0)
 
-              dateString = yesterday.setHours(0,0,0,0)
+              // // use yesterday
+              // var yesterday = new Date(today);
+              // yesterday.setDate(today.getDate() - 1);
+
+              // dateString = yesterday.setHours(0,0,0,0)
             }
             // console.log(dateString)
             
@@ -1916,15 +1918,15 @@ class Trades {
 
     // get the daily recap for the given date
     _getRecap(recap_date) {
-      console.log("Get Recap For", new Date(recap_date))
-        if (!this.userLoggedIn && recap_date.getDate() == (new Date()).getDate()){
-          return new Promise((resolve) => { 
-            $(".membersOnlyContent").hide();
-            $(".membersOnlyFiller").show();
+      // console.log("Get Recap For", new Date(recap_date))
+      //   if (!this.userLoggedIn && recap_date.getDate() == (new Date()).getDate()){
+      //     return new Promise((resolve) => { 
+      //       $(".membersOnlyContent").hide();
+      //       $(".membersOnlyFiller").show();
             
-            resolve([])
-           });
-        }
+      //       resolve([])
+      //      });
+      //   }
 
         var todays_table = [];
         return new Promise((resolve) => {
@@ -4216,8 +4218,8 @@ class Trades {
       formattedTimestampStr += " ET"
     }
 
-    var chartTitle =  ticker.toUpperCase() + " Market Pressure"
-    var chartSubTitle = formattedTimestampStr
+    // var chartTitle = " "// ticker.toUpperCase() + " Market Pressure"
+    var chartTitle = formattedTimestampStr
 
     var options = {
       chart: {
@@ -4250,7 +4252,7 @@ class Trades {
         enabled: false,
       },
       title: { text: chartTitle},
-      subtitle: { text: chartSubTitle },
+      // subtitle: { text: chartSubTitle },
       xaxis: {
           type: 'category',
           title: {
@@ -4314,7 +4316,7 @@ class Trades {
     else{
       this.chartGEX.updateOptions({
         title: { text: chartTitle },
-        subtitle: { text: chartSubTitle },
+        // subtitle: { text: chartSubTitle },
       });
 
       this.chartGEX.updateSeries([{

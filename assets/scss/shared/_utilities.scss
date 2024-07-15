@@ -448,6 +448,15 @@ ul li {
 }
 
 
+#search-input::-ms-input-placeholder {
+  color: lightgray !important;
+}
+#search-input::placeholder {
+  color: lightgray !important; /* Make placeholder text white */
+  opacity: 1 !important; /* Ensure the color is not partially transparent */
+}
+
+
 @media (min-width: 992px) { /* Large screens and up */
   #flow_tracker_row,
   #stock_social_row {
@@ -496,10 +505,10 @@ ul li {
   }
 
   .calendar-column {
-    height: 425px;
-    max-height: 425px;
+    height: 460px;
+    max-height: 460px;
     overflow-y: scroll;
-}
+  }
 }
 
 

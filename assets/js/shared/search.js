@@ -20,33 +20,12 @@ function displayResults(results, store) {
                             </div>
                         </div>
                     </div>
-
-                    <div class="row justify-content-center pb-5">
-                        <div class="col-lg-6 col-12 justify-content-center">
-                            <div class="card shadow p-3 mb-5 justify-content-center" id="iv_results" style="border-radius: 15px; background-color: #E9E4D7; ">
-                                <div class="row">
-                                <div class="col-4">
-                                    <div id="movePercentTitle" class="fw-bold">Expected Move</div>
-                                    <span class="movePercent"></span> <span id="moveAmount"> </span>
-                                </div>
-                                <div class="col-4">
-                                    <div id="closePriceTitle" class="fw-bold">Last Close Price</div>
-                                    <span class="closePrice"></span>
-                                </div>
-                                <div class="col-4">
-                                    <div id="ivRangeTitle" class="fw-bold">Expectations</div>
-                                    <span class="ivRange"></span>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 `;
 
                 // Create the configuration object
 
                 userTrades = new Trades();
-                userTrades.fetchIVData(item.ticker);
+                // userTrades.fetchIVData(item.ticker);
 
                 stockWidgetConfig = {
                     "symbols": [
@@ -98,8 +77,8 @@ function displayResults(results, store) {
 
             // Assuming item has a coverImage property for the image URL
             cards += `
-                <div class="col-lg-6 col-12 pb-3">
-                    <a class="card shadow border-0 p-4 text-decoration-none h-100" style="border-radius: 15px;" href="${item.url}">
+                <div class="col-lg-6 col-12 pb-lg-3">
+                    <a class="card border-1 p-4 text-decoration-none h-100"  href="${item.url}">
                         <div class="card-body">
                             <h5 class="card-title fw-semibold">${item.title}</h5>`;
 

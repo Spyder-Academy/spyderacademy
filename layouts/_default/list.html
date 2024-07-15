@@ -38,56 +38,69 @@
             </div>
           </div>
 
-          <div class="col-12 pb-5 p-0 plan-section content-section">
+          <div class="col-12 pb-lg-2 p-0 plan-section content-section">
             {{ partial "shared/stock_ticker.html" }}
           </div>
           
-          <div class="row p-0 plan-section content-section">
-            {{ partial "shared/tickers.html" . }}
-          </div>
+          
 
 
           
           <div class="plan-section content-section row p-0 pb-lg-5">
             <div class="col-lg-5 col-12 p-0">
-              <div class="blog-content ">
-                  <h2 class="px-2 px-lg-0">Economic Calendar
-                    <span id="economicCalendarTooltip" style="background-color: lightgray; border-color: lightgray;" class="btn btn-secondary" data-toggle="tooltip" data-placement="auto" data-html="true" >
-                      <i class="fa-solid fa-question"></i>
-                    </span>
-                  </h2>
-              </div>
               {{ partial "shared/economic_calendar.html" }}
             </div>
             <div class="col-lg-7 col-12 p-0 px-lg-2">
-              <div class="blog-content ">
-                <h2 class="px-2 px-lg-0">Market Pressure
+            
+              <div class="card  p-3">
+                <div class="px-2 px-lg-0 fw-bold text-uppercase">SPY Market Pressure
                   <span id="marketPressureTooltip" style="background-color: lightgray; border-color: lightgray;" class="btn btn-secondary" data-toggle="tooltip" data-placement="auto" data-html="true" >
                     <i class="fa-solid fa-question"></i>
                   </span>
-                </h2> 
-              </div>
-              <div class="card shadow p-3">
+                </div>
                 <div class="w-100 d-none"  id="spyGammaChart"></div>
                 <input type="range" class="form-range" id="gex_slider" min="0" max="16" step="1" value="16">
               </div>
             </div>
           </div>
 
-          <div class="plan-section content-section problem p-3" style="background-color: #313131;">
+          <div class="plan-section content-section row p-0  bg-dark text-white" >
+            <div class="card-body  h-100 w-100">
+              <div class="tweet-header">
+                  <div>
+                      <strong>SPY Gamma Exposure</strong>
+                  </div>
+              </div>
+              <div class="tweet-body">
+              <p>
+                  The market for <a href="/stocks/spy/" class="text-white">SPY</a> is currently attracted to <span class="largestGammaLevelText"></span>, and the overall sentiment is <span class="gammaOutlook"></span>.
+              </p>
+              <p class="d-none lowRangeDayWarning">Today may be a low range day for SPY, so take quick scalps, or you may want to go touch grass instead.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row p-0 pt-lg-3 plan-section content-section">
+            {{ partial "shared/tickers.html" . }}
+          </div>
+
+
+          <!-- <div class="plan-section content-section problem p-3" style="background-color: #313131;">
             <div class="container">
               <div class="row justify-content-center">
                 <div class="col-12 justify-content-center">
                   <div class="card d-flex flex-row align-items-start border-0 p-5  justify-content-center  text-center"  style="background-color: #313131;">
                     <span class="card-text text-light fs-3">
-                      The market for SPY is currently attracted to <span class="largestGammaLevelText"></span>, and the overall sentiment is <span class="gammaOutlook"></span>.
-                      <p class="lowRangeDayWarning d-none">Today may be a low range day, so take quick scalps, or you may want to go touch grass instead.</p>
+                      
+                      
                     </span>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
+
+
 
 
 

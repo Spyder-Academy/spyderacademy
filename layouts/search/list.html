@@ -1,6 +1,20 @@
 {{ define "main" }}
-  <section class="section blog-list py-5">
+  <section class="section blog-list">
     <div class="container">
+
+      <div class="row p-0 justify-content-center">
+        <div class="col-12">
+            <div class="container p-0 m-0">
+                <div class="row pb-5" >
+                    <div class="col">
+                        <div class="card border-0 p-0 bg-dark text-white" style="border-radius: 15px;">
+                            {{ partial "shared/search-form.html" . }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
         
       <div class="row justify-content-center pb-5">
         <div class="col-12 col-xl-6">
@@ -13,22 +27,10 @@
         </div>
       </div>
 
+      
       <div class="row pb-5 justify-content-center">
-        <div class="col-lg-6 col-12">
-            <div class="container">
-                <div class="row pb-5" >
-                    <div class="col">
-                        <div class="card shadow border-0 p-3" style="border-radius: 15px; background-color: #BFE1CF; ">
-                            {{ partial "shared/search-form.html" . }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-      </div>
-      <div class="row pb-5 justify-content-center">
-        <div class="col-12">
-            <div class="container">
+        <div class="col-12 p-0">
+            <div class="container p-0 m-0">
                 <div class="row pb-5" id="results">
 
                 </div>

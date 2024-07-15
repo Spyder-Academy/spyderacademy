@@ -1,6 +1,11 @@
-<div class="card shadow p-3 calendar-column">
+<div class="card p-3 calendar-column">
   <div class="container scrollable-table">
-      <div id="calendar"></div>
+    <div class="px-2 px-lg-0 fw-bold text-uppercase">Economic Calendar
+        <span id="economicCalendarTooltip" style="background-color: lightgray; border-color: lightgray;" class="btn btn-secondary" data-toggle="tooltip" data-placement="auto" data-html="true" >
+          <i class="fa-solid fa-question"></i>
+        </span>
+    </div>
+    <div id="calendar"></div>
   </div>
 </div>
 
@@ -52,7 +57,7 @@
                         <tbody>
                             ${day.Events.map(event => `
                                 <tr class="small w-100" style="color: ${getColorByImpact(event.Impact)};">
-                                    <td class="p-0 border-0 col-2">${event.Time}</td>
+                                    <td class="p-0 border-0 col-2 ">${event.Time}</td>
                                     <td class="p-0 border-0 col-9">${event.Release}</td>
                                     <td class="p-0 border-0 col-2">${event.Impact}</td>
                                 </tr>
