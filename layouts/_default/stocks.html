@@ -86,14 +86,15 @@
         </div>
       
         <div id="gammaChartContainer" class="col-lg-6 col-12 p-0 m-0">
-          <div class="card shadow p-3 mr-2">
+          <div class="card shadow p-3 mr-2 h-100 d-flex">
+            <div class="px-2 px-lg-0 fw-bold text-uppercase">{{ .Page.Params.ticker }} Market Pressure</div>
             <div class="w-100"  id="gammaChart">Loading Market Exposure...</div>
             <input type="range" class="form-range" id="gex_slider" min="0" max="40" step="1" value="40" disabled="true" />
           </div>
         </div>
 
         <div id="gammaOverlayContainer" class="col-lg-6 col-12 p-0 m-0">
-          <div class="card shadow p-3 m-0">
+          <div class="card shadow p-3 m-0 h-100 d-flex">
             <div class="w-100"  id="gammaChartOverlay">Loading Gamma Overlay...</div>
           </div>
         </div>
