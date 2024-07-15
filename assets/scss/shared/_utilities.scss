@@ -511,7 +511,12 @@ ul li {
     max-height: 460px;
     overflow-y: scroll;
   }
+
+  .lg-rounded{
+    border-radius: 15px;
+  }
 }
+
 
 
 .tweet-card {
@@ -586,4 +591,6 @@ ul li {
   border-bottom: 5px solid #1DA1F2;
   border-radius: 0;
 }
+
+
 
