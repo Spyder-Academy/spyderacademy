@@ -2602,7 +2602,7 @@ class Trades {
         // loop through all flow returned
         response.forEach(flow => {
           // for each flow tracked
-          console.log(flow)
+          // console.log(flow)
 
           function toTitleCase(str) {
             return str.replace(/(?:^|\s)\w/g, function(match) {
@@ -2618,51 +2618,6 @@ class Trades {
 
           var message = toTitleCase(flow["status"]).replaceAll("\n", "<br/>")
 
-          var price_when_posted = flow["options_price_when_posted"]
-          var current_price = 0
-          var price_difference = 0
-          var updown = "flat"
-          var updown_message = ""
-          var max_gain = 0
-          var max_loss = 0
-
-          if (price_when_posted != undefined && flow["options_price"].length > 0){
-            console.log(flow["options_price"])
-            current_price = parseFloat(flow["options_price"][0]["close_price"])
-            var today_low_price = parseFloat(flow["options_price"][0]["low_price"])
-            var today_high_price = parseFloat(flow["options_price"][0]["high_price"])
-            price_difference = ((current_price - price_when_posted) / price_when_posted) * 100
-            updown = price_difference >= 0 ? "up" : "down"
-            updown_message = `This contract is currently ${updown} about ${Math.abs(price_difference).toFixed(0)}%.`
-
-            max_gain = ((Math.max(flow["max_price"], today_high_price) - price_when_posted)  / price_when_posted) * 100
-            max_loss = ((Math.min(flow["min_price"], today_low_price) - price_when_posted)  / price_when_posted) * 100
-          }
-
-          var rating = undefined
-          var rating_el = ""
-          var rating  = 0
-          if (flow["rating"] != undefined){
-            rating = parseInt(flow["rating"])
-
-            switch (Math.ceil((rating/100) * 5)){
-              case 5:
-                rating_el = `<i class="fa-solid fa-fire text-secondary"></i>`
-                break;
-              case 4:
-                rating_el = `<i class="fa-solid fa-star text-warning"></i>`
-                break;
-              case 3:
-                rating_el = `<i class="fa-solid fa-star-half-stroke"></i>`
-                break;
-              case 2:
-                rating_el = `<i class="fa-solid fa-face-meh"></i>`
-                break;
-              case 1:
-                rating_el = `<i class="fa-solid fa-poop"></i>`
-                break;
-            }
-          }
 
           var flow_tweet_author = flow["author"]
           var flow_tweet_url = flow["url"]
@@ -2670,7 +2625,7 @@ class Trades {
 
           // create the flow card
           var flow_card = `
-                <div class="card-body tweet-card">
+                <div class="card-body tweet-card" id="flowCard_${contract}">
                     <div class="tweet-header">
                         <div>
                             <strong><a href="/stocks/${flow["ticker"].toLowerCase()}/#flow">${parsedContract}</a></strong> <span class="text-muted"> - <span title="${easternTime}" >${relativeTime}</span></span>
@@ -2681,16 +2636,8 @@ class Trades {
                         <a href="${flow_tweet_url}" target="_blank">${flow_tweet_author}</a> - ${flow_tweet_msg}<br/><br/>
                         ${message}
                       </p>
-                      <p class="${updown == 'up' ? 'text-success' : 'text-danger'}">${updown_message}</p>
                     </div>
-                    <div class="tweet-footer text-muted ${price_when_posted == undefined ? 'd-none' : ''}">
-                        <div class="row w-100 ">
-                          <div class="col-3 p-0 text-center" title="This contract has seen a Maximum Gain of ${max_gain.toFixed(0)}%"><i class="fa fa-money-bill-trend-up text-success"></i> ${max_gain.toFixed(0)}%</div>
-                          <div class="col-3 p-0 text-center" title="The Lowest Price this contract has seen is ${max_loss.toFixed(0)}%"><i class="fa fa-sack-xmark pl-3 text-danger"></i> ${max_loss.toFixed(0)}%</div>
-                          <div class="col-3 p-0 text-center" title="The Current Value of this contract is about ${price_difference.toFixed(0)}%"><i class="fa ${updown == 'up' ? 'fa-arrow-up' : 'fa-arrow-down'} pl-3 ${updown == 'up' ? 'text-success' : 'text-danger'}"></i> ${Math.abs(price_difference).toFixed(0)}% </div>
-                          <div class="col-3 p-0 text-center" title="The Flow Strength is ${(Math.ceil((rating/100) * 5))}/5")>${rating_el}</div>
-                        </div>
-                    </div>
+                    
                 </div>
               `
 
@@ -2698,9 +2645,108 @@ class Trades {
           //  append the flow card
           $("#WL_FlowTracker").append(flow_card);
         });
+
+        // loop back through the flow adding in the options pricing.
+        await this.fetchOptionsPricing(response)
       }
     }
     catch(error){
+      throw error
+    }
+  }
+
+  async fetchOptionsPricing(flow_list){
+    // console.log("fetch pricng for flow: ", flow)
+
+    var unique_flow = []
+    flow_list.forEach(f => {
+      unique_flow.push({
+        "contract": f["contract"],
+        "created_date": f["created_date"]
+      })
+    });
+
+    var url = `https://us-central1-spyder-academy.cloudfunctions.net/options_price`;
+
+    try {
+        let response = await $.ajax({
+          url: url,
+          method: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify(unique_flow)
+        });
+
+        if (response) {
+          // console.log(response)
+          // update the flow tracker with latest pricing info
+
+          response.forEach(flow_pricing => {
+            if (flow_pricing["options_price"].length > 0){
+              // get the flow for this contract
+              var flow = flow_list.find(x => x["contract"] == flow_pricing["contract"])
+
+              var price_when_posted = flow["options_price_when_posted"]
+
+              var current_price = parseFloat(flow_pricing["options_price"][0]["close_price"])
+              var today_low_price = parseFloat(flow_pricing["options_price"][0]["low_price"])
+              var today_high_price = parseFloat(flow_pricing["options_price"][0]["high_price"])
+              var price_difference = ((current_price - price_when_posted) / price_when_posted) * 100
+              var updown = price_difference >= 0 ? "up" : "down"
+              var updown_message = `This contract is currently ${updown} about ${Math.abs(price_difference).toFixed(0)}%.`
+  
+              var max_gain = ((Math.max(flow["max_price"], today_high_price) - price_when_posted)  / price_when_posted) * 100
+              var max_loss = ((Math.min(flow["min_price"], today_low_price) - price_when_posted)  / price_when_posted) * 100
+
+              var rating = undefined
+              var rating_el = ""
+              var rating  = 0
+              if (flow["rating"] != undefined){
+                rating = parseInt(flow["rating"])
+
+                switch (Math.ceil((rating/100) * 5)){
+                  case 5:
+                    rating_el = `<i class="fa-solid fa-fire text-secondary"></i>`
+                    break;
+                  case 4:
+                    rating_el = `<i class="fa-solid fa-star text-warning"></i>`
+                    break;
+                  case 3:
+                    rating_el = `<i class="fa-solid fa-star-half-stroke"></i>`
+                    break;
+                  case 2:
+                    rating_el = `<i class="fa-solid fa-face-meh"></i>`
+                    break;
+                  case 1:
+                    rating_el = `<i class="fa-solid fa-poop"></i>`
+                    break;
+                }
+              }
+
+              // update the html with the price details
+              var flow_pricing_div = `
+                <div class="tweet-footer text-muted ${price_when_posted == undefined ? 'd-none' : ''}">
+                    <div class="row w-100 ">
+                      <div class="col-3 p-0 text-center" title="This contract has seen a Maximum Gain of ${max_gain.toFixed(0)}%"><i class="fa fa-money-bill-trend-up text-success"></i> ${max_gain.toFixed(0)}%</div>
+                      <div class="col-3 p-0 text-center" title="The Lowest Price this contract has seen is ${max_loss.toFixed(0)}%"><i class="fa fa-sack-xmark pl-3 text-danger"></i> ${max_loss.toFixed(0)}%</div>
+                      <div class="col-3 p-0 text-center" title="The Current Value of this contract is about ${price_difference.toFixed(0)}%"><i class="fa ${updown == 'up' ? 'fa-arrow-up' : 'fa-arrow-down'} pl-3 ${updown == 'up' ? 'text-success' : 'text-danger'}"></i> ${Math.abs(price_difference).toFixed(0)}% </div>
+                      <div class="col-3 p-0 text-center" title="The Flow Strength is ${(Math.ceil((rating/100) * 5))}/5")>${rating_el}</div>
+                    </div>
+                </div>
+              `
+
+              var updown_message = `<p class="${updown == 'up' ? 'text-success' : 'text-danger'}">${updown_message}</p>`
+
+
+              // add the div to the appropriate flow card
+              var contract = flow["contract"]
+              $(`#flowCard_${contract}`).append(flow_pricing_div)
+              $(`#flowCard_${contract} .tweet-body`).append(updown_message)
+            }
+          })
+
+        }
+    }
+    catch(error) {
       throw error
     }
   }
