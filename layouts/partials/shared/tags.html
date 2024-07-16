@@ -3,7 +3,7 @@
 
     <div class="mobile_nav row shadow bg-dark text-white d-md-none d-sm-block sticky-top mb-3" style="font-size: 0.8em;">
         <div class="col-md-10 col-sm-12 p-0 justify-content-center">
-          <ul class="nav nav-pills py-3 m-0 justify-content-center" id="pills-tab" role="tablist">
+          <ul class="nav nav-pills py-3 m-0 justify-content-center" id="edu-tabs" role="tablist">
             <li class="nav-item m-0" role="presentation">
               <a href="/tags/getting-started/" class="nav-link text-white bg-dark {{ if eq .RelPermalink `/tags/getting-started/` }}active{{ end }}">Basics</a>
             </li>
@@ -74,5 +74,33 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+           
+            var tabs = $("#edu-tabs .nav-item a"); // Get all tab links
+
+            $(window).on("swipeleft", function() {
+                console.log("swipe left")
+                var currentIndex = tabs.index($(".nav-item a.active"));
+                if (currentIndex < tabs.length - 1) {
+                    window.location = tabs[currentIndex + 1].href
+                }
+            });
+
+            $(window).on("swiperight", function() {
+                console.log("swipe right")
+                var currentIndex = tabs.index($(".nav-item a.active"));
+                if (currentIndex > 0) {
+                    window.location = tabs[currentIndex - 1].href
+                }
+            });
+
+            
+        });
+    </script>
+        
+        
     {{- end }}
 {{- end }}
+

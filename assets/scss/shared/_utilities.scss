@@ -592,5 +592,14 @@ ul li {
   border-radius: 0;
 }
 
+#pills-tab {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+}
+.nav-item {
+    flex: 0 0 auto; /* Ensure items don't shrink */
+}
 
 
