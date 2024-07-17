@@ -2625,7 +2625,7 @@ class Trades {
 
           // create the flow card
           var flow_card = `
-                <div class="card-body tweet-card" id="flowCard_${contract}">
+                <div class="card-body tweet-card" id="flowCard_${contract.replace(".", "_")}">
                     <div class="tweet-header">
                         <div>
                             <strong><a href="/stocks/${flow["ticker"].toLowerCase()}/#flow">${parsedContract}</a></strong> <span class="text-muted"> - <span title="${easternTime}" >${relativeTime}</span></span>
@@ -2739,8 +2739,8 @@ class Trades {
 
               // add the div to the appropriate flow card
               var contract = flow["contract"]
-              $(`#flowCard_${contract}`).append(flow_pricing_div)
-              $(`#flowCard_${contract} .tweet-body`).append(updown_message)
+              $(`#flowCard_${contract.replace(".", "_")}`).append(flow_pricing_div)
+              $(`#flowCard_${contract.replace(".", "_")} .tweet-body`).append(updown_message)
             }
           })
 
