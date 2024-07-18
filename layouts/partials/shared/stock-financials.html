@@ -2,16 +2,82 @@
 {{ $stocks := .Site.Data.stocks.stocks }}
 {{ $profile := where $stocks "symbol" $symbol }}
 
-<div class="tradingview-financials-widget-container__widget"></div>
-<script type="application/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-financials.js" async>
-  {
-    "isTransparent": false,
-    "largeChartUrl": "",
-    "displayMode": "regular",
-    "width": "100%",
-    "height": "800",
-    "colorTheme": "light",
-    "symbol": "{{ $symbol }}",
-    "locale": "en"
-  }
-</script>
+
+
+<div class="container p-0 m-0">
+  <div class="content-section row d-none stock_social_row">
+      <div class="col-12 d-lg-block">
+          <div class="card-body tweet-header bg-dark text-white justify-content-center">
+              <h4 class="card-title fw-semibold text-uppercase">FINANCIALS</h4>
+          </div>
+      </div>
+  </div>
+
+  <div class="row pb-3 justify-content-evenly text-center">
+    <div class="col-4">
+      <div class="card rounded  d-flex h-100">
+        <div class="card-body">
+            <div class="fs-1" id="financials_cagr">-</div>
+            <div class="text-muted" title="Compund Annual Growth Rate">CAGR</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card rounded d-flex h-100">
+        <div class="card-body">
+          <div class="fs-1" id="financials_ltm_gross_margin">-</div>
+          <div class="text-muted" title="Last 12 Months Gross Margin">LTM Gross Margin</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card rounded d-flex  h-100">
+        <div class="card-body">
+          <div class="fs-1" id="financials_ltm_fcf_margin">-</div>
+          <div class="text-muted" title="Last 12 Months Free Cash Flow Margin">LTM Free Cash Flow Margin</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row pb-3 text-center">
+    <div class="col-lg-6 col-12">
+      <div class="card rounded">
+        <div class="card-body">
+          <div  id="revenueChart">QUARTERLY REVENUE</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-12">
+      <div class="card rounded">
+        <div class="card-body">
+          <div  id="epsChart">EARNINGS PER SHARE</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row pb-3">
+    <div class="col-12">
+      <div class="card rounded">
+        <div class="card-body">
+          <div class="tradingview-financials-widget-container__widget"></div>
+          <script type="application/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-financials.js" async>
+            {
+              "isTransparent": false,
+              "largeChartUrl": "",
+              "displayMode": "regular",
+              "width": "100%",
+              "height": "800",
+              "colorTheme": "light",
+              "symbol": "{{ $symbol }}",
+              "locale": "en"
+            }
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

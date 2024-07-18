@@ -3510,18 +3510,18 @@ class Trades {
        
         // new way with tweet cards
         var author = day
-        var premarket = `<div class="py-1 ">Morning</div>`
-        var postmarket = `<div class="py-1 ">Evening</div>`
+        var premarket = `<div class="py-1 ">Before Open</div>`
+        var postmarket = `<div class="py-1 ">After Close</div>`
         if (data[day].premarket.length > 0) {
             data[day].premarket.forEach(symbol => {
-              premarket += ` <div class="py-1"><a class="" href="/stocks/${symbol.toLowerCase()}/" data-toggle="popover" data-ticker="${symbol}" data-id_prefix="earnings"><img class="p-0 m-0 " src="/images/logos/${symbol.toUpperCase()}.png" style="width: 25px"></img> ${symbol}</a></div>`;
+              premarket += ` <div class="py-1"><a class="" style="text-decoration: none;" href="/stocks/${symbol.toLowerCase()}/" data-toggle="popover" data-ticker="${symbol}" data-id_prefix="earnings"><img class="p-0 m-0 " src="/images/logos/${symbol.toUpperCase()}.png" style="width: 25px;"></img> ${symbol}</a></div>`;
             });
         } 
 
         // After hours row
         if (data[day].afterhours.length > 0) {
             data[day].afterhours.forEach(symbol => {
-              postmarket += ` <div class="py-1"><a class=" href="/stocks/${symbol.toLowerCase()}/" data-toggle="popover" data-ticker="${symbol}" data-id_prefix="earnings" "><img class="p-0 m-0 " src="/images/logos/${symbol.toUpperCase()}.png" style="width: 25px"></img> ${symbol}</a></div>`;
+              postmarket += ` <div class="py-1"><a class="" style="text-decoration: none;" href="/stocks/${symbol.toLowerCase()}/" data-toggle="popover" data-ticker="${symbol}" data-id_prefix="earnings" "><img class="p-0 m-0 " src="/images/logos/${symbol.toUpperCase()}.png" style="width: 25px;"></img> ${symbol}</a></div>`;
             });
         } 
 
@@ -4094,6 +4094,198 @@ class Trades {
       console.error('Error fetching The Strat data:', error)
       $("#strat_signal_row").hide()
     });
+  }
+
+
+  async fetchFinancials(ticker){
+
+    if (ticker.toUpperCase() in ["SPY", "QQQ", "SPX", "IWM"]){
+      return
+    }
+
+    var url = `https://us-central1-spyder-academy.cloudfunctions.net/stock_financials?ticker=${ticker}`;
+
+    fetch(url)
+      .then(response => response.json())
+      .then(financial_data => {
+
+        // update the summaries row
+        $("#financials_cagr").text(financial_data.summaries["CAGR"] + "%")
+        $("#financials_ltm_gross_margin").text(financial_data.summaries["LTM_Gross_Margin"] + "%")
+        $("#financials_ltm_fcf_margin").text(financial_data.summaries["LTM_FCF_Margin"] + "%")
+
+        // Prepare data for revenue chart
+        let revenueData = financial_data["income_statements"].map(item => {
+            return {
+                x: item.report_period,
+                y: item.revenue
+            };
+        });
+
+        // Prepare data for EPS chart
+        let epsData = financial_data["income_statements"].map(item => {
+            return {
+                x: item.report_period,
+                y: item.earnings_per_share
+            };
+        });
+
+        // Add the Apex chart for revenue to the container div #revenueChart
+        var optionsRevenue = {
+            series: [{
+                name: 'Revenue',
+                data: revenueData
+            }],
+            chart: {
+                type: 'bar',
+                height: 350,
+                sparkline: {
+                  enabled: true
+                },
+                toolbar: {
+                  show: false
+                }
+            },
+            plotOptions: {
+              bar: {
+                borderRadius: 10,
+                dataLabels: {
+                  position: 'top', // top, center, bottom
+                },
+              }
+            },
+            dataLabels: {
+              enabled: true,
+              formatter: function(value) {
+                if (value >= 1000000000) {
+                    return "$" + (value / 1000000000).toFixed(1) + 'B'; // Format values in billions
+                } else if (value >= 1000000) {
+                    return "$" + (value / 1000000).toFixed(1) + 'M'; // Format values in millions
+                } else if (value >= 1000) {
+                    return "$" + (value / 1000).toFixed(1) + 'K'; // Format values in thousands
+                } else {
+                    return "$" + value.toFixed(2); // Format values below thousands
+                }
+              },
+              offsetY: -30,
+              style: {
+                fontSize: '12px',
+                colors: ["#304758"]
+              }
+            },
+            tooltip: {
+                x: {
+                  formatter: function(value) {
+                      const date = new Date(value);
+                      const year = date.getFullYear();
+                      const month = date.getMonth();
+                      const quarter = Math.floor(month / 3) + 1;
+                      return `Q${quarter} ${year}`;
+                  }
+                }
+            },
+            grid: {
+              show: false
+            },
+            xaxis: {
+                type: 'datetime',
+                labels: {
+                    formatter: function (value) {
+                        const date = new Date(value);
+                        const year = (date.getFullYear()).toString().substring(2);
+                        const month = date.getMonth();
+                        const quarter = Math.floor(month / 3) + 1;
+                        return `Q${quarter} '${year}`;
+                    },
+                    rotate: -90,
+                    rotateAlways: true,
+                    trim: true,
+                    showDuplicates: false,
+                }
+            },
+            yaxis: {
+                labels: {
+                    show: false,
+                    formatter: function (value) {
+                      if (value >= 1000000000) {
+                          return "$" + (value / 1000000000).toFixed(1) + 'B'; // Format values in billions
+                      } else if (value >= 1000000) {
+                          return "$" + (value / 1000000).toFixed(1) + 'M'; // Format values in millions
+                      } else if (value >= 1000) {
+                          return "$" + (value / 1000).toFixed(1) + 'K'; // Format values in thousands
+                      } else {
+                          return "$" + value.toFixed(2); // Format values below thousands
+                      }
+                    }
+                }
+            }
+        };
+
+
+        var revenueChart = new ApexCharts(document.querySelector("#revenueChart"), optionsRevenue);
+        revenueChart.render();
+
+        // Add the Apex chart for EPS to the container div #epsChart
+        var optionsEPS = {
+            series: [{
+                name: 'EPS',
+                data: epsData
+            }],
+            chart: {
+                type: 'scatter',
+                height: 350,
+                sparkline: {
+                  enabled: false
+                },
+                toolbar: {
+                  show: false
+                }
+            },
+            
+            tooltip: {
+              x: {
+                formatter: function(value) {
+                    const date = new Date(value);
+                    const year = date.getFullYear();
+                    const month = date.getMonth();
+                    const quarter = Math.floor(month / 3) + 1;
+                    return `Q${quarter} ${year}`;
+                }
+              }
+            },
+            grid: {
+              show: false
+            },
+            xaxis: {
+              type: 'datetime',
+              labels: {
+                  formatter: function (value) {
+                      const date = new Date(value);
+                      const year = (date.getFullYear()).toString().substring(2);
+                      const month = date.getMonth();
+                      const quarter = Math.floor(month / 3) + 1;
+                      return `Q${quarter} '${year}`;
+                  },
+                  show: false,
+              }
+            },
+            yaxis: {
+                labels: {
+                    formatter: function (value) {
+                        return `${value}`;
+                    }
+                }
+            },
+            markers: {
+              shape: ['circle'],
+              size: 10,
+            },
+        };
+
+        var epsChart = new ApexCharts(document.querySelector("#epsChart"), optionsEPS);
+        epsChart.render();
+
+      });
   }
 
 

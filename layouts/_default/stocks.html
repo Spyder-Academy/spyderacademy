@@ -66,7 +66,10 @@
               <button class="nav-link  text-white bg-dark "  data-bs-toggle="pill" data-bs-target="#pills-tweets" type="button" role="tab" aria-controls="pills-tweets" aria-selected="false">Social</button>
             </li>
             <li class="nav-item m-0" role="presentation">
-              <button class="nav-link text-white bg-dark" data-bs-toggle="pill" data-bs-target="#pills-about" type="button" role="tab" aria-controls="pills-about" aria-selected="false">News</button>
+              <button class="nav-link text-white bg-dark" data-bs-toggle="pill" data-bs-target="#pills-news" type="button" role="tab" aria-controls="pills-news" aria-selected="false">News</button>
+            </li>
+            <li class="nav-item m-0" role="presentation">
+              <button class="nav-link text-white bg-dark" data-bs-toggle="pill" data-bs-target="#pills-financials" type="button" role="tab" aria-controls="pills-financials" aria-selected="false">Earnings</button>
             </li>
           </ul>
         </div>
@@ -134,33 +137,16 @@
       {{ partial "shared/stock-tweets" (dict "symbol" .Page.Params.ticker "tvSymbol" $tvSymbol  "Site" .Site) }}
     </div>
 
-     <div class="about-section content-section row mb-5 shadow" style="border-radius: 15px;">
-      <div class="col-md-10 col-sm-12 p-0 justify-content-center">
-        <ul class="nav nav-pills p-3 m-0" id="pills-tab" role="tablist">
+    <div class="financials-section content-section row mb-5 shadow" style="border-radius: 15px;">
+      {{ partial "shared/stock-financials" (dict "symbol" .Page.Params.ticker "tvSymbol" $tvSymbol  "Site" .Site) }}
+    </div>
 
-          <li class="nav-item m-0" role="presentation">
-            <button class="nav-link active" id="pills-news-tab" data-bs-toggle="pill" data-bs-target="#pills-news" type="button" role="tab" aria-controls="pills-news" aria-selected="false">News</button>
-          </li>
+    <div class="news-section content-section row mb-5 shadow" style="border-radius: 15px;">
+      {{ partial "shared/stock-news" (dict "symbol" .Page.Params.ticker "tvSymbol" $tvSymbol  "Site" .Site) }}
+    </div>
 
-          <li class="nav-item m-0" role="presentation">
-            <button class="nav-link " id="pills-financials-tab" data-bs-toggle="pill" data-bs-target="#pills-financials" type="button" role="tab" aria-controls="pills-financials" aria-selected="true">Financial Profile</button>
-          </li>
-        </ul>
-      </div>
-      
-      <div class="col-12 p-0 justify-content-center">
-        <div class="tab-content " id="pills-tabContent">
-          
-          <div class="tab-pane fade show active" id="pills-news" role="tabpanel" aria-labelledby="pills-news-tab">
-            {{ partial "shared/stock-news" (dict "symbol" .Page.Params.ticker "Site" .Site) }}
-          </div>
-
-          <div class="tab-pane fade" id="pills-financials" role="tabpanel" aria-labelledby="pills-financials-tab">
-            {{ partial "shared/stock-financials" (dict "symbol" $tvSymbol "Site" .Site) }}
-          </div>
-         
-        </div>
-      </div>
+   
+    
     </div>
 
     
@@ -175,6 +161,7 @@
            userTrades.fetchGEXByStrike(ticker, "#gammaChart", idx=0, historicals = true);
            userTrades.fetchEMASignals(ticker);
            userTrades.fetchTheStratSignals(ticker)
+           userTrades.fetchFinancials(ticker)
 
            // Get a reference to the range input element
            const slider = document.getElementById('gex_slider');
