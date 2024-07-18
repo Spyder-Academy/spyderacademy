@@ -4110,7 +4110,7 @@ class Trades {
       .then(financial_data => {
 
         // update the summaries row
-        $("#financials_cagr").text(financial_data.summaries["CAGR"] + "%")
+        $("#financials_cagr").text(financial_data.summaries["CAGR"] != null ? financial_data.summaries["CAGR"] + "%" : "-")
         $("#financials_ltm_gross_margin").text(financial_data.summaries["LTM_Gross_Margin"] + "%")
         $("#financials_ltm_fcf_margin").text(financial_data.summaries["LTM_FCF_Margin"] + "%")
 
@@ -4163,6 +4163,8 @@ class Trades {
                     return "$" + (value / 1000000).toFixed(1) + 'M'; // Format values in millions
                 } else if (value >= 1000) {
                     return "$" + (value / 1000).toFixed(1) + 'K'; // Format values in thousands
+                } else if (value == null) {
+                    return ""
                 } else {
                     return "$" + value.toFixed(2); // Format values below thousands
                 }
@@ -4213,6 +4215,8 @@ class Trades {
                           return "$" + (value / 1000000).toFixed(1) + 'M'; // Format values in millions
                       } else if (value >= 1000) {
                           return "$" + (value / 1000).toFixed(1) + 'K'; // Format values in thousands
+                      } else if (value == null) {
+                          return ""
                       } else {
                           return "$" + value.toFixed(2); // Format values below thousands
                       }
