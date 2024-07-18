@@ -4117,7 +4117,7 @@ class Trades {
         // Prepare data for revenue chart
         let revenueData = financial_data["income_statements"].map(item => {
             return {
-                x: item.report_period,
+                x: item.calendar_date,
                 y: item.revenue
             };
         });
@@ -4125,7 +4125,7 @@ class Trades {
         // Prepare data for EPS chart
         let epsData = financial_data["income_statements"].map(item => {
             return {
-                x: item.report_period,
+                x: item.calendar_date,
                 y: item.earnings_per_share
             };
         });
