@@ -4117,17 +4117,17 @@ class Trades {
         // Prepare data for revenue chart
         let revenueData = financial_data["income_statements"].map(item => {
             return {
-                x: item["Calendar Date"],
-                y: item["Total Revenue"]
+                x: item["calendar_date"],
+                y: item["revenue"]
             };
         });
 
         // Prepare data for EPS chart
         let epsData = financial_data["income_statements"].map(item => {
             return {
-              x: item["Calendar Date"],
-              y: item["Basic EPS"],
-              fillColor: item["Basic EPS"] < 0 ? "#cc0003" : "#2ba02d"
+              x: item["calendar_date"],
+              y: item["earnings_per_share"],
+              fillColor: item["earnings_per_share"] < 0 ? "#cc0003" : "#2ba02d"
             };
         });
 
