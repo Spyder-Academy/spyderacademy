@@ -4109,10 +4109,18 @@ class Trades {
       .then(response => response.json())
       .then(financial_data => {
 
+        if (Object.keys(financial_data).length === 0){
+          // no data, hide the section
+          $(".tenq").empty()
+        }
+
         // update the summaries row
-        $("#financials_cagr").text(financial_data.summaries["CAGR"] != null ? financial_data.summaries["CAGR"] + "%" : "-")
-        $("#financials_ltm_gross_margin").text(financial_data.summaries["LTM_Gross_Margin"] + "%")
-        $("#financials_ltm_fcf_margin").text(financial_data.summaries["LTM_FCF_Margin"] + "%")
+        const cagr = financial_data.summaries["CAGR"] 
+        const gross_margin = financial_data.summaries["LTM_Gross_Margin"]
+        const fcf_margin = financial_data.summaries["LTM_FCF_Margin"]
+        $("#financials_cagr").text(cagr != null ? cagr + "%" : "-")
+        $("#financials_ltm_gross_margin").text(gross_margin != 0 ? gross_margin + "%" : "-")
+        $("#financials_ltm_fcf_margin").text(fcf_margin != 0 ? fcf_margin + "%" : "-")
 
         // Prepare data for revenue chart
         let revenueData = financial_data["income_statements"].map(item => {

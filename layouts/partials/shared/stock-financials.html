@@ -13,7 +13,7 @@
       </div>
   </div>
 
-  <div class="row pb-3 justify-content-evenly text-center">
+  <div class="row pb-3 justify-content-evenly text-center tenq">
     <div class="col-4">
       <div class="card rounded  d-flex h-100">
         <div class="card-body">
@@ -40,7 +40,7 @@
     </div>
   </div>
 
-  <div class="row pb-3 text-center">
+  <div class="row pb-3 text-center tenq">
     <div class="col-lg-6 col-12">
       <div class="card rounded">
         <div class="card-title p-3 fw-bold">
@@ -63,12 +63,13 @@
     </div>
   </div>
 
-  <div class="row pb-3 text-center">
+  <div class="row pb-3 text-center tenq">
     <div class="col-lg-12 col-12">
       <div class="card rounded">
         <div class="card-body p-5">
             <div id="sankey_chart" style="height: 600px"></div>
         </div>
+      </div>
     </div>
   </div>
 
@@ -93,9 +94,8 @@
       </div>
     </div>
   </div>
-
-
 </div>
+
 
 <script>
   // Initialize the chart
@@ -114,7 +114,7 @@
 
     var product_nodes = quarterlyEarnings.revenue_sources.map(source => ({
             "name": source.name,
-            "value": parseFloat(source.value),
+            "value": parseFloat(source.value) || 0,
             "depth": 0,
             "itemStyle": { color: "#0065fe"}, label: {position: "top", color: "#0065fe"},
             "append": {name: "Amount", value: monetize(source.value, quarterlyEarnings.revenue)}
@@ -124,12 +124,12 @@
       const existingNode = acc.find(node => node.name === source.name);
 
       if (existingNode) {
-          existingNode.value += parseFloat(source.value);
+          existingNode.value += (parseFloat(source.value)  || 0);
       } 
       else {
           acc.push({
               "name": source.name,
-              "value": parseFloat(source.value),
+              "value": parseFloat(source.value) || 0,
               "depth": 0,
               "itemStyle": { color: "#0065fe"},
               "label": {position: "top", color: "#0065fe"},
@@ -144,7 +144,7 @@
 
     function monetize(v, t = 0){
       var pv = v
-      v = Math.abs(parseFloat(v))
+      v = Math.abs(parseFloat(v) || 0)
       if (v >= 1e9){
         pv = `$${(parseFloat(v)/1e9).toFixed(1)}B`
       }
@@ -244,47 +244,34 @@
         get_node("SG&A", quarterlyEarnings.selling_general_and_administrative_expenses, 5, "out"),
         get_node("R&D", quarterlyEarnings.research_and_development, 5, "out"),
         get_node("Other", quarterlyEarnings.other_expenses, 5, "out"),
-
-
-        // { "name": "Revenue", "value": parseFloat(quarterlyEarnings.revenue), depth: 1, itemStyle: { color: get_income_color(quarterlyEarnings.revenue)}, label: {position: "top", align: "center", color: "black"}, append: {name: "Amount", value: monetize(quarterlyEarnings.revenue)}, emphasis: {label: {}} },
-
-        // { "name": "2-1", "value": parseFloat(quarterlyEarnings.revenue) * 0.15, depth: 2, itemStyle: { color: "transparent"}, label: {show: false} },
-        // { "name": "Gross Profit", "value": parseFloat(quarterlyEarnings.gross_profit), depth: 2, itemStyle: { color: get_income_color(quarterlyEarnings.gross_profit)}, label: {position: "top", color: "green", align: "center"}, append: {name: "Amount", value: monetize(quarterlyEarnings.gross_profit, quarterlyEarnings.revenue)} },
-        // { "name": "COGS", "value": parseFloat(quarterlyEarnings.cost_of_revenue), depth: 2, itemStyle: { color: get_expense_color(quarterlyEarnings.cost_of_revenue)}, label: {position: "bottom", color: "red", align: "center"}, append: {name: "Amount", value: monetize(quarterlyEarnings.cost_of_revenue, quarterlyEarnings.revenue)}  },
-        
-        
-        // { "name": "3-1", "value": parseFloat(quarterlyEarnings.revenue) * 0.10, depth: 3, itemStyle: { color: "transparent"}, label: {show: false} },
-        // { "name": "Operating Income", "value": parseFloat(quarterlyEarnings.operating_income), depth: 3, itemStyle: { color: get_income_color(quarterlyEarnings.operating_income)}, label: {position: "top", color: "green", align: "center"}, append: {name: "Amount", value: monetize(quarterlyEarnings.operating_income, quarterlyEarnings.revenue)}  },
-        // { "name": "Operating Expense", "value": parseFloat(quarterlyEarnings.operating_expense), depth: 3, itemStyle: {color: get_expense_color(quarterlyEarnings.operating_expense)}, label: {position: "bottom", color: "red"}, append: {name: "Amount", value: monetize(quarterlyEarnings.operating_expense, quarterlyEarnings.revenue)} },
-        
-        // { "name": "4-1", "value": parseFloat(quarterlyEarnings.revenue) * 0, depth: 4, itemStyle: { color: "transparent"}, label: {show: false} },
-        // { "name": "Pretax Income", "value": parseFloat(quarterlyEarnings.ebit), depth: 4, itemStyle: { color: get_income_color(quarterlyEarnings.ebit)}, label: {position: "top", color: "green", align: "center"}, append: {name: "Amount", value: monetize(quarterlyEarnings.ebit, quarterlyEarnings.revenue)}  },
-        
-        // // { "name": "5-1", "value": parseFloat(quarterlyEarnings.revenue) * 0.00, depth: 5, itemStyle: { color: "transparent"}, label: {show: false} },
-        // { "name": "Net Income", "value": parseFloat(quarterlyEarnings.net_income), depth: 5, itemStyle: { color: get_income_color(quarterlyEarnings.net_income)}, label: {position: "right", color: "green"}, append: {name: "Amount", value: monetize(quarterlyEarnings.net_income, quarterlyEarnings.revenue)}  },
-        // { "name": "Tax", "value": Math.abs(parseFloat(quarterlyEarnings.income_tax_expense)), depth: 5, itemStyle: { color: get_expense_color(quarterlyEarnings.income_tax_expense)}, label: {position: "right", color: (quarterlyEarnings.income_tax_expense > 0 ? "red" : "green")}, append: {name: "Amount", value: monetize(Math.abs(quarterlyEarnings.income_tax_expense), quarterlyEarnings.revenue)}  },
-        // { "name": "Interest Expense", "value": parseFloat(quarterlyEarnings.interest_expense), depth: 5, itemStyle: { color: get_expense_color(quarterlyEarnings.interest_expense)}, label: {position: "right", color: "red", show: (quarterlyEarnings.interest_expense > 0 ? true : false)}, append: {name: "Amount", value: monetize(quarterlyEarnings.interest_expense, quarterlyEarnings.revenue)}  },
-        // { "name": "SG&A", "value": parseFloat(quarterlyEarnings.selling_general_and_administrative_expenses), depth: 5, itemStyle: { color: get_expense_color(quarterlyEarnings.selling_general_and_administrative_expenses)}, label: {position: "right", color: "red", show: (quarterlyEarnings.selling_general_and_administrative_expenses > 0 ? true : false)}, append: {name: "Amount", value: monetize(quarterlyEarnings.selling_general_and_administrative_expenses, quarterlyEarnings.revenue)}  },
-        // { "name": "R&D", "value": parseFloat(quarterlyEarnings.research_and_development), depth: 5, itemStyle: { color: get_expense_color(quarterlyEarnings.research_and_development)}, label: {position: "right", color: "red", show: (quarterlyEarnings.research_and_development > 0 ? true : false)}, append: {name: "Amount", value: monetize(quarterlyEarnings.research_and_development, quarterlyEarnings.revenue)}  },
-        // { "name": "Other", "value": parseFloat(quarterlyEarnings.other_expenses), depth: 5, itemStyle: { color: get_expense_color(quarterlyEarnings.other_expenses) }, label: {position: "right", color: "red", show: (quarterlyEarnings.other_expenses > 0 ? true : false)}, append: {name: "Amount", value: monetize(quarterlyEarnings.other_expenses, quarterlyEarnings.revenue)}  },
-        
     ];
 
 
     // Extract links
 
-    var product_links = quarterlyEarnings.revenue_sources.map(source => ({
-            "source": source.name,
-            "target": "Revenue",
-            "value": parseFloat(source.value),
-            "lineStyle": {
-              "color": "#0065fe",
-              "opacity": 0.5
-            }
-        }))
+    var product_links = quarterlyEarnings.revenue_sources.reduce((acc, source) => {
+      const existingNode = acc.find(node => node.source === source.name);
 
-        product_links = product_links.sort((a, b) => b.value - a.value).slice(0, 5);
+      if (existingNode) {
+        existingNode.value += (parseFloat(source.value) || 0);
+      } else {
+        acc.push({
+          "source": source.name,
+          "target": "Revenue",
+          "value": parseFloat(source.value) || 0,
+          "lineStyle": {
+            "color": "#0065fe",
+            "opacity": 0.5
+          }
+        });
+      }
 
+      return acc;
+    }, []);
+
+    product_links = product_links.sort((a, b) => b.value - a.value).slice(0, 5);
+
+    // console.log(product_nodes, product_links)
 
     const links = [
         ...product_links,
@@ -299,23 +286,10 @@
         get_link("Operating Expense", "R&D", quarterlyEarnings.research_and_development, "out"),
         get_link("Operating Expense", "Other", quarterlyEarnings.other_expenses, "out"),
         get_link("Revenue", "COGS", quarterlyEarnings.cost_of_revenue, "out"),
-
-        // { "source": "Revenue", "target": "Gross Profit", "value": parseFloat(quarterlyEarnings.gross_profit), lineStyle: {color: "#99ce9a", opacity: 0.5}},
-        // { "source": "Gross Profit", "target": "Operating Income", "value": parseFloat(quarterlyEarnings.operating_income), lineStyle: {color: "#99ce9a", opacity: 0.5}},
-        // { "source": "Gross Profit", "target": "Operating Expense", "value": parseFloat(quarterlyEarnings.operating_expense), lineStyle: {color: "#cc0003", opacity: 0.5} },
-        // { "source": "Operating Income", "target": "Pretax Income", "value": parseFloat(quarterlyEarnings.ebit), lineStyle: {color: "#99ce9a", opacity: 0.5} },
-        // { "source": "Pretax Income", "target": "Net Income", "value": parseFloat(quarterlyEarnings.net_income), lineStyle: {color: "#99ce9a", opacity: 0.5} },
-        // { "source": "Pretax Income", "target": "Tax", "value": parseFloat(quarterlyEarnings.income_tax_expense), lineStyle: {color: (quarterlyEarnings.income_tax_expense > 0 ? "#cc0003" : "#99ce9a"), opacity: 0.5} },
-        // { "source": "Pretax Income", "target": "Interest Expense", "value": parseFloat(quarterlyEarnings.interest_expense), lineStyle: {color: (quarterlyEarnings.interest_expense > 0 ? "#cc0003" : "transparent"), opacity: 0.5} },
-        // { "source": "Operating Expense", "target": "SG&A", "value": parseFloat(quarterlyEarnings.selling_general_and_administrative_expenses), lineStyle: {color:  (quarterlyEarnings.selling_general_and_administrative_expenses > 0 ? "#cc0003" : "transparent"), opacity: 0.5} },
-        // { "source": "Operating Expense", "target": "R&D", "value": parseFloat(quarterlyEarnings.research_and_development), lineStyle: {color: (quarterlyEarnings.research_and_development > 0 ? "#cc0003" : "transparent"), opacity: 0.5} },
-        // { "source": "Operating Expense", "target": "Other", "value": parseFloat(quarterlyEarnings.other_expenses), lineStyle: {color: (quarterlyEarnings.other_expenses > 0 ? "#cc0003" : "transparent"), opacity: 0.5} },
-        // { "source": "Revenue", "target": "COGS", "value": parseFloat(quarterlyEarnings.cost_of_revenue), lineStyle: {color: "#cc0003", opacity: 0.5} },
-        
     ];
 
-    console.log("Data Node: ", nodes)
-    console.log("Data Links: ", links)
+    // console.log("Data Node: ", nodes)
+    // console.log("Data Links: ", links)
     // Define the chart options
     var option = {
       "mode": 1,
@@ -375,7 +349,6 @@
             formatter: function(params) {
               const name = params.name;
               const append = params.data.append;
-              console.log(params.name, append)
 
               if (append !== undefined){
                 return [
@@ -396,7 +369,7 @@
             },
             "show": true,
             "position": "right",
-            "fontSize": 15,
+            "fontSize": "15",
           },
           
           itemStyle: {
@@ -418,17 +391,17 @@
         {
           type: 'text',
           left: 'center',
-          bottom: 0,
+          bottom: 10,
           style: {
             text: 'Created by Spyder Academy',
             fill: '#c0c0c0',
-            fontSize: 15
+            fontSize: "15"
           }
         },
         {
           type: 'image',
           left: 'center',
-          bottom: 20,
+          bottom: 30,
           style: {
             image: '/images/logo.png',
             width: 50,
@@ -458,939 +431,3 @@
 
 
 
-
-
-<script>
-
-  // // ORIGINAL CODEGURU CHART SETUP THAT WORKS!
-
-  // var option = {
-  //     "mode": 1,
-  //     "animation": false,
-  //     "darkMode": "auto",
-  //     "colorBy": "series",
-  //     "color": [
-  //       "#5470c6",
-  //       "#91cc75",
-  //       "#fac858",
-  //       "#ee6666",
-  //       "#73c0de",
-  //       "#3ba272",
-  //       "#fc8452",
-  //       "#9a60b4",
-  //       "#ea7ccc"
-  //     ],
-  //     "gradientColor": [
-  //       "#f6efa6",
-  //       "#d88273",
-  //       "#bf444c"
-  //     ],
-  //     "aria": {
-  //       "decal": {
-  //         "decals": [
-  //           {
-  //             "color": "rgba(0, 0, 0, 0.2)",
-  //             "dashArrayX": [
-  //               1,
-  //               0
-  //             ],
-  //             "dashArrayY": [
-  //               2,
-  //               5
-  //             ],
-  //             "symbolSize": 1,
-  //             "rotation": 0.5235987755982988
-  //           },
-  //           {
-  //             "color": "rgba(0, 0, 0, 0.2)",
-  //             "symbol": "circle",
-  //             "dashArrayX": [
-  //               [
-  //                 8,
-  //                 8
-  //               ],
-  //               [
-  //                 0,
-  //                 8,
-  //                 8,
-  //                 0
-  //               ]
-  //             ],
-  //             "dashArrayY": [
-  //               6,
-  //               0
-  //             ],
-  //             "symbolSize": 0.8
-  //           },
-  //           {
-  //             "color": "rgba(0, 0, 0, 0.2)",
-  //             "dashArrayX": [
-  //               1,
-  //               0
-  //             ],
-  //             "dashArrayY": [
-  //               4,
-  //               3
-  //             ],
-  //             "rotation": -0.7853981633974483
-  //           },
-  //           {
-  //             "color": "rgba(0, 0, 0, 0.2)",
-  //             "dashArrayX": [
-  //               [
-  //                 6,
-  //                 6
-  //               ],
-  //               [
-  //                 0,
-  //                 6,
-  //                 6,
-  //                 0
-  //               ]
-  //             ],
-  //             "dashArrayY": [
-  //               6,
-  //               0
-  //             ]
-  //           },
-  //           {
-  //             "color": "rgba(0, 0, 0, 0.2)",
-  //             "dashArrayX": [
-  //               [
-  //                 1,
-  //                 0
-  //               ],
-  //               [
-  //                 1,
-  //                 6
-  //               ]
-  //             ],
-  //             "dashArrayY": [
-  //               1,
-  //               0,
-  //               6,
-  //               0
-  //             ],
-  //             "rotation": 0.7853981633974483
-  //           },
-  //           {
-  //             "color": "rgba(0, 0, 0, 0.2)",
-  //             "symbol": "triangle",
-  //             "dashArrayX": [
-  //               [
-  //                 9,
-  //                 9
-  //               ],
-  //               [
-  //                 0,
-  //                 9,
-  //                 9,
-  //                 0
-  //               ]
-  //             ],
-  //             "dashArrayY": [
-  //               7,
-  //               2
-  //             ],
-  //             "symbolSize": 0.75
-  //           }
-  //         ]
-  //       }
-  //     },
-  //     "textStyle": {
-  //       "fontFamily": "sans-serif",
-  //       "fontSize": 12,
-  //       "fontStyle": "normal",
-  //       "fontWeight": "normal"
-  //     },
-  //     "stateAnimation": {
-  //       "duration": 300,
-  //       "easing": "cubicOut"
-  //     },
-  //     "animationDuration": 1000,
-  //     "animationDurationUpdate": 500,
-  //     "animationEasing": "cubicInOut",
-  //     "animationEasingUpdate": "cubicInOut",
-  //     "animationThreshold": 2000,
-  //     "progressiveThreshold": 3000,
-  //     "progressive": 400,
-  //     "hoverLayerThreshold": 3000,
-  //     "useUTC": false,
-  //     "graphic": [
-  //       {
-  //         "elements": [
-  //           {
-  //             "type": "image",
-  //             "style": {
-  //               "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAABAtJREFUaEPtmH1sE2Ucxz93t2vXbV2HjLF21M1lBKeiASW+kRmVF40uIokzakiMxtcs6l/+YVxGgv/hPyRLDCGK0fgHYlAzUWEYI8FAIoJKCBqWOfbSdS8Ibddu7fXuMXfdHAjbbK+VLLnnj16uzz2/3/fl93vy3En9/jsFC3hIDoFr7J7jwDU2AMcBxwGbCjglZFNA28sdB2xLaDNA/h3QBQhQFnmRfWUWPCMyjn4hBhKgmD/5G7YISC6Vksc3oDY2gDQFzMAiIJeXIHtLMwRicYxoIkNAngIvBNqZbhKfH0SktJwZZU3A1VhP8UP3oQSqkdQi3HetQgn6IZlk8pvDTB79FaFpGaWnxTbPu7pAUlWK776N4oebwO1G7x8ieewkQkujh8JMfvsDqTM9WZHJioBnYxNlLzyJetNypLRG/JNOUn/0IHtLKNu8AaGopPvD6D29RDo+RiRTFhjJ7cLXugWlvo6i4FIkXWN8XxdGLIFrRT2lzzQjVBXt9FnGd+1h4sDh/0wiKwLe1i2o9XUkvvqesic2IldVol+MYpaS6+YG6x5ZRkSijKx/Fm0gZAFRlwWo6voQyVcOhoExMkbqdLdVOkqFF2N4jPhnB/E8ej9azzliHR8VhkBR0E9JyyO4bl+JurwWJbB0pvb/lTJ1/BQjzS9Z/1Z17sR1x8qrgxICfXAYrfscqZ9Pkfh0P+n+ocIQMKOatV/R1ornsXWZBu0bILJ9N1pvv9Wgi997ByVQZc2lfvrNurrW3Gpd9dAw519pA0Og1gXxvfkccnCZNTfx5SEubuuweiGbkVUJTQdWqpdQsfV1iteuJrKtg/gX3yGSSWu64q0XKX3+KSSP5zIcYjxBbPtOorv2TPWFm9JND+Jra2XyyAkubt2BHh7NBnsmTq6vlPLiRcilHvTRvxATk/8kllweqo/tRamuvAyMHh4jvGYzQs80tpXcU4yy5DqM+ATG+QtZg7dFYNZsAvwnOzFdunSY6g6tap7ZWnOCe+WinB2YK7//xCwEVjfnCfZMGIfA1ST1H/gA5ZbGS44XBunjvxDe9OrCcMDdUEvl17uRykoswCIWZ/SBp0kNDi8MAqQFgbOHkH1eC7ARiRFasQ7k/J5EC7MLTWkc+L0LuXyKQDRG6Mb1eVffITDnVnp0L0pt0HpE7+1j6J6WheVA+cstlL/9hgU62v4u0ff3LSwC5gtMzcCPFujBwL2g5r+BC9oDZvCaviMZAtevLYj6DoH5ZK35M/NqOHhD03yP5jxfkLPQNJrKHe0gyYy91p4zwPkWFpSAGqix8muhwflw5DxfUAIibX7kMj+nTH8MyhnnrAsLSiD/cK+M6BD4P1SeK4fjgOOATQWcErIpoO3ljgO2JbQZ4G8j5bOgubd7ywAAAABJRU5ErkJggg==",
-  //               "width": 48,
-  //               "height": 48
-  //             },
-  //             "left": 150,
-  //             "top": 12,
-  //             "id": "\u0000series\u00000\u00000",
-  //             "parentOption": null,
-  //             "hv": [
-  //               true,
-  //               true
-  //             ]
-  //           },
-  //           {
-  //             "type": "text",
-  //             "style": {
-  //               "text": "Tesla Inc",
-  //               "font": "bold 18px Inter, arial",
-  //               "fill": "#3e4763",
-  //               "align": null,
-  //               "verticalAlign": null,
-  //               "textBaseline": null,
-  //               "textVerticalAlign": null
-  //             },
-  //             "left": 210,
-  //             "top": 26,
-  //             "id": "\u0000series\u00001\u00000",
-  //             "parentOption": null,
-  //             "hv": [
-  //               true,
-  //               true
-  //             ]
-  //           }
-  //         ]
-  //       }
-  //     ],
-  //     "axisPointer": [
-  //       {
-  //         "show": "auto",
-  //         "z": 50,
-  //         "type": "line",
-  //         "snap": false,
-  //         "triggerTooltip": true,
-  //         "value": null,
-  //         "status": null,
-  //         "link": [],
-  //         "animation": null,
-  //         "animationDurationUpdate": 200,
-  //         "lineStyle": {
-  //           "color": "#B9BEC9",
-  //           "width": 1,
-  //           "type": "dashed"
-  //         },
-  //         "shadowStyle": {
-  //           "color": "rgba(210,219,238,0.2)"
-  //         },
-  //         "label": {
-  //           "show": true,
-  //           "formatter": null,
-  //           "precision": "auto",
-  //           "margin": 3,
-  //           "color": "#fff",
-  //           "padding": [
-  //             5,
-  //             7,
-  //             5,
-  //             7
-  //           ],
-  //           "backgroundColor": "auto",
-  //           "borderColor": null,
-  //           "borderWidth": 0,
-  //           "borderRadius": 3
-  //         },
-  //         "handle": {
-  //           "show": false,
-  //           "icon": "M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4h1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7v-1.2h6.6z M13.3,22H6.7v-1.2h6.6z M13.3,19.6H6.7v-1.2h6.6z",
-  //           "size": 45,
-  //           "margin": 50,
-  //           "color": "#333",
-  //           "shadowBlur": 3,
-  //           "shadowColor": "#aaa",
-  //           "shadowOffsetX": 0,
-  //           "shadowOffsetY": 2,
-  //           "throttle": 40
-  //         }
-  //       }
-  //     ],
-  //     "tooltip": [
-  //       {
-  //         "trigger": "item",
-  //         "triggerOn": "mousemove",
-  //         "z": 60,
-  //         "show": true,
-  //         "showContent": true,
-  //         "alwaysShowContent": false,
-  //         "displayMode": "single",
-  //         "renderMode": "auto",
-  //         "confine": null,
-  //         "showDelay": 0,
-  //         "hideDelay": 100,
-  //         "transitionDuration": 0.4,
-  //         "enterable": false,
-  //         "backgroundColor": "#fff",
-  //         "shadowBlur": 10,
-  //         "shadowColor": "rgba(0, 0, 0, .2)",
-  //         "shadowOffsetX": 1,
-  //         "shadowOffsetY": 2,
-  //         "borderRadius": 4,
-  //         "borderWidth": 1,
-  //         "padding": null,
-  //         "extraCssText": "",
-  //         "axisPointer": {
-  //           "type": "line",
-  //           "axis": "auto",
-  //           "animation": "auto",
-  //           "animationDurationUpdate": 200,
-  //           "animationEasingUpdate": "exponentialOut",
-  //           "crossStyle": {
-  //             "color": "#999",
-  //             "width": 1,
-  //             "type": "dashed",
-  //             "textStyle": {}
-  //           }
-  //         },
-  //         "textStyle": {
-  //           "color": "#666",
-  //           "fontSize": 14
-  //         }
-  //       }
-  //     ],
-  //     "yAxis": [],
-  //     "xAxis": [],
-  //     "grid": [
-  //       {
-  //         "x": 10,
-  //         "x2": 10,
-  //         "y": 10,
-  //         "y2": 10,
-  //         "containLabel": true,
-  //         "borderWidth": 0,
-  //         "left": 10,
-  //         "top": 10,
-  //         "right": 10,
-  //         "bottom": 10,
-  //         "show": false,
-  //         "z": 0,
-  //         "backgroundColor": "rgba(0,0,0,0)",
-  //         "borderColor": "#ccc"
-  //       }
-  //     ],
-  //     "series": [
-  //       {
-  //         "type": "sankey",
-  //         "layout": "none",
-  //         "emphasis": {
-  //           "focus": "adjacency",
-  //           "label": {
-  //             "show": true
-  //           },
-  //           "lineStyle": {
-  //             "opacity": 0.5
-  //           }
-  //         },
-  //         "layoutIterations": 0,
-  //         "nodeGap": 50,
-  //         "left": 150,
-  //         "top": 120,
-  //         "bottom": 60,
-  //         "right": 110,
-  //         "itemStyle": {
-  //           "color2": "#c1c7d0"
-  //         },
-  //         "label": {
-  //           "rich": {
-  //             "green": {
-  //               "color": "#2ba02d",
-  //               "fontWeight": "bold",
-  //               "fontSize": 11
-  //             },
-  //             "red": {
-  //               "color": "#cc0003",
-  //               "fontWeight": "bold",
-  //               "fontSize": 11
-  //             },
-  //             "blue": {
-  //               "color": "#0065fe",
-  //               "fontWeight": "bold",
-  //               "fontSize": 11
-  //             },
-  //             "black": {
-  //               "color": "#081131",
-  //               "fontWeight": "bold",
-  //               "fontSize": 11
-  //             },
-  //             "value": {
-  //               "color": "#6d7794",
-  //               "padding": [
-  //                 2,
-  //                 0,
-  //                 0,
-  //                 0
-  //               ],
-  //               "fontSize": 10
-  //             },
-  //             "append": {
-  //               "color": "#6d7794",
-  //               "padding": [
-  //                 2,
-  //                 0,
-  //                 0,
-  //                 0
-  //               ],
-  //               "fontSize": 10
-  //             }
-  //           },
-  //           "show": true,
-  //           "position": "right",
-  //           "fontSize": 12
-  //         },
-  //         "data": [
-  //           {
-  //             "name": "Automotive segment",
-  //             "value": 90738,
-  //             "depth": 0,
-  //             "itemStyle": {
-  //               "color": "#4285f4",
-  //               "align": "right"
-  //             },
-  //             "label": {
-  //               "position": [
-  //                 -125,
-  //                 "20%"
-  //               ],
-  //               "width": 125,
-  //               "overflow": "break"
-  //             },
-  //             "color": "blue",
-  //             "emphasis": {
-  //               "label": {}
-  //             }
-  //           },
-  //           {
-  //             "name": "Energy generation and storage segment",
-  //             "value": 6035,
-  //             "depth": 0,
-  //             "itemStyle": {
-  //               "color": "#4285f4",
-  //               "align": "right"
-  //             },
-  //             "label": {
-  //               "position": [
-  //                 -125,
-  //                 -10
-  //               ],
-  //               "width": 125,
-  //               "overflow": "break"
-  //             },
-  //             "color": "blue",
-  //             "emphasis": {
-  //               "label": {}
-  //             }
-  //           },
-  //           {
-  //             "name": "1-1",
-  //             "depth": 1,
-  //             "value": 24193.25,
-  //             "itemStyle": {
-  //               "color": "transparent"
-  //             },
-  //             "label": {
-  //               "show": false
-  //             },
-  //             "emphasis": {
-  //               "label": {
-  //                 "show": false
-  //               }
-  //             }
-  //           },
-  //           {
-  //             "name": "Revenue",
-  //             "depth": 1,
-  //             "value": 96773,
-  //             "itemStyle": {
-  //               "color": "#0065fe"
-  //             },
-  //             "label": {
-  //               "position": [
-  //                 "0%",
-  //                 "-40"
-  //               ],
-  //               "width": 120,
-  //               "overflow": "break"
-  //             },
-  //             "color": "black",
-  //             "emphasis": {
-  //               "label": {}
-  //             }
-  //           },
-  //           {
-  //             "name": "2-1",
-  //             "depth": 2,
-  //             "value": 18144.9375,
-  //             "itemStyle": {
-  //               "color": "transparent"
-  //             },
-  //             "label": {
-  //               "show": false
-  //             },
-  //             "emphasis": {
-  //               "label": {
-  //                 "show": false
-  //               }
-  //             }
-  //           },
-  //           {
-  //             "name": "Gross Profit",
-  //             "depth": 2,
-  //             "value": 17660,
-  //             "itemStyle": {
-  //               "color": "#2ba02d"
-  //             },
-  //             "label": {
-  //               "position": "top",
-  //               "width": 120,
-  //               "overflow": "break"
-  //             },
-  //             "color": "green",
-  //             "append": [
-  //               {
-  //                 "name": "Margin",
-  //                 "value": "18.25%"
-  //               }
-  //             ],
-  //             "emphasis": {
-  //               "label": {}
-  //             }
-  //           },
-  //           {
-  //             "name": "COGS",
-  //             "depth": 2,
-  //             "value": 79113,
-  //             "itemStyle": {
-  //               "color": "#cc0003"
-  //             },
-  //             "label": {
-  //               "position": "bottom",
-  //               "width": 110,
-  //               "overflow": "break"
-  //             },
-  //             "color": "red",
-  //             "emphasis": {
-  //               "label": {}
-  //             }
-  //           },
-  //           {
-  //             "name": "3-1",
-  //             "depth": 3,
-  //             "value": 9072.46875,
-  //             "itemStyle": {
-  //               "color": "transparent"
-  //             },
-  //             "label": {
-  //               "show": false
-  //             },
-  //             "emphasis": {
-  //               "label": {
-  //                 "show": false
-  //               }
-  //             }
-  //           },
-  //           {
-  //             "name": "Operating Income",
-  //             "depth": 3,
-  //             "value": 8891,
-  //             "itemStyle": {
-  //               "color": "#2ba02d"
-  //             },
-  //             "label": {
-  //               "position": "top",
-  //               "width": 120,
-  //               "overflow": "break"
-  //             },
-  //             "color": "green",
-  //             "append": [
-  //               {
-  //                 "name": "Margin",
-  //                 "value": "9.19%"
-  //               }
-  //             ],
-  //             "emphasis": {
-  //               "label": {}
-  //             }
-  //           },
-  //           {
-  //             "name": "Net Interest Income",
-  //             "depth": 3,
-  //             "value": 910,
-  //             "itemStyle": {
-  //               "color": "#2ba02d"
-  //             },
-  //             "label": {
-  //               "position": [
-  //                 "-50",
-  //                 "-20"
-  //               ],
-  //               "width": 110,
-  //               "overflow": "break"
-  //             },
-  //             "color": "green",
-  //             "emphasis": {
-  //               "label": {}
-  //             }
-  //           },
-  //           {
-  //             "name": "Other Income (Expense)",
-  //             "depth": 3,
-  //             "value": 172,
-  //             "itemStyle": {
-  //               "color": "#2ba02d"
-  //             },
-  //             "label": {
-  //               "position": "bottom",
-  //               "width": 120,
-  //               "overflow": "break"
-  //             },
-  //             "color": "green",
-  //             "emphasis": {
-  //               "label": {}
-  //             }
-  //           },
-  //           {
-  //             "name": "3-2",
-  //             "depth": 3,
-  //             "value": 1,
-  //             "itemStyle": {
-  //               "color": "transparent"
-  //             },
-  //             "label": {
-  //               "show": false
-  //             },
-  //             "emphasis": {
-  //               "label": {
-  //                 "show": false
-  //               }
-  //             }
-  //           },
-  //           {
-  //             "name": "Total Operating Expense",
-  //             "depth": 3,
-  //             "value": 8769,
-  //             "itemStyle": {
-  //               "color": "#cc0003"
-  //             },
-  //             "label": {
-  //               "position": "bottom",
-  //               "width": 120,
-  //               "overflow": "break"
-  //             },
-  //             "color": "red",
-  //             "emphasis": {
-  //               "label": {}
-  //             }
-  //           },
-  //           {
-  //             "name": "4-1",
-  //             "depth": 4,
-  //             "value": 1,
-  //             "itemStyle": {
-  //               "color": "transparent"
-  //             },
-  //             "label": {
-  //               "show": false
-  //             },
-  //             "emphasis": {
-  //               "label": {
-  //                 "show": false
-  //               }
-  //             }
-  //           },
-  //           {
-  //             "name": "Pretax Income",
-  //             "depth": 4,
-  //             "value": 9973,
-  //             "itemStyle": {
-  //               "color": "#2ba02d"
-  //             },
-  //             "label": {
-  //               "position": "top",
-  //               "width": 120,
-  //               "overflow": "break"
-  //             },
-  //             "color": "green",
-  //             "append": [
-  //               {
-  //                 "name": "Margin",
-  //                 "value": "10.31%"
-  //               }
-  //             ],
-  //             "emphasis": {
-  //               "label": {}
-  //             }
-  //           },
-  //           {
-  //             "name": "4-2",
-  //             "depth": 4,
-  //             "value": 27217.40625,
-  //             "itemStyle": {
-  //               "color": "transparent"
-  //             },
-  //             "label": {
-  //               "show": false
-  //             },
-  //             "emphasis": {
-  //               "label": {
-  //                 "show": false
-  //               }
-  //             }
-  //           },
-  //           {
-  //             "name": "SG&A",
-  //             "depth": 4,
-  //             "value": 4800,
-  //             "itemStyle": {
-  //               "color": "#cc0003"
-  //             },
-  //             "label": {
-  //               "position": "right",
-  //               "width": 110,
-  //               "overflow": "break"
-  //             },
-  //             "color": "red",
-  //             "emphasis": {
-  //               "label": {}
-  //             }
-  //           },
-  //           {
-  //             "name": "R&D",
-  //             "depth": 4,
-  //             "value": 3969,
-  //             "itemStyle": {
-  //               "color": "#cc0003"
-  //             },
-  //             "label": {
-  //               "position": "right",
-  //               "width": 110,
-  //               "overflow": "break"
-  //             },
-  //             "color": "red",
-  //             "emphasis": {
-  //               "label": {}
-  //             }
-  //           },
-  //           {
-  //             "name": "Net Income",
-  //             "depth": 5,
-  //             "value": 14999,
-  //             "itemStyle": {
-  //               "color": "#2ba02d"
-  //             },
-  //             "label": {
-  //               "width": 120,
-  //               "overflow": "break"
-  //             },
-  //             "color": "green",
-  //             "append": [
-  //               {
-  //                 "name": "Margin",
-  //                 "value": "15.50%"
-  //               }
-  //             ],
-  //             "emphasis": {
-  //               "label": {}
-  //             }
-  //           },
-  //           {
-  //             "name": "Minority Interests",
-  //             "depth": 5,
-  //             "value": -25,
-  //             "itemStyle": {
-  //               "color": "#2ba02d"
-  //             },
-  //             "label": {
-  //               "width": 120,
-  //               "overflow": "break"
-  //             },
-  //             "color": "red",
-  //             "emphasis": {
-  //               "label": {}
-  //             }
-  //           },
-  //           {
-  //             "name": "Tax",
-  //             "depth": 5,
-  //             "value": -5001,
-  //             "itemStyle": {
-  //               "color": "#2ba02d"
-  //             },
-  //             "label": {
-  //               "position": "right",
-  //               "width": 120,
-  //               "overflow": "break"
-  //             },
-  //             "color": "red",
-  //             "append": [
-  //               {
-  //                 "name": "Tax Rate",
-  //                 "value": "-50.15%"
-  //               }
-  //             ],
-  //             "emphasis": {
-  //               "label": {}
-  //             }
-  //           }
-  //         ],
-  //         "links": [
-  //           {
-  //             "source": "Automotive segment",
-  //             "value": 90738,
-  //             "target": "Revenue",
-  //             "lineStyle": {
-  //               "color": "#85b2f9",
-  //               "opacity": 0.8
-  //             }
-  //           },
-  //           {
-  //             "source": "Energy generation and storage segment",
-  //             "value": 6035,
-  //             "target": "Revenue",
-  //             "lineStyle": {
-  //               "color": "#85b2f9",
-  //               "opacity": 0.8
-  //             }
-  //           },
-  //           {
-  //             "source": "Revenue",
-  //             "value": 17660,
-  //             "target": "Gross Profit",
-  //             "lineStyle": {
-  //               "color": "#99ce9a",
-  //               "opacity": 0.8
-  //             }
-  //           },
-  //           {
-  //             "source": "Revenue",
-  //             "value": 79113,
-  //             "target": "COGS",
-  //             "lineStyle": {
-  //               "color": "#e18584",
-  //               "opacity": 0.8
-  //             }
-  //           },
-  //           {
-  //             "source": "Gross Profit",
-  //             "value": 8891,
-  //             "target": "Operating Income",
-  //             "lineStyle": {
-  //               "color": "#99ce9a",
-  //               "opacity": 0.8
-  //             }
-  //           },
-  //           {
-  //             "source": "Gross Profit",
-  //             "value": 8769,
-  //             "target": "Total Operating Expense",
-  //             "lineStyle": {
-  //               "color": "#e18584",
-  //               "opacity": 0.8
-  //             }
-  //           },
-  //           {
-  //             "source": "Total Operating Expense",
-  //             "value": 4800,
-  //             "target": "SG&A",
-  //             "lineStyle": {
-  //               "color": "#e18584",
-  //               "opacity": 0.8
-  //             }
-  //           },
-  //           {
-  //             "source": "Total Operating Expense",
-  //             "value": 3969,
-  //             "target": "R&D",
-  //             "lineStyle": {
-  //               "color": "#e18584",
-  //               "opacity": 0.8
-  //             }
-  //           },
-  //           {
-  //             "source": "Operating Income",
-  //             "value": 8891,
-  //             "target": "Pretax Income",
-  //             "lineStyle": {
-  //               "color": "#99ce9a",
-  //               "opacity": 0.8
-  //             }
-  //           },
-  //           {
-  //             "source": "Net Interest Income",
-  //             "value": 910,
-  //             "target": "Pretax Income",
-  //             "lineStyle": {
-  //               "color": "#99ce9a",
-  //               "opacity": 0.8
-  //             }
-  //           },
-  //           {
-  //             "source": "Other Income (Expense)",
-  //             "value": 172,
-  //             "target": "Pretax Income",
-  //             "lineStyle": {
-  //               "color": "#99ce9a",
-  //               "opacity": 0.8
-  //             }
-  //           },
-  //           {
-  //             "source": "Pretax Income",
-  //             "value": 14974,
-  //             "target": "Net Income",
-  //             "lineStyle": {
-  //               "color": "#99ce9a",
-  //               "opacity": 0.8
-  //             }
-  //           },
-  //           {
-  //             "source": "Pretax Income",
-  //             "value": -5001,
-  //             "target": "Tax",
-  //             "lineStyle": {
-  //               "color": "#99ce9a",
-  //               "opacity": 0.8
-  //             }
-  //           },
-  //           {
-  //             "source": "Pretax Income",
-  //             "value": -25,
-  //             "target": "Minority Interests",
-  //             "lineStyle": {
-  //               "color": "#99ce9a",
-  //               "opacity": 0.8
-  //             }
-  //           }
-  //         ],
-  //         "tooltip": {},
-  //         "z": 2,
-  //         "coordinateSystem": "view",
-  //         "orient": "horizontal",
-  //         "nodeWidth": 20,
-  //         "draggable": true,
-  //         "levels": [],
-  //         "nodeAlign": "justify",
-  //         "lineStyle": {
-  //           "color": "#314656",
-  //           "opacity": 0.2,
-  //           "curveness": 0.5
-  //         },
-  //         "select": {
-  //           "itemStyle": {
-  //             "borderColor": "#212121"
-  //           }
-  //         },
-  //         "animationEasing": "linear",
-  //         "animationDuration": 1000
-  //       }
-  //     ],
-  //     "visualMap": [],
-  //     "dataZoom": [],
-  //     "markArea": [],
-  //     "markLine": [],
-  //     "markPoint": [],
-  //     "legend": []
-  //   };
-</script>
