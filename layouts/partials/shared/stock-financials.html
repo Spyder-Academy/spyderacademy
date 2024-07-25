@@ -243,7 +243,7 @@
         get_node("Interest Expense", quarterlyEarnings.interest_expense, 5, "out"),
         get_node("SG&A", quarterlyEarnings.selling_general_and_administrative_expenses, 5, "out"),
         get_node("R&D", quarterlyEarnings.research_and_development, 5, "out"),
-        get_node("Other", quarterlyEarnings.other_expenses, 5, "out"),
+        get_node("Other Expenses", quarterlyEarnings.other_expenses, 5, "out"),
     ];
 
 
@@ -284,7 +284,7 @@
         get_link("PreTax Income", "Interest Expense", quarterlyEarnings.interest_expense, "out"),
         get_link("Operating Expense", "SG&A", quarterlyEarnings.selling_general_and_administrative_expenses, "out"),
         get_link("Operating Expense", "R&D", quarterlyEarnings.research_and_development, "out"),
-        get_link("Operating Expense", "Other", quarterlyEarnings.other_expenses, "out"),
+        get_link("Operating Expense", "Other Expenses", quarterlyEarnings.other_expenses, "out"),
         get_link("Revenue", "COGS", quarterlyEarnings.cost_of_revenue, "out"),
     ];
 
