@@ -112,7 +112,9 @@
   async function renderChart() {
     const quarterlyEarnings = await fetchData();
 
-    var product_nodes = quarterlyEarnings.revenue_sources.map(source => ({
+    var product_nodes = quarterlyEarnings.revenue_sources.filter(source => !source.name.includes("Total"));
+
+    product_nodes = product_nodes.map(source => ({
             "name": source.name,
             "value": parseFloat(source.value) || 0,
             "depth": 0,
@@ -120,7 +122,7 @@
             "append": {name: "Amount", value: monetize(source.value, quarterlyEarnings.revenue)}
         }))
 
-    product_nodes = quarterlyEarnings.revenue_sources.reduce((acc, source) => {
+    product_nodes = product_nodes.reduce((acc, source) => {
       const existingNode = acc.find(node => node.name === source.name);
 
       if (existingNode) {
@@ -179,7 +181,7 @@
 
     function get_node(n, v, d, type){
       const color = (type == "out") ? get_expense_color(v) : get_income_color(v);
-
+      v = parseFloat(v) || 0
 
       return {
         "name": n, 
@@ -203,6 +205,7 @@
 
     function get_link(s, d, v, type){
       var color = ""
+      v = (parseFloat(v) || 0)
       if (v == 0){
         color = "transparent"
       }
@@ -248,8 +251,9 @@
 
 
     // Extract links
-
-    var product_links = quarterlyEarnings.revenue_sources.reduce((acc, source) => {
+    var product_links = quarterlyEarnings.revenue_sources.filter(source => !source.name.includes("Total"));
+    
+    product_links = quarterlyEarnings.revenue_sources.reduce((acc, source) => {
       const existingNode = acc.find(node => node.source === source.name);
 
       if (existingNode) {
@@ -288,8 +292,8 @@
         get_link("Revenue", "COGS", quarterlyEarnings.cost_of_revenue, "out"),
     ];
 
-    // console.log("Data Node: ", nodes)
-    // console.log("Data Links: ", links)
+    console.log("Data Node: ", nodes)
+    console.log("Data Links: ", links)
     // Define the chart options
     var option = {
       "mode": 1,
