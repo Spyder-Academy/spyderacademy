@@ -4126,7 +4126,8 @@ class Trades {
         let epsData = financial_data["income_statements"].map(item => {
             return {
               x: item["Calendar Date"],
-              y: item["Basic EPS"]
+              y: item["Basic EPS"],
+              fillColor: item["Basic EPS"] < 0 ? "#cc0003" : "#2ba02d"
             };
         });
 
@@ -4274,11 +4275,12 @@ class Trades {
               }
             },
             yaxis: {
-                labels: {
-                    formatter: function (value) {
-                        return `${value}`;
-                    }
-                }
+              forceNiceScale: true,
+              labels: {
+                  formatter: function (value) {
+                      return `${value.toFixed(2)}`;
+                  }
+              }
             },
             markers: {
               shape: ['circle'],
