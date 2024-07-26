@@ -113,7 +113,10 @@
   async function renderChart() {
     const quarterlyEarnings = await fetchData();
 
-    var product_nodes = quarterlyEarnings.revenue_sources.filter(source => !source.name.includes("Total"));
+    var product_nodes = quarterlyEarnings.revenue_sources.filter(source => 
+      !source.name.includes("Total ") && 
+      !source.name.includes("All ")
+    );
 
     product_nodes = product_nodes.map(source => ({
             "name": source.name,
@@ -124,10 +127,10 @@
         }))
 
     product_nodes = product_nodes.reduce((acc, source) => {
-      const existingNode = acc.find(node => node.name === source.name);
+      const existingNode = acc.find(node => (node.name === source.name));
 
-      if (existingNode) {
-          existingNode.value += (parseFloat(source.value)  || 0);
+      if (existingNode && source.value != 0) {
+          existingNode.value = (parseFloat(source.value) || 0);
       } 
       else {
           acc.push({
@@ -252,13 +255,16 @@
 
 
     // Extract links
-    var product_links = quarterlyEarnings.revenue_sources.filter(source => !source.name.includes("Total"));
+    var product_links = quarterlyEarnings.revenue_sources.filter(source => 
+      !source.name.includes("Total ") && 
+      !source.name.includes("All ")
+    );
     
-    product_links = quarterlyEarnings.revenue_sources.reduce((acc, source) => {
+    product_links = product_links.reduce((acc, source) => {
       const existingNode = acc.find(node => node.source === source.name);
 
-      if (existingNode) {
-        existingNode.value += (parseFloat(source.value) || 0);
+      if (existingNode && source.value != 0) {
+        existingNode.value = (parseFloat(source.value) || 0);
       } else {
         acc.push({
           "source": source.name,
