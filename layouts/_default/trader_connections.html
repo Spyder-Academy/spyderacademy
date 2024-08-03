@@ -1,0 +1,62 @@
+{{ define "main" }}
+<section class="section pt-1 pb-5 bg-dark">
+    <div class="container-fluid " style="position: relative; overflow-x: hidden;">
+        
+        <div class="row p-0 m-0">
+            <!-- Left Panel -->
+            <div class="col-lg-2 col-sm-12 d-none d-lg-block p-0">
+                {{ partial "social/profile_card" }}
+            </div>
+            <!-- Main Content Area -->
+            <div class="col-lg-10 col-sm-12 p-0">
+                <div class="container-fluid p-0 m-0 h-100">
+                    <div class="row h-100">
+                        <div class="col-12 my-0">
+                            <div class="card h-100 border-0 px-3 mx-lg-3 lg-rounded">
+                                <div class="row p-0 m-0 justify-content-center ">
+                                    {{ partial "social/social_navbar" }}
+                                </div>
+                                <div class="container-fluid p-0">
+                                    <div class="row">
+                                        <div class="col-12"><h1 class="gradient-text text-uppercase">Discover The Best Traders</h1></div>
+                                    </div>
+                                    <div class="row discover_cards">
+                                        <div class="col-lg-3 p-0 py-lg-3 profile-card-template d-none">
+                                            {{ partial "social/profile_card_sm" }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+
+    <!-- Load Shared JS -->
+
+    <script>
+
+        let tradeSocial = null;
+
+        $(document).ready(function() {
+            var handle = null
+            var tradeSocial = new TradeSocial();
+            
+            // get the member from the url
+            handle = window.location.hash.substring(1); // Removes the '#' from the hash
+
+            tradeSocial.getMemberDetails(handle).then(memberProfile => {
+                tradeSocial.getMemberTrades(handle).then(trades => {
+                    tradeSocial.renderProfileCard(memberProfile, trades);
+                    tradeSocial.list_users()
+                });
+            })
+
+        });
+
+    </script>
+</section>
+{{ end }}

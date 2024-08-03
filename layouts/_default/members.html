@@ -42,7 +42,7 @@
                 <div class="col-lg-2 col-sm-12 my-1">
                     <div class="card  border-1 p-3" style="background-color: #FFF; ">
                         <div class="details">
-                            <p class="small p-0 m-0">AVG GAIN (<span id="numTrades"></span>)</p>
+                            <p class="small p-0 m-0">AVG GAIN (<span id="numTrades"></span> Trades)</p>
                             <h4 id="avgGain"></h4>
                         </div>
                     </div>
@@ -334,10 +334,10 @@
        }
 
        function addManualTrade(){
-            var success = userTrades.addManualTrade();
+            var success = tradeSocial.addManualTrade();
             if (success){
                 hideTradeEntry();
-                userTrades.updateCharts();
+                tradeSocial.updateCharts();
             }
             else{
                 $('#tradeErrorMessage').show()
@@ -361,10 +361,10 @@
     //    }
 
        async function addExecutionTrade(){
-            var success = await userTrades.addExecutionTrade();
+            var success = await tradeSocial.addExecutionTrade();
             if (success){
                 hideTradeExecution();
-                userTrades.updateCharts();
+                tradeSocial.updateCharts();
             }
             else{
                 $('#tradeExecutionErrorMessage').show()
@@ -372,10 +372,10 @@
        }
 
        async function deleteTrade(){
-            var success = await userTrades.deleteTrade();
+            var success = await tradeSocial.deleteTrade();
             if (success){
                 hideTradeExecution();
-                userTrades.updateCharts();
+                tradeSocial.updateCharts();
             }
             else{
                 $('#tradeExecutionErrorMessage').show()
@@ -447,14 +447,14 @@
 
             $('#titleUser').text(title);
 
-            userTrades.selectUser(userid);
-            userTrades.updateCharts();
+            tradeSocial.selectUser(userid);
+            tradeSocial.updateCharts();
         }
 
 
         function selectContract(el){
             // if (firebase.auth().currentUser){
-                userTrades.renderTVChart($(el), $(el).attr("tradeid"));
+                tradeSocial.renderTVChart($(el), $(el).attr("tradeid"));
                 $(el).find(".membersOnlyContent").show();
                 $(el).find(".membersOnlyFiller").hide();
             // }
@@ -502,10 +502,10 @@
             }
         }
 
-        let userTrades = null;
+        let tradeSocial = null;
 
         $(document).ready(function() {
-            userTrades = new Trades();
+            tradeSocial = new TradeSocial();
 
             firebase.auth().onAuthStateChanged((user) => {
                 if (user) {

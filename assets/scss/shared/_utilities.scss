@@ -602,4 +602,155 @@ ul li {
     flex: 0 0 auto; /* Ensure items don't shrink */
 }
 
+.user_profile {
+  // background: linear-gradient(90deg, #0cc0df, #ffde59);
+}
 
+.tracking-wide{
+  letter-spacing: 0.05em
+}
+
+@include media-breakpoint-down(sm){ /* Small screens and down */
+  .contract-details-card {
+    width: 200px;
+    right: -100%;
+    display: none;
+  }
+  .contract-details-card.show {
+    left: 0;
+    width: 100%;
+  }
+}
+
+@include media-breakpoint-up(lg) { /* Large screens and up */
+  .contract-details-card {
+    width: 500px;
+    right: -100%;
+    transition: right 0.3s ease-in-out;
+  }
+  .contract-details-card.show {
+    width: 500px;
+    right: 0;
+    transition: right 0.3s ease-in-out;
+
+  }
+
+
+  .notch{
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+  }
+}
+
+
+.contract-details-card {
+  position: absolute;
+  top: 0;
+  right: -100%;
+  height: 100%;
+  background-color: transparent;
+  z-index: 9999;
+  padding: 0;
+}
+
+.contract-details-card .details-card {
+  background-color: #446678;
+  min-height: 100%;
+}
+.contract-details-card.show {
+  display: block;
+}
+
+.gradient-green {
+  background: linear-gradient(90deg, #0cc0df, #ffde59);
+  border: 0;
+}
+
+.gradient-profile-card {
+  background: linear-gradient(135deg, #000000, #3533cd);
+  color: #fff;
+  border: 0;
+}
+.gradient-profile-card.gold-card {
+  // background: linear-gradient(135deg, #000000, #c89116);
+  background-image: repeating-linear-gradient(to right, #a2682a 0%, #be8c3c 8%, #be8c3c 18%, #d3b15f 27%, #faf0a0 35%, #ffffc2 40%, #faf0a0 50%, #d3b15f 58%, #be8c3c 67%, #b17b32 77%, #bb8332 83%, #d4a245 88%, #e1b453 93%, #a4692a 100%);
+	background-size: 400% 400%;
+	animation: gradient 16s ease-in-out infinite;
+}
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+
+.gradient-text {
+  font-size: 3em;
+  font-weight: bold;
+  background: -webkit-linear-gradient(#0cc0df, #ffde59);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  overflow: hidden; /* Ensure the shimmer stays within the text bounds */
+}
+
+.gradient-text::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  height: 100%;
+  width: 150%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+}
+
+
+
+
+.user_profile .card-up {
+  height: 150px;
+  overflow: hidden;
+  border-radius: 15px;
+  background-size: cover;
+}
+.user_profile .avatar {
+  width: 110px;
+  margin-top: -60px;
+  overflow: hidden;
+  border: 3px solid #fff;
+  border-radius: 50%;
+}
+.discover_cards .user_profile:hover{
+  transform:scale(1.05);
+}
+
+.notch {
+  background-color: #343a40; /* Dark background to mimic the notch */
+  
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notch .nav-pills .nav-link {
+  background-color: transparent;
+  color: white;
+  border-radius: 50%;
+  margin: 0 5px;
+  padding: 0.5em;
+  font-size: 1.5rem;
+}
+
+.notch .nav-pills .nav-link.active {
+  background-color: white; /* Active button background color */
+  color: #343a40; /* Active button icon color */
+}

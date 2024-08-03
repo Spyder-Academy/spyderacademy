@@ -27,8 +27,12 @@
     {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
   {{ end -}}
 
-  {{- $tradesJS := resources.Get "js/shared/trades.js" -}}
-  <script src="{{ $tradesJS.Permalink }}" defer></script> 
+  {{- $tradesRecordJS := resources.Get "js/shared/trade_record.js" -}}
+  {{- $tradeSocialJS := resources.Get "js/shared/trade_social.js" -}}
+  {{- $tradePlannerJS := resources.Get "js/shared/trade_planner.js" -}}
+  <script src="{{ $tradesRecordJS.Permalink }}" defer></script> 
+  <script src="{{ $tradeSocialJS.Permalink }}" defer></script> 
+  <script src="{{ $tradePlannerJS.Permalink }}" defer></script> 
 
   <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 

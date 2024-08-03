@@ -1,0 +1,176 @@
+{{ define "main" }}
+<section class="section pt-1 pb-5 bg-dark">
+    <div class="container-fluid " style="position: relative; overflow-x: hidden;">
+        
+        <div class="row p-0 m-0">
+            <!-- Left Panel -->
+            <div class="col-lg-2 col-sm-12 d-none d-lg-block p-0">
+                {{ partial "social/profile_card" }}
+            </div>
+            <!-- Main Content Area -->
+            <div class="col-lg-10 col-sm-12 p-0">
+                <div class="container-fluid p-0 m-0 h-100">
+                    <div class="row h-100" id="memberTrades">
+                        <div class="col-12 my-0">
+                            <div class="card h-100 border-0 px-3 mx-lg-3 lg-rounded">
+                                <div class="row p-0 m-0 justify-content-center ">
+                                    {{ partial "social/social_navbar" }}
+                                </div>
+                                <div class="container-fluid p-0">
+                                    <div class="row">
+                                        <div class="col-12"><h1 class="gradient-text text-uppercase p-lg-3">Trade Social</h1></div>
+                                    </div>
+                                    <div class="row">
+                                        <!-- Latest Trades -->
+                                        <div class="col-lg-6 col-12">
+                                            <div class="row p-lg-3 p-sm-0" id="tradeRecap">
+                                                <!-- trade-card-template gets pasted into here -->
+                                            </div>
+                                        </div>
+                                        <!-- Top Winners -->
+                                        <div class="col-lg-6 col-sm-12">
+                                            <div class="card border-0 lg-rounded p-lg-3 p-sm-0">
+                                                <div id="tradeScoreboard"></div>
+                                            </div>
+                                            <!-- Calendar Heatmap -->
+                                            <div class="card border-0 lg-rounded mt-5 p-lg-3 p-sm-0">
+                                                <div  id="tradeHeatmap"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-sm-12 my-1">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sliding Card -->
+        <div id="contractDetailsCard" class="contract-details-card">
+            <div class="details-card card border-0 shadow d-flex lg-rounded">
+                <div class="card-body">
+                    <div class="contract_banner card  border-0 p-2 mx-0 my-lg-1 lg-rounded gradient-green" >
+                        <div class="card-body p-1 tradeRow">
+                            <div class="container p-0">
+                                <div class="row align-items-center">
+                                    <div class="col-2 m-0">
+                                        <img class="tradeLogo" src="" style="width: 3em; border-radius: 2em; border: 3px solid white;" />
+                                    </div>
+                                    <div class="col-10 px-3">
+                                        <div class="row">
+                                            <div class="col-8 small lh-1 fw-bold text-uppercase traderName tracking-wide"></div>
+                                            <div class="col-4"></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-8 fs-3 lh-1 tradeContract tracking-wide"></div>
+                                            <div class="col-4 fs-3 lh-1 tradeGain text-end"></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-10  small lh-1 tradeNotes text-muted text-uppercase tracking-wide" style="overflow: hidden; text-overflow: ellipses; white-space: nowrap;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="my-3 py-3 card shadow border-0 lg-rounded bg-black">
+                        <div class="tvChartHeader"></div>
+                    </div>
+                    <div class="entryExitNotes small lh-1 p-3 card shadow border-0" style="border-radius: 1em; background-color: #BFE1CF;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+
+    <!-- Trade Card Template -->
+    <div class="col-lg-12 col-sm-12 trade-card-template d-none  ">
+        <div class="card border-1 p-2 mx-0 my-1 lg-rounded gradient-green" >
+            <div class="card-body p-1 tradeRow" onclick="selectContract(this);">
+                <div class="container p-0">
+                    <div class="row align-items-center">
+                        <div class="col-lg-1 col-2 m-0">
+                            <img class="tradeLogo" src="/images/logos/TSLA.png" style="width: 3em; border-radius: 2em; border: 3px solid white;" />
+                        </div>
+                        <div class="col-lg-11 col-10 px-3">
+                            <div class="row ">
+                                <div class="col-8 small lh-1 fw-bold text-uppercase traderName text-nowrap">Trader Name</div>
+                                <div class="col-4"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8 fs-3 lh-1 tradeContract text-nowrap ">Contract</div>
+                                <div class="col-4 fs-3 lh-1 tradeGain text-end">Gains %</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-10  small lh-1 tradeNotes text-muted text-uppercase" style="overflow: hidden; text-overflow: ellipses; white-space: nowrap;">Trade Notes</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Shared JS -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+	<script type="text/javascript" src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+
+    <script>
+
+        let tradeSocial = null;
+
+        function selectContract(el){
+            event.stopPropagation();
+            const tradeid = $(el).attr("tradeid")
+            tradeSocial.renderTradeDetails(tradeid);
+
+            // Scroll to the top of the page
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // Optional: adds a smooth scrolling effect
+            });
+        }
+
+
+        $(document).ready(function() {
+            tradeSocial = new TradeSocial();
+
+            var handle = null
+            
+            // get the member from the url
+            handle = window.location.hash.substring(1); // Removes the '#' from the hash
+
+            tradeSocial.getMemberDetails(handle).then(memberProfile => {
+                tradeSocial.getMemberTrades(handle).then(trades => {
+                    tradeSocial.renderProfileCard(memberProfile, trades);
+                    tradeSocial.renderTradeRecap(trades, new Date());
+                    tradeSocial.renderScoreboard(trades);
+                    tradeSocial.renderCalendar(trades);
+                });
+            })
+
+
+            // Function to handle the card click and hide on outside click
+            $(document).on('click', function(event) {
+                var contractCard = $('#contractDetailsCard');
+                
+                // If the card is visible and the click is outside of it
+                if (contractCard.hasClass('show') ) {
+                    contractCard.removeClass('show');
+                }
+            });
+
+        });
+
+    </script>
+</section>
+{{ end }}

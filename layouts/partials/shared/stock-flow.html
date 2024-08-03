@@ -27,8 +27,8 @@
         });
 
         var symbol = {{ $symbol }}
-        var userTrades = new Trades()
-        userTrades.fetchFlow(ticker=symbol);
+        var tradePlanner = new TradePlanner()
+        tradePlanner.fetchFlow(ticker=symbol);
         
     });
 </script>

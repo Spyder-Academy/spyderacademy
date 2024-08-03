@@ -155,10 +155,10 @@
           <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
           <script>
             $(document).ready(function() {
-               userTrades = new Trades();
-               userTrades.fetchEarningsCalendar();
-               userTrades.fetchScreener();
-               userTrades.fetchAllFlow();
+              tradePlanner = new TradePlanner();
+              tradePlanner.fetchEarningsCalendar();
+              tradePlanner.fetchScreener();
+              tradePlanner.fetchAllFlow();
             });
           </script>
 
@@ -208,13 +208,13 @@
                 
                 <script>
                   $(document).ready(function() {
-                    userTrades = new Trades();
-                    userTrades.fetchXPosts();
+                    tradePlanner = new TradePlanner();
+                    tradePlanner.fetchXPosts();
                   });
 
                   function refreshTweets(){
-                    userTrades = new Trades();
-                    userTrades.fetchXPosts();
+                    tradePlanner = new TradePlanner();
+                    tradePlanner.fetchXPosts();
                   }
                 </script>
               </div>
@@ -319,9 +319,9 @@
             }
 
             {{ if eq .Params.nickname "Stocks List" }}
-              userTrades = new Trades();
-              userTrades.fetchGEXByStrike("SPY", "#spyGammaChart", idx=0, historicals=true);
-              var range = userTrades.fetchIVData("SPY");
+              tradePlanner = new TradePlanner();
+              tradePlanner.fetchGEXByStrike("SPY", "#spyGammaChart", idx=0, historicals=true);
+              var range = tradePlanner.fetchIVData("SPY");
 
               // Get a reference to the range input element
               const slider = document.getElementById('gex_slider');
@@ -332,7 +332,7 @@
                   const selectedIndex = parseInt(slider.max) - parseInt(slider.value);
 
                   // Retrieve the corresponding snapshot data from your dataset
-                  userTrades.fetchGEXByStrike("SPY", "#spyGammaChart", idx=selectedIndex, historicals=true);
+                  tradePlanner.fetchGEXByStrike("SPY", "#spyGammaChart", idx=selectedIndex, historicals=true);
               });
 
             {{ end }}

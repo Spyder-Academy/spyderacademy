@@ -155,12 +155,12 @@
      <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
      <script>
        $(document).ready(function() {
-           userTrades = new Trades();
+           tradePlanner = new TradePlanner();
            
            var ticker = {{ .Page.Params.ticker }};
-           userTrades.fetchGEXByStrike(ticker, "#gammaChart", idx=0, historicals = true);
-           userTrades.fetchEMASignals(ticker);
-           userTrades.fetchTheStratSignals(ticker)
+           tradePlanner.fetchGEXByStrike(ticker, "#gammaChart", idx=0, historicals = true);
+           tradePlanner.fetchEMASignals(ticker);
+           tradePlanner.fetchTheStratSignals(ticker)
 
            // Get a reference to the range input element
            const slider = document.getElementById('gex_slider');
@@ -171,16 +171,16 @@
               const selectedIndex = parseInt(slider.max) - parseInt(slider.value);
 
               // Retrieve the corresponding snapshot data from your dataset
-              userTrades.fetchGEXByStrike(ticker, "#gammaChart", idx=selectedIndex, historicals=true);
+              tradePlanner.fetchGEXByStrike(ticker, "#gammaChart", idx=selectedIndex, historicals=true);
           });
 
           // Use an async IIFE (Immediately Invoked Function Expression) to use await
           (async function() {
               try {
-                  var range = await userTrades.fetchIVData(ticker);
+                  var range = await tradePlanner.fetchIVData(ticker);
                   if (range) {
                       const expectedMove = range;
-                      userTrades.fetchGEXOverlay(ticker, expectedMove);
+                      tradePlanner.fetchGEXOverlay(ticker, expectedMove);
                   } else {
                       console.error('Failed to fetch IV data.');
                   }

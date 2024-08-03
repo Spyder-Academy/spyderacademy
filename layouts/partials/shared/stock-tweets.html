@@ -21,7 +21,7 @@
     $(document).ready(function() {
 
         var symbol = {{ $symbol }}
-        var userTrades = new Trades()
-        userTrades.showStockTweets(ticker=symbol);
+        var tradePlanner = new TradePlanner()
+        tradePlanner.showStockTweets(ticker=symbol);
     });
 </script>

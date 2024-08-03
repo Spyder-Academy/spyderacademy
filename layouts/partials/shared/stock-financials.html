@@ -99,10 +99,10 @@
 
 <script>
   $(document).ready(function() {
-      userTrades = new Trades();
+      tradePlanner = new TradePlanner();
       
       var ticker = {{ $symbol }};
-      userTrades.fetchFinancials(ticker);
+      tradePlanner.fetchFinancials(ticker);
 
 
   });

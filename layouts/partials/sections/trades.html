@@ -40,20 +40,20 @@
 </div>
 
   <script>
-    $(document).ready(async function() {
-        userTrades = new Trades();
-        await userTrades.renderTopRecentTrades(isCarousel = true, parentElement=$('#tradesCarousel'), templateElement=$('.trade-carousel-template'))
-        // Reinitialize the carousel
-        $('#carouselTrades').carousel(
-          {interval: 2000} // Changes the slide every 2 seconds
-        );
+    // $(document).ready(async function() {
+    //     tradeSocial = new TradeSocial();
+    //     await tradeSocial.renderTopRecentTrades(isCarousel = true, parentElement=$('#tradesCarousel'), templateElement=$('.trade-carousel-template'))
+    //     // Reinitialize the carousel
+    //     $('#carouselTrades').carousel(
+    //       {interval: 2000} // Changes the slide every 2 seconds
+    //     );
 
-        // Explicitly start the carousel if needed
-        setTimeout(() => {
-          $('#carouselTrades').carousel('cycle'); // This command depends on the carousel plugin you're using
-        }, 1000); // A slight delay to ensure dynamic content is loaded and the carousel is ready
+    //     // Explicitly start the carousel if needed
+    //     setTimeout(() => {
+    //       $('#carouselTrades').carousel('cycle'); // This command depends on the carousel plugin you're using
+    //     }, 1000); // A slight delay to ensure dynamic content is loaded and the carousel is ready
 
-      });
+    //   });
 
   </script>
   

@@ -68,8 +68,8 @@ menus:
       url: "/stocks/"
       weight: 7
 
-    - name: "Alerted Trades"
-      url: "/members/"
+    - name: "Trade Social"
+      url: "/tradesocial/"
       weight: 8
 
     - name: "🔎"
@@ -111,8 +111,8 @@ menus:
       url: "/tools/"
       weight: 7
 
-    - name: "Alerted Trades"
-      url: "/members/"
+    - name: "Trade Social"
+      url: "/tradesocial/"
       weight: 8
 
     - name: "Terms of Use"
