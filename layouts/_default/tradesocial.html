@@ -1,5 +1,5 @@
 {{ define "main" }}
-<section class="section pt-1 pb-5 bg-dark">
+<section class="section pt-1 pb-2 bg-dark">
     <div class="container-fluid " style="position: relative; overflow-x: hidden;">
         
         <div class="row p-0 m-0">
@@ -12,23 +12,23 @@
                 <div class="container-fluid p-0 m-0 h-100">
                     <div class="row h-100" id="memberTrades">
                         <div class="col-12 my-0">
-                            <div class="card h-100 border-0 px-3 mx-lg-3 lg-rounded">
+                            <div class="card h-100 border-0 mx-lg-3 lg-rounded">
                                 <div class="row p-0 m-0 justify-content-center ">
                                     {{ partial "social/social_navbar" }}
                                 </div>
-                                <div class="container-fluid p-0">
+                                <div class="container-fluid px-3">
                                     <div class="row">
                                         <div class="col-12"><h1 class="gradient-text text-uppercase p-lg-3">Trade Social</h1></div>
                                     </div>
                                     <div class="row">
                                         <!-- Latest Trades -->
-                                        <div class="col-lg-6 col-12">
+                                        <div class="col-lg-6 col-12 p-0">
                                             <div class="row p-lg-3 p-sm-0" id="tradeRecap">
                                                 <!-- trade-card-template gets pasted into here -->
                                             </div>
                                         </div>
                                         <!-- Top Winners -->
-                                        <div class="col-lg-6 col-sm-12">
+                                        <div class="col-lg-6 col-sm-12 p-0">
                                             <div class="card border-0 lg-rounded p-lg-3 p-sm-0">
                                                 <div id="tradeScoreboard"></div>
                                             </div>

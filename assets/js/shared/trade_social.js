@@ -786,31 +786,34 @@ class TradeSocial {
           var isWinner = tradeEntry.gainsValue >= 0;
           var isLoser = tradeEntry.gainsValue < 0;
 
-          // Extract the month, date, and year from the exit date
-          var exit_date = (new Date(tradeEntry.exit_date_max))
-          var month = exit_date.getMonth(); //toLocaleString('default', { month: 'short' });
-          var year = exit_date.getFullYear();
-          var date = exit_date.getDate();
-          var monthKey = new Date(year, month, 1); // Include the year in the key
+          if (tradeEntry.exit_date_max != null)
+          {
+            // Extract the month, date, and year from the exit date
+            var exit_date = (new Date(tradeEntry.exit_date_max))
+            var month = exit_date.getMonth(); //toLocaleString('default', { month: 'short' });
+            var year = exit_date.getFullYear();
+            var date = exit_date.getDate();
+            var monthKey = new Date(year, month, 1); // Include the year in the key
 
-          // Create a unique key for each date
-          if (seriesData.hasOwnProperty(monthKey)) {
-              var monthData = seriesData[monthKey];
+            // Create a unique key for each date
+            if (seriesData.hasOwnProperty(monthKey)) {
+                var monthData = seriesData[monthKey];
 
-              // Find the index of the date in the monthData array
-              var dateIndex = monthData.findIndex((data) => data.x === date);
+                // Find the index of the date in the monthData array
+                var dateIndex = monthData.findIndex((data) => data.x === date);
 
-              if (dateIndex !== -1) {
-                  if (isWinner) {
-                      monthData[dateIndex].y += 1; // Increment winners count
-                  } else if (isLoser) {
-                      monthData[dateIndex].y -= 1; // Decrement losers count
-                  }
-              } else {
-                  monthData.push({ x: date, y: isWinner ? 1 : -1 });
-              }
-          } else {
-              seriesData[monthKey] = [{ x: date, y: isWinner ? 1 : -1 }];
+                if (dateIndex !== -1) {
+                    if (isWinner) {
+                        monthData[dateIndex].y += 1; // Increment winners count
+                    } else if (isLoser) {
+                        monthData[dateIndex].y -= 1; // Decrement losers count
+                    }
+                } else {
+                    monthData.push({ x: date, y: isWinner ? 1 : -1 });
+                }
+            } else {
+                seriesData[monthKey] = [{ x: date, y: isWinner ? 1 : -1 }];
+            }
           }
       })
 

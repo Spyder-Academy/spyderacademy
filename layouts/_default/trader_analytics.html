@@ -1,5 +1,5 @@
 {{ define "main" }}
-<section class="section pt-1 pb-5 bg-dark">
+<section class="section pt-1 pb-2 bg-dark">
     <div class="container-fluid " style="position: relative; overflow-x: hidden;">
         
         <div class="row p-0 m-0">
@@ -12,37 +12,37 @@
                 <div class="container-fluid p-0 m-0 h-100">
                     <div class="row h-100" id="memberTrades">
                         <div class="col-12 my-0">
-                            <div class="card h-100 border-0 px-3 mx-lg-3 lg-rounded">
+                            <div class="card h-100 border-0 mx-lg-3 lg-rounded">
                                 <div class="row p-0 m-0 justify-content-center ">
                                     {{ partial "social/social_navbar" }}
                                 </div>
-                                <div class="container-fluid p-0">
+                                <div class="container-fluid px-3 pb-3">
                                     <div class="row">
                                         <div class="col-12"><h1 class="gradient-text text-uppercase">AI Analytics</h1></div>
                                     </div>
                                     <div class="row d-flex align-items-stretch">
-                                        <div class="col-lg-4 col-sm-12 my-lg-3">
+                                        <div class="col-lg-4 col-sm-12 my-lg-3 p-lg-3 p-0 ">
                                             <div class="card  border-1 lg-rounded p-3 h-100" id="chart_wins_losses">
                                                 <h2 class='text-uppercase px-3'>Wins vs Losses</h2>
                                                 <div id="chartWinsVsLosses"></div>
                                             </div>
                                         </div>
                             
-                                        <div class="col-lg-4 col-sm-12 my-lg-3">
+                                        <div class="col-lg-4 col-sm-12 my-lg-3 p-lg-3 p-0">
                                             <div class="card  border-1 lg-rounded p-3 h-100" id="chart_drawdown_turnaround">
                                                 <h2 class='text-uppercase px-3'>Drawdown Turnaround</h2>
                                                 <div  id="chartDrawdowns"></div>
                                             </div>
                                         </div>
                             
-                                        <div class="col-lg-4 col-sm-12 my-lg-3">
+                                        <div class="col-lg-4 col-sm-12 my-lg-3 p-lg-3 p-0">
                                             <div class="card  border-1 lg-rounded p-3 h-100" id="chart_daily_radar">
                                                 <h2 class='text-uppercase px-3'>Daily Radar</h2>
                                                 <div  id="chartGainsDOWRadar"></div>
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-12 col-sm-12 my-lg-3">
+                                        <div class="col-lg-12 col-sm-12 my-lg-3 p-lg-3 p-0">
                                             <div class="card bg-dark text-white border-1 lg-rounded p-3" >
                                                 <h2 class='text-uppercase px-3'>Observations ✨ </h2>
                                                 <div id="aiRecommendations"></div>

@@ -728,8 +728,11 @@ ul li {
   border: 3px solid #fff;
   border-radius: 50%;
 }
-.discover_cards .user_profile:hover{
-  transform:scale(1.05);
+
+@include media-breakpoint-up(lg) {
+  .discover_cards .user_profile:hover{
+    transform:scale(1.05);
+  }
 }
 
 .notch {
