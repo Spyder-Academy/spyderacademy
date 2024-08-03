@@ -1455,24 +1455,8 @@ class TradeSocial {
                 // fill in the trade details
                 var tradeCardRow = $('#contractDetailsCard')
                 
-                var hoursAgo = Math.abs(new Date() - tradeEntry.entry_date.toDate()) / 36e5; // 36e5 is the number of milliseconds in one hour
-                var timeAgoText = Math.floor(hoursAgo) + " hours ago";
-
-                if (hoursAgo > 24){
-                  if (Math.floor(hoursAgo / 24) == 1) 
-                    timeAgoText = Math.floor(hoursAgo / 24) + " day ago";
-                  else
-                  timeAgoText = Math.floor(hoursAgo / 24) + " days ago";
-                }
-                else{
-                  if (Math.floor(hoursAgo) == 1) 
-                    timeAgoText = Math.floor(hoursAgo) + " hour ago";
-                  else 
-                    timeAgoText = Math.floor(hoursAgo) + " hours ago";
-              }
-
-                tradeCardRow.find(".traderName").text(tradeEntry.username + " - " + timeAgoText)
-                tradeCardRow.find(".tradeContract").text(tradeEntry.ticker + " " + tradeEntry.strike)
+                tradeCardRow.find(".traderName").text(tradeEntry.username + " - " + moment(tradeEntry.entry_date.toDate()).fromNow())
+                tradeCardRow.find(".tradeContract").text(tradeEntry.ticker + " " + tradeEntry.strike + " " + tradeEntry.expiration)
                 tradeCardRow.find(".tradeGain").text(tradeEntry.gainsString)
                 tradeCardRow.find(".tradeNotes").text(tradeEntry.notes)
                 var stock_image = "/images/logos/" + tradeEntry.ticker.toUpperCase() + ".png"
@@ -1655,7 +1639,7 @@ class TradeSocial {
           tradeCardRow.removeClass("col-lg-6")
           tradeCardRow.addClass("col-lg-12")
           tradeCardRow.find(".traderName").text(trade.username + " on " + (new Date(trade.exit_date_max)).toLocaleDateString())
-          tradeCardRow.find(".tradeContract").text(trade.ticker + " " + trade.strike)
+          tradeCardRow.find(".tradeContract").text(trade.ticker + " " + trade.strike + " " + trade.expiration)
           tradeCardRow.find(".tradeGain").text(trade.gainsString)
           tradeCardRow.find(".tradeNotes").text(trade.notes)
 
@@ -1731,7 +1715,7 @@ class TradeSocial {
           }
 
             tradeCardRow.find(".traderName").text(timeAgoText)
-            tradeCardRow.find(".tradeContract").text(trade.ticker + " " + trade.strike)
+            tradeCardRow.find(".tradeContract").text(trade.ticker + " " + trade.strike + " " + trade.expiration)
             tradeCardRow.find(".tradeGain").text(trade.gainsString)
             tradeCardRow.find(".tradeNotes").text(trade.notes)
 
