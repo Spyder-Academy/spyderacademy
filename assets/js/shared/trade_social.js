@@ -181,13 +181,17 @@ class TradeSocial {
         if (Math.abs(avgLoss) > Math.abs(avgWin)){
           this.addRecommendation("Your avg loss (" + Math.abs(avgLoss) + "%) is greater than your avg win (" + avgWin + "%).  Try cutting losers earlier.", $("#chart_wins_losses"))
         }
-        else{
+        else if (Math.abs(avgLoss) < Math.abs(avgWin)){
           this.addRecommendation("Nice! Your avg loss (" + Math.abs(avgLoss) + "%) is lower than your avg win (" + avgWin + "%).", $("#chart_wins_losses"))
         }
 
     }
 
     async renderDayOfTheWeekRadar(tradesData){
+        if (tradesData.length == 0){
+          return
+        }
+
         // Calculate the win percentages by the day of the week
         var winPercentages = [0, 0, 0, 0, 0]; // Initialize an array to hold the win percentages for each weekday (Monday to Friday)
         var totalTradesByDay = [0, 0, 0, 0, 0]; // Initialize an array to hold the total trades for each weekday
@@ -319,6 +323,11 @@ class TradeSocial {
     }
 
     async renderDrawDownsChart(tradesData){
+
+      if (tradesData.length == 0){
+        return
+      }
+
       // Categorize drawdowns
       var drawdownWinCategories = {
         "0%": 0,
@@ -750,6 +759,10 @@ class TradeSocial {
       // Create a map to store the count of winners and losers for each date
       var self = this;
       var seriesData = {};
+
+      if (tradesData.length == 0){
+        return
+      }
   
       // Initialize with at least the past 6 months
       var currentDate = new Date();
@@ -1473,6 +1486,10 @@ class TradeSocial {
 
 
     renderWinsVsLossesChart(tradesData) {
+
+      if (tradesData.length == 0){
+        return
+      }
       // get the counts of winning trades/losing trades based on range of drawdown.
 
       // Categorize drawdowns
@@ -1600,6 +1617,10 @@ class TradeSocial {
 
     async renderScoreboard(tradesData){
       $('#tradeScoreboard').empty()
+
+      if (tradesData.length == 0){
+        return
+      }
 
       var scoreboardRow = $("<div class='row'></div>")
       var scoreboardHeader = $("<div class='col-10'><h2 class='text-uppercase p-3'>" + "TOP WINNERS" + "</h2></div>")
