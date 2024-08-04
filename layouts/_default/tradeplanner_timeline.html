@@ -1,0 +1,178 @@
+{{ define "main" }}
+<section class="section pt-1 pb-2 bg-dark">
+    <div class="container-fluid " style="position: relative; overflow-x: hidden;">
+        
+        <div class="row p-0 m-0">
+            <!-- Left Panel -->
+            <div class="col-lg-2 col-12 d-lg-block p-2 bg-white lg-rounded">
+                
+                <div class="container bg-dark lg-rounded">
+                    <div class="row">
+                        <div class="tweet-body text-white">
+                            <p>
+                                The Gamma for <a href="/stocks/spy/" class="text-white">$SPY</a> is currently attracted to <span class="largestGammaLevelText"></span>, and the overall sentiment is <span class="gammaOutlook"></span>.
+                            </p>
+                            <p>
+                                Bulls want to see <span class="bullRange"></span>.<br/>
+                                Bears are betting on <span class="bearRange"></span>.<br/>
+                                Giving a <span class="moveAmount"></span> range.
+                            </p>
+            
+                            <p class="d-none lowRangeDayWarning">Today may be a low range day for SPY, so take quick scalps, or you may want to go touch grass instead.</p>
+                            <p class="text-end">✨</p>
+                        </div>
+                    </div>
+                </div>
+
+                {{ partial "planner/watchlist" }}
+            </div>
+            <!-- Main Content Area -->
+            <div class="col-lg-10 col-sm-12 p-0">
+                <div class="container-fluid p-0 m-0 h-100">
+                    <div class="row h-100" id="memberTrades">
+                        <div class="col-12 my-0">
+                            <div class="card h-100 border-0 mx-lg-3 lg-rounded">
+                                <div class="row p-0 m-0 justify-content-center ">
+                                    {{ partial "planner/navbar" }}
+                                </div>
+                                <div class="container-fluid timeline p-0">
+                                    <div class="row">
+                                        <div class="col-12"><h1 class="gradient-text text-uppercase px-lg-4">Trade Planner Timeline (BETA)</h1></div>
+                                    </div>
+                                    <div class="row timeline-row p-0 m-0">
+                                        <div class="col-12 p-0">
+                                            <div class="d-flex flex-nowrap">
+                                                <div class="scanner-section content-section p-0 flex-shrink-0">
+                                                    <div class="card h-100">
+                                                        <div class="card-title bg-primary text-white fw-bold p-3"><i class="fa fa-lock"></i> Following On Trade Social </div>
+                                                        <div id="WL_Following" class="post-column">
+                                                            <div class="card-body tweet-card gradient-profile-card gold-card">
+                                                                <div class="tweet-header">
+                                                                    <div>
+                                                                        <strong>FREE LIMIT REACHED</strong>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="tweet-body">
+                                                                    You have reached your limit for the day.  Become a member to see more!
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body tweet-card">
+                                                                <div class="tweet-header">
+                                                                    <div>
+                                                                        <strong>WARNING</strong> - just now
+                                                                    </div>
+                                                                </div>
+                                                                <div class="tweet-body">
+                                                                    <strong>UNDER DEVELOPMENT</strong> <br/>
+                                                                    This Column is currently under construction and not yet enabled for members.
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body tweet-card">
+                                                                <div class="tweet-header">
+                                                                    <div>
+                                                                        <strong>Sith</strong> - 2 hours ago
+                                                                    </div>
+                                                                </div>
+                                                                <div class="tweet-body">
+                                                                    <strong>TEST 165C 08/12</strong> - Trimmed at $1.30<br/>
+                                                                    had to trim
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body tweet-card gradient-green">
+                                                                <div class="tweet-header">
+                                                                    <div>
+                                                                        <strong>Sith</strong> - 2 hours ago
+                                                                    </div>
+                                                                </div>
+                                                                <div class="tweet-body">
+                                                                    <strong>TEST 165C 08/12</strong> - Added at $1.02<br/>
+                                                                    Bounced ORB low. Back above 209.
+                                                                </div>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="scanner-section content-section p-0 flex-shrink-0">
+                                                    <div class="card h-100">
+                                                        <div class="card-title bg-secondary text-white fw-bold p-3">Daily Reversals</div>
+                                                        <div id="WL_Reversals" class="post-column"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="oi-section content-section p-0 flex-shrink-0">
+                                                    <div class="card  h-100">
+                                                        <div class="card-title bg-primary text-white fw-bold p-3">Options Flow Tracker</div>
+                                                        <div id="WL_FlowTracker" class="post-column"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="trades-section content-section p-0 flex-shrink-0">
+                                                    <div class="card  h-100">
+                                                        <div class="card-title bg-warning text-black fw-bold p-3">Trade Ideas</div>
+                                                        <div id="X_TradeIdeas" class="stock_tweets post-column"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="charts-section content-section p-0 flex-shrink-0">
+                                                    <div class="card  h-100">
+                                                        <div class="card-title bg-primary text-white fw-bold p-3">Chart Setups</div>
+                                                        <div id="X_Charts" class="stock_tweets post-column"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="flow-section content-section p-0 flex-shrink-0" >
+                                                    <div class="card  h-100">
+                                                        <div class="card-title bg-secondary text-white fw-bold p-3">Options Flow</div>
+                                                        <div id="X_OptionsFlow" class="stock_tweets post-column"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sliding Card -->
+        <div id="contractDetailsCard" class="contract-details-card">
+            <div class="details-card card border-0 shadow d-flex lg-rounded">
+                <div class="card-body">
+                    something here on slide out, not sure what yet!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+
+    
+
+    <!-- Load Shared JS -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+
+    <script>
+
+        let tradePlanner = null;
+
+
+        $(document).ready(function() {
+            tradePlanner = new TradePlanner();
+
+            // Gamma Generated Market Recommendation
+            tradePlanner.fetchGEXByStrike("SPY", "#spyGammaChart", idx=0, historicals=false);
+            tradePlanner.fetchIVData("SPY");
+
+            // populate timeline columns
+            tradePlanner.fetchScreener();
+            tradePlanner.fetchAllFlow();
+            tradePlanner.fetchXPosts();
+
+
+        });
+
+    </script>
+</section>
+{{ end }}

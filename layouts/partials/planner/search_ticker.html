@@ -1,0 +1,104 @@
+
+<div class="row" >
+    <div class="col-lg-12 col-12 m-0 p-0">
+        <div class="card shadow border-0 m-0 mb-2 p-4 text-center bg-dark text-white " style="border-radius: 15px">
+            <div class="card-body p-0">
+                <div class="container-fluid">
+                    <div class="row  align-items-center ">
+                        <div class="col-10">
+                            <strong><input id="tickerInput" name="query" autocomplete="off" class="form-control-borderless no-border-transparent-bg text-white text-uppercase text-center w-100" type="text" placeholder="SEARCH TICKER"></strong>
+                        </div>
+                        <div class="col-2 text-end">
+                            <button class="btn btn-sm py-0"><i class="fas fa-search text-white"></i></button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="search-dropdown-menu shadow card p-3" style="border-radius: 15px; display: none; position: absolute; width: 200px; z-index: 1000;">
+        </div>
+    </div>
+</div>
+
+<script>
+    // Function to handle the key press event
+    function handleKeyPress(event) {
+        // Get the current input value
+        var searchString = $("#tickerInput").val().toUpperCase();
+        if (searchString.length === 0) return;
+        
+        // Filter tickers that start with the searchString
+        var matchingTickers = tickers.filter(ticker => ticker.startsWith(searchString));
+        
+        // Check if the Enter key was pressed
+        if (event.key === 'Enter' && (matchingTickers.length == 1 || matchingTickers[0] == searchString)) {
+            $('#tickerInput').val(matchingTickers[0])
+            handleSymbolSearch();
+        }
+
+        else {
+            // show the dropdown with auto suggested symbols
+            $(".search-dropdown-menu").hide()
+            $(".search-dropdown-menu").empty()
+
+            
+           
+            // Append matching tickers to the dropdown menu
+            for (let t of matchingTickers) {
+                $(".search-dropdown-menu").append(
+                    `<a class="text-decoration-none" href="/stocks/${t.toLowerCase()}/">
+                        <img src="/images/logos/${t.toUpperCase()}.png" style="width: 20px; height: 20px; margin-right: 10px;">
+                        ${t}
+                    </a>`
+                );
+            }
+
+            // Show the menu if there are matching tickers
+            if (matchingTickers.length > 0) {
+                $(".search-dropdown-menu").show();
+            }
+        }
+    }
+
+    function handleSymbolSearch(){
+        console.log("search symbol")
+        // Get the value entered by the user
+        var symbol = document.getElementById('tickerInput').value.trim().toLowerCase();
+            
+        // Check if the symbol is not empty
+        if (symbol) {
+            // Redirect to the desired URL
+            document.location.href = "/stocks/" + symbol + "/";
+        }
+    }
+
+    $(document).ready(function() {
+        // Add event listener to the input box using jQuery
+        $('#tickerInput').on('keyup', handleKeyPress);
+        $('#tickerInput').on('blur', function(){
+            setTimeout(function() {
+                $("#tickerInput").attr("placeholder", 'SEARCH TICKER');
+                $('.search-dropdown-menu').hide();
+            }, 200); // Delay of 200 milliseconds
+        });
+        // Add event listener to links in the dropdown to ensure they are clickable
+        $(document).on('mousedown', '.search-dropdown-menu a', function() {
+            // Prevent blur event when a link is clicked
+            $('#tickerInput').off('blur');
+        });
+        // Re-add blur event after clicking a link
+        $(document).on('mouseup', '.search-dropdown-menu a', function() {
+            $('#tickerInput').on('blur', function(){
+                setTimeout(function() {
+                    $("#tickerInput").attr("placeholder", 'SEARCH TICKER');
+                    $('.search-dropdown-menu').hide();
+                }, 200); // Delay of 200 milliseconds
+            });
+        });
+        
+        $('#tickerInput').on('focus', function(){
+            $("#tickerInput").attr("placeholder", '');
+        });
+    });
+</script>

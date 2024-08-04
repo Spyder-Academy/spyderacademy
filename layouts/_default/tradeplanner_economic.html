@@ -1,0 +1,67 @@
+{{ define "main" }}
+<section class="section pt-1 pb-2 bg-dark">
+    <div class="container-fluid " style="position: relative; overflow-x: hidden;">
+        
+        <div class="row p-0 m-0">
+            <!-- Left Panel -->
+            <div class="col-lg-2 col-sm-12 d-none d-lg-block p-0">
+                Watchlist Tickers Here
+            </div>
+            <!-- Main Content Area -->
+            <div class="col-lg-10 col-sm-12 p-0">
+                <div class="container-fluid p-0 m-0 h-100">
+                    <div class="row h-100" id="memberTrades">
+                        <div class="col-12 my-0">
+                            <div class="card h-100 border-0 mx-lg-3 lg-rounded">
+                                <div class="row p-0 m-0 justify-content-center ">
+                                    {{ partial "planner/navbar" }}
+                                </div>
+                                <div class="container-fluid px-3">
+                                    <div class="row">
+                                        <div class="col-12"><h1 class="gradient-text text-uppercase p-lg-3">Economic Calendar</h1></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 p-3">
+                                            {{ partial "shared/economic_calendar.html" }}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sliding Card -->
+        <div id="contractDetailsCard" class="contract-details-card">
+            <div class="details-card card border-0 shadow d-flex lg-rounded">
+                <div class="card-body">
+                    something here on slide out, not sure what yet!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+
+    
+
+    <!-- Load Shared JS -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+
+    <script>
+
+        let tradePlanner = null;
+
+
+        $(document).ready(function() {
+            tradePlanner = new TradePlanner();
+
+        });
+
+    </script>
+</section>
+{{ end }}

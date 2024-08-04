@@ -517,6 +517,35 @@ ul li {
   }
 }
 
+.timeline .timeline-row {
+  overflow-x: auto;
+}
+
+.timeline .flex-nowrap .content-section {
+  flex-basis: 20%;
+}
+
+@include media-breakpoint-down(sm){ /* Small screens and down */
+  .timeline .flex-nowrap .content-section {
+    flex-basis: 80%;
+  }
+}
+
+.timeline .card {
+  height: 100%;
+  background-color: transparent;
+  border-radius: 0px;
+  border-width: 0px 1px 0px 0px;
+}
+.timeline .card-title{
+  border-radius: 0px;
+}
+
+.timeline .post-column {
+  overflow-y: auto;
+  height: 100%;
+  max-height: 80vh; /* Adjust this as needed for the height of your content */
+}
 
 
 .tweet-card {
@@ -665,6 +694,11 @@ ul li {
 
 .gradient-green {
   background: linear-gradient(90deg, #0cc0df, #ffde59);
+  border: 0;
+}
+
+.gradient-red {
+  background: linear-gradient(90deg, #ff3131, #ff914d);
   border: 0;
 }
 
