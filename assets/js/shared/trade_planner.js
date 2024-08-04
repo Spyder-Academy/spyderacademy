@@ -12,6 +12,77 @@ class TradePlanner {
   }
 
 
+
+  sortEarningsData(data) {
+    data.sort((a, b) => {
+      // Compare by date
+      if (a.date < b.date) return -1;
+      if (a.date > b.date) return 1;
+
+      // Compare by earnings time (premarket/postmarket)
+      if (a.when === 'pre market' && b.when !== 'pre market') return -1;
+      if (a.when !== 'pre market' && b.when === 'pre market') return 1;
+
+      // Compare by market cap
+      return b.marketCap - a.marketCap; // Descending order
+    });
+  }
+
+
+  async renderEarningsCalendar(){
+    var url = "https://us-central1-spyder-academy.cloudfunctions.net/earnings_calendar";
+
+    try {
+      let response = await $.ajax({ url: url, method: 'GET' });
+      if (response && response.length > 0) {
+
+        this.sortEarningsData(response);
+
+        response.forEach(function(item) {
+          
+          const symbol = item.symbol;
+          const marketCap = item.marketCap;
+          const when = item.when; // 'pre market' or 'post market'
+          const date = new Date(item.date + ' 05:00:00 UTC-0400');
+          const day = date.getDay(); // 0 = Sunday, 1 = Monday, etc.
+          const logoUrl = `/images/logos/${symbol.toUpperCase()}.png`; 
+
+  
+          const logoHtml = `
+              <div class="col-3 p-2">
+                <div class="card bg-dark text-center p-0 w-100">
+                    <div class="card-body p-0">
+                        <div class="earnings-logo">
+                            <img src="${logoUrl}" alt="${symbol}" title="${symbol}">
+                        </div>
+                        <a href="/stocks/${symbol.toLowerCase()}/" class="stretched-link"></a>
+                    </div>
+                    <div class="card-footer">
+                      ${symbol}
+                    </div>
+                </div>
+              </div>
+          `;
+  
+          $(`#earnings-${day} .date`).text(date.getDate());
+
+          if (tickers.includes(symbol.toUpperCase())){
+            if (when === 'pre market') {
+                $(`#earnings-${day} .before-open .row`).append(logoHtml);
+            } else {
+                $(`#earnings-${day} .after-close .row`).append(logoHtml);
+            }
+          }
+      });
+
+      }
+    } catch (error) {
+      console.error('Error fetching Earnings Calendar from the API:', error);
+    }
+
+  }
+
+
   async getClosePrice(ticker) {
     var sentTicker = ticker.toUpperCase();
     var url = "https://api.options.ai/expected-moves/" + sentTicker;
@@ -894,20 +965,7 @@ class TradePlanner {
   formatMarketCap(marketCap) {
     return `$${(marketCap / 1_000_000_000).toFixed(1)}B`;
   }
-  sortEarningsData(data) {
-    data.sort((a, b) => {
-      // Compare by date
-      if (a.date < b.date) return -1;
-      if (a.date > b.date) return 1;
-
-      // Compare by earnings time (premarket/postmarket)
-      if (a.when === 'pre market' && b.when !== 'pre market') return -1;
-      if (a.when !== 'pre market' && b.when === 'pre market') return 1;
-
-      // Compare by market cap
-      return b.marketCap - a.marketCap; // Descending order
-    });
-  }
+  
 
   displayEarningsCalendarSkeleton(data) {
     let calendarHtml = '';

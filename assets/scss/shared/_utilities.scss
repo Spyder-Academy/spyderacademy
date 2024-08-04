@@ -791,3 +791,55 @@ ul li {
   background-color: white; /* Active button background color */
   color: #343a40; /* Active button icon color */
 }
+
+
+
+.earnings_calendar .earnings-day {
+  background-color: #2c2c2c;
+  color: white;
+  border: none;
+  margin-bottom: 1rem;
+}
+
+.earnings_calendar .day-title {
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.earnings_calendar .date {
+  font-size: 3rem;
+  text-align: center;
+}
+
+.earnings_calendar .morning {
+  background: linear-gradient(90deg, #FFBB86, #FFD700); /* Soft orange to golden yellow */
+  border:0
+}
+
+
+.earnings_calendar .evening {
+  background: linear-gradient(90deg, #FF6E7F, #BFE9FF); /* Warm pink to cool blue */
+  border:0
+}
+
+.earnings_calendar .earnings-section {
+  margin-bottom: 1rem;
+}
+
+.earnings_calendar .earnings-logos {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.earnings_calendar .earnings-logo img {
+  object-fit: contain;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.earnings_calendar .card .card-footer{
+  font-size: 0.8rem;
+  white-space: nowrap;
+  text-align: center;
+}
