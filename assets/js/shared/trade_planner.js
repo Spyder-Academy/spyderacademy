@@ -1932,7 +1932,7 @@ class TradePlanner {
     $("#financials_cagr").text(cagr != null ? cagr + "%" : "-")
     $("#financials_ltm_gross_margin").text(gross_margin != 0 ? gross_margin + "%" : "-")
     $("#financials_ltm_fcf_margin").text(fcf_margin != 0 ? fcf_margin + "%" : "-")
-    $("#financials_title").text(`${ticker.toUpperCase()} Financials`)
+    $("#financials_title").html(`<a class="text-white" href="/stocks/${ticker.toLowerCase()}/">$${ticker.toUpperCase()}</a> Financials`)
 
     // Prepare data for revenue chart
     let revenueData = financial_data["income_statements"].map(item => {
