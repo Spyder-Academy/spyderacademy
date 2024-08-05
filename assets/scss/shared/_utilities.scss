@@ -692,6 +692,14 @@ ul li {
   display: block;
 }
 
+.rightpanel-details-card .nav-link.active{
+  background-color: #000 !important;
+  border-radius: 10px;
+}
+.rightpanel-details-card .nav-link:hover{
+  border-radius: 10px;
+}
+
 .gradient-green {
   background: linear-gradient(90deg, #0cc0df, #ffde59);
   border: 0;
@@ -843,3 +851,4 @@ ul li {
   white-space: nowrap;
   text-align: center;
 }
+

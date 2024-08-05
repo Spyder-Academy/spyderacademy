@@ -35,25 +35,45 @@
   </div>
 
   <div class="row text-center tenq">
-    <div class="col-12 mb-3">
-      <div class="card lg-rounded">
-        <div class="card-title p-3 fw-bold">
-          QUARTERLY REVENUE
+    <!-- Tabs Navigation -->
+    <ul class="nav nav-tabs m-0 w-100 border-0 m-2 p-0 m-0 bg-dark lg-rounded" id="chartTabs" role="tablist">
+        <li class="nav-item w-50 p-2 m-0" role="presentation">
+            <a class="nav-link w-100 active text-light" id="revenue-tab" data-bs-toggle="tab" href="#revenue" role="tab" aria-controls="revenue" aria-selected="true">Quarterly Revenue</a>
+        </li>
+        <li class="nav-item w-50 p-2 m-0" role="presentation">
+            <a class="nav-link w-100 text-light" id="eps-tab" data-bs-toggle="tab" href="#eps" role="tab" aria-controls="eps" aria-selected="false">Earnings Per Share</a>
+        </li>
+    </ul>
+
+    <!-- Tabs Content -->
+    <div class="tab-content" id="chartTabsContent">
+        <!-- Revenue Chart Tab -->
+        <div class="tab-pane fade show active" id="revenue" role="tabpanel" aria-labelledby="revenue-tab">
+            <div class="col-12 mb-3">
+                <div class="card lg-rounded">
+                    <div class="card-title p-3 fw-bold">
+                        QUARTERLY REVENUE
+                    </div>
+                    <div class="card-body">
+                        <div id="revenueChart"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-          <div  id="revenueChart"></div>
+
+        <!-- Earnings Per Share Chart Tab -->
+        <div class="tab-pane fade" id="eps" role="tabpanel" aria-labelledby="eps-tab">
+            <div class="col-12 mb-3">
+                <div class="card lg-rounded">
+                    <div class="card-title p-3 fw-bold">
+                        EARNINGS PER SHARE
+                    </div>
+                    <div class="card-body">
+                        <div id="epsChart"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="col-12 mb-3">
-      <div class="card lg-rounded">
-        <div class="card-title p-3 fw-bold">
-          EARNINGS PER SHARE
-        </div>
-        <div class="card-body">
-          <div  id="epsChart"></div>
-        </div>
-      </div>
     </div>
   </div>
 

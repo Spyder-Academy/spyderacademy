@@ -215,9 +215,14 @@
                 var earningsDetailsCard = $('#earningsDetailsCard');
                 
                 // If the card is visible and the click is outside of it
-                if (earningsDetailsCard.hasClass('show') ) {
+                if (earningsDetailsCard.hasClass('show') && !$(event.target).closest('#earningsDetailsCard').length) {
                     earningsDetailsCard.removeClass('show');
                 }
+            });
+
+            // Prevent the click inside the card from closing it
+            $('#earningsDetailsCard').on('click', function(event) {
+                event.stopPropagation(); // Stop the click event from bubbling up to the document
             });
         });
 
