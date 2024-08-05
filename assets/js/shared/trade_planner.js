@@ -50,12 +50,12 @@ class TradePlanner {
   
           const logoHtml = `
               <div class="col-3 p-2">
-                <div class="card bg-dark text-center p-0 w-100">
+                <div class="card bg-dark text-center p-0 w-100" onclick="selectEarningsSymbol('${symbol}')">
                     <div class="card-body p-0">
                         <div class="earnings-logo">
                             <img src="${logoUrl}" alt="${symbol}" title="${symbol}">
                         </div>
-                        <a href="/stocks/${symbol.toLowerCase()}/" class="stretched-link"></a>
+                        <!--<a href="/stocks/${symbol.toLowerCase()}/" class="stretched-link"></a>-->
                     </div>
                     <div class="card-footer">
                       ${symbol}
@@ -80,6 +80,12 @@ class TradePlanner {
       console.error('Error fetching Earnings Calendar from the API:', error);
     }
 
+  }
+
+  renderEarningsDetails(symbol){
+     // Show the card by adding the 'show' class
+     this.fetchFinancials(symbol);
+     $('#earningsDetailsCard').addClass('show');
   }
 
 
@@ -1926,6 +1932,7 @@ class TradePlanner {
     $("#financials_cagr").text(cagr != null ? cagr + "%" : "-")
     $("#financials_ltm_gross_margin").text(gross_margin != 0 ? gross_margin + "%" : "-")
     $("#financials_ltm_fcf_margin").text(fcf_margin != 0 ? fcf_margin + "%" : "-")
+    $("#financials_title").text(`${ticker.toUpperCase()} Financials`)
 
     // Prepare data for revenue chart
     let revenueData = financial_data["income_statements"].map(item => {

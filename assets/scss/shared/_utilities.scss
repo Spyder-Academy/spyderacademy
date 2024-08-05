@@ -640,24 +640,24 @@ ul li {
 }
 
 @include media-breakpoint-down(sm){ /* Small screens and down */
-  .contract-details-card {
+  .rightpanel-details-card {
     width: 200px;
     right: -100%;
     display: none;
   }
-  .contract-details-card.show {
+  .rightpanel-details-card.show {
     left: 0;
     width: 100%;
   }
 }
 
 @include media-breakpoint-up(lg) { /* Large screens and up */
-  .contract-details-card {
+  .rightpanel-details-card {
     width: 500px;
     right: -100%;
     transition: right 0.3s ease-in-out;
   }
-  .contract-details-card.show {
+  .rightpanel-details-card.show {
     width: 500px;
     right: 0;
     transition: right 0.3s ease-in-out;
@@ -674,7 +674,7 @@ ul li {
 }
 
 
-.contract-details-card {
+.rightpanel-details-card {
   position: absolute;
   top: 0;
   right: -100%;
@@ -684,11 +684,11 @@ ul li {
   padding: 0;
 }
 
-.contract-details-card .details-card {
+.rightpanel-details-card .details-card {
   background-color: #446678;
   min-height: 100%;
 }
-.contract-details-card.show {
+.rightpanel-details-card.show {
   display: block;
 }
 
