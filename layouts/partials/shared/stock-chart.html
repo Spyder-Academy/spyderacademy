@@ -3,27 +3,27 @@
 {{ $profile := where $stocks "symbol" $symbol }}
 
 
-<div class="container p-0 m-0">
+<div class="container-fluid p-0">
   <div class="row py-3">
     <div class="col-12">
-      <div class="card shadow border-0 p-3 m-0 d-flex tradingview-stockchart-widget-container" style="border-radius: 15px;">
+      <div class="card shadow border-1 p-3 m-0 d-flex tradingview-stockchart-widget-container bg-dark" style="border-radius: 15px;">
         <div class="tradingview-stockchart-widget-container__widget"></div>
         <script type="application/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
           {
             "symbol": "{{ $symbol }}",
             "width": "100%",
-            "height": "500",
+            "height": "600",
             "interval": "D",
             "timezone": "America/New_York",
             "theme": "light",
             "style": "1",
             "locale": "en",
             "gridColor" : "rgba(255,255,255, 0)",
+            "details": false,
             "enable_publishing": false,
             "save_image": false,
             "studies": [
               "STD;MA%Ribbon",
-              "STD;Pivot%1Points%1High%1Low",
               "STD;Gaps"
             ],
             "support_host": "https://www.tradingview.com"

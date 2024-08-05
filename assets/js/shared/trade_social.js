@@ -1462,8 +1462,17 @@ class TradeSocial {
                 var stock_image = "/images/logos/" + tradeEntry.ticker.toUpperCase() + ".png"
                 tradeCardRow.find(".tradeLogo").attr("src", stock_image)
                 tradeCardRow.find(".contract_banner").show()
+
+                if (tradeEntry.gainsValue < 0){
+                  tradeCardRow.find(".trade_card").removeClass("gradient-green")
+                  tradeCardRow.find(".trade_card").addClass("gradient-red")
+                }
+                else if (tradeEntry.gainsValue >= 0){
+                  tradeCardRow.find(".trade_card").addClass("gradient-green")
+                  tradeCardRow.find(".trade_card").removeClass("gradient-red")
+                }
             
-                  $(".entryExitNotes").show()
+                $(".entryExitNotes").show()
                 
               });
           });
@@ -1788,6 +1797,11 @@ class TradeSocial {
             tradeCardRow.find(".tradeNotes").text(trade.notes)
             tradeCardRow.find(".tradeLogo").attr("src", "/images/logos/" + trade.ticker.toUpperCase() + ".png")
             tradeCardRow.find(".tradeRow").attr("tradeid", trade.tradeid)
+            
+            if (trade.gainsValue < 0){
+              tradeCardRow.find(".trade_card").removeClass("gradient-green")
+              tradeCardRow.find(".trade_card").addClass("gradient-red")
+            }
 
             $('#tradeRecap').append(tradeCardRow);
         });

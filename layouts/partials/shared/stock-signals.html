@@ -3,108 +3,27 @@
 
 <div class="p-0">
     <div class="container p-0 m-0">
-        <div class="row flow_tracker_row d-none">
-            <div class="col-12 d-lg-block">
-                <div class="content-section card-body tweet-header bg-dark text-white justify-content-center">
-                    <h4 class="card-title fw-semibold text-uppercase">STOCK SIGNALS</h4>
-                </div>
-                <div class="col-12 p-3 text-danger">
-                    Stock Signals is currently in Beta and should not be considered financial advise!
-                </div>
-            </div>
-        </div>
-        <div class="row pb-lg-2 m-0">
-            <div class="col-lg-4 col-12 p-0 p-lg-2" id="market_pressure_signal_card">
-                <div class="card h-100  p-3 mb-5">
-                    <div class="card-body">
-                        <h4 id="marketPressureHeader" class="card-title fw-semibold text-uppercase">{{ $symbol }} MARKET PRESSURE</h4>
-                        <p class="card-text" id="signalGammaOutlook"><span class="gammaOutlook"></span></p>
-                        <p class="card-text text-black-61">The market price for {{ $symbol }} is currently attracted to <span class="largestGammaLevelText"></span>, and the overall sentiment is <span class="gammaOutlook"></span><br/></p>
-                        <p class="card-text text-black-61 p-3" style="background-color: #bfe1cf">Currently trading at <span id="currentPriceWidget" class="fw-bold"></span> as of <span id="currentPriceWidgetTimeValue"></span></p>
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-lg-4 col-12 p-0 p-lg-2" id="expected_move_signal_card">
-                <div class="card h-100  p-3 mb-5">
-                    <div class="card-body">
-                        <h4 id="expectedMoveHeader" class="card-title fw-semibold text-uppercase" data-toggle="tooltip" data-placement="auto">EXPECTED MOVE FOR {{ $symbol }}</h4>
-                        <p class="card-text text-black-61 small" id="expectedMoveBy"></p>
-                        <p class="card-text text-black-61" id="movePercentTitle">{{ $symbol }} Expected Move: <span class="movePercent"></span> (<span class="moveAmount"></span>)</p>
-                        <div id="expectedMoveChop" class="alert alert-warning text-center d-none" role="alert">May be a low range day. Go Touch Grass.</div>
-
-                        <table class="table text-center">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col" style="background-color: #bfe1cf">Bulls Want</th>
-                                    <th scope="col" style="background-color:  #a30000; color: #fff">Bears Want</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><span class="bullRange"  style="color: #29741D" ></span><span class="bullRangeHit d-none"> 🎯</span></td>
-                                    <td><span class="bearRange" style="color: #ad0000" ></span><span class="bearRangeHit d-none"> 🎯</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-12 p-0 p-lg-2" id="ema_signal_card">
-                <div class="card h-100  p-3 mb-5">
-                    <div class="card-body">
-                        <h4 id="movingAveragesHeader" class="card-title fw-semibold text-uppercase">{{ $symbol }} MOVING AVERAGES</h4>
-                        <div class="card-text text-black-61" id="emaSignals">
-                        </div>
+        <div id="strat_signal_row" class="row m-0">
+            <div class="col-12 p-0">
+                <div class="card">
+                    <div class="card-body tweet-card" id="gammaSignals">
+                        {{ partial "planner/gamma_explanation" (dict "symbol" $symbol) }}
                     </div>
                 </div>
             </div>
         </div>
-        <div id="strat_signal_row" class="row pb-0 pb-lg-2 m-0">
-            <div class="col-lg-4 col-12 p-0 p-lg-2" id="strat_signal_card">
-                <div class="card h-100  p-3 mb-5">
-                    <div class="card-body">
-                        <h4 class="card-title fw-semibold text-uppercase">{{ $symbol }} - Technical Analysis</h4>
-                        <div class="card-text text-black-61" id="theStratSignals">
-                        </div>
+        <div id="strat_signal_row" class="row m-0">
+            <div class="col-12 p-0" id="strat_signal_card">
+                <div class="card">
+                    <div class="card-body tweet-card" id="theStratSignals">
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-12 p-0 p-lg-2" id="stratimg_signal_card">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="card-text text-black-61" id="theStratCombos">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-12 p-0 p-lg-2">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="card-text text-black-61">
-                            <div class="tradingview-widget-container__widget"></div>
-                            <script type="application/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-                            {
-                                "symbol": "{{ $tvSymbol }}",
-                                "width": "100%",
-                                "height": "400",
-                                "interval": "D",
-                                "timezone": "America/New_York",
-                                "theme": "light",
-                                "style": "1",
-                                "locale": "en",
-                                "hide_top_toolbar": true,
-                                "hide_legend": false,
-                                "hide_volume": true,
-                                "allow_symbol_change": false,
-                                "gridColor" : "rgba(255,255,255, 0)",
-                                "enable_publishing": false,
-                                "save_image": false,
-                                "support_host": "https://www.tradingview.com"
-                            }
-                            </script>
-                        </div>
+        </div>
+        <div id="strat_signal_row" class="row m-0">
+            <div class="col-12 p-0" id="ema_signal_card">
+                <div class="card">
+                    <div class="card-body tweet-card" id="emaSignals">
                     </div>
                 </div>
             </div>
@@ -136,6 +55,11 @@
             title: "<h6>POSSIBLE CHOP</h6><p>An expected move < 0.5% often indicates a low range day, which is less than ideal for options traders looking for range.</p><p>Trade quick scalps or look for other names.</p>",
             html: true
         });
+
+        ticker = {{ $symbol }}
+        tradePlanner = new TradePlanner();
+        tradePlanner.fetchEMASignals(ticker);
+        tradePlanner.fetchTheStratSignals(ticker)
 
         
     });

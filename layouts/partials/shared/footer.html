@@ -1,5 +1,5 @@
 <footer class="shared footer bg-blue-light py-5">
-  <div class="container">
+  <div class="container-fluid">
     <div class="row pb-5">
       <div class="col-12 col-xl-6 text-center text-xl-start pb-4">
         <h4 class="fs-4 fw-semibold text-uppercase text-primary">{{ .Site.Title }}</h4>
@@ -18,18 +18,27 @@
 
         
       </div>
-      <div class="col-12 col-xl-3 text-center text-xl-start pb-4">
+      <div class="col-12 col-xl-2 text-center text-xl-start pb-4">
         <ul class="list-unstyled">
-          {{ range first 5 .Site.Menus.footer }}
+          {{ range first 4 .Site.Menus.footer }}
             <li class="">
               <a class="small text-black-61 text-decoration-none" href="{{ .URL }}">{{ .Name }}</a>
             </li>
           {{ end }}
         </ul>
       </div>
-      <div class="col-12 col-xl-3 text-center text-xl-start pb-4">
+      <div class="col-12 col-xl-2 text-center text-xl-start pb-4">
         <ul class="list-unstyled">
-          {{ range after 5 .Site.Menus.footer }}
+          {{ range first 3 (after 4 .Site.Menus.footer) }}
+            <li class="">
+              <a class="small text-black-61 text-decoration-none" href="{{ .URL }}">{{ .Name }}</a>
+            </li>
+          {{ end }}
+        </ul>
+      </div>
+      <div class="col-12 col-xl-2 text-center text-xl-start pb-4">
+        <ul class="list-unstyled">
+          {{ range first 3 (after 7 .Site.Menus.footer) }}
             <li class="">
               <a class="small text-black-61 text-decoration-none" href="{{ .URL }}">{{ .Name }}</a>
             </li>

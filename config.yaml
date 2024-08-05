@@ -65,7 +65,7 @@ menus:
       weight: 6
 
     - name: "Trade Planner"
-      url: "/stocks/"
+      url: "/tradeplanner/"
       weight: 7
 
     - name: "Trade Social"
@@ -103,17 +103,17 @@ menus:
       url: "/courses/"
       weight: 6
 
-    - name: "Stock Research"
-      url: "/stocks/"
-      weight: 7
-
-    - name: "Trading Tools"
-      url: "/tools/"
+    - name: "Trade Planner"
+      url: "/tradeplanner/"
       weight: 7
 
     - name: "Trade Social"
       url: "/tradesocial/"
       weight: 8
+
+    - name: "Other Trading Tools"
+      url: "/tools/"
+      weight: 9
 
     - name: "Terms of Use"
       url: "/termsofuse/"

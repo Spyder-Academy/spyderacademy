@@ -334,63 +334,65 @@ class TradePlanner {
 
         // render the tweets 
         response.forEach(tweet => {
-          var author = tweet["author"]
-          var symbol = tweet["symbol"]
-          var message = tweet["message"].replace(/\n/g, "<br/>");
-          var tweet_link = tweet["url"] ? tweet["url"] : ""
+          // var author = tweet["author"]
+          // var symbol = tweet["symbol"]
+          // var message = tweet["message"].replace(/\n/g, "<br/>");
+          // var tweet_link = tweet["url"] ? tweet["url"] : ""
 
-          var price_difference = ""
-          var price_difference_detail = ""
-          var price_class = ""
+          // var price_difference = ""
+          // var price_difference_detail = ""
+          // var price_class = ""
 
-          if (tweet["current_price"] && tweet["price_when_posted"]) {
-            var current_price = tweet["current_price"]
-            var price_when_posted = tweet["price_when_posted"]
+          // if (tweet["current_price"] && tweet["price_when_posted"]) {
+          //   var current_price = tweet["current_price"]
+          //   var price_when_posted = tweet["price_when_posted"]
 
-            price_difference_detail = `Price when posted was $${price_when_posted}.  Currently trading at $${current_price}`
+          //   price_difference_detail = `Price when posted was $${price_when_posted}.  Currently trading at $${current_price}`
 
-            if (current_price >= price_when_posted) {
-              price_difference = "<i class='fa-regular fa-circle-up'></i> " + symbol.toUpperCase() + " is Up $" + Math.abs(current_price - price_when_posted).toFixed(2) + " since posted."
-              price_class = "text-success"
-            }
-            else {
-              price_difference = "<i class='fa-regular fa-circle-down'></i> " + symbol.toUpperCase() + " is Down $" + Math.abs(current_price - price_when_posted).toFixed(2) + " since posted."
-              price_class = "text-danger"
-            }
+          //   if (current_price >= price_when_posted) {
+          //     price_difference = "<i class='fa-regular fa-circle-up'></i> " + symbol.toUpperCase() + " is Up $" + Math.abs(current_price - price_when_posted).toFixed(2) + " since posted."
+          //     price_class = "text-success"
+          //   }
+          //   else {
+          //     price_difference = "<i class='fa-regular fa-circle-down'></i> " + symbol.toUpperCase() + " is Down $" + Math.abs(current_price - price_when_posted).toFixed(2) + " since posted."
+          //     price_class = "text-danger"
+          //   }
 
-          }
+          // }
 
-          if (symbol) {
-            // var symbolLink = `<a href='/stocks/${lowerSymbol}/'>$${symbol}</a>`;
-            var symbolLink = `<a class="" href="/stocks/${symbol.toLowerCase()}/" >$${symbol}</a>`
-            message = message.replace(new RegExp(`\\$${symbol}`, 'g'), symbolLink);
-          }
+          // if (symbol) {
+          //   // var symbolLink = `<a href='/stocks/${lowerSymbol}/'>$${symbol}</a>`;
+          //   var symbolLink = `<a class="" href="/stocks/${symbol.toLowerCase()}/" >$${symbol}</a>`
+          //   message = message.replace(new RegExp(`\\$${symbol}`, 'g'), symbolLink);
+          // }
 
-          var image = tweet["image"]
-          var timestamp = moment(tweet["timestamp"]);
+          // var image = tweet["image"]
+          // var timestamp = moment(tweet["timestamp"]);
 
-          // Calculate relative time and Eastern Time format
-          var relativeTime = timestamp.fromNow();
-          var easternTime = timestamp.tz("America/New_York").format('MMMM Do YYYY, h:mm:ss a');
+          // // Calculate relative time and Eastern Time format
+          // var relativeTime = timestamp.fromNow();
+          // var easternTime = timestamp.tz("America/New_York").format('MMMM Do YYYY, h:mm:ss a');
 
-          var tweet_template = `
-                      <div class="col-lg-3 col-12 social-card">
-                        <div class="card-body tweet-card">
-                            <div class="tweet-header">
-                                <div>
-                                    <a href="${tweet_link}" target="_blank" class="text-decoration-none">𝕏 <strong>${author}</strong></a> <span class="text-muted"> - <span title="${easternTime}">${relativeTime}</span></span>
-                                </div>
-                            </div>
-                            <div class="tweet-body">
-                                <p>${message}</p>
-                                ${image ? `<a href="${image}" target="_blank"><img src="${image}" style="border-radius: 15px" class="img-fluid" alt="Tweet Image"></a>` : ''}
-                            </div>
-                            <div class="tweet-footer text-muted">
-                                ${price_difference ? `<div class="${price_class}" title="${price_difference_detail}">${price_difference}</div>` : ``}
-                            </div>
-                        </div>
-                      </div>
-                    `;
+          var tweet_template = this.createTweetTemplate(tweet);
+
+          // var tweet_template = `
+          //             <div class="col-lg-3 col-12  social-card">
+          //               <div class="card-body tweet-card">
+          //                   <div class="tweet-header">
+          //                       <div>
+          //                           <a href="${tweet_link}" target="_blank" class="text-decoration-none">𝕏 <strong>${author}</strong></a> <span class="text-muted"> - <span title="${easternTime}">${relativeTime}</span></span>
+          //                       </div>
+          //                   </div>
+          //                   <div class="tweet-body">
+          //                       <p>${message}</p>
+          //                       ${image ? `<a href="${image}" target="_blank"><img src="${image}" style="border-radius: 15px" class="img-fluid" alt="Tweet Image"></a>` : ''}
+          //                   </div>
+          //                   <div class="tweet-footer text-muted">
+          //                       ${price_difference ? `<div class="${price_class}" title="${price_difference_detail}">${price_difference}</div>` : ``}
+          //                   </div>
+          //               </div>
+          //             </div>
+          //           `;
 
           $("#stock_social_row").append(tweet_template);
         });
@@ -718,7 +720,7 @@ class TradePlanner {
 
           // create the flow card
           var flow_card = `
-                    <div class="col-lg-4 col-12 social-card">
+                    <div class="col-12 social-card">
                       <div class="card-body tweet-card">
                           <div class="tweet-header">
                               <div>
@@ -855,7 +857,7 @@ class TradePlanner {
       // if there is no flow to display, show an empty card 
       if (response.length == 0) {
         var flow_card = `
-                    <div class="col-lg-4 col-12 social-card">
+                    <div class="col-12 social-card">
                       <div class="card-body tweet-card">
                           <div class="tweet-header">
                               <div>
@@ -1752,20 +1754,23 @@ class TradePlanner {
       .then(emaData => {
         const emaList = $('#emaSignals');
 
-        if (emaData.length > 0) {
-          $("#currentPriceWidget").html("$" + emaData[0].latest_price.toFixed(2))
-          $("#currentPriceWidgetTimeValue").html((new Date()).toLocaleTimeString())
-        }
-        else {
-          $("#currentPriceWidgetTime").hide()
-          $("#ema_signal_card").hide()
-        }
+        // if (emaData.length > 0) {
+        //   $("#currentPriceWidget").html("$" + emaData[0].latest_price.toFixed(2))
+        //   $("#currentPriceWidgetTimeValue").html((new Date()).toLocaleTimeString())
+        // }
+        // else {
+        //   $("#currentPriceWidgetTime").hide()
+        //   $("#ema_signal_card").hide()
+        // }
+
+        const emaItemHeader = $("<div class='tweet-header'><strong>Moving Averages</strong></div>")
+        emaList.append(emaItemHeader);
 
         emaData.forEach(data => {
           const status = data.latest_price > data.value ? 'Bullish' : 'Bearish';
           const statusClass = data.latest_price > data.value ? '#29741D' : '#a30000';
 
-          const emaItem = $("<div>")
+          const emaItem = $("<div class='tweet-body'>")
           var emaItemHTML = ""
 
           if (status == "Bullish") {
@@ -1810,8 +1815,42 @@ class TradePlanner {
           candleType = candleType + " with " + stratData.candlestick_pattern
         }
 
-        thestrat.append($(`<div><p>Daily Candle: ${candleType}</p></div>`));
-        thestrat.append($(`<div><p>Potential Combo: ${stratData.thestrat_combo}</p></div>`));
+        var comboImg = ""
+        if (stratData.thestrat_combo == "2-1-2 Bullish Continuation or Bearish Reversal") {
+          comboImg = '/images/stratcombos/212b.png'
+        }
+        else if (stratData.thestrat_combo == "2-1-2 Bullish Reversal or Bearish Continuation") {
+          comboImg = '/images/stratcombos/212a.png'
+        }
+        else if (stratData.thestrat_combo == "3-1-2 Bullish or Bearish") {
+          comboImg = '/images/stratcombos/312.png'
+        }
+        else if (stratData.thestrat_combo == "1-2-2 Bearish Reversal") {
+          comboImg = '/images/stratcombos/122.png'
+        }
+        else if (stratData.thestrat_combo == "1-2-2 Bullish Reversal") {
+          comboImg = '/images/stratcombos/122.png'
+        }
+        else if (stratData.thestrat_combo == "2-2 Bullish Reversal or Bearish Continuation") {
+          comboImg = '/images/stratcombos/22a.png'
+        }
+        else if (stratData.thestrat_combo == "2-2 Bearish Reversal or Bullish Continuation") {
+          comboImg = '/images/stratcombos/22b.png'
+        }
+        else if (stratData.thestrat_combo == "3-2 Continuation or Reversal") {
+          comboImg = '/images/stratcombos/32.png'
+        }
+        else if (stratData.thestrat_combo == "3-2-2 Bullish Reversal") {
+          comboImg = '/images/stratcombos/322.png'
+        }
+        else if (stratData.thestrat_combo == "3-2-2 Bearish Reversal") {
+          comboImg = '/images/stratcombos/322.png'
+        }
+
+
+        thestrat.append($(`<div class="tweet-header"><strong>Potential Daily Setup</strong></div>`));
+        thestrat.append($(`<div data-toggle="popover" data-ticker="${ticker}"><p>Daily Candle:<br/>${candleType}</p></div>`));
+        thestrat.append($(`<div data-toggle="strat_popover" data-img="${comboImg}"><p><strong>Potential Combo</strong>:<br/>${stratData.thestrat_combo}</p></div>`));
 
 
         var triggersTable = $(`<table class="table text-center">`);
@@ -1897,38 +1936,7 @@ class TradePlanner {
         thestrat.append(ftfcTable)
 
         // show the Chart Combos
-        const thestratCombos = $('#theStratCombos');
-        if (stratData.thestrat_combo == "2-1-2 Bullish Continuation or Bearish Reversal") {
-          thestratCombos.append($("<img class='w-100 h-100' src='/images/stratcombos/212b.png'>"))
-        }
-        else if (stratData.thestrat_combo == "2-1-2 Bullish Reversal or Bearish Continuation") {
-          thestratCombos.append($("<img class='w-100 h-100' src='/images/stratcombos/212a.png'>"))
-        }
-        else if (stratData.thestrat_combo == "3-1-2 Bullish or Bearish") {
-          thestratCombos.append($("<img class='w-100 h-100' src='/images/stratcombos/312.png'>"))
-        }
-        else if (stratData.thestrat_combo == "1-2-2 Bearish Reversal") {
-          thestratCombos.append($("<img class='w-100 h-100' src='/images/stratcombos/122.png'>"))
-        }
-        else if (stratData.thestrat_combo == "1-2-2 Bullish Reversal") {
-          thestratCombos.append($("<img class='w-100 h-100' src='/images/stratcombos/122.png'>"))
-        }
-        else if (stratData.thestrat_combo == "2-2 Bullish Reversal or Bearish Continuation") {
-          thestratCombos.append($("<img class='w-100 h-100' src='/images/stratcombos/22a.png'>"))
-        }
-        else if (stratData.thestrat_combo == "2-2 Bearish Reversal or Bullish Continuation") {
-          thestratCombos.append($("<img class='w-100 h-100' src='/images/stratcombos/22b.png'>"))
-        }
-        else if (stratData.thestrat_combo == "3-2 Continuation or Reversal") {
-          thestratCombos.append($("<img class='w-100 h-100' src='/images/stratcombos/32.png'>"))
-        }
-        else if (stratData.thestrat_combo == "3-2-2 Bullish Reversal") {
-          thestratCombos.append($("<img class='w-100 h-100' src='/images/stratcombos/322.png'>"))
-        }
-        else if (stratData.thestrat_combo == "3-2-2 Bearish Reversal") {
-          thestratCombos.append($("<img class='w-100 h-100' src='/images/stratcombos/322.png'>"))
-        }
-
+       
       })
       .catch(error => {
         console.error('Error fetching The Strat data:', error)
@@ -2692,6 +2700,7 @@ class TradePlanner {
       }],
       plotOptions: {
         bar: {
+          borderRadius: "5",
           colors: {
             ranges: [{
               from: -100,
@@ -2850,8 +2859,8 @@ class TradePlanner {
             color: "#fff",
             background: GEXValue >= 0 ? "#00E396" : "#FF4560",
           },
-          text: `$${item.Strike.toFixed(2)}`,
-          position: 'center'
+          // text: `$${item.Strike.toFixed(2)}`,
+          position: 'right'
         }
       };
     });
@@ -2979,7 +2988,8 @@ class TradePlanner {
       ],
       markers: {
         size: [0, 0, 0, 8], // Hide markers for projection lines
-        shape: "square"
+        shape: "square",
+        strokeWidth: 0,
       },
       stroke: {
         width: [4, 4, 4, 1], // Set stroke width for each series
@@ -3063,6 +3073,7 @@ class TradePlanner {
             // Set the properties
             card.find(".tradeLogo").attr("src", `/images/logos/${stock["symbol"]}.png`);
             card.find(".symbol_link").text(stock["symbol"]);
+            card.find(".symbol_link").attr("href", `/stocks/${stock["symbol"].toLowerCase()}/`);
             card.find(".symbol_price").text(stock["price"].toFixed(2));
 
             var directionArrowClass = stock["change"] < 0 ? "fa-arrow-down" : "fa-arrow-up";

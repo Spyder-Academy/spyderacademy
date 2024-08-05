@@ -6,23 +6,7 @@
             <!-- Left Panel -->
             <div class="col-lg-2 col-12 d-lg-block p-2 bg-white lg-rounded">
                 
-                <div class="container bg-dark lg-rounded">
-                    <div class="row">
-                        <div class="tweet-body text-white">
-                            <p>
-                                The Gamma for <a href="/stocks/spy/" class="text-white">$SPY</a> is currently attracted to <span class="largestGammaLevelText"></span>, and the overall sentiment is <span class="gammaOutlook"></span>.
-                            </p>
-                            <p>
-                                Bulls want to see <span class="bullRange"></span>.<br/>
-                                Bears are betting on <span class="bearRange"></span>.<br/>
-                                Giving a <span class="moveAmount"></span> range.
-                            </p>
-            
-                            <p class="d-none lowRangeDayWarning">Today may be a low range day for SPY, so take quick scalps, or you may want to go touch grass instead.</p>
-                            <p class="text-end">✨</p>
-                        </div>
-                    </div>
-                </div>
+                {{ partial "planner/gamma_explanation" (dict "symbol" "SPY") }}
 
                 {{ partial "planner/watchlist" }}
             </div>
@@ -39,59 +23,11 @@
                                     <div class="row">
                                         <div class="col-12"><h1 class="gradient-text text-uppercase px-lg-4">Trade Planner Timeline (BETA)</h1></div>
                                     </div>
-                                    <div class="row timeline-row p-0 m-0">
+                                    <div class="row timeline-row p-0 m-0 sticky-top">
                                         <div class="col-12 p-0">
                                             <div class="d-flex flex-nowrap">
                                                 <div class="scanner-section content-section p-0 flex-shrink-0">
-                                                    <div class="card h-100">
-                                                        <div class="card-title bg-primary text-white fw-bold p-3"><i class="fa fa-lock"></i> Following On Trade Social </div>
-                                                        <div id="WL_Following" class="post-column">
-                                                            <div class="card-body tweet-card gradient-profile-card gold-card">
-                                                                <div class="tweet-header">
-                                                                    <div>
-                                                                        <strong>FREE LIMIT REACHED</strong>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="tweet-body">
-                                                                    You have reached your limit for the day.  Become a member to see more!
-                                                                </div>
-                                                            </div>
-                                                            <div class="card-body tweet-card">
-                                                                <div class="tweet-header">
-                                                                    <div>
-                                                                        <strong>WARNING</strong> - just now
-                                                                    </div>
-                                                                </div>
-                                                                <div class="tweet-body">
-                                                                    <strong>UNDER DEVELOPMENT</strong> <br/>
-                                                                    This Column is currently under construction and not yet enabled for members.
-                                                                </div>
-                                                            </div>
-                                                            <div class="card-body tweet-card">
-                                                                <div class="tweet-header">
-                                                                    <div>
-                                                                        <strong>Sith</strong> - 2 hours ago
-                                                                    </div>
-                                                                </div>
-                                                                <div class="tweet-body">
-                                                                    <strong>TEST 165C 08/12</strong> - Trimmed at $1.30<br/>
-                                                                    had to trim
-                                                                </div>
-                                                            </div>
-                                                            <div class="card-body tweet-card gradient-green">
-                                                                <div class="tweet-header">
-                                                                    <div>
-                                                                        <strong>Sith</strong> - 2 hours ago
-                                                                    </div>
-                                                                </div>
-                                                                <div class="tweet-body">
-                                                                    <strong>TEST 165C 08/12</strong> - Added at $1.02<br/>
-                                                                    Bounced ORB low. Back above 209.
-                                                                </div>
-                                                            </div>
-                                                            
-                                                        </div>
-                                                    </div>
+                                                    {{ partial "planner/trade_alerts" }}
                                                 </div>
                                                 <div class="scanner-section content-section p-0 flex-shrink-0">
                                                     <div class="card h-100">

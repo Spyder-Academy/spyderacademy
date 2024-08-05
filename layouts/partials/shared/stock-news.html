@@ -2,22 +2,13 @@
 {{ $stocks := .Site.Data.stocks.stocks }}
 {{ $profile := where $stocks "symbol" $symbol }}
 
-<div class="p-0">
   <div class="container p-0">
-    <div class="content-section row d-none stock_social_row">
-        <div class="col-12 d-lg-block">
-            <div class="card-body tweet-header bg-dark text-white justify-content-center">
-                <h4 class="card-title fw-semibold text-uppercase">NEWS</h4>
-            </div>
-        </div>
-    </div>
     <div id="news-feed" class="row">
         <div class="col-12 p-5">
             Scanning the latest news ...
         </div>
     </div>
   </div>
-</div>
 
 <script>
     async function fetchRSSFeed(url) {
@@ -51,24 +42,8 @@
                 var relativeTime = timestamp.fromNow();
                 var easternTime = timestamp.tz("America/New_York").format('MMMM Do YYYY, h:mm:ss a');
                 
-                // if (item.pubDate != ""){
-                //   formattedTimestampStr = (new Date(item.pubDate)).toLocaleString('en-US', {
-                //     weekday: 'short',
-                //     month: 'short',
-                //     day: 'numeric',
-                //     year: 'numeric',
-                //     hour: 'numeric',
-                //     minute: 'numeric',
-                //     hour12: true
-                //   })
-
-                //   formattedTimestampStr += " ET"
-                // }
-
-                
-                
                 const itemElement = document.createElement('div');
-                itemElement.className = 'col-md-4 col-sm-12 social-card';
+                itemElement.className = 'col-12 ';
                 itemElement.innerHTML = `
                     <div class="card-body tweet-card h-100">
                         <div class="tweet-header">
