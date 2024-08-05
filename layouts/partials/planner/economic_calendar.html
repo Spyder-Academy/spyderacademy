@@ -1,0 +1,99 @@
+
+
+<div class="row earnings_calendar ">
+    <!-- Column for Monday -->
+    <div class="col-md-2 col-12 p-md-3 p-0">
+        <div class="card earnings-day lg-rounded" id="day-1">
+            <div class="card-header">
+                <div class="day-title">MON</div>
+                <div class="date">-</div>
+            </div>
+            <div class="card-body">
+                <div class="card bg-transparent text-center p-0 w-100" >
+                    <div class="card-body p-0">
+                        <div class="container p-0 m-0"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Column for Tues -->
+    <div class="col-md-2 col-12 p-md-3 p-0">
+        <div class="card earnings-day lg-rounded" id="day-2">
+            <div class="card-header">
+                <div class="day-title">TUE</div>
+                <div class="date">-</div>
+            </div>
+            <div class="card-body">
+                <div class="card bg-transparent text-center p-0 w-100" >
+                    <div class="card-body p-0">
+                        <div class="container p-0 m-0"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Column for Wed -->
+    <div class="col-md-2 col-12 p-md-3 p-0">
+        <div class="card earnings-day lg-rounded" id="day-3">
+            <div class="card-header">
+                <div class="day-title">WED</div>
+                <div class="date">-</div>
+            </div>
+            <div class="card-body">
+                <div class="card bg-transparent text-center p-0 w-100" >
+                    <div class="card-body p-0">
+                        <div class="container p-0 m-0"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Column for Thur -->
+    <div class="col-md-2 col-12 p-md-3 p-0">
+        <div class="card earnings-day lg-rounded" id="day-4">
+            <div class="card-header">
+                <div class="day-title">THU</div>
+                <div class="date">-</div>
+            </div>
+            <div class="card-body">
+                <div class="card bg-transparent text-center p-0 w-100" >
+                    <div class="card-body p-0">
+                        <div class="container p-0 m-0"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Column for Friday -->
+    <div class="col-md-2 col-12 p-md-3 p-0">
+        <div class="card earnings-day lg-rounded" id="day-5">
+            <div class="card-header">
+                <div class="day-title">FRI</div>
+                <div class="date">-</div>
+            </div>
+            <div class="card-body">
+                <div class="card bg-transparent text-center p-0 w-100" >
+                    <div class="card-body p-0">
+                        <div class="container p-0 m-0"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    let tradePlanner = null;
+
+    $(document).ready(function() {
+        tradePlanner = new TradePlanner();
+        tradePlanner.renderEconomicCalendar();
+    });
+
+</script>

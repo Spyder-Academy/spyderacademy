@@ -88,6 +88,42 @@ class TradePlanner {
      $('#earningsDetailsCard').addClass('show');
   }
 
+  async renderEconomicCalendar(){
+    var url = "https://us-central1-spyder-academy.cloudfunctions.net/economic_calendar";
+
+    try {
+      let response = await $.ajax({ url: url, method: 'GET' });
+      if (response && response.length > 0) {
+
+        const currentYear = new Date().getFullYear();
+
+        response.forEach(function(item) {
+          const date = new Date(item["Date"] + " " + currentYear + ' 05:00:00 UTC-0400');
+          const day = date.getDay(); // 0 = Sunday, 1 = Monday, etc.
+          $(`#day-${day} .date`).text(date.getDate());
+
+          item["Events"].forEach(function(event) {
+            var highlightClass = ""
+            if (event["Impact"] == "High"){
+              highlightClass = "gradient-red"
+            }
+
+            const event_row = `
+              <div class="row p-2 ${highlightClass} lg-rounded mb-1">
+                  <div class="col-4 px-2 m-0 text-start text-nowrap">${event.Time}</div>
+                  <div class="col-8 p-0 m-0 text-start">${event.Release}</div>
+              </div>
+            `;
+
+            $(`#day-${day} .container`).append(event_row);
+          });
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching Economic Calendar from the API:', error);
+    }
+  }
+
 
   async getClosePrice(ticker) {
     var sentTicker = ticker.toUpperCase();

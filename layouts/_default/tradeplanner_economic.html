@@ -21,12 +21,7 @@
                                     <div class="row">
                                         <div class="col-12"><h1 class="gradient-text text-uppercase p-lg-3">Economic Calendar</h1></div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-12 p-3">
-                                            {{ partial "shared/economic_calendar.html" }}
-
-                                        </div>
-                                    </div>
+                                    {{ partial "planner/economic_calendar.html" }}
                                 </div>
                             </div>
                         </div>
@@ -45,24 +40,8 @@
         </div>
     </div>
 
-    
-
 
     
 
-    <!-- Load Shared JS -->
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
-
-    <script>
-
-        let tradePlanner = null;
-
-
-        $(document).ready(function() {
-            tradePlanner = new TradePlanner();
-
-        });
-
-    </script>
 </section>
 {{ end }}
