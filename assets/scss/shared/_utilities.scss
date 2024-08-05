@@ -527,7 +527,7 @@ ul li {
 
 @include media-breakpoint-down(sm){ /* Small screens and down */
   .timeline .flex-nowrap .content-section {
-    flex-basis: 80%;
+    flex-basis: 100%;
   }
 }
 
