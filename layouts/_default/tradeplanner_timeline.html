@@ -1,7 +1,7 @@
 {{ define "main" }}
 <section class="section pb-2 bg-dark">
 
-    <div class="timeline-container mb-5">
+    <div id="timeline" class="timeline-container mb-5">
         <div class="column ">
             <h4 class="gradient-profile-card gold-card text-white text-uppercase fw-bold p-3"  >Trade Planner</h4>
                 <div class="post">
@@ -60,6 +60,25 @@
 
     <script>
 
+       // Function to handle the scroll shake effect
+        function triggerScrollHint(container) {
+            // Temporarily disable scroll snapping
+            container.style.scrollSnapType = 'none';
+            container.style.scrollBehavior = 'smooth';
+
+            // Perform the scroll "peekaboo" effect
+            container.scrollLeft += 25;
+            setTimeout(() => {
+                container.scrollLeft -= 25; // Move back to the original position
+
+                // Re-enable scroll snapping after the animation
+                setTimeout(() => {
+                    container.style.scrollSnapType = 'x mandatory';
+                    container.style.scrollBehavior = '';
+                }, 300);
+            }, 300);
+        }
+
         let tradePlanner = null;
 
 
@@ -74,6 +93,14 @@
             tradePlanner.fetchScreener();
             tradePlanner.fetchAllFlow();
             tradePlanner.fetchXPosts();
+
+            timelineContainer = document.querySelector("#timeline");
+            if (timelineContainer) {
+                // Only trigger the scroll hint on mobile devices
+                if (window.innerWidth <= 768) {  // Adjust the width as needed
+                    triggerScrollHint(timelineContainer);
+                }
+            }
 
 
         });
