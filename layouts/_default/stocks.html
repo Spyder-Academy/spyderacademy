@@ -3,14 +3,23 @@
 {{ $tvSymbol := .Page.Params.tv_override | default .Page.Params.ticker }}
 
 <section class="section pt-1 pb-2 bg-dark">
-    <div class="container-fluid " style="position: relative; overflow-x: hidden;">
+    <div class="container-fluid p-0 " style="position: relative; overflow-x: hidden;">
         
         <div class="row p-0 m-0">
             <!-- Left Panel -->
             <div class="col-lg-2 col-12 d-lg-block p-2 bg-white lg-rounded h-100">
-                {{ partial "planner/watchlist" }}
+                
+              <div class="mx-3">
+                {{ partial "planner/search_ticker"}}
+              </div>
 
-                <div class="container gradient-profile-card gold-card m-0 p-2 lg-rounded " onclick="showFinancials('{{ .Page.Params.ticker }}');">
+                <div class="d-none d-md-block">
+                  {{ partial "planner/watchlist" }}
+                </div>
+
+               
+
+                <div class="container gradient-profile-card gold-card m-0 p-2" style="border-radius:15px" onclick="showFinancials('{{ .Page.Params.ticker }}');">
                     <div class="row btn m-0 p-0 tweet-body text-white text-uppercase text-center py-3">
                         <div class="col-12 align-text-middle ">
                           Check out ${{ upper .Page.Params.ticker }}'s Financials!
@@ -27,7 +36,7 @@
                                 <div class="row p-0 m-0 justify-content-center ">
                                     {{ partial "planner/navbar" }}
                                 </div>
-                                <div class="container-fluid timeline p-2">
+                                <div class="container-fluid timeline p-0 p-lg-2">
                                     <div class="row p-0 m-0">
                                         <div class="col-12">
                                           {{ with .Title }}
@@ -86,7 +95,7 @@
               </div>
             </div>
 
-            <div class="col-lg-3 p-3 m-0 bg-white lg-rounded">
+            <div class="col-lg-3 p-0 p-lg-3 m-0 bg-white lg-rounded">
               {{ partial "planner/gamma_explanation" (dict "symbol" .Page.Params.ticker) }}
               
               <div class="container p-0 m-0">
@@ -113,11 +122,11 @@
 
         <div class="container-fluid p-0 mt-3 m-0  " style="overflow-x: hidden">
           <div class="card border-0 shadow d-flex lg-rounded ">
-              <div class="timeline-container p-0" style="border-radius: 15px;">
+              <div class="timeline-container p-0">
                 
   
                 <div class="column">
-                    <h4 class="gradient-red text-white p-3" style="border-top-left-radius: 15px;">Technical Analysis</h4>
+                    <h4 class="gradient-red text-white p-3" >Technical Analysis</h4>
                     {{ partial "shared/stock-signals" (dict "symbol" .Page.Params.ticker "tvSymbol" $tvSymbol  "Site" .Site) }}
                 </div>
 
@@ -137,7 +146,7 @@
                 </div>
   
                 <div class="column">
-                    <h4 class="bg-warning text-white p-3" style="border-top-right-radius: 15px;">News</h4>
+                    <h4 class="bg-warning text-white p-3">News</h4>
                     {{ partial "shared/stock-news" (dict "symbol" .Page.Params.ticker "tvSymbol" $tvSymbol  "Site" .Site) }}
                 </div>
             </div>
@@ -153,7 +162,7 @@
     <div class="container timeline p-3 mt-4 bg-light lg-rounded">
       <div class="row">
         <div class="col-12 d-flex justify-content-center">
-          <div class="blog-content p-5 mw-100 fs-5">
+          <div class="blog-content p-0 p-lg-5 mw-100 fs-5">
             <h2> {{ .Title }} </h2>
             {{ .Content }}
           </div>

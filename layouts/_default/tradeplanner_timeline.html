@@ -7,8 +7,12 @@
                 <div class="post">
                     {{ partial "planner/gamma_explanation" (dict "symbol" "SPY") }}
                 </div>
-                
-                <div class="post mt-2">
+
+                <div class=" post px-4">
+                    {{ partial "planner/search_ticker"}}
+                </div>
+    
+                <div class="post">
                     {{ partial "planner/watchlist" }}
                 </div>
         </div>
