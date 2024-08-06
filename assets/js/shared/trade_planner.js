@@ -922,6 +922,92 @@ class TradePlanner {
     }
   }
 
+  async fetchTradesFromPeopleIFollow(){
+    // get list of trades from people I follow
+
+    // render this list.
+
+    // listen for any new trade alerts for realtime update
+    this.listenForTradesFromPeopleIFollow();
+  }
+
+
+  async listenForTradesFromPeopleIFollow(){
+    // Assume currentUserId is the ID of the current user
+    const currentUserId = "3x2UXhg6pveNwtU9Bk91f5F6UID3"; // todo: cashmoneytrades for now.
+
+    // Reference to the user's document in Firestore
+    const userDocRef = this.firestore_db.collection("users").doc(currentUserId);
+
+    // Get the start of the current day (today at 00:00:00)
+    const now = new Date();
+    const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
+
+    // Listen to the user's "following" list
+    userDocRef.onSnapshot((doc) => {
+        if (doc.exists) {
+            const following = doc.data().following || [];
+
+            console.log("following:", following)
+
+            if (following.length > 0) {
+                // Listen for new trades posted by users in the "following" list
+                const tradesRef = this.firestore_db.collection("trades");
+
+                tradesRef
+                  .where("uid", "in", following)
+                  .where("entry_date", ">", startOfDay)
+                  .orderBy("entry_date", "desc")  
+                  .onSnapshot((snapshot) => {
+                    snapshot.docChanges().forEach((change) => {
+                        if (change.type === "added") {
+                            const newTrade = change.doc.data();
+                            console.log("New trade posted by followed user:", newTrade);
+                            // Update the UI or notify the user
+                            var trade = TradeRecord.from_dict(newTrade.id, newTrade)
+                            var tradeRow = this.renderTrade(trade)
+                            var tradePost = $("<div class='post'>").append(tradeRow)
+
+                            console.log(trade.entry_date.toDate(), this.pageLoadTimestamp, trade.entry_date.toDate() > this.pageLoadTimestamp)
+                            if (trade.entry_date.toDate() > this.pageLoadTimestamp){
+                              $("#WL_Following").prepend(tradePost);
+                            }
+                            else{
+                              $("#WL_Following").append(tradePost);
+                            }
+                        }
+                    });
+                });
+            }
+        }
+    });
+
+  }
+
+
+  renderTrade(trade){
+
+    var tradeCard = $('.trade-card-template');
+
+    var tradeCardRow = tradeCard.clone()
+    tradeCardRow.removeClass("d-none")
+    tradeCardRow.removeClass("template")
+    tradeCardRow.removeClass("trade-card-template")
+    tradeCardRow.find(".traderName").text(trade.username + " - " + moment((trade.entry_date).toDate()).fromNow())
+    tradeCardRow.find(".tradeContract").text(trade.ticker + " " + trade.strike + " " + trade.expiration)
+    tradeCardRow.find(".tradeGain").text(trade.gainsString)
+    tradeCardRow.find(".tradeNotes").text(trade.notes)
+    tradeCardRow.find(".tradeLogo").attr("src", "/images/logos/" + trade.ticker.toUpperCase() + ".png")
+    tradeCardRow.find(".tradeRow").attr("tradeid", trade.tradeid)
+    
+    if (trade.gainsValue < 0){
+      tradeCardRow.find(".trade_card").removeClass("gradient-green")
+      tradeCardRow.find(".trade_card").addClass("gradient-red")
+    }
+
+    return tradeCardRow
+  }
+
   async fetchBondAuctions() {
     const apiUrl = "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/upcoming_auctions?fields=security_term,security_type,offering_amt,auction_date&sort=auction_date&format=json";
 

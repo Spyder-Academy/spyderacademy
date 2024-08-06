@@ -18,7 +18,7 @@
         </div>
 
         <div class="column">
-            <h4 class="gradient-green text-white p-3">Following on TradeSocial</h4>
+            <h4 class="gradient-green text-white p-3">Following on TradeSocial (BETA)</h4>
             {{ partial "planner/trade_alerts" }}
         </div>
 
@@ -90,6 +90,7 @@
             tradePlanner.fetchIVData("SPY");
 
             // populate timeline columns
+            tradePlanner.fetchTradesFromPeopleIFollow();
             tradePlanner.fetchScreener();
             tradePlanner.fetchAllFlow();
             tradePlanner.fetchXPosts();
