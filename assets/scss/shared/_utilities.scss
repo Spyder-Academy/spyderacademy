@@ -517,17 +517,20 @@ ul li {
   }
 }
 
+ 
 .timeline .timeline-row {
-  overflow-x: auto;
+  overflow-x: scroll;
 }
 
 .timeline .flex-nowrap .content-section {
   flex-basis: 20%;
+  max-height: 100vh;
+  scroll-snap-type: x mandatory;
 }
 
 @include media-breakpoint-down(sm){ /* Small screens and down */
   .timeline .flex-nowrap .content-section {
-    flex-basis: 100%;
+    flex-basis: 98%;
   }
 }
 
@@ -543,8 +546,8 @@ ul li {
 
 .timeline .post-column {
   overflow-y: auto;
-  height: 100%;
-  max-height: 100vh; /* Adjust this as needed for the height of your content */
+  height: 90%;
+  max-height: 90vh; /* Adjust this as needed for the height of your content */
 }
 
 
