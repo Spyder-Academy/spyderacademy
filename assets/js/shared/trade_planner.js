@@ -2776,8 +2776,11 @@ class TradePlanner {
       $(chartid).empty()
 
       // this.chartGEX.destroy();
-      this.chartGEX = new ApexCharts(document.querySelector(chartid), options);
-      this.chartGEX.render();
+      document.querySelectorAll(chartid).forEach((element) => {
+        const chart = new ApexCharts(element, options);
+        chart.render();
+      });
+
     }
     else {
       this.chartGEX.updateOptions({
@@ -2802,14 +2805,14 @@ class TradePlanner {
     ticker = ticker.toUpperCase();
     const jsonData = await this._fetchGEXOverlayData(ticker);
     if (ticker == "SPX") {
-      $("#gammaOverlayContainer").hide()
+      $(".gammaOverlayContainer").hide()
     }
     else if (jsonData && jsonData.stock_price.length > 0) {
       this._renderGEXOverlay(ticker, jsonData, expectedMove);
     }
     else {
       console.log("No data to render.");
-      $("#gammaChartOverlay").text("Gamma Price Overlay is currently unavailable")
+      $(".gammaChartOverlay").text("Gamma Price Overlay is currently unavailable")
     }
   }
 
@@ -2824,7 +2827,7 @@ class TradePlanner {
       return data;
     } catch (error) {
       console.error("Could not fetch data:", error);
-      $("#gammaOverlayContainer").hide()
+      $(".gammaOverlayContainer").hide()
     }
   }
 
@@ -3038,11 +3041,15 @@ class TradePlanner {
     };
 
     // $("#gammaChartOverlay").removeClass("d-none")
-    $("#gammaChartOverlay").empty()
+    $(".gammaChartOverlay").empty()
 
     if (this.chartGEXOverlay != null) this.chartGEXOverlay.destroy();
-    this.chartGEXOverlay = new ApexCharts(document.querySelector("#gammaChartOverlay"), options);
-    this.chartGEXOverlay.render();
+
+    document.querySelectorAll('.gammaChartOverlay').forEach((element) => {
+      const chart = new ApexCharts(element, options);
+      chart.render();
+    });
+
   }
 
 

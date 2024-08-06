@@ -95,7 +95,7 @@
               </div>
             </div>
 
-            <div class="col-lg-3 p-0 p-lg-3 m-0 bg-white lg-rounded">
+            <div class="col-lg-3 p-0 p-lg-3 m-0 bg-white lg-rounded d-none d-lg-block">
               {{ partial "planner/gamma_explanation" (dict "symbol" .Page.Params.ticker) }}
               
               <div class="container p-0 m-0">
@@ -104,14 +104,14 @@
                     <div id="gammaChartContainer" class="col-12 p-0 m-0">
                       <div class="card border-0 p-3 mr-2 h-100 d-flex">
                         <div class="px-2 px-lg-0 fw-bold text-uppercase">{{ .Page.Params.ticker }} Market Pressure</div>
-                        <div class="w-100"  id="gammaChart">Loading Market Exposure...</div>
+                        <div class="w-100 gammaChart"  id="gammaChart">Loading Market Exposure...</div>
                         <input type="range" class="form-range" id="gex_slider" min="0" max="40" step="1" value="40" disabled="true" />
                       </div>
                     </div>
             
                     <div id="gammaOverlayContainer" class="col-12 p-0 m-0">
                       <div class="card border-0 p-3 m-0 h-100 d-flex">
-                        <div class="w-100"  id="gammaChartOverlay">Loading Gamma Overlay...</div>
+                        <div class="w-100 gammaChartOverlay"  id="gammaChartOverlay">Loading Gamma Overlay...</div>
                       </div>
                     </div>
                   </div>
@@ -120,15 +120,36 @@
             </div>
         </div>
 
-        <div class="container-fluid p-0 mt-3 m-0  " style="overflow-x: hidden">
+        <div class="container-fluid p-0 mt-3 m-0" style="overflow-x: hidden">
           <div class="card border-0 shadow d-flex lg-rounded ">
               <div class="timeline-container p-0">
+                
                 
   
                 <div class="column">
                     <h4 class="gradient-red text-white p-3" >Technical Analysis</h4>
                     {{ partial "shared/stock-signals" (dict "symbol" .Page.Params.ticker "tvSymbol" $tvSymbol  "Site" .Site) }}
                 </div>
+
+                <div class="column d-md-none">
+                  <h4 class="gradient-gold text-white p-3" >Gamma Exposure</h4>
+                  <div class="post">
+                    <div id="gammaChartContainer" class="col-12 p-0 m-0">
+                      <div class="card border-0 p-3 mr-2 h-100 d-flex">
+                        <div class="px-2 px-lg-0 fw-bold text-uppercase">{{ .Page.Params.ticker }} Market Pressure</div>
+                        <div class="w-100 gammaChart"  id="mobileGammaChart">Loading Market Exposure...</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="post">
+                    <div id="gammaOverlayContainer" class="col-12 p-0 m-0">
+                      <div class="card border-0 p-3 m-0 h-100 d-flex">
+                        <div class="w-100 gammaChartOverlay"  id="mobileGammaChartOverlay">Loading Gamma Overlay...</div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
 
                 <div class="column">
                   <h4 class="gradient-green text-white p-3" >Following on TradeSocial</h4>
@@ -206,7 +227,7 @@
 
             // Gamma Generated Market Recommendation
             var ticker = {{ .Page.Params.ticker }};
-            tradePlanner.fetchGEXByStrike(ticker, "#gammaChart", idx=0, historicals = true);
+            tradePlanner.fetchGEXByStrike(ticker, ".gammaChart", idx=0, historicals = true);
             var range = tradePlanner.fetchIVData(ticker);
             tradePlanner.fetchGEXOverlay(ticker, range);
 
@@ -214,7 +235,7 @@
             const slider = document.getElementById('gex_slider');
             slider.addEventListener('input', function() {
                 const selectedIndex = parseInt(slider.max) - parseInt(slider.value);
-                tradePlanner.fetchGEXByStrike(ticker, "#gammaChart", idx=selectedIndex, historicals=true);
+                tradePlanner.fetchGEXByStrike(ticker, ".gammaChart", idx=selectedIndex, historicals=true);
             });
 
             // Function to handle the card click and hide on outside click
