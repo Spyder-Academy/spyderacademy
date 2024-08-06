@@ -1,97 +1,51 @@
 {{ define "main" }}
-<section class="section pt-1 pb-2 bg-dark">
-    <div class="container-fluid  " style="">
-        
-        <div class="row p-0 m-0">
-            <!-- Left Panel -->
-            <!-- <div class="col-lg-2 col-12 d-lg-block p-2 bg-white lg-rounded">
-                
-                {{ partial "planner/gamma_explanation" (dict "symbol" "SPY") }}
+<section class="section pb-2 bg-dark">
 
-                {{ partial "planner/watchlist" }}
-            </div> -->
-            <!-- Main Content Area -->
-            <div class="col-12 p-0">
-                <div class="container-fluid p-0 m-0 ">
-                    <div class="row h-100">
-                        <div class="col-12 my-0 p-0">
-                            <div class="card h-100 border-0 mx-lg-3 lg-rounded">
-                                <div class="row p-0 m-0 justify-content-center">
-                                    {{ partial "planner/navbar" }}
-                                </div>
-                                <div class="container-fluid timeline p-0 mt-lg-4 mb-4">
-                                    <div class="row timeline-row p-0 m-0  ">
-                                        <div class="col-12 p-0">
-                                            <div class="d-flex flex-nowrap">
-                                                <div class="alerts-section content-section flex-shrink-0 p-lg-2 mx-lg-2 p-0 m-0 bg-dark lg-rounded" >
-                                                    <div class="card ">
-                                                        <div class="card-title gradient-profile-card gold-card text-black fw-bold p-2 text-center" style="border-radius: 10px;"><h1 class="fs-5">Trade Planner</h1></div>
-
-                                                        <div class="p-lg-2 m-lg-2 p-0 m-0 lg-rounded bg-light ">
-                                                        {{ partial "planner/gamma_explanation" (dict "symbol" "SPY") }}
-                                        
-                                                        {{ partial "planner/watchlist" }}
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="alerts-section content-section p-0 flex-shrink-0">
-                                                    {{ partial "planner/trade_alerts" }}
-                                                </div>
-                                                <div class="scanner-section content-section p-0 flex-shrink-0">
-                                                    <div class="card ">
-                                                        <div class="card-title bg-secondary text-white fw-bold p-3">Daily Reversals</div>
-                                                        <div id="WL_Reversals" class="post-column"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="charts-section content-section p-0 flex-shrink-0">
-                                                    <div class="card  h-100">
-                                                        <div class="card-title bg-primary text-white fw-bold p-3">Chart Setups</div>
-                                                        <div id="X_Charts" class="stock_tweets post-column"></div>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="trades-section content-section p-0 flex-shrink-0">
-                                                    <div class="card  h-100">
-                                                        <div class="card-title bg-warning text-black fw-bold p-3">Trade Ideas</div>
-                                                        <div id="X_TradeIdeas" class="stock_tweets post-column"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="oi-section content-section p-0 flex-shrink-0">
-                                                    <div class="card  h-100">
-                                                        <div class="card-title gradient-gold text-white fw-bold p-3">Options Flow Tracker</div>
-                                                        <div id="WL_FlowTracker" class="post-column"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="flow-section content-section p-0 flex-shrink-0" >
-                                                    <div class="card  h-100">
-                                                        <div class="card-title gradient-blue text-white fw-bold p-3"  style="border-top-right-radius: 15px;">Options Flow</div>
-                                                        <div id="X_OptionsFlow" class="stock_tweets post-column"></div>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <div class="timeline-container mb-5">
+        <div class="column ">
+            <h4 class="gradient-profile-card gold-card text-white text-uppercase fw-bold p-3"  >Trade Planner</h4>
+                <div class="post">
+                    {{ partial "planner/gamma_explanation" (dict "symbol" "SPY") }}
                 </div>
-            </div>
+                
+                <div class="post mt-2">
+                    {{ partial "planner/watchlist" }}
+                </div>
         </div>
 
-        <!-- Sliding Card -->
-        <!-- <div id="contractDetailsCard" class="rightpanel-details-card">
-            <div class="details-card card border-0 shadow d-flex lg-rounded">
-                <div class="card-body">
-                    something here on slide out, not sure what yet!
-                </div>
-            </div>
-        </div> -->
-    </div>
+        <div class="column">
+            <h4 class="gradient-green text-white p-3">Following on TradeSocial</h4>
+            {{ partial "planner/trade_alerts" }}
+        </div>
 
-    
+
+        <div class="column">
+            <h4 class="gradient-red text-white p-3">Daily Reversals</h4>
+            <div id="WL_Reversals"></div>
+        </div>
+
+        <div class="column">
+            <h4 class="bg-primary text-white p-3">Chart Setups</h4>
+            <div id="X_Charts" ></div>
+        </div>
+
+        <div class="column">
+            <h4 class="bg-warning text-white p-3">Trade Ideas</h4>
+            <div id="X_TradeIdeas"></div>
+        </div>
+
+        <div class="column">
+            <h4 class="gradient-gold text-white p-3">OI Tracker</h4>
+            <div id="WL_FlowTracker"></div>
+        </div>
+
+        <div class="column">
+            <h4 class="gradient-blue text-white p-3">Options Flow</h4>
+            <div id="X_OptionsFlow" ></div>
+        </div>
+
+
+    </div>
 
 
     
