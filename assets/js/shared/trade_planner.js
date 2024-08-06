@@ -147,7 +147,7 @@ class TradePlanner {
 
 
   // Function to listen to new posts for a specific source
-  async listenToNewPosts(source) {
+  async listenToNewFinXPosts(source) {
     const sourceRef = this.firestore_db.collection('finX').doc(source).collection('posts');
 
     sourceRef.orderBy('timestamp', 'desc').onSnapshot(snapshot => {
@@ -159,6 +159,28 @@ class TradePlanner {
           if (post.timestamp.toDate() > this.pageLoadTimestamp) {
             console.log("New post detected", post);
             this.renderPost(post, source);
+          }
+        }
+      });
+    });
+  }
+  // Function to listen to new posts for OI Tracker
+  async listenToNewFlow() {
+    const sourceRef = this.firestore_db.collection('flow');
+
+    sourceRef.orderBy('created_date', 'desc').onSnapshot(snapshot => {
+      snapshot.docChanges().forEach(change => {
+        if (change.type === 'added') {
+          const post = change.doc.data();
+
+          // Check if the post is created after the page load
+          if (post.created_date.toDate() > this.pageLoadTimestamp) {
+            console.log("New flow tracking detected", post);
+
+            var flow_card = this.createFlowPost(post)
+            
+            //  append the flow card
+            $("#WL_FlowTracker").prepend(flow_card);
           }
         }
       });
@@ -236,14 +258,14 @@ class TradePlanner {
         });
 
         this.init_tradingview_popovers();
-        this.listenToNewPosts("Javier 🤘")
-        this.listenToNewPosts("Jake Wujastyk")
-        this.listenToNewPosts("7 Star Setups")
-        this.listenToNewPosts("TrendSpider")
-        this.listenToNewPosts("Banana3")
-        this.listenToNewPosts("Taylor")
-        this.listenToNewPosts("Trade Talk Media")
-        this.listenToNewPosts("Alex Jones Industrial Average")
+        this.listenToNewFinXPosts("Javier 🤘")
+        this.listenToNewFinXPosts("Jake Wujastyk")
+        this.listenToNewFinXPosts("7 Star Setups")
+        this.listenToNewFinXPosts("TrendSpider")
+        this.listenToNewFinXPosts("Banana3")
+        this.listenToNewFinXPosts("Taylor")
+        this.listenToNewFinXPosts("Trade Talk Media")
+        this.listenToNewFinXPosts("Alex Jones Industrial Average")
 
       } else {
         console.error('No data received from stock tweets API.');
@@ -334,66 +356,8 @@ class TradePlanner {
 
         // render the tweets 
         response.forEach(tweet => {
-          // var author = tweet["author"]
-          // var symbol = tweet["symbol"]
-          // var message = tweet["message"].replace(/\n/g, "<br/>");
-          // var tweet_link = tweet["url"] ? tweet["url"] : ""
-
-          // var price_difference = ""
-          // var price_difference_detail = ""
-          // var price_class = ""
-
-          // if (tweet["current_price"] && tweet["price_when_posted"]) {
-          //   var current_price = tweet["current_price"]
-          //   var price_when_posted = tweet["price_when_posted"]
-
-          //   price_difference_detail = `Price when posted was $${price_when_posted}.  Currently trading at $${current_price}`
-
-          //   if (current_price >= price_when_posted) {
-          //     price_difference = "<i class='fa-regular fa-circle-up'></i> " + symbol.toUpperCase() + " is Up $" + Math.abs(current_price - price_when_posted).toFixed(2) + " since posted."
-          //     price_class = "text-success"
-          //   }
-          //   else {
-          //     price_difference = "<i class='fa-regular fa-circle-down'></i> " + symbol.toUpperCase() + " is Down $" + Math.abs(current_price - price_when_posted).toFixed(2) + " since posted."
-          //     price_class = "text-danger"
-          //   }
-
-          // }
-
-          // if (symbol) {
-          //   // var symbolLink = `<a href='/stocks/${lowerSymbol}/'>$${symbol}</a>`;
-          //   var symbolLink = `<a class="" href="/stocks/${symbol.toLowerCase()}/" >$${symbol}</a>`
-          //   message = message.replace(new RegExp(`\\$${symbol}`, 'g'), symbolLink);
-          // }
-
-          // var image = tweet["image"]
-          // var timestamp = moment(tweet["timestamp"]);
-
-          // // Calculate relative time and Eastern Time format
-          // var relativeTime = timestamp.fromNow();
-          // var easternTime = timestamp.tz("America/New_York").format('MMMM Do YYYY, h:mm:ss a');
 
           var tweet_template = this.createTweetTemplate(tweet);
-
-          // var tweet_template = `
-          //             <div class="col-lg-3 col-12  social-card">
-          //               <div class="card-body tweet-card">
-          //                   <div class="tweet-header">
-          //                       <div>
-          //                           <a href="${tweet_link}" target="_blank" class="text-decoration-none">𝕏 <strong>${author}</strong></a> <span class="text-muted"> - <span title="${easternTime}">${relativeTime}</span></span>
-          //                       </div>
-          //                   </div>
-          //                   <div class="tweet-body">
-          //                       <p>${message}</p>
-          //                       ${image ? `<a href="${image}" target="_blank"><img src="${image}" style="border-radius: 15px" class="img-fluid" alt="Tweet Image"></a>` : ''}
-          //                   </div>
-          //                   <div class="tweet-footer text-muted">
-          //                       ${price_difference ? `<div class="${price_class}" title="${price_difference_detail}">${price_difference}</div>` : ``}
-          //                   </div>
-          //               </div>
-          //             </div>
-          //           `;
-
           $("#stock_social_row").append(tweet_template);
         });
 
@@ -448,6 +412,51 @@ class TradePlanner {
     return result;
   }
 
+
+  createFlowPost(flow){
+
+    function toTitleCase(str) {
+      return str.replace(/(?:^|\s)\w/g, function (match) {
+        return match.toUpperCase();
+      });
+    }
+
+    var contract = flow["contract"]
+    var parsedContract = this.convertContract(contract)
+    
+    var timestamp = jQuery.type(flow["created_date"]) == "string" ? moment(flow["created_date"]) : moment(flow["created_date"].toDate())
+    var relativeTime = timestamp.fromNow();
+    var easternTime = timestamp.tz("America/New_York").format('MMMM Do YYYY, h:mm:ss a');
+
+    var message = toTitleCase(flow["status"]).replaceAll("\n", "<br/>")
+
+
+    var flow_tweet_author = flow["author"]
+    var flow_tweet_url = flow["url"]
+    var flow_tweet_msg = flow["post_message"]
+
+    // create the flow card
+    var flow_card = `
+              <div class="card-body tweet-card" id="flowCard_${contract.replace(".", "_")}">
+                  <div class="tweet-header">
+                      <div>
+                          <strong><a href="/stocks/${flow["ticker"].toLowerCase()}/#flow">${parsedContract}</a></strong> <span class="text-muted"> - <span title="${easternTime}" >${relativeTime}</span></span>
+                      </div>
+                  </div>
+                  <div class="tweet-body">
+                    <p>
+                      <a href="${flow_tweet_url}" target="_blank">${flow_tweet_author}</a> - ${flow_tweet_msg}<br/><br/>
+                      ${message}
+                    </p>
+                  </div>
+                  
+              </div>
+            `
+
+    return flow_card
+
+  }
+
   async fetchAllFlow() {
     var url = `https://us-central1-spyder-academy.cloudfunctions.net/flow`;
 
@@ -459,48 +468,12 @@ class TradePlanner {
         response.forEach(flow => {
           // for each flow tracked
           // console.log(flow)
-
-          function toTitleCase(str) {
-            return str.replace(/(?:^|\s)\w/g, function (match) {
-              return match.toUpperCase();
-            });
-          }
-
-          var contract = flow["contract"]
-          var parsedContract = this.convertContract(contract)
-          var timestamp = moment(flow["created_date"])
-          var relativeTime = timestamp.fromNow();
-          var easternTime = timestamp.tz("America/New_York").format('MMMM Do YYYY, h:mm:ss a');
-
-          var message = toTitleCase(flow["status"]).replaceAll("\n", "<br/>")
-
-
-          var flow_tweet_author = flow["author"]
-          var flow_tweet_url = flow["url"]
-          var flow_tweet_msg = flow["post_message"]
-
-          // create the flow card
-          var flow_card = `
-                    <div class="card-body tweet-card" id="flowCard_${contract.replace(".", "_")}">
-                        <div class="tweet-header">
-                            <div>
-                                <strong><a href="/stocks/${flow["ticker"].toLowerCase()}/#flow">${parsedContract}</a></strong> <span class="text-muted"> - <span title="${easternTime}" >${relativeTime}</span></span>
-                            </div>
-                        </div>
-                        <div class="tweet-body">
-                          <p>
-                            <a href="${flow_tweet_url}" target="_blank">${flow_tweet_author}</a> - ${flow_tweet_msg}<br/><br/>
-                            ${message}
-                          </p>
-                        </div>
-                        
-                    </div>
-                  `
-
-          // console.log(flow_card)
+          var flow_card = this.createFlowPost(flow)
           //  append the flow card
           $("#WL_FlowTracker").append(flow_card);
         });
+
+        this.listenToNewFlow()
 
         // loop back through the flow adding in the options pricing.
         await this.fetchOptionsPricing(response)
