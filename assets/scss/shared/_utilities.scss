@@ -546,6 +546,7 @@ ul li {
 
 .timeline .post-column {
   overflow-y: auto;
+  overflow-x: hidden;
   height: 90%;
   max-height: 90vh; /* Adjust this as needed for the height of your content */
 }
@@ -710,6 +711,16 @@ ul li {
 
 .gradient-red {
   background: linear-gradient(90deg, #ff3131, #ff914d);
+  border: 0;
+}
+
+.gradient-gold {
+  background: linear-gradient(135deg, #000000, #c89116);
+  border: 0;
+}
+
+.gradient-blue {
+  background: linear-gradient(135deg, #000000, #3533cd);
   border: 0;
 }
 

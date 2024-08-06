@@ -402,7 +402,7 @@ class TradePlanner {
       } else {
         // if there is no flow to display, show an empty card 
         var flow_card = `
-                      <div class="col-lg-4 col-12 social-card">
+                      <div class="col-12 social-card">
                         <div class="card-body tweet-card">
                             <div class="tweet-header">
                                 <div>
