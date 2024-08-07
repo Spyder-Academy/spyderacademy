@@ -4,16 +4,28 @@
 </noscript>
 <!-- End Google Tag Manager (noscript) -->
 
+
+<!-- Navbar -->
 <nav class="navbar navbar-expand-xl navbar-dark bg-dark pb-1">
-  <div class="container">
-    <a class="navbar-brand d-flex align-items-center" href="{{ .Site.BaseURL }}">
+  <div class="container d-flex justify-content-between align-items-center">
+    <!-- Spyder logo, centered on mobile -->
+    <a class="navbar-brand d-lg-none mx-auto" href="{{ .Site.BaseURL }}">
+      {{ partial "utilities/image.html" "images/spyder.png" }}
+    </a>
+
+    <!-- Spyder logo, left-aligned on desktop -->
+    <a class="navbar-brand d-none d-lg-flex align-items-center" href="{{ .Site.BaseURL }}">
       {{ partial "utilities/image.html" "images/spyder.png" }}
       <span class="px-3 fs-3 fw-semibold text-uppercase text-white">{{ .Site.Title }}</span>
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+
+    <!-- Toggle button, visible on mobile only -->
+    <button class="navbar-toggler d-lg-none position-absolute start-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarContent">
+
+    <!-- Desktop Menu Items -->
+    <div class="collapse navbar-collapse d-none d-lg-flex" id="navbarDesktopContent">
       <ul class="navbar-nav ms-auto mb-xl-0">
         {{ range .Site.Menus.main }}
           <li class="nav-item text-center m-0">
@@ -21,7 +33,7 @@
           </li>
         {{ end }}
       </ul>
-      <ul class="navbar-nav  ms-auto mb-xl-0">
+      <ul class="navbar-nav ms-auto mb-xl-0">
         {{ range .Site.Menus.buttons }}
           <li class="nav-item m-0">
             <a class="nav-link btn btn-secondary text-light px-4 m-0" href="{{ .URL }}">{{ .Name }}</a>
@@ -30,5 +42,39 @@
       </ul>
     </div>
   </div>
-</nav> 
+</nav>
+
+<!-- Mobile Side Navbar Content -->
+<div id="navbarContent" class="side-nav collapse d-lg-none">
+  <ul class="navbar-nav ms-auto my-3">
+    <li class="nav-item text-left m-0">
+      <span class="px-3 fs-3 fw-semibold text-uppercase text-white">{{ .Site.Title }}</span>
+    </li>
+  </ul>
+
+  <ul class="navbar-nav ms-auto mb-xl-0">
+    {{ range .Site.Menus.main }}
+      <li class="nav-item text-left m-0 p-2">
+        <a class="nav-link text-white px-4 fw-bold" href="{{ .URL }}">{{ .Name }}</a>
+      </li>
+    {{ end }}
+  </ul>
+
+  <ul class="navbar-nav ms-auto mb-xl-0">
+    {{ range .Site.Menus.buttons }}
+      <li class="nav-item m-0">
+        <a class="nav-link btn btn-secondary text-light px-4 m-0" href="{{ .URL }}">{{ .Name }}</a>
+      </li>
+    {{ end }}
+  </ul>
+</div>
+
+
+<script>
+    const navbarContent = document.getElementById('navbarContent');
+    document.querySelector('.navbar-toggler').addEventListener('click', function() {
+    document.body.classList.toggle('navbar-open');
+  });
+
+</script>
 

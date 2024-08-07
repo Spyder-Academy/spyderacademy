@@ -665,6 +665,42 @@ ul li {
   border-radius: 0;
 }
 
+.mobile_nav.transparent {
+  opacity: 0.5;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.mobile_nav.solid {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Sidebar initial state: hidden off-screen to the left */
+.side-nav {
+  position: fixed;
+  top: 0;
+  left: -250px; /* Sidebar width */
+  width: 250px;
+  height: 100%;
+  background-color: #343a40; /* Match the navbar's background */
+  overflow-y: auto;
+  transition: transform 0.3s ease-in-out; /* Use transform for smoother animation */
+  z-index: 1050; /* Ensure it's above other content */
+}
+
+/* When the sidebar is shown, slide it into view */
+.side-nav.show {
+  // transform: translateX(250px); /* Translate sidebar into view */
+}
+
+/* Shift the body content to the right when the sidebar is open */
+body.navbar-open {
+  transform: translateX(250px); /* Same width as the sidebar */
+  transition: transform 0.3s ease-in-out; /* Use transform to match the sidebar */
+}
+
+
+
 #pills-tab {
     display: flex;
     overflow-x: auto;

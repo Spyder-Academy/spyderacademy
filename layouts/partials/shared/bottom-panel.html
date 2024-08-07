@@ -9,10 +9,10 @@
                 <a href="/education/" class="nav-link  text-white bg-dark "><i class="fa fa-user-graduate"></i></a>
             </li>
             <li class="nav-item m-0 text-center" role="presentation">
-                <a href="/tradeplanner/" class="nav-link  text-white bg-dark "  ><i class="fa fa-comment-dollar"></i></a>
+                <a href="/tradeplanner/" class="nav-link  text-white bg-dark "  ><i class="fa fa-bars-staggered"></i></a>
             </li>
             <li class="nav-item m-0 text-center" role="presentation">
-                <a href="/tradesocial/" class="nav-link text-white bg-dark "><i class="fa fa-bell"></i></a>
+                <a href="/tradesocial/" class="nav-link text-white bg-dark "><i class="fa fa-user-group"></i></a>
             </li>
             <li class="nav-item m-0 text-center" role="presentation">
                 <a href="/search/" class="nav-link text-white bg-dark "><i class="fa fa-search"></i></a>
@@ -22,4 +22,39 @@
     </div>
 
 
-    
+    <script>
+      let lastScrollTop = 0;
+      const mobileNav = document.querySelector('.mobile_nav');
+      const scrollableColumns = document.querySelectorAll('.column');
+
+      function handleScroll(event) {
+        let scrollTop;
+
+        if (event.target === document) {
+          scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        } else {
+          scrollTop = event.target.scrollTop;
+        }
+
+        if (scrollTop > lastScrollTop) {
+          // Scrolling down
+          mobileNav.classList.add('transparent');
+          mobileNav.classList.remove('solid');
+        } else {
+          // Scrolling up
+          mobileNav.classList.add('solid');
+          mobileNav.classList.remove('transparent');
+        }
+
+        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Prevent negative scroll value
+      }
+
+      // Listen for scroll events on the main window
+      window.addEventListener('scroll', handleScroll);
+
+      // Listen for scroll events on each scrollable column
+      scrollableColumns.forEach(column => {
+        column.addEventListener('scroll', handleScroll);
+      });
+
+    </script>
