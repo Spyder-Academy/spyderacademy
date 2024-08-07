@@ -43,7 +43,9 @@ class TradePlanner {
           const symbol = item.symbol;
           const marketCap = item.marketCap;
           const when = item.when; // 'pre market' or 'post market'
-          const date = new Date(item.date + ' 05:00:00 UTC-0400');
+
+          const [year, month, dd] = item.date.split("-").map(Number);
+          const date = new Date(year, month - 1, dd, 5, 0, 0, 0);
           const day = date.getDay(); // 0 = Sunday, 1 = Monday, etc.
           const logoUrl = `/images/logos/${symbol.toUpperCase()}.png`; 
 
@@ -85,6 +87,7 @@ class TradePlanner {
   renderEarningsDetails(symbol){
      // Show the card by adding the 'show' class
      this.fetchFinancials(symbol);
+     $('#earningsDetailsCard').removeClass('d-none');
      $('#earningsDetailsCard').addClass('show');
   }
 

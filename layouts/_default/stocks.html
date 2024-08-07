@@ -3,8 +3,6 @@
 {{ $tvSymbol := .Page.Params.tv_override | default .Page.Params.ticker }}
 
 <section class="section pt-1 pb-2 bg-dark">
-  <div class="container-fluid p-0 mt-3 m-0" style="overflow-x: hidden">
-    <div class="card border-0 shadow d-flex lg-rounded ">
         <div class="timeline-container p-0 bg-dark">
             <div class="column d-none d-lg-block bg-white border-0 mx-1 px-3 lg-rounded">
               <div class="post " style="border-radius: 0; box-shadow: none;">
@@ -109,20 +107,20 @@
                 {{ .Content }}
               </div>
           </div>
-      </div>
-    </div>
 
-     <!-- Sliding Card -->
-    <div id="earningsDetailsCard" class="rightpanel-details-card">
-      <div class="details-card card border-0 shadow d-flex lg-rounded">
-          <div class="card-body">
-              {{ partial "planner/stock-financials.html" }}
+          <!-- Sliding Card -->
+          <div id="earningsDetailsCard" class="rightpanel-details-card d-none">
+            <div class="details-card card border-0 shadow d-flex lg-rounded">
+                <div class="card-body">
+                    {{ partial "planner/stock-financials.html" }}
+                </div>
+            </div>
           </div>
       </div>
-    </div>
+
+     
 
 
-  </div>
 
  
     
@@ -157,6 +155,8 @@
                 // If the card is visible and the click is outside of it
                 if (earningsDetailsCard.hasClass('show') && !$(event.target).closest('#earningsDetailsCard').length) {
                     earningsDetailsCard.removeClass('show');
+                    earningsDetailsCard.addClass('d-none');
+
                 }
             });
 
