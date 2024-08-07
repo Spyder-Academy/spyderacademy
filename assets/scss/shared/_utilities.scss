@@ -705,6 +705,10 @@ ul li {
   padding: 0.5em;
   background-color: #000;
 }
+.extra_wide_column{
+  flex: 1 0 50%;
+  max-width: 50%;
+}
 .column h4 {
   position: -webkit-sticky; /* For Safari */
   position: sticky;
@@ -732,13 +736,17 @@ ul li {
   font-size: 14px;
 }
 
-/* Responsive adjustments */
+/* Responsive adjustments for small screen */
 @media (max-width: 768px) {
   .timeline-container {
       gap: 0;
       padding: 0;
   }
   .column {
+      flex: 0 0 100%;
+      max-width: 100%;
+  }
+  .extra_wide_column{
       flex: 0 0 100%;
       max-width: 100%;
   }

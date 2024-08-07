@@ -3,202 +3,128 @@
 {{ $tvSymbol := .Page.Params.tv_override | default .Page.Params.ticker }}
 
 <section class="section pt-1 pb-2 bg-dark">
-    <div class="container-fluid p-0 " style="position: relative; overflow-x: hidden;">
-        
-        <div class="row p-0 m-0">
-            <!-- Left Panel -->
-            <div class="col-lg-2 col-12 d-lg-block p-2 bg-white lg-rounded h-100">
-                
-              <div class="mx-3">
+  <div class="container-fluid p-0 mt-3 m-0" style="overflow-x: hidden">
+    <div class="card border-0 shadow d-flex lg-rounded ">
+        <div class="timeline-container p-0 bg-dark">
+            <div class="column d-none d-lg-block bg-white border-0 mx-1 px-3 lg-rounded">
+              <div class="post " style="border-radius: 0; box-shadow: none;">
+                  {{ partial "planner/watchlist" }}
+              </div>
+            </div>
+
+            <div class="column extra_wide_column bg-white border-0 mx-1 px-0 lg-rounded" >
+              <div class="post p-1 px-3">
                 {{ partial "planner/search_ticker"}}
               </div>
 
-                <div class="d-none d-md-block">
-                  {{ partial "planner/watchlist" }}
+              <div class="post p-1">
+                <!-- TradingView Widget BEGIN -->
+                <div class="card border-0 p-0 mb-3 d-flex tradingview-header-widget-container bg-dark" style="border-radius: 15px;">
+                  <div class="tradingview-header-widget-container__widget"></div>
+                  <script type="application/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js" async>
+                    {
+                      "symbol" : "{{  $tvSymbol }}",
+                      "width" : "100%",
+                      "locale" : "en",
+                      "colorTheme" : "dark",
+                      "isTransparent" : true
+                    }
+                  </script>
                 </div>
+                <!-- TradingView Widget END -->
+              </div>
 
-               
+              <div class="post p-1" style="border:0; box-shadow:none;">
+                {{ partial "shared/stock-chart" (dict "symbol" $tvSymbol "Site" .Site) }}
+              </div>
 
-                <div class="container gradient-profile-card gold-card m-0 p-2" style="border-radius:15px" onclick="showFinancials('{{ .Page.Params.ticker }}');">
-                    <div class="row btn m-0 p-0 tweet-body text-white text-uppercase text-center py-3">
-                        <div class="col-12 align-text-middle ">
-                          Check out ${{ upper .Page.Params.ticker }}'s Financials!
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Main Content Area -->
-            <div class="col-lg-7 col-sm-12 p-0">
-                <div class="container-fluid p-0 m-0 h-100">
-                    <div class="row h-100" id="memberTrades">
-                        <div class="col-12 my-0">
-                            <div class="card h-100 border-0 mx-lg-3 lg-rounded">
-                                <div class="row p-0 m-0 justify-content-center ">
-                                    {{ partial "planner/navbar" }}
-                                </div>
-                                <div class="container-fluid timeline p-0 p-lg-2">
-                                    <div class="row p-0 m-0">
-                                        <div class="col-12">
-                                          {{ with .Title }}
-                                            <h1 class="gradient-text text-center text-uppercase px-lg-4">{{ . }}</h1>
-                                          {{ end }}
-                                          {{ with .Params.description }}
-                                            <p class="text-black-61 text-center pb-3">{{ . }}</p>
-                                          {{ end }}
-                                          
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="row timeline-row p-0 m-0 align-items-center">
-                                      <div class="col-12 p-3 align-items-center bg-dark lg-rounded">
-                                          <!-- TradingView Widget BEGIN -->
-                                          <div class="card border-0 p-0 mb-3 d-flex tradingview-header-widget-container bg-dark" style="border-radius: 15px;">
-                                            <div class="tradingview-header-widget-container__widget"></div>
-                                            <script type="application/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-info.js" async>
-                                              {
-                                                "symbol" : "{{  $tvSymbol }}",
-                                                "width" : "100%",
-                                                "locale" : "en",
-                                                "colorTheme" : "dark",
-                                                "isTransparent" : true
-                                              }
-                                            </script>
-                                          </div>
-                                          <!-- TradingView Widget END -->
-                                      </div>
-                                    </div>
-
-                                    <div class="row timeline-row p-0 m-0 align-items-center">
-                                        <div class="col-12 p-0 align-items-center bg-light lg-rounded">
-                                            {{ partial "shared/stock-chart" (dict "symbol" $tvSymbol "Site" .Site) }}
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            
-                        </div>
-                        
-                    </div>
-                    
-                </div>
-
-                
-            </div>
-
-            <!-- Sliding Card -->
-            <div id="earningsDetailsCard" class="rightpanel-details-card">
-              <div class="details-card card border-0 shadow d-flex lg-rounded">
-                  <div class="card-body">
-                      {{ partial "planner/stock-financials.html" }}
+              <div class="post p-3 m-1 gradient-profile-card gold-card btn" style="border:0; border-radius: 15px; box-shadow:none;" onclick="showFinancials('{{ .Page.Params.ticker }}');">
+                  <div class="align-text-middle">
+                    Check out ${{ upper .Page.Params.ticker }}'s Financials!
                   </div>
               </div>
             </div>
 
-            <div class="col-lg-3 p-0 p-lg-3 m-0 bg-white lg-rounded d-none d-lg-block">
-              {{ partial "planner/gamma_explanation" (dict "symbol" .Page.Params.ticker) }}
-              
-              <div class="container p-0 m-0">
-                <div class="card border-0 shadow d-flex lg-rounded d-lg-block h-100">
-                  <div class="card-body">
-                    <div id="gammaChartContainer" class="col-12 p-0 m-0">
-                      <div class="card border-0 p-3 mr-2 h-100 d-flex">
-                        <div class="px-2 px-lg-0 fw-bold text-uppercase">{{ .Page.Params.ticker }} Market Pressure</div>
-                        <div class="w-100 gammaChart"  id="gammaChart">Loading Market Exposure...</div>
-                        <input type="range" class="form-range" id="gex_slider" min="0" max="40" step="1" value="40" disabled="true" />
-                      </div>
-                    </div>
-            
-                    <div id="gammaOverlayContainer" class="col-12 p-0 m-0">
-                      <div class="card border-0 p-3 m-0 h-100 d-flex">
-                        <div class="w-100 gammaChartOverlay"  id="gammaChartOverlay">Loading Gamma Overlay...</div>
-                      </div>
-                    </div>
+            <div class="column bg-white border-0 mx-1 px-0 lg-rounded">
+              <h4 class="gradient-gold text-white p-3" >Gamma Exposure</h4>
+
+              <div class="post">
+                {{ partial "planner/gamma_explanation" (dict "symbol" .Page.Params.ticker) }}
+              </div>
+              <div class="post" style="box-shadow: none;">
+                <div id="gammaChartContainer" class="col-12 p-0 m-0">
+                  <div class="card border-0 p-3 mr-2 h-100 d-flex">
+                    <div class="px-2 px-lg-0 fw-bold text-uppercase">{{ .Page.Params.ticker }} Market Pressure</div>
+                    <div class="w-100 gammaChart"  id="mobileGammaChart">Loading Market Exposure...</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="post" style="box-shadow: none;">
+                <div id="gammaOverlayContainer" class="col-12 p-0 m-0">
+                  <div class="card border-0 p-3 m-0 h-100 d-flex">
+                    <div class="w-100 gammaChartOverlay"  id="mobileGammaChartOverlay">Loading Gamma Overlay...</div>
                   </div>
                 </div>
               </div>
             </div>
-        </div>
 
-        <div class="container-fluid p-0 mt-3 m-0" style="overflow-x: hidden">
-          <div class="card border-0 shadow d-flex lg-rounded ">
-              <div class="timeline-container p-0">
-                
-                
-  
-                <div class="column">
-                    <h4 class="gradient-red text-white p-3" >Technical Analysis</h4>
-                    {{ partial "shared/stock-signals" (dict "symbol" .Page.Params.ticker "tvSymbol" $tvSymbol  "Site" .Site) }}
-                </div>
 
-                <div class="column d-md-none">
-                  <h4 class="gradient-gold text-white p-3" >Gamma Exposure</h4>
-                  <div class="post">
-                    <div id="gammaChartContainer" class="col-12 p-0 m-0">
-                      <div class="card border-0 p-3 mr-2 h-100 d-flex">
-                        <div class="px-2 px-lg-0 fw-bold text-uppercase">{{ .Page.Params.ticker }} Market Pressure</div>
-                        <div class="w-100 gammaChart"  id="mobileGammaChart">Loading Market Exposure...</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="post">
-                    <div id="gammaOverlayContainer" class="col-12 p-0 m-0">
-                      <div class="card border-0 p-3 m-0 h-100 d-flex">
-                        <div class="w-100 gammaChartOverlay"  id="mobileGammaChartOverlay">Loading Gamma Overlay...</div>
-                      </div>
-                    </div>
-                  </div>
-              </div>
-
-                <div class="column">
-                  <h4 class="gradient-green text-white p-3" >Following on TradeSocial</h4>
-                  {{ partial "planner/trade_alerts" }}
-                </div>
-  
-                <div class="column">
-                  <h4 class="gradient-blue text-white p-3">Tracked Flow</h4>
-                  {{ partial "shared/stock-flow" (dict "symbol" .Page.Params.ticker "tvSymbol" $tvSymbol  "Site" .Site) }}
-                </div>
-  
-                <div class="column">
-                    <h4 class="bg-primary text-white p-3">Stock Posts</h4>
-                    {{ partial "shared/stock-tweets" (dict "symbol" .Page.Params.ticker "tvSymbol" $tvSymbol  "Site" .Site) }}
-                </div>
-  
-                <div class="column">
-                    <h4 class="bg-warning text-white p-3">News</h4>
-                    {{ partial "shared/stock-news" (dict "symbol" .Page.Params.ticker "tvSymbol" $tvSymbol  "Site" .Site) }}
-                </div>
+            <div class="column lg-rounded mx-1">
+                <h4 class="gradient-red text-white p-3" >Technical Analysis</h4>
+                {{ partial "shared/stock-signals" (dict "symbol" .Page.Params.ticker "tvSymbol" $tvSymbol  "Site" .Site) }}
             </div>
+
+            <div class="column lg-rounded mx-1">
+              <h4 class="gradient-green text-white p-3" >Following on TradeSocial</h4>
+              {{ partial "planner/trade_alerts" }}
+            </div>
+
+            <div class="column lg-rounded mx-1">
+              <h4 class="gradient-blue text-white p-3">Tracked Flow</h4>
+              {{ partial "shared/stock-flow" (dict "symbol" .Page.Params.ticker "tvSymbol" $tvSymbol  "Site" .Site) }}
+            </div>
+
+            <div class="column lg-rounded mx-1">
+                <h4 class="bg-primary text-white p-3">Stock Posts</h4>
+                {{ partial "shared/stock-tweets" (dict "symbol" .Page.Params.ticker "tvSymbol" $tvSymbol  "Site" .Site) }}
+            </div>
+
+            <div class="column lg-rounded mx-1">
+                <h4 class="bg-warning text-white p-3">News</h4>
+                {{ partial "shared/stock-news" (dict "symbol" .Page.Params.ticker "tvSymbol" $tvSymbol  "Site" .Site) }}
+            </div>
+
+            <div class="column extra_wide_column lg-rounded mx-1">
+              <div class="blog-content p-0 p-lg-5 mw-100 fs-5">
+                <div class="col-12">
+                  {{ with .Title }}
+                    <h1 class="gradient-text text-center text-uppercase px-lg-4">{{ . }}</h1>
+                  {{ end }}
+                  {{ with .Params.description }}
+                    <p class="text-black-61 text-center pb-3">{{ . }}</p>
+                  {{ end }}
+                </div>
+    
+                {{ .Content }}
+              </div>
           </div>
-        </div>
-
       </div>
+    </div>
 
-      
-
-      
-
-    <div class="container timeline p-3 mt-4 bg-light lg-rounded">
-      <div class="row">
-        <div class="col-12 d-flex justify-content-center">
-          <div class="blog-content p-0 p-lg-5 mw-100 fs-5">
-            <h2> {{ .Title }} </h2>
-            {{ .Content }}
+     <!-- Sliding Card -->
+    <div id="earningsDetailsCard" class="rightpanel-details-card">
+      <div class="details-card card border-0 shadow d-flex lg-rounded">
+          <div class="card-body">
+              {{ partial "planner/stock-financials.html" }}
           </div>
-        </div>
       </div>
     </div>
 
 
-        
+  </div>
 
-        
-
-    
-
-
+ 
     
 
     <!-- Load Shared JS -->
@@ -223,20 +149,6 @@
         }
           
         $(document).ready(function() {
-            tradePlanner = new TradePlanner();
-
-            // Gamma Generated Market Recommendation
-            var ticker = {{ .Page.Params.ticker }};
-            tradePlanner.fetchGEXByStrike(ticker, ".gammaChart", idx=0, historicals = true);
-            var range = tradePlanner.fetchIVData(ticker);
-            tradePlanner.fetchGEXOverlay(ticker, range);
-
-            // Get a reference to the range input element
-            const slider = document.getElementById('gex_slider');
-            slider.addEventListener('input', function() {
-                const selectedIndex = parseInt(slider.max) - parseInt(slider.value);
-                tradePlanner.fetchGEXByStrike(ticker, ".gammaChart", idx=selectedIndex, historicals=true);
-            });
 
             // Function to handle the card click and hide on outside click
             $(document).on('click', function(event) {
@@ -252,6 +164,23 @@
             $('#earningsDetailsCard').on('click', function(event) {
                 event.stopPropagation(); // Stop the click event from bubbling up to the document
             });
+
+            tradePlanner = new TradePlanner();
+
+            // Gamma Generated Market Recommendation
+            var ticker = {{ .Page.Params.ticker }};
+            tradePlanner.fetchGEXByStrike(ticker, ".gammaChart", idx=0, historicals = true);
+            var range = tradePlanner.fetchIVData(ticker);
+            tradePlanner.fetchGEXOverlay(ticker, range);
+
+            // Get a reference to the range input element
+            const slider = document.getElementById('gex_slider');
+            slider.addEventListener('input', function() {
+                const selectedIndex = parseInt(slider.max) - parseInt(slider.value);
+                tradePlanner.fetchGEXByStrike(ticker, ".gammaChart", idx=selectedIndex, historicals=true);
+            });
+
+            
 
             
 
