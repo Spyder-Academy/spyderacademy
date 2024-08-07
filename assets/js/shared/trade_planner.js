@@ -947,7 +947,6 @@ class TradePlanner {
     const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
 
     // Listen to the user's "following" list
-    $("#WL_Following").empty();
     userDocRef.onSnapshot((doc) => {
         if (doc.exists) {
             const following = doc.data().following || [];
