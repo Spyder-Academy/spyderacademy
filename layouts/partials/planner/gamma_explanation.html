@@ -4,19 +4,19 @@
 <div class="container bg-dark m-0 mb-3 lg-rounded">
     <div class="row tweet-body text-white py-3">
             <div class="col-11">
-            <p>
-              The Gamma for <a href="/stocks/{{ lower $symbol }}/" class="text-white">{{ upper $symbol }}</a> is currently attracted to <span class="largestGammaLevelText"></span>, and the overall sentiment is <span class="gammaOutlook"></span>. 
-            </p>
-            <p>
+                The Gamma for <a href="/stocks/{{ lower $symbol }}/" class="text-white">{{ upper $symbol }}</a> is currently attracted to <span class="largestGammaLevelText"></span>, and the overall sentiment is <span class="gammaOutlook"></span>. 
+                <br/>
+                <br/>
+
                 Bulls want to see <span class="bullRange"></span>. <span class="bullRangeHit d-none"> 🎯</span><br/>
                 Bears are betting on <span class="bearRange"></span>. <span class="bearRangeHit d-none"> 🎯</span><br/>
+                
                 <br/>
                 The expected range today is about <span class="moveAmount"></span>.
-            </p>
 
-            <p class="d-none lowRangeDayWarning">Today may be a low range day for {{ upper $symbol }}, so take quick scalps, or you may want to go touch grass instead.</p>
+                <span class="d-none lowRangeDayWarning">Today may be a low range day for {{ upper $symbol }}, so take quick scalps, or you may want to go touch grass instead.</span>
             </div>
-            <div class="col-1 text-end align-bottom">
+            <div class="col-1 p-1 text-start align-bottom">
               ✨ 
             </div>
     </div>
