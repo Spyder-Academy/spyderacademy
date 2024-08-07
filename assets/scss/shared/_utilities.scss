@@ -729,8 +729,8 @@ ul li {
   height: 100vh; /* Ensure the container takes the full viewport height */
 }
 .column {
-  flex: 1 0 400px;
-  max-width: 400px;
+  flex: 1 0 600px;
+  max-width: 600px;
   background-color: #fff;
   // border-radius: 0px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -741,6 +741,22 @@ ul li {
   flex-direction: column;
   height: 100%; /* Ensure columns take full height */
 }
+
+
+.boot_column {
+  // flex: 1 0 200px;
+  background-color: #fff;
+  // border-radius: 0px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Ensure columns take full height */
+  
+}
+
 .featured_column {
   padding: 0.5em;
   background-color: #000;
@@ -748,8 +764,10 @@ ul li {
 .extra_wide_column{
   flex: 1 0 50%;
   max-width: 50%;
+  max-height: 100vh;
 }
-.column h4 {
+.column h4,
+.boot_column h4 {
   position: -webkit-sticky; /* For Safari */
   position: sticky;
   top: 0;
@@ -776,11 +794,21 @@ ul li {
   font-size: 14px;
 }
 
+/* For small screens and up */
+.row-flex-nowrap-sm {
+  // flex-wrap: nowrap;
+}
+
+
 /* Responsive adjustments for small screen */
 @media (max-width: 768px) {
   .timeline-container {
       gap: 0;
       padding: 0;
+  }
+  .row-flex-nowrap-sm {
+    flex-wrap: nowrap;
+    scroll-snap-type: x mandatory;
   }
   .column {
       flex: 0 0 100%;
@@ -789,6 +817,10 @@ ul li {
   .extra_wide_column{
       flex: 0 0 100%;
       max-width: 100%;
+  }
+  .boot_column{
+    scroll-snap-align: start;
+    flex: 1 0 auto; /* Flex-grow and shrink with auto basis */
   }
 }
 
