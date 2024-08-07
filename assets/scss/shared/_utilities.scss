@@ -1,38 +1,14 @@
-/* Sidebar styling */
-.offcanvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 300px;
-  margin-left: -300px;
-  background-color: #f8f8f8;
-  overflow-x: hidden;
-  overflow-y: auto;
-  -webkit-transition: all 0.5s ease-in-out;
-  -moz-transition: all 0.5s ease-in-out;
-  transition: all 0.5s ease-in-out;
+body {
+  padding-top: env(safe-area-inset-top);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  margin: 0;
 }
 
-.offcanvas.active {
-  margin-left: 0;
+header, footer {
+  padding: env(safe-area-inset-top) 0;
 }
-
-.navmenu {
-  background-color: #f8f8f8;
-  border-color: #e7e7e7;
-  border-right: 1px solid #ddd;
-  border-bottom: 1px solid #e7e7e7;
-  margin-right: -300px;
-  overflow-x: hidden;
-  -webkit-transition: margin 0.25s ease;
-  -o-transition: margin 0.25s ease;
-  transition: margin 0.25s ease;
-}
-
-.navmenu.in {
-  margin-right: 0;
-}
-
 
 
 
