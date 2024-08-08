@@ -861,6 +861,18 @@ class TradePlanner {
     }
   }
 
+  isMarketOpen() {
+    const now = new Date();
+    const easternOffset = -4; // Eastern Daylight Time (EDT) offset in hours
+    const utcNow = now.getTime() + (now.getTimezoneOffset() * 6000); // Convert current time to UTC
+    const easternTime = new Date(utcNow + (3600000 * easternOffset)); // Convert UTC to Eastern Time
+  
+    const marketOpen = new Date(easternTime);
+    marketOpen.setHours(9, 30, 0, 0); // Set the time to 9:30 AM Eastern
+  
+    return easternTime >= marketOpen;
+  }
+
   async fetchIVData(ticker) {
     $("#iv_results").addClass("d-none");
 
@@ -907,11 +919,13 @@ class TradePlanner {
         }
 
         // if we have the actuals, we can update the bullseyes
-        if (item.actualHigh && item.actualHigh >= item.moveUpper) {
-          $(".bullRangeHit").removeClass("d-none");
-        }
-        if (item.actualLow && item.actualLow <= item.moveLower) {
-          $(".bearRangeHit").removeClass("d-none");
+        if (isMarketOpen()) {
+          if (item.actualHigh && item.actualHigh >= item.moveUpper) {
+            $(".bullRangeHit").removeClass("d-none");
+          }
+          if (item.actualLow && item.actualLow <= item.moveLower) {
+            $(".bearRangeHit").removeClass("d-none");
+          }
         }
 
         return { "bears": item.moveLower.toFixed(2), "bulls": item.moveUpper.toFixed(2), "timestamp": item.timestamp }
