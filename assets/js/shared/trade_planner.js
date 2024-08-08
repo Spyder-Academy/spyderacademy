@@ -3065,7 +3065,7 @@ class TradePlanner {
       dataLabels: {
         enabled: false
       },
-      title: { text: ticker.toUpperCase() + " (5min) Market Pressure Walls" },
+      // title: { text: ticker.toUpperCase() + " (5min) Market Pressure Walls" },
       xaxis: {
         type: 'datetime',
         tickPlacement: 'on'

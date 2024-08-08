@@ -655,8 +655,8 @@ ul li {
 .side-nav {
   position: fixed;
   top: 0;
-  left: -250px; /* Sidebar width */
-  width: 250px;
+  left: -300px; /* Sidebar width */
+  width: 300px;
   height: 100%;
   background-color: #343a40; /* Match the navbar's background */
   overflow-y: auto;
@@ -671,7 +671,7 @@ ul li {
 
 /* Shift the body content to the right when the sidebar is open */
 body.navbar-open {
-  transform: translateX(250px); /* Same width as the sidebar */
+  transform: translateX(300px); /* Same width as the sidebar */
   transition: transform 0.3s ease-in-out; /* Use transform to match the sidebar */
 }
 
@@ -736,6 +736,7 @@ body.navbar-open {
   flex-wrap: nowrap;
   overflow-x: scroll;
   padding: 20px;
+  padding-bottom: 0px;
   gap: 0px;
   scroll-snap-type: x mandatory;
   height: 100vh; /* Ensure the container takes the full viewport height */
@@ -825,6 +826,7 @@ body.navbar-open {
   .column {
       flex: 0 0 100%;
       max-width: 100%;
+      height: 125vh;
   }
   .extra_wide_column{
       flex: 0 0 100%;
