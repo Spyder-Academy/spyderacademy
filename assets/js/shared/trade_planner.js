@@ -1938,8 +1938,8 @@ class TradePlanner {
         var triggersHeader = $(`<thead class="thead-dark">`);
         var triggersHeaderRow = $(`<tr>`);
         var triggersTargetsHeader = $(`<th scope="col"></th>`);
-        var triggersCallsHeader = $(`<th scope="col" style="background-color: #bfe1cf">Calls > $${stratData.long_trigger}</th>`);
-        var triggersPutsHeader = $(`<th scope="col" style="background-color: #a30000; color: #fff">Puts < $${stratData.short_trigger}</th>`);
+        var triggersCallsHeader = $(`<th scope="col" class="gradient-green">Calls > $${stratData.long_trigger}</th>`);
+        var triggersPutsHeader = $(`<th scope="col" class="gradient-red">Puts < $${stratData.short_trigger}</th>`);
 
         triggersHeaderRow.append(triggersTargetsHeader)
         triggersHeaderRow.append(triggersCallsHeader)
@@ -1989,8 +1989,8 @@ class TradePlanner {
           continuityStatus = "Bearish"
         }
 
-        const bullishStyle = "style='background-color: #bfe1cf'"
-        const bearishStyle = "style='background-color: #a30000; color: #fff;'"
+        const bullishStyle = "class='gradient-green text-white'"
+        const bearishStyle = "class='gradient-red text-white''"
 
         var dailyStyle = (stratData.continuity.daily_trend == "Up") ? bullishStyle : bearishStyle
         var weeklyStyle = (stratData.continuity.weekly_trend == "Up") ? bullishStyle : bearishStyle
@@ -2015,6 +2015,16 @@ class TradePlanner {
         ftfcTable.append(ftfcRow)
 
         thestrat.append(ftfcTable)
+
+        if (continuityStatus == "Neutral"){
+          $("#header_technicalanalysis").addClass("bg-black")
+        }
+        else if (continuityStatus == "Bearish"){
+          $("#header_technicalanalysis").addClass("gradient-red")
+        }
+        else if (continuityStatus == "Bullish"){
+          $("#header_technicalanalysis").addClass("gradient-green")
+        }
 
         // show the Chart Combos
        

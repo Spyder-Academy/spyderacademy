@@ -41,11 +41,14 @@
                 <!-- TradingView Widget END -->
               </div>
 
+              {{ $excludedTickers := slice "SPY" "QQQ" "IWM" "SPX" "ES" "MES" "MNQ" }}
+              {{ if not (in $excludedTickers .Page.Params.ticker) }}
               <div class="post p-3 mx-1 gradient-profile-card gold-card btn" style="border:0; border-radius: 15px; box-shadow:none;" onclick="showFinancials('{{ .Page.Params.ticker }}');">
                 <div class="align-text-middle">
                   Check out ${{ upper .Page.Params.ticker }}'s Financials!
                 </div>
               </div>
+              {{ end }}
 
               <div class="post p-1" style="border:0; box-shadow:none;">
                 {{ partial "shared/stock-chart" (dict "symbol" $tvSymbol "Site" .Site) }}
@@ -81,7 +84,7 @@
 
 
             <div class="col-lg-3 boot_column lg-rounded mb-lg-3 m-0 p-0">
-                <h4 class="gradient-red text-white p-3" >Technical Analysis</h4>
+                <h4 id="header_technicalanalysis" class="text-white p-3" >Technical Analysis</h4>
                 {{ partial "shared/stock-signals" (dict "symbol" .Page.Params.ticker "tvSymbol" $tvSymbol  "Site" .Site) }}
             </div>
 
