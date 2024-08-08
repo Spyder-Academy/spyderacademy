@@ -326,7 +326,7 @@ class TradePlanner {
     var easternTime = timestamp.tz("America/New_York").format('MMMM Do YYYY, h:mm:ss a');
 
     var tweet_template = `
-                <div class="card-body tweet-card">
+                <div class="card-body tweet-card post">
                     <div class="tweet-header">
                         <div>
                             <a href="${tweet_link}" target="_blank" class="text-decoration-none">𝕏 <strong>${author}</strong></a> <span class="text-muted"> - <span title="${easternTime}">${relativeTime}</span></span>
@@ -370,7 +370,7 @@ class TradePlanner {
         // if there is no flow to display, show an empty card 
         var flow_card = `
                       <div class="col-12 social-card">
-                        <div class="card-body tweet-card">
+                        <div class="card-body tweet-card post">
                             <div class="tweet-header">
                                 <div>
                                     <strong>Come Back Later</strong></span>
@@ -440,7 +440,7 @@ class TradePlanner {
 
     // create the flow card
     var flow_card = `
-              <div class="card-body tweet-card" id="flowCard_${contract.replace(".", "_")}">
+              <div class="card-body tweet-card post" id="flowCard_${contract.replace(".", "_")}">
                   <div class="tweet-header">
                       <div>
                           <strong><a href="/stocks/${flow["ticker"].toLowerCase()}/#flow">${parsedContract}</a></strong> <span class="text-muted"> - <span title="${easternTime}" >${relativeTime}</span></span>
@@ -697,7 +697,7 @@ class TradePlanner {
           // create the flow card
           var flow_card = `
                     <div class="col-12 social-card">
-                      <div class="card-body tweet-card">
+                      <div class="card-body tweet-card post">
                           <div class="tweet-header">
                               <div>
                                   <strong>${parsedContract}</strong> <span class="text-muted"> - <span title="${easternTime}" >${relativeTime}</span></span>
@@ -834,7 +834,7 @@ class TradePlanner {
       if (response.length == 0) {
         var flow_card = `
                     <div class="col-12 social-card">
-                      <div class="card-body tweet-card">
+                      <div class="card-body tweet-card post">
                           <div class="tweet-header">
                               <div>
                                   <strong>Come Back Later</strong></span>
@@ -925,17 +925,17 @@ class TradePlanner {
     }
   }
 
-  async fetchTradesFromPeopleIFollow(){
+  async fetchTradesFromPeopleIFollow(ticker = null){
     // get list of trades from people I follow
 
     // render this list.
 
     // listen for any new trade alerts for realtime update
-    this.listenForTradesFromPeopleIFollow();
+    this.listenForTradesFromPeopleIFollow(ticker);
   }
 
 
-  async listenForTradesFromPeopleIFollow(){
+  async listenForTradesFromPeopleIFollow(ticker = null){
     // Assume currentUserId is the ID of the current user
     const currentUserId = "3x2UXhg6pveNwtU9Bk91f5F6UID3"; // todo: cashmoneytrades for now.
 
@@ -952,15 +952,34 @@ class TradePlanner {
             const following = doc.data().following || [];
 
             console.log("following:", following)
+            if (ticker !== null){
+              console.log("Get trades for ticker:", ticker)
+            }
+            else{
+              console.log("Get all trades from follows")
+            }
 
             if (following.length > 0) {
                 // Listen for new trades posted by users in the "following" list
-                const tradesRef = this.firestore_db.collection("trades");
+                var tradesRef = this.firestore_db.collection("trades");
+
+                
+
+                if (ticker !== null){
+                  tradesRef = tradesRef
+                    .where("uid", "in", following)
+                    .where("ticker", "==", ticker.toUpperCase())
+                    .orderBy("entry_date", "desc")  
+                    .limit(10)
+                  }
+                else{
+                  tradesRef = tradesRef
+                    .where("uid", "in", following)
+                    .where("entry_date", ">", startOfDay)
+                    .orderBy("entry_date", "desc")  
+                  }
 
                 tradesRef
-                  .where("uid", "in", following)
-                  .where("entry_date", ">", startOfDay)
-                  .orderBy("entry_date", "desc")  
                   .onSnapshot((snapshot) => {
                     snapshot.docChanges().forEach((change) => {
                         if (change.type === "added") {
@@ -969,7 +988,7 @@ class TradePlanner {
                             // Update the UI or notify the user
                             var trade = TradeRecord.from_dict(newTrade.id, newTrade)
                             var tradeRow = this.renderTrade(trade)
-                            var tradePost = $("<div class='post'>").append(tradeRow)
+                            var tradePost = $("<div class='post border-0'>").append(tradeRow)
 
                             console.log(trade.entry_date.toDate(), this.pageLoadTimestamp, trade.entry_date.toDate() > this.pageLoadTimestamp)
                             if (trade.entry_date.toDate() > this.pageLoadTimestamp){
@@ -1304,7 +1323,7 @@ class TradePlanner {
 
           // render the list of IV Flush Candidates
           var tweet_template = `
-                    <div class="card-body tweet-card flush-candidate">
+                    <div class="card-body tweet-card post flush-candidate">
                         <div class="tweet-header">
                             <div>
                                 <strong>${title}</strong>
@@ -1387,7 +1406,7 @@ class TradePlanner {
 
     if ($(".flush-candidate").length === 0) {
       var tweet_template = `
-              <div class="card-body tweet-card">
+              <div class="card-body tweet-card post">
                   <div class="tweet-header">
                       <div>
                           <strong>IV Flush (<a class="text-black" href="/education/how-to-trade-the-iv-flush-strategy/">Learn More</a>)</strong>
@@ -1431,7 +1450,7 @@ class TradePlanner {
 
 
       var tweet_template = `
-              <div class="card-body tweet-card">
+              <div class="card-body tweet-card post">
                   <div class="tweet-header">
                       <div>
                           <strong>${author}</strong>
@@ -1508,7 +1527,7 @@ class TradePlanner {
               var imgSrc = `/images/stratcombos/${imageName}`;
 
               var tweet_template = `
-                            <div class="card-body tweet-card">
+                            <div class="card-body tweet-card post">
                                 <div class="tweet-header">
                                     <div>
                                         <strong>${author}</strong>
@@ -1550,7 +1569,7 @@ class TradePlanner {
 
         if ($("#WL_Reversals").is(":empty")) {
           var tweet_template = `
-              <div class="card-body tweet-card">
+              <div class="card-body tweet-card post">
                   <div class="tweet-header">
                       <div>
                           <strong>Trade Scanner</strong>
