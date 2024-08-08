@@ -53,34 +53,53 @@
   </ul>
 
   <div class="navbar-nav ms-auto mb-xl-0 text-white fs-4">
-      <div class="row nav-item text-left m-0 my-2 p-2">
-        <div class="col-2"><i class="fa fa-home"></i></div>
-        <div class="col-10">Home</div>
-      </div>
-      <div class="row nav-item text-left m-0 my-2 p-2">
-        <div class="col-2"><i class="fa fa-user-graduate"></i></div>
-        <div class="col-10">Education</div>
-      </div>
-      <div class="row nav-item text-left m-0 my-2 p-2">
-        <div class="col-2"><i class="fa fa-sack-dollar"></i></div>
-        <div class="col-10">Earnings Calendar</div>
-      </div>
-      <div class="row nav-item text-left m-0 my-2 p-2">
-        <div class="col-2"><i class="fa fa-landmark"></i></div>
-        <div class="col-10">Economic Calendar</div>
-      </div>
-      <div class="row nav-item text-left m-0 my-2 p-2">
-        <div class="col-2"><i class="fa fa-bars-staggered"></i></div>
-        <div class="col-10">Trade Planner</div>
-      </div>
-      <div class="row nav-item text-left m-0 my-2 p-2">
-        <div class="col-2"><i class="fa fa-user-group"></i></div>
-        <div class="col-10">Trade Social</div>
-      </div>
-      <div class="row nav-item text-left m-0 my-2 p-2">
-        <div class="col-2"><i class="fa fa-search"></i></div>
-        <div class="col-10">Search</div>
-      </div>
+      <a href="/" class="text-white text-decoration-none">
+        <div class="row nav-item text-left m-0 my-2 p-2">
+          <div class="col-2"><i class="fa fa-home"></i></div>
+          <div class="col-10">Home</div>
+        </div>
+      </a>
+      <a href="/education/" class="text-white text-decoration-none">
+        <div class="row nav-item text-left m-0 my-2 p-2">
+          <div class="col-2"><i class="fa fa-user-graduate"></i></div>
+          <div class="col-10">Education</div>
+        </div>
+      </a>
+      <a href="/tradeplanner/earnings_calendar/" class="text-white text-decoration-none">
+        <div class="row nav-item text-left m-0 my-2 p-2">
+          <div class="col-2"><i class="fa fa-sack-dollar"></i></div>
+          <div class="col-10">Earnings Calendar</div>
+        </div>
+      </a>
+
+      <a href="/tradeplanner/economic_calendar/" class="text-white text-decoration-none">
+        <div class="row nav-item text-left m-0 my-2 p-2">
+          <div class="col-2"><i class="fa fa-landmark"></i></div>
+          <div class="col-10">Economic Calendar</div>
+        </div>
+      </a>
+
+      <a href="/tradeplanner/" class="text-white text-decoration-none">
+        <div class="row nav-item text-left m-0 my-2 p-2">
+          <div class="col-2"><i class="fa fa-bars-staggered"></i></div>
+          <div class="col-10">Trade Planner</div>
+        </div>
+      </a>
+
+      <a href="/tradesocial/" class="text-white text-decoration-none">
+        <div class="row nav-item text-left m-0 my-2 p-2">
+          <div class="col-2"><i class="fa fa-user-group"></i></div>
+          <div class="col-10">Trade Social</div>
+        </div>
+      </a>
+
+      <a href="/search/" class="text-white text-decoration-none">
+        <div class="row nav-item text-left m-0 my-2 p-2">
+          <div class="col-2"><i class="fa fa-search"></i></div>
+          <div class="col-10">Search</div>
+        </div>
+      </a>
+
     </div>
 
     {{ range .Site.Menus.buttons }}
