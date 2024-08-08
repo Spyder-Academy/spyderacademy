@@ -501,7 +501,6 @@ class TradePlanner {
     var url = `https://us-central1-spyder-academy.cloudfunctions.net/options_price`;
 
     try {
-      console.log(unique_flow)
       let response = await $.ajax({
         url: url,
         method: 'POST',
@@ -514,7 +513,7 @@ class TradePlanner {
         // update the flow tracker with latest pricing info
 
         response.forEach(flow_pricing => {
-          if (flow_pricing["options_price"].length > 0) {
+          if (flow_pricing["options_price"] && flow_pricing["options_price"].length > 0) {
             // get the flow for this contract
             var flow = flow_list.find(x => x["contract"] == flow_pricing["contract"])
 
@@ -966,14 +965,6 @@ class TradePlanner {
         if (doc.exists) {
             const following = doc.data().following || [];
 
-            console.log("following:", following)
-            if (ticker !== null){
-              console.log("Get trades for ticker:", ticker)
-            }
-            else{
-              console.log("Get all trades from follows")
-            }
-
             if (following.length > 0) {
                 // Listen for new trades posted by users in the "following" list
                 var tradesRef = this.firestore_db.collection("trades");
@@ -999,13 +990,11 @@ class TradePlanner {
                     snapshot.docChanges().forEach((change) => {
                         if (change.type === "added") {
                             const newTrade = change.doc.data();
-                            console.log("New trade posted by followed user:", newTrade);
                             // Update the UI or notify the user
                             var trade = TradeRecord.from_dict(newTrade.id, newTrade)
                             var tradeRow = this.renderTrade(trade)
                             var tradePost = $("<div class='post border-0'>").append(tradeRow)
 
-                            console.log(trade.entry_date.toDate(), this.pageLoadTimestamp, trade.entry_date.toDate() > this.pageLoadTimestamp)
                             if (trade.entry_date.toDate() > this.pageLoadTimestamp){
                               $("#WL_Following").prepend(tradePost);
                             }
