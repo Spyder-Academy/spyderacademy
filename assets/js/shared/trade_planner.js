@@ -501,6 +501,7 @@ class TradePlanner {
     var url = `https://us-central1-spyder-academy.cloudfunctions.net/options_price`;
 
     try {
+      console.log(unique_flow)
       let response = await $.ajax({
         url: url,
         method: 'POST',
@@ -919,7 +920,7 @@ class TradePlanner {
         }
 
         // if we have the actuals, we can update the bullseyes
-        if (isMarketOpen()) {
+        if (this.isMarketOpen()) {
           if (item.actualHigh && item.actualHigh >= item.moveUpper) {
             $(".bullRangeHit").removeClass("d-none");
           }
