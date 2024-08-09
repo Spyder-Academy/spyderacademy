@@ -1,25 +1,25 @@
-<div class="col-lg-3 col-sm-12 notch p-0 m-0 bg-dark text-white border-0 text-center" >
+<div id="tradesocial_navbar" class="col-lg-3 col-sm-12 notch p-0 m-0 bg-dark text-white border-0 text-center" >
     <ul class="nav nav-pills p-3 m-0 justify-content-center" id="pills-tab" role="tablist">
         <li class="nav-item m-0" role="presentation">
-          <a id="nav_trades" class="nav-link text-white bg-dark active" href="/tradesocial/" type="button">
+          <a id="nav_trades" class="nav-link text-white bg-dark active" href="/profile/" type="button">
             <i class="fa fa-table-list"></i>
           </a>
         </li>
         <li class="nav-item m-0" role="presentation">
-          <a id="nav_analytics" class="nav-link text-white bg-dark active" href="/tradesocial/analytics/" type="button">
+          <a id="nav_analytics" class="nav-link text-white bg-dark active" href="/profile/analytics/" type="button">
             <i class="fa fa-chart-simple"></i>
           </a>
         </li>
         <li class="nav-item m-0" role="presentation">
-          <a id="nav_connections" class="nav-link text-white bg-dark active" href="/tradesocial/connections/" type="button">
+          <a id="nav_connections" class="nav-link text-white bg-dark active" href="/profile/connections/" type="button">
             <i class="fa fa-person-dots-from-line"></i>
           </a>
         </li>
-        <li class="nav-item m-0" role="presentation">
-            <a id="nav_bookmarks" class="nav-link text-white bg-dark active" href="/tradesocial/bookmarks/" type="button">
+        <!-- <li class="nav-item m-0" role="presentation">
+            <a id="nav_bookmarks" class="nav-link text-white bg-dark active" href="/profile/bookmarks/" type="button">
                 <i class="fa fa-bookmark"></i>
             </a>
-        </li>
+        </li> -->
       </ul>
 </div>
 
@@ -41,8 +41,16 @@
       $("#nav_connections").attr('href', function(i, oldHref) {
           return oldHref + `#${handle}`;
       });
-      $("#nav_bookmarks").attr('href', function(i, oldHref) {
-          return oldHref + `#${handle}`;
+      // $("#nav_bookmarks").attr('href', function(i, oldHref) {
+      //     return oldHref + `#${handle}`;
+      // });
+
+      firebase.auth().onAuthStateChanged((user) => {
+          if (!user) {
+              // User is not signed in
+              console.log("User is not authenticated, hiding nav bar");
+              $("#tradesocial_navbar").hide()
+          } 
       });
       
     

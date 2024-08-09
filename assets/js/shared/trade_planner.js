@@ -178,8 +178,6 @@ class TradePlanner {
 
           // Check if the post is created after the page load
           if (post.created_date.toDate() > this.pageLoadTimestamp) {
-            console.log("New flow tracking detected", post);
-
             var flow_card = this.createFlowPost(post)
             
             //  append the flow card
@@ -348,7 +346,6 @@ class TradePlanner {
   async showStockTweets(symbol) {
     $("#stock_social_row").empty()
     var url = `https://us-central1-spyder-academy.cloudfunctions.net/stock_tweets?ticker=${symbol}`;
-    console.log("Loading tweets for ", url)
     try {
       let response = await $.ajax({ url: url, method: 'GET' });
       if (response && response.length > 0) {
@@ -604,7 +601,6 @@ class TradePlanner {
           var easternTime = timestamp.tz("America/New_York").format('MMMM Do YYYY, h:mm:ss a');
 
           var message = flow["status"].replaceAll("\n", "<br/>")
-          console.log(message)
 
           var price_when_posted = flow["options_price_when_posted"]
           var current_price = 0
@@ -2631,77 +2627,77 @@ class TradePlanner {
     }
   }
 
+  
+
   isFetchingSnapshotData = false;
   async _fetchGEXData(ticker, idx = 0, historicals = false) {
+    var url = `https://us-central1-spyder-academy.cloudfunctions.net/gex_snapshots?ticker=${ticker}`;
+    try {
+      if (this.snapshotGexData == null && !this.isFetchingSnapshotData) {
+        this.isFetchingSnapshotData = true;
 
-    if (!historicals) {
-      var url = `https://us-central1-spyder-academy.cloudfunctions.net/gex?ticker=${ticker}`;
-
-      try {
         const response = await fetch(url);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const responseData = await response.json();
-        var data = responseData
-        var timestamp = ""
+        this.snapshotGexData = responseData
 
+        // update the slider max and steps values
+        $("#gex_slider").attr("max", this.snapshotGexData.length - 1);
+        $("#gex_slider").attr("value", this.snapshotGexData.length - 1);
+        $("#gex_slider").removeAttr("disabled");
 
-        return {
-          "data": data,
-          "timestamp": timestamp
-        };
-
-      } catch (error) {
-        console.error("Could not fetch data:", error);
+        this.isFetchingSnapshotData = false;
       }
-    }
-    else {
-      var url = `https://us-central1-spyder-academy.cloudfunctions.net/gex_snapshots?ticker=${ticker}`;
-      try {
-        if (this.snapshotGexData == null && !this.isFetchingSnapshotData) {
-          this.isFetchingSnapshotData = true;
 
-          const response = await fetch(url);
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          const responseData = await response.json();
-          this.snapshotGexData = responseData
+      var data = {}
+      var timestamp = ""
+      
+      // Initialize min and max values
+      var minStrike = Infinity;
+      var maxStrike = -Infinity;
+      var minGex = Infinity;
+      var maxGex = -Infinity;
+      var currentSpotPrice = parseFloat(this.snapshotGexData[0]["max_gamma"]["Spot"]);
 
-          // update the slider max and steps values
-          $("#gex_slider").attr("max", this.snapshotGexData.length - 1);
-          $("#gex_slider").attr("value", this.snapshotGexData.length - 1);
-          $("#gex_slider").removeAttr("disabled");
+      var snapshopIndex =  this.snapshotGexData[idx] != null ? idx : this.snapshotGexData.length - 1
 
-          this.isFetchingSnapshotData = false;
-        }
+      if (this.snapshotGexData[snapshopIndex] != null) {
+        var snapshot = this.snapshotGexData[idx]
 
-        var data = {}
-        var timestamp = ""
+        data = snapshot["data"]
+        timestamp = snapshot["timestamp"]
 
-        if (this.snapshotGexData[idx] != null) {
-          data = this.snapshotGexData[idx]["data"]
-          timestamp = this.snapshotGexData[idx]["timestamp"]
-        }
-        else {
-          data = this.snapshotGexData[this.snapshotGexData.length - 1]["data"]
-          timestamp = this.snapshotGexData[this.snapshotGexData.length - 1]["timestamp"]
-        }
+        // Iterate over all snapshots
+        $.each(this.snapshotGexData, function(index, snapshot) {
+          $.each(snapshot.data, function(i, dataPoint) {
+              var strike = dataPoint.Strike;
+              var gex = dataPoint.GEX;
 
+              // Update min/max strike
+              if (strike < minStrike) minStrike = strike;
+              if (strike > maxStrike) maxStrike = strike;
 
-
-        return {
-          "data": data,
-          "timestamp": timestamp
-        };
-
-      } catch (error) {
-        console.error("Could not fetch Historical Gamma Snapshot Data:", error);
-        // $("#market_pressure_signal_card").hide()
-        // $("#marketPressureStatement").hide()
-        // $("#market_pressure").hide()
+              // Update min/max GEX
+              if (gex < minGex) minGex = gex;
+              if (gex > maxGex) maxGex = gex;
+          });
+        });
       }
+
+      return {
+        "data": data,
+        "timestamp": timestamp,
+        "minStrike": minStrike,
+        "maxStrike": maxStrike,
+        "minGEX": minGex,
+        "maxGEX": maxGex,
+        "currentSpot": currentSpotPrice
+      };
+
+    } catch (error) {
+      console.error("Could not fetch Historical Gamma Snapshot Data:", error);
     }
   }
 
@@ -2709,6 +2705,22 @@ class TradePlanner {
 
     const jsonData = gexData["data"]
     const timestamp = gexData["timestamp"]
+
+    let minGEX = gexData["minGEX"]
+    let maxGEX = gexData["maxGEX"]
+    let maxX = gexData["maxStrike"]
+    let minX = gexData["minStrike"]
+
+    // Add min and max strikes if they don't exist in the current dataset
+    if (!jsonData.some(item => item.Strike === minX)) {
+      jsonData.push({ Strike: minX, GEX: 0 });
+    }
+    if (!jsonData.some(item => item.Strike === maxX)) {
+        jsonData.push({ Strike: maxX, GEX: 0 });
+    }
+
+    // Sort the jsonData by Strike to ensure proper order on the x-axis
+    jsonData.sort((a, b) => a.Strike - b.Strike);
 
     // Prepare your data for ApexCharts
     var seriesData = jsonData.map(
@@ -2720,41 +2732,19 @@ class TradePlanner {
         };
       });
 
-    // Find the item with the largest absolute GEX value
-    let maxGEXItem = jsonData.reduce((prev, current) => {
-      return (prev.GEX) > (current.GEX) ? prev : current;
-    });
-    // Find the item with the lowest GEX value
-    let minGEXItem = jsonData.reduce((prev, current) => {
-      return ((prev.GEX) < (current.GEX)) ? prev : current;
-    });
-
+    
     let largestGEX = jsonData.reduce((prev, current) => {
       return Math.abs(prev.GEX) > Math.abs(current.GEX) ? prev : current;
     });
 
-    let maxX = jsonData.reduce((prev, current) => {
-      return ((prev.Strike) > (current.Strike)) ? prev : current;
-    });
-    // Find the item with the lowest GEX value
-    let minX = jsonData.reduce((prev, current) => {
-      return (prev.Strike) < (current.Strike) ? prev : current;
-    });
+    
 
     let netGEX = jsonData.reduce((acc, item) => acc + item.GEX, 0);
 
-    var currentSpotPrice = jsonData[0].Spot;
+    var currentSpotPrice = gexData["currentSpot"];
 
     // Determine the sentiment based on the sign of the GEX and the current spot price
     let bearbull = netGEX > 0 ? "Bullish" : netGEX < 0 ? "Bearish" : "Neutral";
-
-    // if (maxGEXItem.GEX > 0) {
-    //   // If largest GEX is positive (call gamma)
-    //   bearbull =  "Bullish";
-    // } else {
-    //   // If largest GEX is negative (put gamma)
-    //   bearbull =  "Bearish";
-    // }
 
     $(".largestGammaLevelText").text("$" + largestGEX.Strike.toFixed(2));
     $(".gammaOutlook").text(bearbull);
@@ -2787,7 +2777,19 @@ class TradePlanner {
         height: 350,
         toolbar: {
           show: false,
-        }
+        },
+        animations: {
+          enabled: true,
+          easing: 'easeinout',
+          speed: 300,
+          animateGradually: {
+              enabled: false,
+          },
+          dynamicAnimation: {
+              enabled: true,
+              speed: 350
+          }
+        },
       },
       series: [{
         name: 'GEX',
@@ -2809,6 +2811,7 @@ class TradePlanner {
           }
         }
       },
+      
       dataLabels: {
         enabled: false,
       },
@@ -2824,15 +2827,15 @@ class TradePlanner {
             return "$" + x.toFixed(0);
           }
         },
-        min: minX.Strike,
-        max: maxX.Strike
+        min: minX,
+        max: maxX
       },
       yaxis: {
         title: {
           text: 'Gamma Exposure (Bn$/%)'
         },
-        min: minGEXItem.GEX * 1.5,
-        max: maxGEXItem.GEX * 1.5,
+        min: minGEX * 1.5,
+        max: maxGEX * 1.5,
         forceNiceScale: true,
         labels: {
           formatter: function (y) {
@@ -2867,17 +2870,19 @@ class TradePlanner {
 
 
     if (this.chartGEX == null) {
+      console.log("create the chart")
       $(chartid).removeClass("d-none")
       $(chartid).empty()
 
       // this.chartGEX.destroy();
       document.querySelectorAll(chartid).forEach((element) => {
-        const chart = new ApexCharts(element, options);
-        chart.render();
+        this.chartGEX = new ApexCharts(element, options);
+        this.chartGEX.render();
       });
 
     }
     else {
+      console.log("update the chart")
       this.chartGEX.updateOptions({
         title: { text: chartTitle },
         // subtitle: { text: chartSubTitle },
@@ -2898,7 +2903,9 @@ class TradePlanner {
   async fetchGEXOverlay(ticker, expectedMove = null) {
     // console.log("overlay data", expectedMove)
     ticker = ticker.toUpperCase();
+    expectedMove = await this.fetchIVData(ticker);
     const jsonData = await this._fetchGEXOverlayData(ticker);
+    
     if (ticker == "SPX") {
       $(".gammaOverlayContainer").hide()
     }
@@ -3017,6 +3024,8 @@ class TradePlanner {
       x: nextTimestamp,
       y: expectedMove.bears,
     };
+
+    console.log("Exp Move", expectedMove)
 
     // Assume that the last actual stock price will be the starting point for projections
 

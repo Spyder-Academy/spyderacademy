@@ -1,0 +1,145 @@
+{{ define "main" }}
+
+
+<section class="section  bg-light">
+    
+    <div class="login-container">
+        <div class="card login-card">
+            <div class="row g-0">
+                <div class="col-lg-12 d-flex align-items-center">
+                    <div class="login-form">
+                        <div class="text-center mb-4">
+                            <img src="/images/logo.png" alt="Logo" width="100">
+                            <h2 class="gradient-text fs-1">Welcome back, you've been missed!</h2>
+                        </div>
+                        <!-- <div class="d-grid mb-3">
+                            <button class="btn btn-google btn-block">
+                                <i class="fab fa-google"></i> Log in with Google
+                            </button>
+                        </div>
+                        <div class="text-center mb-3">Or sign in with</div> -->
+                        <form>
+                            <div id="loginErrorMessage" class="alert alert-danger small" role="alert" style="display: none">
+                                Invalid Credentials!
+                            </div>
+                            <div class="mb-3">
+                                <input id="txtEmail" type="email" class="form-control" placeholder="Email" autocomplete="email">
+                            </div>
+                            <div class="mb-3">
+                                <input id="txtPassword" type="password" class="form-control" placeholder="Password" autocomplete="current-password">
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="keepLoggedIn">
+                                <label class="form-check-label" for="keepLoggedIn">Keep me logged in</label>
+                            </div>
+                            <div class="d-grid mb-3">
+                                <button id="submitLoginBtn" class="btn btn-dark gradient-green p-3 btn-block" type="button">Log in now</button>
+                            </div>
+                            <div class="text-center">
+                                <a href="https://whop.com/checkout/plan_R3WQYTQspY7NA?d2c=true" target="_blank" class="d-block">Sign Up</a>
+                                <a href="#" onclick="sendPasswordResetEmail()">Forgot password</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Load Shared JS -->
+
+    <script>
+        let tradeSocial = null;
+
+        // Sign in with email and password when the submit button is clicked
+        const submitLoginBtn = document.getElementById('submitLoginBtn');
+        submitLoginBtn.addEventListener('click', async () => {
+            var username = $("#txtEmail").val();
+            var pwd = $("#txtPassword").val();
+
+            console.log("login button clicked")
+            try{
+                const userCredential =  await auth.signInWithEmailAndPassword(username, pwd);
+                window.location.href = "/profile/";
+            }catch(error) {
+                // Handle login error
+                const errorCode = error.code;
+                const errorMessage = error.message;
+
+                    // Display an error message to the user
+                var displayErrorMessage = "Log in failed"
+                if (errorCode == "auth/user-not-found"){
+                    displayErrorMessage = "Please use the email address used when subscribing in whop.com"
+                }
+                else if (errorCode == "auth/invalid-email"){
+                    displayErrorMessage = "Please enter a valid email address."
+                }
+                else if (errorCode == "auth/missing-password"){
+                    displayErrorMessage = "Please enter a password."
+                }
+                else if (errorCode == "auth/wrong-password"){
+                    displayErrorMessage = "Please enter a valid password."
+                }
+
+                $('#loginErrorMessage').text(displayErrorMessage);
+                $('#loginErrorMessage').show();
+            }
+        });
+
+        function sendPasswordResetEmail() {
+            var email = $("#txtEmail").val();
+
+            if (email == ""){
+                $('#loginErrorMessage').text("Please enter the email address you signed up with on Whop.com");
+                $('#loginErrorMessage').show();
+            }
+            else
+            {
+                firebase.auth().sendPasswordResetEmail(email)
+                    .then(() => {
+                        // Password reset email sent successfully
+                        console.log("Password reset email sent to", email);
+                        // Display a success message to the user
+                        $('#loginErrorMessage').text("Password reset email sent to " + email);
+                        $('#loginErrorMessage').show();
+                    })
+                    .catch((error) => {
+                        // An error occurred
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        console.error("Password reset email error:", errorCode, errorMessage);
+
+                        // Display an error message to the user
+                        var displayErrorMessage = "Failed to send password reset email"
+                        if (errorCode == "auth/user-not-found"){
+                            displayErrorMessage = "The email address entered is not a verified member."
+                        }
+                        else if (errorCode == "auth/invalid-email"){
+                            displayErrorMessage = "Please enter a valid email address."
+                        }
+
+                        $('#loginErrorMessage').text(displayErrorMessage);
+                        $('#loginErrorMessage').show();
+                    });
+            }
+        }
+
+        
+
+
+        $(document).ready(function() {
+            tradeSocial = new TradeSocial();
+
+            // check log in status, if already logged in then go back.
+            firebase.auth().onAuthStateChanged((user) => {
+                if (user) {
+                    window.location.href = "/profile/";
+                }
+            });
+
+        });
+
+    </script>
+</section>
+{{ end }}

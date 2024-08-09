@@ -190,8 +190,7 @@
 
             // Gamma Generated Market Recommendation
             tradePlanner.fetchGEXByStrike(ticker, ".gammaChart", idx=0, historicals = true);
-            var range = tradePlanner.fetchIVData(ticker);
-            tradePlanner.fetchGEXOverlay(ticker, range);
+            tradePlanner.fetchGEXOverlay(ticker);
 
             // Get a reference to the range input element
             const slider = document.getElementById('gex_slider');

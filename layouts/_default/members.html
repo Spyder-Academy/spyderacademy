@@ -382,7 +382,7 @@
             }
        }
 
-         // Sign in with email and password when the submit button is clicked
+        // Sign in with email and password when the submit button is clicked
         const submitLogin = document.getElementById('submitLogin');
         submitLogin.addEventListener('click', () => {
             var username = $("#txtEmail").val();
@@ -392,7 +392,6 @@
                 .then((userCredential) => {
                     // Handle successful login
                     const user = userCredential.user;
-                    console.log("User logged in:", user);
                     // Hide the modal
                     const loginModal = document.getElementById('loginModal');
                     loginModal.style.display = 'none';

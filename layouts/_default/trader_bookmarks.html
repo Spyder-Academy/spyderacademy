@@ -49,6 +49,13 @@
                 });
             })
 
+            firebase.auth().onAuthStateChanged((user) => {
+                if (!user) {
+                    // User is not signed in
+                    window.location = "/login/"
+                } 
+            });
+
         });
 
     </script>

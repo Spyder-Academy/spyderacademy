@@ -18,28 +18,25 @@
                                 </div>
                                 <div class="container-fluid px-3">
                                     <div class="row">
-                                        <div class="col-12"><h1 class="gradient-text text-uppercase p-lg-3">Trade Social</h1></div>
+                                        <div class="col-12"><h1 class="gradient-text text-uppercase">Member Trades</h1></div>
                                     </div>
                                     <div class="row">
                                         <!-- Latest Trades -->
                                         <div class="col-lg-6 col-12 p-0">
-                                            <div class="row p-lg-3 p-sm-0" id="tradeRecap">
+                                            <div class="card border-0 lg-rounded p-lg-3 p-sm-0" id="tradeRecap">
                                                 <!-- trade-card-template gets pasted into here -->
                                             </div>
-                                        </div>
-                                        <!-- Top Winners -->
-                                        <div class="col-lg-6 col-sm-12 p-0">
+
+                                            <!-- Top Winners -->
                                             <div class="card border-0 lg-rounded p-lg-3 p-sm-0">
                                                 <div id="tradeScoreboard"></div>
                                             </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-12 p-0">
                                             <!-- Calendar Heatmap -->
-                                            <div class="card border-0 lg-rounded mt-5 p-lg-3 p-sm-0">
+                                            <div class="card border-0 lg-rounded p-lg-3 p-sm-0">
                                                 <div  id="tradeHeatmap"></div>
                                             </div>
-                                        </div>
-
-                                        <div class="col-lg-6 col-sm-12 my-1">
-                                            
                                         </div>
                                     </div>
                                 </div>
@@ -144,20 +141,40 @@
         $(document).ready(function() {
             tradeSocial = new TradeSocial();
 
-            var handle = null
-            
-            // get the member from the url
-            handle = window.location.hash.substring(1); // Removes the '#' from the hash
+            var handle = window.location.hash.substring(1); // Removes the '#' from the hash
+            // if user is logged in, and no handle in the URL, then show the logged-in user details.
+            if (handle != ""){
+                tradeSocial.getMemberDetails(handle).then((memberProfile) => {
+                    handle = memberProfile.handle;
 
-            tradeSocial.getMemberDetails(handle).then(memberProfile => {
-                tradeSocial.getMemberTrades(handle).then(trades => {
-                    tradeSocial.renderProfileCard(memberProfile, trades);
-                    tradeSocial.renderTradeRecap(trades, new Date());
-                    tradeSocial.renderScoreboard(trades);
-                    tradeSocial.renderCalendar(trades);
+                    tradeSocial.getMemberTrades(handle).then((trades) => {
+                        tradeSocial.renderProfileCard(memberProfile, trades);
+                        tradeSocial.renderTradeRecap(trades, new Date());
+                        tradeSocial.renderScoreboard(trades);
+                        tradeSocial.renderCalendar(trades);
+                    });
                 });
-            })
+            }
+            else{
+                // use the authenticated user
+                tradeSocial.getAuthenticatedMemberDetails((memberProfile) => {
+                    handle = memberProfile.handle;
 
+                    tradeSocial.getMemberTrades(handle).then((trades) => {
+                        tradeSocial.renderProfileCard(memberProfile, trades);
+                        tradeSocial.renderTradeRecap(trades, new Date());
+                        tradeSocial.renderScoreboard(trades);
+                        tradeSocial.renderCalendar(trades);
+                    });
+                });
+            }
+
+            firebase.auth().onAuthStateChanged((user) => {
+                if (!user) {
+                    // User is not signed in
+                    window.location = "/login/"
+                } 
+            });
 
             // Function to handle the card click and hide on outside click
             $(document).on('click', function(event) {

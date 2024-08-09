@@ -64,12 +64,12 @@ menus:
       url: "/courses/"
       weight: 6
 
-    - name: "Trade Planner"
-      url: "/tradeplanner/"
-      weight: 7
-
     - name: "Trade Social"
       url: "/tradesocial/"
+      weight: 7
+
+    - name: "Profile"
+      url: "/profile/"
       weight: 8
 
     - name: "🔎"
@@ -77,10 +77,20 @@ menus:
       weight: 9
 
   buttons:
-    - name: "Start Learning"
-      url: "https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_2qHRKoIbGU6NN&pass=prod_45GZIGs1lRCGs&a=spyderacademy"
+    # - name: "Start Learning"
+    #   url: "https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_2qHRKoIbGU6NN&pass=prod_45GZIGs1lRCGs&a=spyderacademy"
+    #   weight: 5
+    #   pre: "btn btn-primary text-light"
+
+    - name: "Log in"
+      url: "/login/"
       weight: 5
-      pre: "btn btn-primary text-light"
+      pre: "btn gradient-green text-light"
+
+    # - name: "Join The Beta"
+    #   url: "https://whop.com/checkout/plan_bCMjkbQ9TJsN2?d2c=true"
+    #   weight: 6
+    #   pre: "btn gradient-red text-light"
 
   footer:
     - name: "Home"
@@ -103,12 +113,12 @@ menus:
       url: "/courses/"
       weight: 6
 
-    - name: "Trade Planner"
-      url: "/tradeplanner/"
-      weight: 7
-
     - name: "Trade Social"
       url: "/tradesocial/"
+      weight: 7
+
+    - name: "Profile"
+      url: "/profile/"
       weight: 8
 
     - name: "Other Trading Tools"

@@ -1,45 +1,53 @@
 {{ define "main" }}
-<section class="section py-5">
-  <div class="container">
-    <div class="row pb-5">
-      <div class="col-12 d-flex justify-content-center">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-lg-6 col-sm-12 my-1">
-              <div id="invalidActionCard" class="card shadow border-0 m-4 p-5 text-center" style="display: none; border-radius: 15px;">
-                <div id="resetForm" class="card-body">
-                  <h1>Authentication</h1>
-                  Your code has expired.  Please try again.
+<section class="section">
 
-                  <a href="/members/" class="btn btn-secondary m-3">Back to Members Page</a>
+  <div class="login-container">
+    <div class="card login-card">
+        <div class="row g-0">
+            <div class="col-lg-12 d-flex align-items-center">
+                <div class="login-form">
+                    <form>
+
+
+                      <div id="invalidActionCard" class="border-0 m-4 p-5 text-center" style="display: none; border-radius: 15px;">
+                        <img src="/images/logo.png" alt="Logo" width="100">
+                        <div id="resetForm" class="card-body">
+                          <h1 class="gradient-text fs-1">Authentication</h1>
+                          Your code has expired.  Please try again.
+                          <div class="d-grid mb-3">
+                            <a href="/profile/" class="btn gradient-green text-white m-3">Back to Profile Page</a>
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div id="resetPasswordCard" class="border-0" style="display: none">
+                        <div id="resetForm" class="card-body">
+                          <h1 class="gradient-text fs-1">Authentication</h1>
+
+                          <form>
+                            <div id="loginErrorMessage" class="alert alert-danger small" role="alert" style="display: none">
+                              Invalid Credentials!
+                            </div>
+                            <div class="form-group">
+                              <input type="password" class="form-control" id="txtPassword" placeholder="Enter your new password">
+                            </div>
+                          </form>
+                        </div>
+                        
+                        <div class=" text-center">
+                          <button type="button" class="btn gradient-green m-3" id="submitReset">Reset Password</button>
+                          <a href="#" onclick="sendPasswordResetEmail()" class="btn gradient-red text-white m-3">Send Reset Email Again</a>
+                        </div>
+                      </div>
+                    </form>
                 </div>
-              </div>
-              <div id="resetPasswordCard" class="card shadow border-0" style="display: none">
-                <div id="resetForm" class="card-body">
-                  <form>
-                    <div id="loginErrorMessage" class="alert alert-danger small" role="alert" style="display: none">
-                      <h1>Authentication</h1>
-                      Invalid Credentials!
-                    </div>
-                    <div class="form-group">
-                      <input type="password" class="form-control" id="txtPassword" placeholder="Enter your new password">
-                    </div>
-                  </form>
-                </div>
-                <div class="card-footer text-center">
-                  <button type="button" class="btn btn-secondary m-3" id="submitReset">Reset Password</button>
-                  <p class="small">
-                    <a href="/#services">Not a member? Sign up here!</a><br/>
-                    <a href="#" onclick="sendPasswordResetEmail()" class="text-decoration-none">Send Reset Email Again</a>
-                  </p>
-                </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
+
+
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -104,13 +112,12 @@
                 firebase.auth().signInWithEmailAndPassword(accountEmail, newPassword)
                   .then(() => {
                     // Handle successful login
-                    console.log("User logged in successfully.");
                     // Redirect the user to the specified continue URL
                     if (continueUrl) {
                       window.location.href = continueUrl;
                     }
                     else{
-                      window.location.href = "/members/"
+                      window.location.href = "/profile/"
                     }
                   })
                   .catch((error) => {

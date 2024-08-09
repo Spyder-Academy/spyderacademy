@@ -23,6 +23,33 @@ class TradeSocial {
         this.green = "#00bf63";
         this.yellow = "#ffde59";
 
+
+    }
+
+    getAuthenticatedMemberDetails(callback) {
+      firebase.auth().onAuthStateChanged((user) => {
+          if (user) {
+              console.log("User is logged in:", user);
+
+              this.firestore_db.collection('users').doc(user.uid).get()
+                  .then((doc) => {
+                      if (doc.exists) {
+                          const memberProfile = doc.data();
+                          console.log("Member profile retrieved:", memberProfile);
+                          if (callback && typeof callback === 'function') {
+                              callback(memberProfile);
+                          }
+                      } else {
+                          console.log("No user profile found in Firestore for this UID");
+                      }
+                  })
+                  .catch((error) => {
+                      console.error("Error fetching user profile:", error);
+                  });
+          } else {
+              console.log("User is not logged in");
+          }
+      });
     }
 
     async getMemberDetails(handle){
@@ -92,6 +119,8 @@ class TradeSocial {
           return []; // Return empty array in case of error
       }
   }
+
+  
   
 
     async renderProfileCard(userData, tradesData){
@@ -459,7 +488,7 @@ class TradeSocial {
     async renderHeatmap(trades, seriesData){
 
         var calendarRow = $("<div class='row'></div>")
-        var calendarHeader = $("<div class='col-10'><h2 class='text-uppercase px-3'>" + "DAILY CALENDAR" + "</h2></div>")
+        var calendarHeader = $("<div class='col-10'><h2 class='text-uppercase p-3'>" + "DAILY CALENDAR" + "</h2></div>")
         calendarRow.append(calendarHeader);
         $('#tradeHeatmap').append(calendarRow);
 
@@ -2220,7 +2249,7 @@ class TradeSocial {
                 profileCard.find("p.text-white").text("@" + user.handle);
 
                 // Update social link
-                profileCard.find(".view_button").attr('href', `/tradesocial/#${user.handle}`).text('VIEW');
+                profileCard.find(".view_button").attr('href', `/profile/#${user.handle}`).text('VIEW');
 
                 // Update followers count
                 profileCard.find("#numFollowers").text(user.followers.length);

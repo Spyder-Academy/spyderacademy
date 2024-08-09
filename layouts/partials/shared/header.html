@@ -33,10 +33,10 @@
           </li>
         {{ end }}
       </ul>
-      <ul class="navbar-nav ms-auto mb-xl-0">
+      <ul class="navbar-nav ms-auto mb-xl-0 auth_button_list">
         {{ range .Site.Menus.buttons }}
-          <li class="nav-item m-0">
-            <a class="nav-link btn btn-secondary text-light px-4 m-0" href="{{ .URL }}">{{ .Name }}</a>
+          <li class="nav-item m-0 d-none signin_button">
+            <a class="nav-link btn btn-secondary text-light px-4 m-0 mx-1 {{ .Pre }} " href="{{ .URL }}">{{ .Name }}</a>
           </li>
         {{ end }}
       </ul>
@@ -65,31 +65,31 @@
           <div class="col-10">Education</div>
         </div>
       </a>
-      <a href="/tradeplanner/earnings_calendar/" class="text-white text-decoration-none">
+      <a href="/tradesocial/earnings_calendar/" class="text-white text-decoration-none">
         <div class="row nav-item text-left m-0 my-2 p-2">
           <div class="col-2"><i class="fa fa-sack-dollar"></i></div>
           <div class="col-10">Earnings Calendar</div>
         </div>
       </a>
 
-      <a href="/tradeplanner/economic_calendar/" class="text-white text-decoration-none">
+      <a href="/tradesocial/economic_calendar/" class="text-white text-decoration-none">
         <div class="row nav-item text-left m-0 my-2 p-2">
           <div class="col-2"><i class="fa fa-landmark"></i></div>
           <div class="col-10">Economic Calendar</div>
         </div>
       </a>
 
-      <a href="/tradeplanner/" class="text-white text-decoration-none">
+      <a href="/tradesocial/" class="text-white text-decoration-none">
         <div class="row nav-item text-left m-0 my-2 p-2">
           <div class="col-2"><i class="fa fa-bars-staggered"></i></div>
-          <div class="col-10">Trade Planner</div>
+          <div class="col-10">Trade Social</div>
         </div>
       </a>
 
-      <a href="/tradesocial/" class="text-white text-decoration-none">
+      <a href="/profile/" class="text-white text-decoration-none">
         <div class="row nav-item text-left m-0 my-2 p-2">
           <div class="col-2"><i class="fa fa-user-group"></i></div>
-          <div class="col-10">Trade Social</div>
+          <div class="col-10">Profile</div>
         </div>
       </a>
 
@@ -102,19 +102,59 @@
 
     </div>
 
-    {{ range .Site.Menus.buttons }}
-    <div class="row nav-item text-left m-0 my-2 p-0">
-      <div class="col-12"><a class="nav-link btn btn-secondary text-light px-4 m-0" href="{{ .URL }}">{{ .Name }}</a></div>
+    <div class="row nav-item text-left m-0 my-2 p-0 auth_button_divs">
+      {{ range .Site.Menus.buttons }}
+        <div class="col-12 signin_button d-none"><a class="nav-link btn btn-secondary text-light px-4 m-0 {{ .Pre }}" href="{{ .URL }}">{{ .Name }}</a></div>
+      {{ end }}
     </div>
-    {{ end }}
-</div>
+  </div>
 
 
 <script>
     const navbarContent = document.getElementById('navbarContent');
     document.querySelector('.navbar-toggler').addEventListener('click', function() {
-    document.body.classList.toggle('navbar-open');
-  });
+      document.body.classList.toggle('navbar-open');
+    });
+
+    function signOutUser() {
+      firebase.auth().signOut()
+          .then(() => {
+          // Sign-out successful
+              console.log("User signed out");
+          })
+          .catch((error) => {
+          // An error occurred
+              console.error("Sign-out error:", error);
+          });
+      }
+
+    $(document).ready(function() {
+        // check log in status, if already logged in show logout button and profile image
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+              var username = user.email
+
+              // desktop nav
+              $(".auth_button_list").append($(
+                `<li class="nav-item m-0">
+                  <a class="nav-link signout_button btn gradient-red text-light px-4 m-0 mx-1 " href="#"  onclick="signOutUser();" title="Welcome Back, ${username}">Log out</a>
+                </li>`
+              ))
+
+              // mobile nav
+              $(".auth_button_divs").append($(
+                `
+                  <div class="col-12 signout_button auth_button"><a class="nav-link btn gradient-red text-light px-4 m-0 " href="#" onclick="signOutUser();" title="Welcome Back, ${username}">Log out</a></div>
+                `
+              ))
+            }
+            else{
+              console.log("User NOT logged in")
+              $(".signout_button").addClass("d-none")
+              $(".signin_button").removeClass("d-none")
+            }
+        });
+      });
 
 </script>
 

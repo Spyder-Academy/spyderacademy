@@ -44,16 +44,25 @@
         $(document).ready(function() {
             var handle = null
             var tradeSocial = new TradeSocial();
-            
-            // get the member from the url
-            handle = window.location.hash.substring(1); // Removes the '#' from the hash
 
-            tradeSocial.getMemberDetails(handle).then(memberProfile => {
-                tradeSocial.getMemberTrades(handle).then(trades => {
+           
+            // use the authenticated user
+            tradeSocial.getAuthenticatedMemberDetails((memberProfile) => {
+                handle = memberProfile.handle;
+
+                tradeSocial.getMemberTrades(handle).then((trades) => {
                     tradeSocial.renderProfileCard(memberProfile, trades);
                     tradeSocial.list_users()
                 });
-            })
+            });
+
+            firebase.auth().onAuthStateChanged((user) => {
+                if (!user) {
+                    // User is not signed in
+                    window.location = "/login/"
+                } 
+            });
+            
 
         });
 
