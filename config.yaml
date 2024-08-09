@@ -57,12 +57,8 @@ menus:
       weight: 1
 
     - name: "Education"
-      url: "/education/"
-      weight: 5
-
-    - name: "Courses"
       url: "/courses/"
-      weight: 6
+      weight: 5
 
     - name: "Trade Social"
       url: "/tradesocial/"

@@ -24,7 +24,7 @@ function displayResults(results, store) {
 
                 // Create the configuration object
 
-                userTrades = new Trades();
+                // userTrades = new Trades();
                 // userTrades.fetchIVData(item.ticker);
 
                 stockWidgetConfig = {
