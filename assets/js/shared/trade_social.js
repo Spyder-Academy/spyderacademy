@@ -16,7 +16,8 @@ class TradeSocial {
         this.snapshotGexData = null
 
         this.tradesCollection = this.firestore_db.collection("trades");
-        this.userMode = false;
+
+        this.authenticatedMember = null;
 
 
         this.red = "#ff3131";
@@ -35,7 +36,10 @@ class TradeSocial {
                   .then((doc) => {
                       if (doc.exists) {
                           const memberProfile = doc.data();
-                          console.log("Member profile retrieved:", memberProfile);
+                          // console.log("Member profile retrieved:", memberProfile);
+                          this.authenticatedMember = memberProfile
+                          this.authenticatedMember.uid = doc.id;
+
                           if (callback && typeof callback === 'function') {
                               callback(memberProfile);
                           }
@@ -2230,9 +2234,11 @@ class TradeSocial {
     try {
         let response = await $.ajax({ url: url, method: 'GET' });
         if (response && response.length > 0) {
+            $(".discover_cards").empty();
+
             // render the users 
             response.forEach(user => {
-                console.log(user)
+                // console.log(user)
                 // Clone the profile card template
                 let profileCard = $(".profile-card-template").clone()
                 profileCard.removeClass('d-none');
@@ -2248,8 +2254,42 @@ class TradeSocial {
                 profileCard.find("h5").text(user.name);
                 profileCard.find("p.text-white").text("@" + user.handle);
 
-                // Update social link
+                // Update view/follow links
                 profileCard.find(".view_button").attr('href', `/profile/#${user.handle}`).text('VIEW');
+
+                var followingList = this.authenticatedMember["following"];
+                var followBtn = profileCard.find(".follow_button")
+                console.log(user.uid, followingList, user.uid in followingList)
+                if (this.authenticatedMember !== null && followingList.includes(user.uid)){
+                  followBtn.click((e) => {
+                    e.preventDefault();  
+                    this.unfollow_member(`${user.uid}`);
+                  });
+                  followBtn.text("Following")
+                  followBtn.addClass("gradient-green")
+
+                  // Change text to "Unfollow" on hover
+                  followBtn.hover(
+                      function() {
+                          $(this).removeClass("gradient-green");
+                          $(this).addClass("btn-danger");
+                          $(this).text("Unfollow");
+                      },
+                      function() {
+                          $(this).text("Following");
+                          $(this).removeClass("btn-danger");
+                          $(this).addClass("gradient-green");
+                      }
+                  );
+                }
+                else {
+                  followBtn.click((e) => {
+                    e.preventDefault();  
+                    this.follow_member(`${user.uid}`);
+                  });
+                  followBtn.text("Follow")
+                  followBtn.addClass("btn-warning")
+                }
 
                 // Update followers count
                 profileCard.find("#numFollowers").text(user.followers.length);
@@ -2284,6 +2324,54 @@ class TradeSocial {
         console.log(e);
     }
   }
+
+
+  async follow_member(uid) {
+    try {
+        console.log("Authenticated Member", this.authenticatedMember);
+        console.log("Follow Member", uid);
+
+        // Add the UID to the following list
+        this.authenticatedMember.following.push(uid);
+
+        // Update Firebase with the new following list
+        await firebase.firestore().collection('users')
+            .doc(this.authenticatedMember.uid)
+            .update({
+                following: this.authenticatedMember.following
+            });
+
+        await this.list_users()
+
+        console.log(`Successfully followed ${uid}`);
+
+    } catch (error) {
+        console.error("Error following member:", error);
+    }
+  }
+
+  async unfollow_member(uid) {
+      try {
+          console.log("Unfollow Member", uid);
+
+          // Remove the UID from the following list
+          this.authenticatedMember.following = this.authenticatedMember.following.filter(followingUid => followingUid !== uid);
+
+          // Update Firebase with the updated following list
+          await firebase.firestore().collection('users')
+              .doc(this.authenticatedMember.uid)
+              .update({
+                  following: this.authenticatedMember.following
+              });
+
+          await this.list_users()
+          console.log(`Successfully unfollowed ${uid}`);
+
+      } catch (error) {
+          console.error("Error unfollowing member:", error);
+      }
+  }
+
 
   
   

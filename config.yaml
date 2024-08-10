@@ -58,15 +58,23 @@ menus:
 
     - name: "Education"
       url: "/courses/"
-      weight: 5
+      weight: 2
 
     - name: "Trade Social"
       url: "/tradesocial/"
-      weight: 7
+      weight: 3
+
+    - name: "Earnings"
+      url: "/tradesocial/earnings_calendar/"
+      weight: 4
+
+    - name: "Economic Calendar"
+      url: "/tradesocial/economic_calendar/"
+      weight: 5
 
     - name: "Profile"
       url: "/profile/"
-      weight: 8
+      weight: 6
 
     - name: "🔎"
       url: "/search/"
