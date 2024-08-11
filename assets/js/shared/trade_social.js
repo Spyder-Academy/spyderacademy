@@ -127,98 +127,239 @@ class TradeSocial {
   
   
 
-    async renderProfileCard(userData, tradesData){
+  async renderProfileCard(userData, tradesData) {
+    if (userData.handle !== undefined) {
+        // Update card background image (banner)
+        $("#profile_banner").css('background-image', `url('${userData.banner}')`);
 
-        if (userData.handle != undefined){
-          // Update card background image (banner)
-          $("#profile_banner").css('background-image', `url('${userData.banner}')`);
+        // Update avatar image
+        $("#profile_avatar").attr('src', userData.avatar);
 
-          // Update avatar image
-          $("#profile_avatar").attr('src', userData.avatar);
+        // Update name and handle
+        $("#profile_name").text(userData.name);
+        $("#profile_handle").html(`#${userData.handle}`);
 
-          // Update name and handle
-          $("#profile_name").text(userData.name);
-          $("#profile_handle").text("#" + userData.handle);
+        if (this.authenticatedMember !== null && userData.uid === this.authenticatedMember.uid) {
+            $("#profile_handle").append($("<span class='edit_profile_btn btn px-1 text-muted'><i class='fa fa-pen'></i></span>").click(() => {
+                this.showEditProfileCard();
+            }));
+        }
 
-          // Iterate through each object in the array
-          userData.socials.forEach(obj => {
-            // Iterate through each key-value pair in the object
+        // Render social links
+        userData.socials.forEach(obj => {
             for (const [key, value] of Object.entries(obj)) {
-                switch(key){
-                  case "x":
-                    $("#profile_socials").append($(`<a href="https://www.x.com/${value}" target="_blank" class="btn btn-outline-primary btn-sm m-1"><i class="fab fa-x-twitter"></i></a>`));
-                    break;
-                  case "discord":
-                    $("#profile_socials").append($(`<a href="https://www.discord.com/users/${value}" target="_blank" class="btn btn-outline-primary btn-sm m-1"><i class="fab fa-discord"></i></a>`));
-                    break;
+                let socialBtn = "";
+                switch (key) {
+                    case "x":
+                      if (value != ""){
+                        socialBtn = `<a href="https://www.x.com/${value}" target="_blank" class="btn btn-outline-primary btn-sm m-1"><i class="fab fa-x-twitter"></i></a>`;
+                      }
+                      break;
+                    case "discord":
+                      if (value != ""){
+                        socialBtn = `<a href="https://www.discord.com/users/${value}" target="_blank" class="btn btn-outline-primary btn-sm m-1"><i class="fab fa-discord"></i></a>`;
+                      }
+                      break;
                 }
+                $("#profile_socials").append(socialBtn);
             }
-          });
+        });
 
-          if (userData.badges.length > 0){
-            $("#profile_badges_row").removeClass("d-none")
-          }
-
-          // Update social link
-          userData.badges.forEach(obj => {
-            // Iterate through each key-value pair in the object
-            for (const [key, value] of Object.entries(obj)) {
-                // console.log(`Key: ${key}, Value: ${value}`);
-                $("#profile_badges").append($(`<div class="col-3"><img src="/images/badges/badge_${key}.png" class="rounded-circle img-fluid" /></div>`));
-            }
-          });
-
-          if (userData.badges.length > 0){
-            $("#profile_badges_row").removeClass("d-none")
-          }
-
+        if (userData.badges.length > 0) {
+            this.renderBadges(userData.badges);
+            $("#profile_badges_row").removeClass("d-none");
         }
 
-        $("#user_profile_card").removeClass("d-none")
-
-
-
-        // calculate the stats
-        var numTrades = tradesData.length;
-        var numWins = tradesData.filter(tradeEntry => tradeEntry.gainsValue >= 0).length;
-        var numLosses = tradesData.filter(tradeEntry => tradeEntry.gainsValue < 0).length;
-        var totalGains = tradesData.reduce((acc, tradeEntry) => acc + tradeEntry.gainsValue, 0);
-        var numBags = tradesData.filter(tradeEntry => tradeEntry.gainsValue >= 100).length;
-
-        var totalGainsFromWins = tradesData
-            .filter(tradeEntry => tradeEntry.gainsValue >= 0)
-            .reduce((acc, tradeEntry) => acc + tradeEntry.gainsValue, 0);
-
-        var totalLossFromLosses = tradesData
-            .filter(tradeEntry => tradeEntry.gainsValue < 0)
-            .reduce((acc, tradeEntry) => acc + tradeEntry.gainsValue, 0);
-        
-        var profitFactor = (numWins / numLosses).toFixed(1)
-        
-        var avgGain = Math.round((totalGains / numTrades)).toFixed(0);
-        var avgLoss = Math.round((totalLossFromLosses / numLosses)).toFixed(0);
-        var avgWin = Math.round((totalGainsFromWins / numWins)).toFixed(0);
-
-        var winRate = numTrades > 0 ? `${Math.round((numWins / numTrades) * 100)}%` : '-'
-        var winFactor = numLosses > 0 ? profitFactor : "-"
-        var avgGain = numTrades > 0 ? `${avgGain}%` : "-"
-
-        $("#winRate").text(winRate);
-        $("#avgGain").text(avgGain);
-        $('#numTrades').text(numTrades)
-        $("#profitFactor").text( numBags);
-
-        // render the badges
-
-        // check if avg loss is > avg win
-        if (Math.abs(avgLoss) > Math.abs(avgWin)){
-          this.addRecommendation("Your avg loss (" + Math.abs(avgLoss) + "%) is greater than your avg win (" + avgWin + "%).  Try cutting losers earlier.", $("#chart_wins_losses"))
-        }
-        else if (Math.abs(avgLoss) < Math.abs(avgWin)){
-          this.addRecommendation("Nice! Your avg loss (" + Math.abs(avgLoss) + "%) is lower than your avg win (" + avgWin + "%).", $("#chart_wins_losses"))
-        }
-
+        $("#user_profile_card").removeClass("d-none");
     }
+
+    this.renderStats(tradesData);
+  }
+
+  renderBadges(badges) {
+      badges.forEach(obj => {
+          for (const [key, value] of Object.entries(obj)) {
+              $("#profile_badges").append(`<div class="col-3"><img src="/images/badges/badge_${key}.png" class="rounded-circle img-fluid" /></div>`);
+          }
+      });
+  }
+
+  renderStats(tradesData) {
+      const numTrades = tradesData.length;
+      const numWins = tradesData.filter(tradeEntry => tradeEntry.gainsValue >= 0).length;
+      const numLosses = tradesData.filter(tradeEntry => tradeEntry.gainsValue < 0).length;
+      const totalGains = tradesData.reduce((acc, tradeEntry) => acc + tradeEntry.gainsValue, 0);
+      const numBags = tradesData.filter(tradeEntry => tradeEntry.gainsValue >= 100).length;
+
+      const totalGainsFromWins = tradesData
+          .filter(tradeEntry => tradeEntry.gainsValue >= 0)
+          .reduce((acc, tradeEntry) => acc + tradeEntry.gainsValue, 0);
+
+      const totalLossFromLosses = tradesData
+          .filter(tradeEntry => tradeEntry.gainsValue < 0)
+          .reduce((acc, tradeEntry) => acc + tradeEntry.gainsValue, 0);
+
+      const profitFactor = (numWins / numLosses).toFixed(1);
+
+      const avgGain = numTrades > 0 ? `${Math.round(totalGains / numTrades)}%` : "-";
+      const avgLoss = numLosses > 0 ? Math.round(totalLossFromLosses / numLosses).toFixed(0) : "-";
+      const avgWin = numWins > 0 ? Math.round(totalGainsFromWins / numWins).toFixed(0) : "-";
+
+      const winRate = numTrades > 0 ? `${Math.round((numWins / numTrades) * 100)}%` : '-';
+      const winFactor = numLosses > 0 ? profitFactor : "-";
+
+      $("#winRate").text(winRate);
+      $("#avgGain").text(avgGain);
+      $('#numTrades').text(numTrades);
+      $("#profitFactor").text(numBags);
+
+      if (avgLoss !== "-" && avgWin !== "-") {
+          if (Math.abs(avgLoss) > Math.abs(avgWin)) {
+              this.addRecommendation(`Your avg loss (${Math.abs(avgLoss)}%) is greater than your avg win (${avgWin}%). Try cutting losers earlier.`, $("#chart_wins_losses"));
+          } else {
+              this.addRecommendation(`Nice! Your avg loss (${Math.abs(avgLoss)}%) is lower than your avg win (${avgWin}%).`, $("#chart_wins_losses"));
+          }
+      }
+  }
+
+  async showEditProfileCard() {
+    console.log("show edit profile card");
+
+    // Show the modal
+    $("#editProfileModal").modal("show");
+
+    // Prepopulate values
+    console.log("auth member:", this.authenticatedMember);
+    $("#editProfileName").val(this.authenticatedMember.name.toUpperCase());
+    $("#editProfileHandle").val(this.authenticatedMember.handle.toLowerCase());
+    $("#editProfileBanner").attr("src", this.authenticatedMember.banner);
+    $("#editProfileAvatar").attr("src", this.authenticatedMember.avatar);
+
+    if (this.authenticatedMember.discoverable == true){
+      $("#btnDiscoverable").attr("checked", "checked");
+      $("#discoverabilityStatus").text("Your profile can be discovered and followed.")
+    }
+    else{
+      $("#btnPrivate").attr("checked", "checked");
+      $("#discoverabilityStatus").text("Your profile is currently private.")
+    }
+
+    // Update discoverability status in Firestore when toggled
+    $(".btn-check[name='btnDiscoverability']").on('change', async () => {
+      const discoverable = $("#btnDiscoverable").is(":checked");
+
+      try {
+          await firebase.firestore().collection('users')
+              .doc(this.authenticatedMember.uid)
+              .update({
+                  discoverable: discoverable
+              });
+          console.log("Discoverability updated successfully");
+
+          // Update status text
+          if (discoverable) {
+              $("#discoverabilityStatus").text("Your profile can be discovered and followed.");
+          } else {
+              $("#discoverabilityStatus").text("Your profile is currently private.");
+          }
+      } catch (error) {
+          console.error("Error updating discoverability:", error);
+      }
+    });
+
+
+    this.authenticatedMember.socials.forEach(obj => {
+        for (const [key, value] of Object.entries(obj)) {
+            switch (key) {
+                case "x":
+                    $("#editSocialTwitter").val(value);
+                    break;
+                case "discord":
+                    $("#editSocialDiscord").val(value);
+                    break;
+            }
+        }
+    });
+
+    const MAX_FILE_SIZE_MB = 0.5; // Set maximum file size in MB
+    const MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024; // Convert MB to bytes
+
+
+    // Remove previous event listeners to prevent multiple bindings
+    $('#profileAvatarInput').off('change').on('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+          if (file.size > MAX_FILE_SIZE) {
+            $("#validationErrors").text(`Avatar file size should not exceed ${MAX_FILE_SIZE_MB} MB.`);
+            $('#profileAvatarInput').val(""); // Clear the file input
+            return;
+          }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                $('#editProfileAvatar').attr("src", e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    $('#profileBannerInput').off('change').on('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            if (file.size > MAX_FILE_SIZE) {
+              $("#validationErrors").text(`Banner file size should not exceed ${MAX_FILE_SIZE_MB} MB.`);
+              $('#profileBannerInput').val(""); // Clear the file input
+              return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                $('#editProfileBanner').attr("src", e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Save changes
+    $("#saveProfileChanges").off('click').on('click', async () => {
+        const avatar = $("#editProfileAvatar").attr("src");
+        const banner = $("#editProfileBanner").attr("src");
+        const name = $("#editProfileName").val();
+        const handle = $("#editProfileHandle").val();
+        const x = $("#editSocialTwitter").val().toLowerCase().replace("https://x.com/", "");
+        const discord = $("#editSocialDiscord").val().toLowerCase();
+
+        try {
+            // Update Firebase with the new profile information
+            await firebase.firestore().collection('users')
+                .doc(this.authenticatedMember.uid)
+                .update({
+                    banner: banner,
+                    avatar: avatar,
+                    handle: handle,
+                    name: name,
+                    avatar: avatar,
+                    banner: banner,
+                    socials: [
+                        { x: x, discord: discord }
+                    ]
+                });
+            console.log("Profile updated successfully");
+
+            // Close the modal after saving
+            $("#editProfileModal").modal("hide");
+
+            // Refresh the Profile Page
+            window.location = "/profile"
+
+        } catch (error) {
+            console.error("Error updating profile:", error);
+        }
+    });
+  }
+
+
+
 
     async renderDayOfTheWeekRadar(tradesData){
         if (tradesData.length == 0){

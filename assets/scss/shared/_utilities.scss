@@ -1048,3 +1048,38 @@ body.navbar-open {
   border-radius: 50%;
   cursor: pointer;
 }
+
+// Glossy Modals
+.glassy-bg {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  border: none;
+}
+
+.modal-content {
+  animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+      transform: translateY(-50%);
+      opacity: 0;
+  }
+  to {
+      transform: translateY(0);
+      opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-dialog {
+      width: 100%;
+      margin: 0;
+  }
+
+  .modal-content {
+      border-radius: 0;
+  }
+}
+

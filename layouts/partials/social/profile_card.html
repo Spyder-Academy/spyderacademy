@@ -72,3 +72,77 @@
     </div>
 </div>
 
+<!-- Edit Profile Modal -->
+<div id="editProfileModal" class="modal fade" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content glassy-bg">
+            <div class="modal-header">
+                <h5 class="modal-title fs-3 text-uppercase" id="editProfileModalLabel">Edit Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="validationErrors" class="p-2 text-danger mt-2"></div>
+
+                <form id="editProfileForm">
+                    <!-- Banner Image with Overlay -->
+                    <div class="card-up position-relative text-center">
+                        <img id="editProfileBanner" src="/images/waves.jpg" class="" style="border-radius: 15px; height: 220px; width: 100%; object-fit: cover;" alt="Profile Banner">
+                        <input type="file" class="d-none" id="profileBannerInput" accept="image/*">
+                        <div class="position-absolute top-50 start-50 translate-middle p-3 rounded-circle" style="background-color: rgba(0,0,0,0.5)">
+                            <i class="fas fa-camera fs-2 text-white cursor-pointer" onclick="document.getElementById('profileBannerInput').click();"></i>
+                        </div>
+                    </div>
+                    <!-- Avatar Image with Overlay -->
+                    <div class="mb-3 text-center position-relative" style="margin-top: -50px;">
+                        <div class="position-relative">
+                            <img id="editProfileAvatar" src="/images/teachers-spiderman.png" class="rounded-circle" style="width: 105px; height: 105px;" alt="Profile Avatar">
+                            <input type="file" class="d-none" id="profileAvatarInput" accept="image/*">
+                            <div class="position-absolute top-50 start-50 translate-middle p-3 rounded-circle" style="background-color: rgba(0,0,0,0.2)">
+                                <i class="fas fa-camera fs-2 text-white cursor-pointer" onclick="document.getElementById('profileAvatarInput').click();"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="profileName" class="form-label">Display Name</label>
+                        <input type="text" class="form-control text-uppercase" id="editProfileName" placeholder="Enter your display name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="profileHandle" class="form-label">Handle</label>
+                        <input type="text" class="form-control text-lowercase" id="editProfileHandle" placeholder="Enter your handle">
+                    </div>
+                    <div id="socialLinks" class="mb-3">
+                        <label class="form-label">Social Links</label>
+                        <div id="socialLinksContainer">
+                            <div class="input-group mb-2">
+                                <span class="input-group-text"><i class="fab fa-x-twitter"></i></span>
+                                <input type="text" class="form-control" id="editSocialTwitter" placeholder="X username">
+                            </div>
+                            <div class="input-group mb-2">
+                                <span class="input-group-text"><i class="fab fa-discord"></i></span>
+                                <input type="text" class="form-control" id="editSocialDiscord" placeholder="Discord User ID">
+                            </div>
+                            <!-- Add more social fields as needed -->
+                        </div>
+                    </div>
+                    <div id="discoverabilityToggle" class="mb-3">
+                        <div><label class="form-label">Discoverability</label>: <span id="discoverabilityStatus" class="text-muted "></span></div>
+                        <div class="btn-group btnDiscoverability" role="group" aria-label="Basic radio toggle button group">
+                            <input type="radio" class="btn-check" name="btnDiscoverability" id="btnPrivate" autocomplete="off" >
+                            <label class="btn btn-outline-primary" for="btnPrivate">Private</label>
+                          
+                            <input type="radio" class="btn-check" name="btnDiscoverability" id="btnDiscoverable" autocomplete="off" >
+                            <label class="btn btn-outline-primary" for="btnDiscoverable">Visible</label>
+                        </div>
+                        
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="saveProfileChanges">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+  
