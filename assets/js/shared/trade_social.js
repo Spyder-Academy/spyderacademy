@@ -1388,6 +1388,7 @@ class TradeSocial {
 
       // Show the card by adding the 'show' class
       $('#contractDetailsCard').addClass('show');
+      $('#contractDetailsCard').removeClass('d-none');
 
       var tvChartEl = $(".tvChartHeader")[0]
       $(".contract_banner").hide()
