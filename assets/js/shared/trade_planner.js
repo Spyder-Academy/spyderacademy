@@ -1122,6 +1122,9 @@ class TradePlanner {
 
     var tradeSocial = new TradeSocial()
     tradeSocial.renderTradeDetails(tradeid);
+    
+    $('#contractDetailsCard').removeClass('d-none');
+    $('#contractDetailsCard').addClass('show');
 
     // Scroll to the top of the page
     window.scrollTo({
