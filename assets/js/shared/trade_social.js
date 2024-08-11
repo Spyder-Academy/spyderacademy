@@ -1603,6 +1603,7 @@ class TradeSocial {
               });
 
               tradeRef.get().then((doc) => {
+                console.log(doc.id, doc.data())
                 var tradeEntry = TradeRecord.from_dict(doc.id, doc.data());
 
                 entryNotesEl.empty();

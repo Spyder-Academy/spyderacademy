@@ -1030,7 +1030,8 @@ class TradePlanner {
                             tradesFound = true;
                             const newTrade = change.doc.data();
                             // Update the UI or notify the user
-                            const trade = TradeRecord.from_dict(newTrade.id, newTrade);
+                            const trade = TradeRecord.from_dict(change.doc.id, newTrade);
+                            // console.log(newTrade, trade, change.doc.id)
                             const tradeRow = this.renderTrade(trade);
                             const tradePost = $("<div class='post border-0'>").append(tradeRow);
 
@@ -1092,7 +1093,7 @@ class TradePlanner {
 
 
   renderTrade(trade){
-
+    // console.log("render trade", trade, trade.tradeid)
     var tradeCard = $('.trade-card-template');
 
     var tradeCardRow = tradeCard.clone()
@@ -1105,6 +1106,7 @@ class TradePlanner {
     tradeCardRow.find(".tradeNotes").text(trade.notes)
     tradeCardRow.find(".tradeLogo").attr("src", "/images/logos/" + trade.ticker.toUpperCase() + ".png")
     tradeCardRow.find(".tradeRow").attr("tradeid", trade.tradeid)
+    tradeCardRow.find(".tradeRow").on("click", (e) => this.selectTrade(trade.tradeid, e))
     
     if (trade.gainsValue < 0){
       tradeCardRow.find(".trade_card").removeClass("gradient-green")
@@ -1112,6 +1114,20 @@ class TradePlanner {
     }
 
     return tradeCardRow
+  }
+
+  async selectTrade(tradeid, event){
+    // console.log("select trade", tradeid)
+    event.stopPropagation();
+
+    var tradeSocial = new TradeSocial()
+    tradeSocial.renderTradeDetails(tradeid);
+
+    // Scroll to the top of the page
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // Optional: adds a smooth scrolling effect
+    });
   }
 
   async fetchBondAuctions() {
