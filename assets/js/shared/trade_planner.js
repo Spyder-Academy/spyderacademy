@@ -978,10 +978,10 @@ class TradePlanner {
     const user = firebase.auth().currentUser;
     var currentUserId = null;
     if (user == null) {
-        console.log("not currently logged in, default the follow list for not logged in users");
+        // console.log("not currently logged in, default the follow list for not logged in users");
         currentUserId = "spyderacademy"; // default
     } else {
-        console.log("currently logged in", user.uid);
+        // console.log("currently logged in", user.uid);
         currentUserId = user.uid;
     }
 
@@ -995,17 +995,19 @@ class TradePlanner {
     // Flag to track if the no trades post is shown
     let noTradesPostShown = false;
 
+    // Get a reference to the audio element
+    const newTradeSound = document.getElementById("newTradeSound");
+
     // Listen to the user's "following" list
     userDocRef.onSnapshot((doc) => {
         if (doc.exists) {
             const following = doc.data().following || [];
 
-            console.log("follow list ", following)
+            // console.log("follow list ", following)
 
             if (following.length > 0) {
                 // Listen for new trades posted by users in the "following" list
                 let tradesRef = this.firestore_db.collection("trades");
-                console.log(following);
 
                 if (ticker !== null) {
                     tradesRef = tradesRef
@@ -1034,26 +1036,30 @@ class TradePlanner {
 
                             if (trade.entry_date.toDate() > this.pageLoadTimestamp) {
                                 $("#WL_Following").prepend(tradePost);
+
+                                // Play sound when a new trade is added
+                                if (newTradeSound) {
+                                  newTradeSound.play().catch(error => console.error("Error playing sound:", error));
+                                }
                             } else {
                                 $("#WL_Following").append(tradePost);
                             }
+
+                            
                         }
                     });
 
                     // Check if we need to show or hide the no trades post
                     if (tradesFound) {
-                        if (noTradesPostShown) {
-                            $(".no-trades-post").remove(); // Remove the no trades post if trades are found
-                            noTradesPostShown = false;
-                        }
+                        $(".no-trades-post").remove(); // Remove the no trades post if trades are found
                     } else {
                         if (!noTradesPostShown) {
                             const noTradesAvailablePost = $(`
                                 <div class='post border-0 no-trades-post'>
                                     <div class='tweet-header fw-bold'>Trade Social</div>
                                     <div class='tweet-body'>
-                                        <p>There are no ideas shared recently by the traders you follow.</p>
-                                        <p><a class="fw-bold" href="/profile/connections/">Click here to Discover more traders to follow!</a></p>
+                                        <p>There are no new ideas shared recently by the traders you follow.</p>
+                                        <p class="text-center"><a class="p-3 fw-bold btn gradient-green  text-white lg-rounded" href="/profile/connections/">Discover more traders to follow!</a></p>
                                     </div>
                                 </div>
                             `);
@@ -1072,7 +1078,7 @@ class TradePlanner {
                         <div class='tweet-header fw-bold'>Trade Social</div>
                         <div class='tweet-body'>
                             <p>You are currently not following any traders.</p>
-                            <p><a class="fw-bold" href="/profile/connections/">Click here to Discover your favorite traders to follow!</a></p>
+                            <p class="text-center"><a class="p-3 fw-bold btn gradient-green  text-white lg-rounded" href="/profile/connections/">Discover traders to follow!</a></p>
                         </div>
                     </div>
                 `);
@@ -2693,10 +2699,11 @@ class TradePlanner {
 
     try {
       const jsonData = await this._fetchGEXData(ticker, idx, historicals);
-      if (jsonData) {
+      if (jsonData && jsonData["data"].length > 0) {
+        console.log(jsonData["data"])
         this._renderGEXByStrike(ticker, jsonData, chartid);
       } else {
-        console.log("No data to render.");
+        // console.log("No data to render.");
       }
     }
     catch (error) {
@@ -2737,7 +2744,10 @@ class TradePlanner {
       var maxStrike = -Infinity;
       var minGex = Infinity;
       var maxGex = -Infinity;
-      var currentSpotPrice = parseFloat(this.snapshotGexData[0]["max_gamma"]["Spot"]);
+      var currentSpotPrice = 0;
+      if (this.snapshotGexData[0]){
+        currentSpotPrice = parseFloat(this.snapshotGexData[0]["max_gamma"]["Spot"]);
+      }
 
       var snapshopIndex =  this.snapshotGexData[idx] != null ? idx : this.snapshotGexData.length - 1
 
@@ -2793,12 +2803,15 @@ class TradePlanner {
     if (!jsonData.some(item => item.Strike === minX)) {
       jsonData.push({ Strike: minX, GEX: 0 });
     }
-    if (!jsonData.some(item => item.Strike === maxX)) {
+    if (jsonData && !jsonData.some(item => item.Strike === maxX)) {
         jsonData.push({ Strike: maxX, GEX: 0 });
     }
 
     // Sort the jsonData by Strike to ensure proper order on the x-axis
     jsonData.sort((a, b) => a.Strike - b.Strike);
+
+
+    
 
     // Prepare your data for ApexCharts
     var seriesData = jsonData.map(
