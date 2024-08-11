@@ -9,6 +9,34 @@ class TradePlanner {
 
     // Store the timestamp of the initial page load
     this.pageLoadTimestamp = new Date();
+    this.authenticatedMember = null;
+  }
+
+  getAuthenticatedMemberDetails(callback) {
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            this.firestore_db.collection('users').doc(user.uid).get()
+                .then((doc) => {
+                    if (doc.exists) {
+                        const memberProfile = doc.data();
+                        // console.log("Member profile retrieved:", memberProfile);
+                        this.authenticatedMember = memberProfile
+                        this.authenticatedMember.uid = doc.id;
+
+                        if (callback && typeof callback === 'function') {
+                            callback(memberProfile);
+                        }
+                    } else {
+                        console.log("No user profile found in Firestore for this UID");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error fetching user profile:", error);
+                });
+        } else {
+            callback(null);
+        }
+    });
   }
 
 
@@ -945,9 +973,17 @@ class TradePlanner {
   }
 
 
-  async listenForTradesFromPeopleIFollow(ticker = null){
+  async listenForTradesFromPeopleIFollow(ticker = null) {
     // Assume currentUserId is the ID of the current user
-    const currentUserId = "3x2UXhg6pveNwtU9Bk91f5F6UID3"; // todo: cashmoneytrades for now.
+    const user = firebase.auth().currentUser;
+    var currentUserId = null;
+    if (user == null) {
+        console.log("not currently logged in, default the follow list for not logged in users");
+        currentUserId = "spyderacademy"; // default
+    } else {
+        console.log("currently logged in", user.uid);
+        currentUserId = user.uid;
+    }
 
     // Reference to the user's document in Firestore
     const userDocRef = this.firestore_db.collection("users").doc(currentUserId);
@@ -956,55 +992,97 @@ class TradePlanner {
     const now = new Date();
     const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
 
+    // Flag to track if the no trades post is shown
+    let noTradesPostShown = false;
+
     // Listen to the user's "following" list
     userDocRef.onSnapshot((doc) => {
         if (doc.exists) {
             const following = doc.data().following || [];
 
+            console.log("follow list ", following)
+
             if (following.length > 0) {
                 // Listen for new trades posted by users in the "following" list
-                var tradesRef = this.firestore_db.collection("trades");
+                let tradesRef = this.firestore_db.collection("trades");
+                console.log(following);
 
-                
+                if (ticker !== null) {
+                    tradesRef = tradesRef
+                        .where("uid", "in", following)
+                        .where("ticker", "==", ticker.toUpperCase())
+                        .orderBy("entry_date", "desc")
+                        .limit(10);
+                } else {
+                    tradesRef = tradesRef
+                        .where("uid", "in", following)
+                        .where("entry_date", ">", startOfDay)
+                        .orderBy("entry_date", "desc");
+                }
 
-                if (ticker !== null){
-                  tradesRef = tradesRef
-                    .where("uid", "in", following)
-                    .where("ticker", "==", ticker.toUpperCase())
-                    .orderBy("entry_date", "desc")  
-                    .limit(10)
-                  }
-                else{
-                  tradesRef = tradesRef
-                    .where("uid", "in", following)
-                    .where("entry_date", ">", startOfDay)
-                    .orderBy("entry_date", "desc")  
-                  }
+                tradesRef.onSnapshot((snapshot) => {
+                    let tradesFound = false;
 
-                tradesRef
-                  .onSnapshot((snapshot) => {
                     snapshot.docChanges().forEach((change) => {
                         if (change.type === "added") {
+                            tradesFound = true;
                             const newTrade = change.doc.data();
                             // Update the UI or notify the user
-                            var trade = TradeRecord.from_dict(newTrade.id, newTrade)
-                            var tradeRow = this.renderTrade(trade)
-                            var tradePost = $("<div class='post border-0'>").append(tradeRow)
+                            const trade = TradeRecord.from_dict(newTrade.id, newTrade);
+                            const tradeRow = this.renderTrade(trade);
+                            const tradePost = $("<div class='post border-0'>").append(tradeRow);
 
-                            if (trade.entry_date.toDate() > this.pageLoadTimestamp){
-                              $("#WL_Following").prepend(tradePost);
-                            }
-                            else{
-                              $("#WL_Following").append(tradePost);
+                            if (trade.entry_date.toDate() > this.pageLoadTimestamp) {
+                                $("#WL_Following").prepend(tradePost);
+                            } else {
+                                $("#WL_Following").append(tradePost);
                             }
                         }
                     });
+
+                    // Check if we need to show or hide the no trades post
+                    if (tradesFound) {
+                        if (noTradesPostShown) {
+                            $(".no-trades-post").remove(); // Remove the no trades post if trades are found
+                            noTradesPostShown = false;
+                        }
+                    } else {
+                        if (!noTradesPostShown) {
+                            const noTradesAvailablePost = $(`
+                                <div class='post border-0 no-trades-post'>
+                                    <div class='tweet-header fw-bold'>Trade Social</div>
+                                    <div class='tweet-body'>
+                                        <p>There are no ideas shared recently by the traders you follow.</p>
+                                        <p><a class="fw-bold" href="/profile/connections/">Click here to Discover more traders to follow!</a></p>
+                                    </div>
+                                </div>
+                            `);
+
+                            $("#WL_Following").append(noTradesAvailablePost);
+                            noTradesPostShown = true;
+                        }
+                    }
                 });
+            } else {
+                // If not following anyone, show the no trades post
+                $(".no-trades-post").remove(); // Remove the no trades post if trades are found
+
+                const notFollowingPost = $(`
+                    <div class='post border-0 no-trades-post'>
+                        <div class='tweet-header fw-bold'>Trade Social</div>
+                        <div class='tweet-body'>
+                            <p>You are currently not following any traders.</p>
+                            <p><a class="fw-bold" href="/profile/connections/">Click here to Discover your favorite traders to follow!</a></p>
+                        </div>
+                    </div>
+                `);
+
+                $("#WL_Following").append(notFollowingPost);
             }
         }
     });
-
   }
+
 
 
   renderTrade(trade){

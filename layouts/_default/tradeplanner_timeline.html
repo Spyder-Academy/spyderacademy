@@ -93,7 +93,10 @@
             tradePlanner.fetchIVData("SPY");
 
             // populate timeline columns
-            tradePlanner.fetchTradesFromPeopleIFollow();
+            tradePlanner.getAuthenticatedMemberDetails((memberProfile) => {
+                tradePlanner.fetchTradesFromPeopleIFollow();
+            });
+
             tradePlanner.fetchScreener();
             tradePlanner.fetchAllFlow();
             tradePlanner.fetchXPosts();

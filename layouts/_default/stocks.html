@@ -186,7 +186,9 @@
             var ticker = {{ .Page.Params.ticker }};
 
             // Trades
-            tradePlanner.fetchTradesFromPeopleIFollow(ticker);
+            tradePlanner.getAuthenticatedMemberDetails((memberProfile) => {
+                tradePlanner.fetchTradesFromPeopleIFollow(ticker);
+            });
 
             // Gamma Generated Market Recommendation
             tradePlanner.fetchGEXByStrike(ticker, ".gammaChart", idx=0, historicals = true);
