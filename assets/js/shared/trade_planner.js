@@ -2854,7 +2854,7 @@ class TradePlanner {
     var currentSpotPrice = gexData["currentSpot"];
 
     // Determine the sentiment based on the sign of the GEX and the current spot price
-    let bearbull = netGEX > 0 ? "Bullish" : netGEX < 0 ? "Bearish" : "Neutral";
+    let bearbull = netGEX > 0 ? "Bullish" : netGEX < 0 ? "Bearish" : "Unavailable";
 
     if (largestGEX.GEX !== 0){
       $(".largestGammaLevelText").text("attracted to $" + largestGEX.Strike.toFixed(2));
