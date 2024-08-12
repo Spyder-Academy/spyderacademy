@@ -4,11 +4,11 @@
         
         <div class="row p-0 m-0">
             <!-- Left Panel -->
-            <div class="col-lg-2 col-sm-12 d-none d-lg-block p-0">
+            <div class="col-xl-2 col-lg-3 col-sm-12 d-none d-lg-block d-xl-block p-0">
                 {{ partial "social/profile_card" }}
             </div>
             <!-- Main Content Area -->
-            <div class="col-lg-10 col-sm-12 p-0">
+            <div class="col-xl-10 col-lg-9 col-sm-12 p-0">
                 <div class="container-fluid p-0 m-0 h-100">
                     <div class="row h-100" id="memberTrades">
                         <div class="col-12 my-0">
@@ -84,11 +84,11 @@
 
 
     <!-- Post Trade Modal -->
-    <div id="postTradeModal" class="modal fade" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div id="postTradeModal" class="modal fade" tabindex="-1" aria-labelledby="postTradeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content glassy-bg">
                 <div class="modal-header">
-                    <h5 class="modal-title fs-3 text-uppercase" id="editProfileModalLabel">Post a Trade</h5>
+                    <h5 class="modal-title fs-3 text-uppercase" id="postTradeModalLabel">Post a Trade</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -140,6 +140,61 @@
             </div>
         </div>
     </div>
+
+    <div id="exitTradeModal" class="modal fade" tabindex="-1" aria-labelledby="exitTradeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content glassy-bg">
+                <div class="modal-header">
+                    <h5 class="modal-title fs-3 text-uppercase" id="exitTradeModalLabel">Trimmed/Exited a Trade</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div id="tradeExitErrorMessage" class="alert alert-danger small" role="alert" style="display: none"></div>
+                        <div class="form-group">
+                            <label for="txtOutCommand" class="form-label">Trade Exit (example: 4.20 hitting price target)</label>
+                            <input type="text" class="form-control" id="txtOutCommand" placeholder="Price Reason" autocomplete="off">
+                        </div>
+                    </form>
+
+                    <!-- Display trade parts -->
+                    <div class="parsed-output mt-3">
+                        <div class="col-lg-12 col-sm-12">
+                            <div class="card trade_card border-1 p-2 mx-0 my-1 lg-rounded gradient-green" >
+                                <div class="card-body p-1 tradeRow">
+                                    <div class="container p-0">
+                                        <div class="row align-items-center">
+                                            <div class="col-lg-1 col-2 m-0">
+                                                <img id="trimTradeLogo" class="tradeLogo" src="/images/logos/SPDR.png" style="width: 3em; border-radius: 2em; border: 3px solid white;" />
+                                            </div>
+                                            <div class="col-lg-11 col-10 px-3">
+                                                <div class="row ">
+                                                    <div class="col-8 small lh-1 fw-bold text-uppercase traderName text-nowrap"><span id="trimTraderName"></span></div>
+                                                    <div class="col-4"></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-8 fs-3 lh-1 tradeContract text-nowrap "><span id="trimSymbol">TICKER</span> <span id="trimOption">STRIKE</span> <span id="trimExpiration">EXP</span></div>
+                                                    <div class="col-4 fs-3 lh-1 tradeGain text-end"><span id="trimPrice">PRICE</span></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-10  small lh-1 tradeNotes text-muted text-uppercase" style="overflow: hidden; text-overflow: ellipses; white-space: nowrap;"><span id="trimNotes">NOTES</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="exitTrade">Exit Trade</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
     <!-- Load Shared JS -->
@@ -208,9 +263,13 @@
                 var contractCard = $('#contractDetailsCard');
                 
                 // If the card is visible and the click is outside of it
-                if (contractCard.hasClass('show') ) {
+                if (contractCard.hasClass('show') && !$(event.target).closest('#contractCard').length) {
                     contractCard.removeClass('show');
                 }
+            });
+
+            $('#contractDetailsCard').on('click', function(event) {
+                event.stopPropagation(); // Stop the click event from bubbling up to the document
             });
 
         });

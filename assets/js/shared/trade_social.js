@@ -18,7 +18,6 @@ class TradeSocial {
         this.tradesCollection = this.firestore_db.collection("trades");
 
         this.authenticatedMember = null;
-        // this.getAuthenticatedMemberDetails();
 
 
         this.red = "#ff3131";
@@ -26,6 +25,13 @@ class TradeSocial {
         this.yellow = "#ffde59";
 
 
+    }
+
+    isUserMode(){
+      var isMyProfile = window.location.hash.substring(1) == ""
+      var isAuthenticated = this.authenticatedMember !== null
+
+      return isMyProfile && isAuthenticated
     }
 
     getAuthenticatedMemberDetails(callback) {
@@ -76,52 +82,148 @@ class TradeSocial {
     }
 
 
-    async getMemberTrades(handle) {
-      const cacheKey = `trades_${handle}`;
-      const cacheExpiryKey = `${cacheKey}_expiry`;
+  //   async getMemberTrades(handle) {
+  //     const cacheKey = `trades_${handle}`;
+  //     const cacheExpiryKey = `${cacheKey}_expiry`;
   
-      // Check if trades are in local storage and not expired
-      const cachedTrades = localStorage.getItem(cacheKey);
-      const cacheExpiry = localStorage.getItem(cacheExpiryKey);
+  //     // Check if trades are in local storage and not expired
+  //     const cachedTrades = localStorage.getItem(cacheKey);
+  //     const cacheExpiry = localStorage.getItem(cacheExpiryKey);
   
-      if (cachedTrades && cacheExpiry) {
-          const now = new Date().getTime();
-          if (now < cacheExpiry) {
-              console.log('Returning cached trades');
-              return JSON.parse(cachedTrades).map(trade => TradeRecord.from_dict(trade["trade_id"], trade));
-          } else {
-              // Remove expired cache
-              localStorage.removeItem(cacheKey);
-              localStorage.removeItem(cacheExpiryKey);
-          }
-      }
+  //     if (cachedTrades && cacheExpiry) {
+  //         const now = new Date().getTime();
+  //         if (now < cacheExpiry) {
+  //             console.log('Returning cached trades');
+  //             return JSON.parse(cachedTrades).map(trade => TradeRecord.from_dict(trade["trade_id"], trade));
+  //         } else {
+  //             // Remove expired cache
+  //             localStorage.removeItem(cacheKey);
+  //             localStorage.removeItem(cacheExpiryKey);
+  //         }
+  //     }
   
-      // If not cached or expired, fetch from API
-      let url = `https://us-central1-spyder-academy.cloudfunctions.net/user_trades/`;
-      if (handle) {
-          url = `https://us-central1-spyder-academy.cloudfunctions.net/user_trades/?handle=${handle}`;
-      }
+  //     // If not cached or expired, fetch from API
+  //     let url = `https://us-central1-spyder-academy.cloudfunctions.net/user_trades/`;
+  //     if (handle) {
+  //         url = `https://us-central1-spyder-academy.cloudfunctions.net/user_trades/?handle=${handle}`;
+  //     }
   
-      try {
+  //     try {
+  //         let response = await $.ajax({ url: url, method: 'GET' });
+  //         if (response && response.length > 0) {
+  //             // Store trades in local storage
+  //             localStorage.setItem(cacheKey, JSON.stringify(response));
+  //             // Set cache expiry time (10 minutes from now)
+  //             const expiryTime = new Date().getTime() + 10 * 60 * 1000;
+  //             localStorage.setItem(cacheExpiryKey, expiryTime);
+  
+  //             let tradeRecords = response.map(trade => TradeRecord.from_dict(trade["trade_id"], trade));
+  //             return tradeRecords;
+  //         }
+  
+  //         return [];
+  
+  //     } catch (error) {
+  //         console.error('Error fetching data from API:', url, error);
+  //         return []; // Return empty array in case of error
+  //     }
+  // }
+
+  async getMemberTrades(handle) {
+    const thresholdDate = new Date(2023, 4, 22); // Note: Month is 0-indexed in JavaScript, so May is 4
+    let tradesRef = null;
+
+    console.log("get Member Trades for ", handle)
+
+    if (handle) {
+        // const userRef = this.firestore_db.collection('users').where('handle', '==', handle.toLowerCase()).limit(1);
+        // const userSnapshot = await userRef.get();
+
+        // if (userSnapshot.empty) {
+        //     console.log(`No user found with handle: ${handle}`);
+        //     return [];
+        // }
+
+        // const userDoc = userSnapshot.docs[0];
+        // const userId = userDoc.id;
+
+        let url = `https://us-central1-spyder-academy.cloudfunctions.net/user?handle=${handle}`;
+        
+        try {
           let response = await $.ajax({ url: url, method: 'GET' });
-          if (response && response.length > 0) {
-              // Store trades in local storage
-              localStorage.setItem(cacheKey, JSON.stringify(response));
-              // Set cache expiry time (60 minutes from now)
-              const expiryTime = new Date().getTime() + 60 * 60 * 1000;
-              localStorage.setItem(cacheExpiryKey, expiryTime);
   
-              let tradeRecords = response.map(trade => TradeRecord.from_dict(trade["trade_id"], trade));
-              return tradeRecords;
+          if (response && response.uid) {  // Assuming response is an object with a 'uid' field
+              // Get the list of trades for the user with the specific handle
+              tradesRef = await this.firestore_db.collection('trades')
+                  .where('uid', '==', response.uid)
+                  .where('entry_date', '>=', thresholdDate)
+                  .orderBy('entry_date', 'desc')
+                  .get();
+          } else {
+              console.log(`No user found with handle: ${handle}`);
+              return [];
           }
-  
-          return [];
-  
-      } catch (error) {
-          console.error('Error fetching data from API:', url, error);
-          return []; // Return empty array in case of error
-      }
+        } catch (error) {
+            console.error("Error fetching user:", error);
+            return [];
+        }
+    } else {
+        // Get own trades if no specific handle is provided
+        tradesRef = await this.firestore_db.collection('trades')
+            .where('uid', '==', this.authenticatedMember.uid)
+            .where('entry_date', '>=', thresholdDate)
+            .orderBy('entry_date', 'desc')
+            .get();
+    }
+
+    const trades = [];
+    const now = new Date();
+    const eod = new Date(now.setHours(23, 59, 59, 999));
+
+    tradesRef.forEach(tradeDoc => {
+        const tradeData = tradeDoc.data();
+        tradeData.trade_id = tradeDoc.id;
+
+        if (!tradeData.uid) {
+            console.log("Missing uid", tradeData);
+            return;
+        }
+
+        if (tradeData.exit_date_max !== null){
+          tradeData.exit_date_max = tradeData.exit_date_max.toDate()
+        }
+
+        if (!tradeData.exit_date_max) {
+            let entryDate = tradeData.entry_date.toDate();
+
+            // Assume the expiration date is the next occurrence of the expiration date following the entry date
+            const expirationStr = tradeData.expiration;
+            const entryYear = entryDate.getFullYear();
+
+            let expirationDate = new Date(`${expirationStr}/${entryYear}`);
+            expirationDate.setHours(23, 59, 59, 999);
+
+            if (expirationDate < entryDate) {
+                expirationDate.setFullYear(entryYear + 1);
+            }
+
+            // If the trade is expired and no exit was posted, assume it expired worthless
+            if (expirationDate < eod) {
+                tradeData.exit_date_max = expirationDate;
+                tradeData.exit_price_max = 0;
+            }
+        }
+
+        // Filter out trades with an entry price of 0
+        if (tradeData.entry_price > 0) {
+            var tr = TradeRecord.from_dict(tradeData.trade_id, tradeData)
+            trades.push(tr);
+        }
+    });
+
+    return trades;
   }
+
 
   
   
@@ -222,8 +324,6 @@ class TradeSocial {
   }
 
   async showEditProfileCard() {
-    console.log("show edit profile card");
-
     // Show the modal
     $("#editProfileModal").modal("show");
 
@@ -252,7 +352,6 @@ class TradeSocial {
               .update({
                   discoverable: discoverable
               });
-          console.log("Discoverability updated successfully");
 
           // Update status text
           if (discoverable) {
@@ -342,7 +441,6 @@ class TradeSocial {
                         { x: x, discord: discord }
                     ]
                 });
-            console.log("Profile updated successfully");
 
             // Close the modal after saving
             $("#editProfileModal").modal("hide");
@@ -716,13 +814,11 @@ class TradeSocial {
             var selectedIndex = config.dataPointIndex + 1
             var selectedSeries = config.seriesIndex
 
-            // console.log(config)
 
             //var selectedDate = new Date(seriesData[selectedSeries].name + " " + selectedIndex + " 2023");
             var [month, year] = seriesData[selectedSeries].name.split(" ");
 
             var monthMap = {Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6, Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12}
-            // console.log(monthMap[month], selectedIndex, year)
 
             var selectedDate = new Date(year, monthMap[month] - 1, selectedIndex);
 
@@ -739,172 +835,6 @@ class TradeSocial {
       return now - timestamp > 2 * 60 * 60 * 1000; // 2 hours in milliseconds
     }
 
-    // async renderTrims(trades) {
-    //   var self = this;
-    //   var upsideTradeData = [];
-    //   var downsideTradeData = [];
-
-    //   var tradeMaxLoss = [];
-    //   var exitPriceCache = {}; // In-memory cache for exit prices
-
-    //   for (const trade of trades) {
-    //     var tradeId = trade.tradeid;
-    //     var entryPrice = trade.entry_price;
-    
-    //     var exitsRef = this.tradesCollection.doc(tradeId).collection("exits");
-    
-    //     if (trade.exit_price_max != null)
-    //     {
-    //       try {
-
-    //         // Check if exit prices are already cached for this trade
-    //         var exitPrices = null;
-    //         let cachedData = localStorage.getItem(tradeId);
-    //         if (cachedData) {
-    //           cachedData = JSON.parse(cachedData);
-    //           if (!self.isDataExpired(cachedData.timestamp)) {
-    //             // Use cached data if it's still valid
-    //             exitPrices = cachedData.exitPrices;
-    //           } else {
-    //             // Fetch exit prices from Firebase and update the cache
-    //             const querySnapshot = await exitsRef.get();
-    //             exitPrices = querySnapshot.docs.map(doc => doc.data()["price"]).sort();
-                
-    //             const cachedData = { exitPrices: exitPrices, timestamp: new Date().getTime() };
-    //             localStorage.setItem(tradeId, JSON.stringify(cachedData));
-    //           }
-    //         } else {
-    //           // Fetch exit prices from Firebase and cache them with timestamp
-    //           const querySnapshot = await exitsRef.get();
-    //           exitPrices = querySnapshot.docs.map(doc => doc.data()["price"]).sort();
-              
-    //           const cachedData = { exitPrices: exitPrices, timestamp: new Date().getTime() };
-    //           localStorage.setItem(tradeId, JSON.stringify(cachedData));
-    //         }
-
-    //         // console.log(exitPrices)
-            
-    //         // Calculate statistics for the trade
-    //         const percentageGainLoss = exitPrices.map(trimPrice => Math.round(((trimPrice - entryPrice) / entryPrice * 100)));
-
-    //         // Add value 0 to the dataset
-    //         percentageGainLoss.push(0);
-
-    //         const sortedValues = percentageGainLoss.slice().sort((a, b) => a - b);
-
-    //         // len will always be 2+ (since one real trim, and we injected a 0)
-    //         const len = sortedValues.length;
-            
-    //         const q1Val =  sortedValues[1] // second trim
-    //         const medianVal =  sortedValues[Math.ceil((len - 1)/2)]; // middle trim
-    //         const q3Val =  len > 2 ? sortedValues[len - 2] : sortedValues[len - 1] // second to last trim, or last if only one trim
-            
-    //         var minVal =  (sortedValues[0]);
-    //         var maxVal =  (sortedValues[len - 1]);
-
-    //         if (maxVal == 0){
-    //           maxVal = 0.001
-    //         }
-      
-    //         var keyValue = trade.username + " " + trade.ticker + " " + trade.strike
-
-    //         upsideTradeData.push(
-    //           {
-    //             x: keyValue,
-    //             y: maxVal,
-    //             goals: [
-    //               {
-    //                   name: "First Trim",
-    //                   value: sortedValues[1],
-    //                   strokeWidth: 2,
-    //                   strokeColor: '#775DD0',
-    //               }
-    //             ]
-    //           });
-           
-    //         downsideTradeData.push(
-    //           {
-    //             x: keyValue,
-    //             y: minVal
-    //           });
-
-
-           
-
-    //       } catch (error) {
-    //         console.error("Error fetching exit data for trade:", tradeId, error);
-    //       }
-    //     }
-    //   }
-
-    //   console.log(upsideTradeData)
-
-
-    //   var options = {
-    //     series: [
-    //       {
-    //         name: 'Max Trim',
-    //         data: upsideTradeData
-    //       },
-    //       {
-    //         name: 'Downside Trims',
-    //         data: downsideTradeData
-    //       }
-    //     ],
-    //     chart: {
-    //       height: 400,
-    //       type: 'bar',
-    //       stacked: true,
-    //       toolbar: false,
-    //     },
-    //     xaxis: {
-    //       title: {
-    //         text: "Trim Percentage"
-    //       }
-    //     },
-    //     yaxis: {
-    //       min: -100,
-    //     },
-    //     plotOptions: {
-    //       bar: {
-    //         horizontal: true,
-    //       }
-    //     },
-    //     colors: [this.green, this.red],
-    //     dataLabels: {
-    //     enabled: false
-    //     },
-    //     tooltip: {
-    //       shared: false,
-    //       x: {
-    //         formatter: function (val) {
-    //           return val
-    //         }
-    //       },
-    //       y: {
-    //         formatter: function (val) {
-    //           return Math.abs(val) + "%"
-    //         }
-    //       }
-    //     },
-    //     legend: {
-    //       show: false,
-    //       showForSingleSeries: true,
-    //       customLegendItems: ['Max Trim', 'First Trim'],
-    //       markers: {
-    //         fillColors: [this.green, this.red]
-    //       }
-    //     }
-    //   };
-    
-    //   if (this.chartTrims != null) {
-    //     this.chartTrims.destroy();
-    //   }
-    
-    //   this.chartTrims = new ApexCharts(document.querySelector("#tradeTrims"), options);
-    //   this.chartTrims.render();
-    // }
-    
 
     async addRecommendation(notes, parentEl = null){
       const addRecs = true //firebase.auth().currentUser
@@ -1029,360 +959,8 @@ class TradeSocial {
     }
   
 
-    renderTVChart(parentEl, tradeid) {
-        var el = $(parentEl).find(".tvChartHeader")[0]
-       
-        if (!$(el).hasClass("d-none")){
-            // chart is currently visible, so ignore the redraw
-            return;
-        }
-
-        // otherwise continue to show this chart
-        $(el).empty()
-        $('.tvChartHeader').addClass("d-none"); // hide all other charts
-        $('.entryExitNotes').addClass("d-none"); // hide all other charts
-        $(el).removeClass("d-none");
-
-    
-        var chart = LightweightCharts.createChart(el, {
-            height: 300,
-            rightPriceScale: {
-                visible: true,
-                borderVisible: false,
-            },
-            leftPriceScale: {
-                visible: true,
-                borderColor: '#ffffff',
-            },
-            timeScale: {
-                timeVisible: true,
-                borderVisible: false,
-            },
-            rightPriceScale: {
-                borderVisible: false,
-            },
-            layout: {
-                background: {
-                    type: 'solid',
-                    color: 'white',
-                },
-                textColor: 'black',
-            },
-            crosshair: {
-                horzLine: {
-                    visible: false,
-                    labelVisible: false,
-                },
-                vertLine: {
-                    visible: true,
-                    style: 0,
-                    width: 2,
-                    color: 'rgba(32, 38, 46, 0.1)',
-                    labelVisible: false,
-                },
-            },
-            // hide the grid lines
-            grid: {
-                vertLines: {
-                    visible: false,
-                },
-                horzLines: {
-                    visible: false,
-                },
-            },
-        });
-    
-        var candleStickSeries = chart.addCandlestickSeries({
-            priceScaleId: 'right',
-            upColor: 'rgb(38,166,154)',
-            downColor: 'rgb(255,82,82)',
-            wickUpColor: 'rgb(38,166,154)',
-            wickDownColor: 'rgb(255,82,82)',
-            borderVisible: false,
-            overlay: true,
-        });
-
-        var optionsSeries = chart.addCandlestickSeries({
-            priceScaleId: 'left',
-            upColor: 'blue',
-            downColor: 'blue',
-            wickUpColor: 'blue',
-            wickDownColor: 'blue',
-	          lineWidth: 2,
-            overlay: true,
-        });
-
-        // TODO: Move this to the API
-        // Get the candle data from the database
-        var tradeRef = this.tradesCollection.doc(tradeid);
-        var candlesRef = this.tradesCollection.doc(tradeid).collection("price_history").doc("underlying").collection("candles");
-        var optionsRef = this.tradesCollection.doc(tradeid).collection("price_history").doc("options_price").collection("candles");
-        var entriesRef = this.tradesCollection.doc(tradeid).collection("entries");
-        var exitsRef = this.tradesCollection.doc(tradeid).collection("exits");
-    
-        var hasData = false;
-        
-        candlesRef.get().then((querySnapshot) => {
-            var self = this;
-            var candleData = [];
-            // var candles = doc.data().candles;
-    
-            querySnapshot.forEach((doc) => {
-                var c = doc.data();
-                // Parse the string into a Date object
-                var time = new Date(c.d);
-    
-                // Get the Unix timestamp in milliseconds
-                var offset = dayjs(c.d).utcOffset() / 60;
-                var timestamp = new Date(time).getTime() + (offset * 60 * 60 * 1000);
-                var timestampInSeconds = Math.floor(timestamp / 1000);
-    
-                candleData.push({
-                    time: timestampInSeconds,
-                    open: c.o,
-                    high: c.h,
-                    low: c.l,
-                    close: c.c
-                });
-
-                hasData = true;
-            });
-    
-            candleStickSeries.setData(candleData);
-        });
-    
-        // Fetch options prices
-        optionsRef.get().then((querySnapshot) => {
-            // var optionsData = optionsDoc.data().candles;
-
-            var optionsSeriesData = [];
-
-            querySnapshot.forEach((doc) => {
-                // Parse the string into a Date object
-                var c = doc.data();
-                var time = new Date(c.d);
-
-                // Get the Unix timestamp in milliseconds
-                var offset = dayjs(c.d).utcOffset() / 60;
-                var timestamp = new Date(time).getTime() + (offset * 60 * 60 * 1000);
-                var timestampInSeconds = Math.floor(timestamp / 1000);
-
-                optionsSeriesData.push({
-                    time: timestampInSeconds,
-                    open: c.o,
-                    high: c.h,
-                    low: c.l,
-                    close: c.c
-                });
-
-                hasData = true;
-            });
-
-            // Add options series to the chart
-            optionsSeries.setData(optionsSeriesData);
-
-        });
-
-        var markers = [];
-        var entryExitNotes = [];
-        var offset = 0;
-
-        // Fetch entries data
-        entriesRef.get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                var entryData = doc.data();
-                var entryTime = Math.floor(entryData["date_time"].toDate().getTime() / 1000);
-                var entryPrice = entryData["price"]; 
-                var entryNotes = entryData["notes"];
-                entryData["action"] = "ADDED"
-
-                offset = dayjs(entryData["date_time"].toDate().toLocaleDateString()).utcOffset() / 60;
-
-                // Convert to EDT
-                entryTime = Math.floor(entryTime + (offset * 60 * 60 * 1000) / 1000);
-
-                // Create entry marker object
-                var entryMarker = {
-                    time: entryTime,
-                    position: 'belowBar',
-                    color: '#2196F3',
-                    shape: 'arrowUp',
-                    text: parseFloat(entryPrice).toFixed(2)
-                };
-                markers.push(entryMarker);
-                entryExitNotes.push(entryData)
-            });
-        }).then(() => {
-            // Fetch exits data
-            exitsRef.get().then((querySnapshot) => {
-                // var exitMarkers = [];
-                querySnapshot.forEach((doc) => {
-                    var exitData = doc.data();
-                    var exitTime = Math.floor(exitData["date_time"].toDate().getTime() / 1000);
-                    var exitPrice = exitData["price"]; 
-                    var exitNotes = exitData["notes"];
-                    exitData["action"] = "TRIMMED"
-
-                    offset = dayjs(exitData["date_time"].toDate().toLocaleDateString()).utcOffset() / 60;
-
-                    // Convert to EDT
-                    exitTime = Math.floor(exitTime + (offset * 60 * 60 * 1000) / 1000);
-
-                    // Create exit marker object
-                    var exitMarker = {
-                        time: exitTime,
-                        position: 'aboveBar',
-                        color: '#e91e63',
-                        shape: 'arrowDown',
-                        text: parseFloat(exitPrice).toFixed(2) 
-                    };
-
-                    markers.push(exitMarker);
-                    entryExitNotes.push(exitData)
-                });
-            }).then(() => {
-                optionsSeries.setMarkers(markers);
-
-                const toolTipWidth = 106;
-                // Create and style the tooltip html element
-                const toolTip = document.createElement('div');
-                toolTip.style = `width: ${toolTipWidth}px; height: 300px; position: absolute; display: none; padding: 8px; box-sizing: border-box; font-size: 12px; text-align: left; z-index: 1000; top: 12px; left: 12px; pointer-events: none; border-radius: 4px 4px 0px 0px; border-bottom: none; box-shadow: 0 2px 5px 0 rgba(117, 134, 150, 0.45);font-family: -apple-system, BlinkMacSystemFont, 'Trebuchet MS', Roboto, Ubuntu, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;`;
-                toolTip.style.background = `rgba(${'255, 255, 255'}, 0.25)`;
-                toolTip.style.color = 'black';
-                toolTip.style.borderColor = 'rgba( 239, 83, 80, 1)';
-                el.appendChild(toolTip);
-
-                // update tooltip
-                chart.subscribeCrosshairMove(param => {
-                    if (
-                        param.point === undefined ||
-                        !param.time ||
-                        param.point.x < 0 ||
-                        param.point.x > el.clientWidth ||
-                        param.point.y < 0 ||
-                        param.point.y > el.clientHeight
-                    ) {
-                        toolTip.style.display = 'none';
-                    } else {
-                        // time will be in the same format that we supplied to setData.
-                        // thus it will be YYYY-MM-DD
-                        const dateStr = new Date((param.time * 1000) - (offset * 60 * 60 * 1000)).toLocaleString();
-                        toolTip.style.display = 'block';
-                        const stockData = param.seriesData.get(candleStickSeries);
-                        const stockPrice = stockData.value !== undefined ? stockData.value : stockData.close;
-                        const optionsData = param.seriesData.get(optionsSeries);
-                        const optionsPrice = optionsData.value !== undefined ? optionsData.value : optionsData.close;
-                        const ticker = $(parentEl).find('.tradeContract').text()
-                        toolTip.innerHTML = `<div class="h6 nowrap" style="color: ${'rgba( 239, 83, 80, 1)'}">`+ ticker + `</div>` + 
-                            `<div style="font-size: 20px; margin: 4px 0px; color: ${'black'}">$ ${(Math.round(100 * stockPrice) / 100).toFixed(2)}</div>` +
-                            `<div style="font-size: 20px; margin: 4px 0px; color: ${'blue'}">$ ${(Math.round(100 * optionsPrice) / 100).toFixed(2)}</div>` +
-                            `<div style="color: ${'black'}">${dateStr}</div>`;
-                            
-                            
-
-                        let left = param.point.x; // relative to timeScale
-                        const timeScaleWidth = chart.timeScale().width();
-                        const priceScaleWidth = chart.priceScale('left').width();
-                        const halfTooltipWidth = toolTipWidth / 2;
-                        left += priceScaleWidth - halfTooltipWidth;
-                        left = Math.min(left, priceScaleWidth + timeScaleWidth - toolTipWidth);
-                        left = Math.max(left, priceScaleWidth);
-
-                        toolTip.style.left = left + 'px';
-                        toolTip.style.top = 0 + 'px';
-                    }
-                });
-
-                chart.timeScale().fitContent();
-
-                if (hasData == false){
-                  $(el).hide();
-                }
-
-                var entryNotesEl = $(parentEl).find(".entryExitNotes")
-                entryNotesEl.removeClass("d-none");
-
-                entryExitNotes = entryExitNotes.sort(function(a, b) {
-                    return a["date_time"].toDate() - b["date_time"].toDate() 
-                });
-
-                tradeRef.get().then((doc) => {
-                  var tradeEntry = TradeRecord.from_dict(doc.id, doc.data());
-
-                  entryNotesEl.empty();
-                  entryNotesEl.append("<h4>TRADE HISTORY</h4>")
-                  entryExitNotes.forEach((t) => {
-                      var direction = t["action"]
-                      var entryNotes = "<strong>" + t["date_time"].toDate().toLocaleString() + "</strong><br/>" + direction + " at $" + parseFloat(t.price).toFixed(2)
-                      var entryReason = " | " + t.notes
-                      if (t.notes == null){
-                        entryReason = ""
-                      }
-
-                      var entryNotesP = $("<p>")
-                      entryNotesP.append(entryNotes)
-                      entryNotesP.append(entryReason)
-                      entryNotesEl.append(entryNotesP)
-                  })
-
-                  // append a line for max drawdown informaton
-                  if (tradeEntry.drawdownValue != ""){
-                    entryNotesEl.append("<p><strong>" + "Max Drawdown" + "</strong><br/>" + tradeEntry.drawdownValue + "</p>")
-                  }
-
-                  // link button to add an execution (eg average in, trim)
-                  if (this.userMode){
-                    var actionButtons = $("<p>")
-                    actionButtons.append("<a class='secondary' href='#' onclick='showNewTradeExecution(\"" + tradeEntry.tradeid + "\", \"" + tradeEntry.ticker.toUpperCase() + " " + tradeEntry.strike.toUpperCase() + "\");'>" + "<i class='fas fa-plus'></i> Exit Trade" + "</a>");
-                    actionButtons.append("<span>  |  </span");
-                    actionButtons.append("<a class='secondary' href='#' onclick='deleteTrade(\"" + tradeEntry.tradeid + "\");'>" + "<i class='fas fa-trash'></i> Delete Trade" + "</a>");
-
-                    entryNotesEl.append(actionButtons)
-                  }
-
-                  
-                });
-
-                
-    
-            });
-        })
-
-        var chartWidth = chart.width
-
-        // Append the fullscreen button
-        var fullscreenButton = $('<button>', {
-            class: 'btn fullscreen_button text-end',
-            style: "width: 2em;",
-            click: toggleFullscreen
-        });
-
-        fullscreenButton.append($('<i/>').addClass('fa fa-expand'));
-       
-        // Append the contianer for the  buttons
-        var buttons = $("<div class='p-3' style='display: flex; justify-content: space-between;'>");
-        buttons.append("<a href='/attribution/' class='text-muted text-decoration-none small' style='width: 20em;'>Powered by TradingView</a>");
-        buttons.append(fullscreenButton);
-
-        $('.tvChartHeader').append(buttons);
-
-        // Function to toggle fullscreen
-        function toggleFullscreen() {
-            $('.tvChartHeader').toggleClass('fullscreen');
-
-            // Update the chart size after toggling fullscreen
-            if ($('.tvChartHeader').hasClass('fullscreen')) {
-                chart.resize(window.innerWidth * 0.9, window.innerHeight * 0.9);
-                chart.timeScale().fitContent();
-            } else {
-                $(el).empty()
-                $('.tvChartHeader').addClass("d-none"); // hide all other charts
-                $('.entryExitNotes').addClass("d-none"); // hide all other charts
-            }
-        }
-    }
-
     renderTradeDetails(tradeid) {
+      console.log("render trade details for ", tradeid)
 
       // Show the card by adding the 'show' class
       $('#contractDetailsCard').addClass('show');
@@ -1602,7 +1180,6 @@ class TradeSocial {
               });
 
               tradeRef.get().then((doc) => {
-                console.log(doc.id, doc.data())
                 var tradeEntry = TradeRecord.from_dict(doc.id, doc.data());
 
                 entryNotesEl.empty();
@@ -1629,7 +1206,7 @@ class TradeSocial {
                 // fill in the trade details
                 var tradeCardRow = $('#contractDetailsCard')
                 
-                tradeCardRow.find(".traderName").text(tradeEntry.username + " - " + moment(tradeEntry.entry_date.toDate()).fromNow())
+                tradeCardRow.find(".traderName").text(tradeEntry.username + " - " + moment(tradeEntry.entry_date).fromNow())
                 tradeCardRow.find(".tradeContract").text(tradeEntry.ticker + " " + tradeEntry.strike + " " + tradeEntry.expiration)
                 tradeCardRow.find(".tradeGain").text(tradeEntry.gainsString)
                 tradeCardRow.find(".tradeNotes").text(tradeEntry.notes)
@@ -1647,6 +1224,37 @@ class TradeSocial {
                 }
             
                 $(".entryExitNotes").show()
+
+                // link button to add an execution (eg average in, trim)
+                if (this.isUserMode() && tradeEntry.uid == this.authenticatedMember.uid) {
+                  const tradeId = tradeEntry.tradeid;
+              
+                  const actionButtons = $(`
+                      <div class="">
+                          <a class='btn gradient-green' href='#' id='exitTradeBtn'>
+                              <i class='fas fa-plus'></i> Exit Trade
+                          </a>
+                          <a class='btn gradient-red' href='#' id='deleteTradeBtn'>
+                              <i class='fas fa-trash'></i> Delete Trade
+                          </a>
+                      </div>
+                  `);
+              
+                  // Clear previous action buttons and append the new ones
+                  $(".tradeActions").empty().append(actionButtons);
+              
+                  // Bind the event handlers
+                  $("#exitTradeBtn").on('click', (event) => {
+                      event.preventDefault();
+                      this.showExitTradeModal(tradeEntry);
+                  });
+              
+                  $("#deleteTradeBtn").on('click', (event) => {
+                      event.preventDefault();
+                      this.deleteTrade(tradeId);
+                  });
+                }
+              
                 
               });
           });
@@ -1931,8 +1539,8 @@ class TradeSocial {
         recapRow.append(recapHeader);
     
         // Buttons on the right (conditionally rendered if isUserMode)
-        var isUserMode = false;//window.location.hash.substring(1) == ""; // Are we looking at our own profile (which means no handle in the url)
-        if (isUserMode) {
+        // var isUserMode = window.location.hash.substring(1) == ""; // Are we looking at our own profile (which means no handle in the url)
+        if (this.isUserMode()) {
           var buttons = $("<div class='col-sm-12 col-lg-auto text-center'></div>");
           var addTradeButton = $("<button class='btn gradient-green m-1 lg-rounded text-white text-uppercase' title='Share Trade Idea'>Share a Trade Idea</button>");
           
@@ -2079,6 +1687,9 @@ class TradeSocial {
 
     }
 
+    
+
+
     parseEntryCommand(command) {
         const symbolPattern = /(\w+)/;
         const optionPattern = /([\d.]+[cpCP]|LONG|SHORT|long|short)/;
@@ -2160,6 +1771,7 @@ class TradeSocial {
       }
     }
 
+  
 
     submitTrade(symbol, strike, price, expiration, notes) {
 
@@ -2178,12 +1790,10 @@ class TradeSocial {
        "username": this.authenticatedMember.name
       }
 
-      console.log("save trade", tradeEntry)
 
       // Add the trade entry to Firestore
       this.firestore_db.collection("trades").add(tradeEntry)
         .then((docRef) => {
-            console.log("Trade entry added with ID: ", docRef.id);
 
             // Add the entries subcollection
             return this.firestore_db.collection("trades").doc(docRef.id).collection("entries").add({
@@ -2194,11 +1804,8 @@ class TradeSocial {
       });
         })
         .then(() => {
-            console.log("Trade entry added to subcollection.");
-
             // invalidate the cache
-            var cachekey = `trades_${this.authenticatedMember.handle}`
-            localStorage.removeItem(cachekey);
+            this.invalidateCache()
             window.location = '/profile/'
             
             // Close the modal
@@ -2211,6 +1818,159 @@ class TradeSocial {
 
 
     }
+
+    showExitTradeModal(tradeEntry) {
+      // Show the modal
+      $("#exitTradeModal").modal("show");
+    
+      // Update modal fields with trade information
+      $('#trimTraderName').text(this.authenticatedMember.name);
+      $("#trimTradeLogo").attr("src", `/images/logos/${tradeEntry.ticker.toUpperCase()}.png`);
+      $('#trimSymbol').text(tradeEntry.ticker.toUpperCase());
+      $('#trimOption').text(tradeEntry.strike);
+      $('#trimExpiration').text(tradeEntry.expiration);
+    
+      // Parse and display initial command value
+      const initialCommand = $("#txtOutCommand").val();
+      if (initialCommand) {
+        const parsedData = this.parseExitCommand(initialCommand);
+        if (parsedData) {
+          $('#trimPrice').text(parsedData.price.toFixed(2));
+          $('#trimNotes').text(parsedData.notes || '');
+        }
+      }
+    
+      // Attach event listener for input changes
+      $('#txtOutCommand').off('input').on('input', (event) => {
+        const command = $(event.target).val();
+        if (command) {
+          const parsedData = this.parseExitCommand(command);
+          if (parsedData) {
+            $('#trimPrice').text(parsedData.price.toFixed(2));
+            $('#trimNotes').text(parsedData.notes || '');
+          }
+        }
+      });
+    
+      // Bind the submit button click event
+      $('#exitTrade').off('click').on('click', () => {
+        console.log("Exit trade Button clicked")
+        const command = $("#txtOutCommand").val();
+        const parsedExitData = this.parseExitCommand(command);
+
+        console.log(parsedExitData)
+        if (parsedExitData == null) 
+        {
+          $('#tradeExitErrorMessage').text('Please enter your exit price and reason.').show();
+        }
+
+
+        if (parsedExitData) {
+          this.submitTradeExit(tradeEntry.tradeid, parsedExitData.price, parsedExitData.notes);
+        }
+      });
+    }
+    
+    parseExitCommand(command) {
+      console.log("parsing command", command)
+      if (!command) return null;
+    
+      try {
+        const pricePattern = /([\d\.]+)/i;
+        const notesPattern = /[\d\.]+ (.+)/i;
+    
+        const priceMatch = command.match(pricePattern);
+        const price = priceMatch ? parseFloat(priceMatch[1]) : null;
+    
+        const notesMatch = command.match(notesPattern);
+        const notes = notesMatch ? notesMatch[1].trim() : '';
+    
+        if (!price) 
+        {
+          $('#tradeExitErrorMessage').text('Please enter the price you trimmed/exited.').show();
+          return
+        }
+        else if (!notes) 
+        {
+          $('#tradeExitErrorMessage').text('Please enter why you exited here.').show();
+          return
+        }
+        else{
+          $('#tradeExitErrorMessage').text('').hide();
+        }
+    
+        return {
+          price: price,
+          notes: notes
+        };
+      } catch (error) {
+        console.error('Error parsing exit command:', error);
+        return null;
+      }
+    }
+    
+    async submitTradeExit(tradeid, price, notes) {
+      console.log("submitTradeExit()")
+
+      if (this.authenticatedMember == null) {
+        $('#tradeExitErrorMessage').text("User not logged in.");
+        return false;
+      }
+    
+      try {
+
+        // Create the exit/trim record
+        const tradeExitData = {
+          date_time: new Date(),
+          notes: notes,
+          price: price,
+          uid: this.authenticatedMember.uid
+        };
+    
+        console.log("Saving trim for ", tradeid, tradeExitData);
+    
+        const tradeDocRef = this.tradesCollection.doc(tradeid);
+        const exitCollectionRef = tradeDocRef.collection("exits");
+    
+        // Add the trade exit data
+        await exitCollectionRef.add(tradeExitData);
+    
+        // Query the exits subcollection to find the maximum exit price
+        const exitQuery = exitCollectionRef.orderBy('price', 'desc').limit(1);
+        const querySnapshot = await exitQuery.get();
+    
+        let maxExitPrice = null;
+        let maxExitDate = null;
+    
+        querySnapshot.forEach((exitDoc) => {
+          maxExitPrice = exitDoc.get('price');
+          maxExitDate = exitDoc.get('date_time');
+        });
+    
+        // Update the parent document with the max exit price and date
+        await tradeDocRef.update({
+          exit_price_max: maxExitPrice,
+          exit_date_max: maxExitDate
+        });
+    
+        console.log('Max exit price and date updated successfully');
+        $('#exitTradeModal').modal('hide');
+
+        this.invalidateCache()
+        window.location = window.location;
+
+        return true;
+      } catch (error) {
+        console.error('Error in submitTradeExit:', error);
+        return false;
+      }
+    }
+    
+
+    invalidateCache(){
+      var cachekey = `trades_${this.authenticatedMember.handle}`
+      localStorage.removeItem(cachekey);
+    }
   
     
    
@@ -2222,348 +1982,155 @@ class TradeSocial {
       return year + '-' + month + '-' + day;
     }
 
-    // parseEntryCommand(command) {
-    //   console.log("parsing", command)
-
-    //   // Define regex patterns to match symbol, option, price, expiration, and notes
-    //   const symbolPattern = /(\w+)/;
-    //   const optionPattern = /([\d.]+[cpCP]|LONG|SHORT|long|short)/;
-    //   const pricePattern = /(@|at|AT) ([\d\.]+)/i;
-    //   const expirationPattern = /\d+\/\d+/;
-    //   const notesPattern = /(@|at|AT) [\d\.]+ (.+)/i;
     
-    //   // Use regex to extract symbol, option, price, expiration, and notes from command
-    //   const symbol = command.match(symbolPattern)[1].toUpperCase();
-    //   const strike = command.match(optionPattern)[1].toUpperCase();
-    //   const price = parseFloat(command.match(pricePattern)[2]);
+
+  // formatETradeDate(inputDate) {
+  //   // Split the input date string into parts
+  //   const parts = inputDate.split('-');
+  
+  //   // Convert the month abbreviation to a numeric month
+  //   const monthAbbreviation = parts[0];
+  //   const months = [
+  //     "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  //     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  //   ];
+  //   const month = months.findIndex(abbr => abbr === monthAbbreviation);
     
-    //   const expirationMatch = command.match(expirationPattern);
-    //   const expirationStr = expirationMatch ? expirationMatch[0] : null;
-    
-    //   const notesMatch = command.match(notesPattern);
-    //   const notes = notesMatch ? notesMatch[2].trim() : null;
-    
-    //   // Parse the expiration date if it is provided, otherwise set it to default
-    //   let expiration;
-    //   if (expirationStr) {
-    //     // Check if expiration_str includes a year
-    //     if (expirationStr.split('/').length === 3) {
-    //       expiration = new Date(expirationStr.replace(/(\d+)\/(\d+)\/(\d+)/, '$2/$1/$3'));
-    //     } else {
-    //       // Append the current year to the expiration_str
-    //       const yearNow = new Date().getFullYear();
-    //       const tempDate = new Date(`${expirationStr}/${yearNow}`);
-    //       // If the tempDate has already passed, use next year; otherwise, use this year
-    //       if (tempDate < new Date()) {
-    //         expiration = new Date(`${expirationStr}/${yearNow + 1}`);
-    //       } else {
-    //         expiration = tempDate;
-    //       }
-    //     }
-
-    //     expiration = expiration.toISOString().slice(0, 10); // Format as "YYYY-MM-DD"
-    //   } else {
-    //     const today = new Date();
-    //     const todayStr = today.toISOString().slice(0, 10); // Format as "YYYY-MM-DD"
-        
-    //     const friday = new Date(today.getTime() + (5 - today.getDay()) % 7 * 24 * 60 * 60 * 1000);
-    //     friday.setHours(0, 0, 0, 0); // Set the time to 00:00:00 (midnight)
-    //     const fridayStr = friday.toISOString().slice(0, 10); // Format as "YYYY-MM-DD"
-
-
-    //     if (["SPY", "SPX", "QQQ"].includes(symbol)) {
-    //       expiration = todayStr;
-    //     } else if (["ES", "MES", "NQ", "MNQ", "RTY", "MCL"].includes(symbol)) {
-    //       expiration = "";
-    //     } else {
-    //       expiration = fridayStr;
-    //     }
-    //   }
-    
-    //   // Return the parsed values as an array
-    //   return {
-    //     "symbol": symbol, 
-    //     "strike": strike, 
-    //     "price": price, 
-    //     "expiration": expiration, 
-    //     "notes": notes
-    //   };
-    // }
-
-    // parseExitCommand(command) {
-    //   console.log("parsing", command)
-
-    //   const pricePattern = /([\d\.]+)/i;
-    //   const notesPattern = /[\d\.]+ (.+)/i;
-
-    //   const price = parseFloat(command.match(pricePattern)[1]);
-    //   const notesMatch = command.match(notesPattern);
-    //   const notes = notesMatch ? notesMatch[1].trim() : null;
-
-    //   return {
-    //     "price": price, 
-    //     "notes": notes
-    //   };
-    // }
-
-    // addManualTrade(){
-    //   if (this.userLoggedIn && this.userMode){
-    //     var tradeEntryCommand = $("#txtInCommand").val()
-    //     var objTrade = this.parseEntryCommand(tradeEntryCommand)
-    //     console.log(objTrade)
-
-    //     var email = firebase.auth().currentUser.email
-    //     var userid = firebase.auth().currentUser.uid
-
-    //     // Create a new entry in the database for this user's trade
-    //     var userDocRef = this.firestore_db.collection("users").doc(email);
-    //     var tradesCollection = userDocRef.collection('trades');
-
-    //     // Define the data to be saved
-    //     var tradeData = {
-    //         "entry_date": new Date(),
-    //         // "num_contracts": tradeNumCons,
-    //         "entry_price": objTrade.price,
-    //         "exit_date_max": null,
-    //         "exit_price_max": null,
-    //         "expiration": objTrade.expiration,
-    //         "notes": objTrade.notes,
-    //         "strike": objTrade.strike,
-    //         "ticker": objTrade.symbol,
-    //         "userid": userid,
-    //         "username": email,
-    //     };
-
-    //     // create the entry record also
-    //     var entryData = {
-    //       "date_time": tradeData.entry_date,
-    //       "notes": tradeData.notes,
-    //       "price": tradeData.entry_price,
-    //       // "num_contracts": tradeNumCons
-    //     }
-
-
-    //     // Add a new document to the "trades" subcollection
-    //     tradesCollection.add(tradeData)
-    //       .then(function(docRef){
-    //         var trade_id = docRef.id
-
-    //         // create the trade entry record
-    //         tradesCollection.doc(trade_id).collection("entries").add(entryData)
-
-    //         return true;
-    //       })
-    //   }
-    //   else{
-    //     $('#tradeErrorMessage').text("User not logged in.");
-    //     return false;
-    //   }
-      
-    //   $('#tradeErrorMessage').text("Saving Trade");
-    //   return true;
-    // }
-
-    async addExecutionTrade() {
-      if (this.userLoggedIn && this.userMode) {
-          try {
-              // Create the trade exit (or average in) trade record
-              var tradeID = $("#txtTradeExecutionID").val();
-
-              var objTradeExit = this.parseExitCommand($("#txtOutCommand").val())
-
-              // Create the exit/trim record
-              var tradeExitData = {
-                  "date_time": new Date(),
-                  "notes": objTradeExit.notes,
-                  "price": objTradeExit.price,
-                  // "num_contracts": tradeNumCons
-              }
-
-              console.log("Saving trim for ", tradeID, objTradeExit)
-
-              var tradeDocRef = this.tradesCollection.doc(tradeID);
-              var exitCollectionRef = tradeDocRef.collection("exits");
-
-              // Add the trade exit data
-              await exitCollectionRef.add(tradeExitData);
-
-              // Query the exits subcollection to find the maximum exit price
-              var exitQuery = exitCollectionRef.orderBy('price', 'desc').limit(1);
-
-              var querySnapshot = await exitQuery.get();
-
-              var maxExitPrice = null;
-              var maxExitDate = null;
-
-              querySnapshot.forEach(function(exitDoc) {
-                  maxExitPrice = exitDoc.get('price');
-                  maxExitDate = exitDoc.get('date_time');
-              });
-
-              // Update the parent document with the max exit price and date
-              await tradeDocRef.update({
-                  exit_price_max: maxExitPrice,
-                  exit_date_max: maxExitDate
-              });
-
-              console.log('Max exit price and date updated successfully');
-              return true;
-          } catch (error) {
-              console.error('Error in addExecutionTrade:', error);
-              return false;
-          }
-      } else {
-          $('#tradeExecutionErrorMessage').text("User not logged in.");
-          return false;
-      }
-  }
-
-  formatETradeDate(inputDate) {
-    // Split the input date string into parts
-    const parts = inputDate.split('-');
+  //   if (month === -1) {
+  //     // Invalid month abbreviation
+  //     return null;
+  //   }
   
-    // Convert the month abbreviation to a numeric month
-    const monthAbbreviation = parts[0];
-    const months = [
-      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-    ];
-    const month = months.findIndex(abbr => abbr === monthAbbreviation);
-    
-    if (month === -1) {
-      // Invalid month abbreviation
-      return null;
-    }
+  //   // Extract the day and year
+  //   const day = parseInt(parts[1]);
+  //   const year = parseInt(parts[2]);
   
-    // Extract the day and year
-    const day = parseInt(parts[1]);
-    const year = parseInt(parts[2]);
+  //   // Calculate the full year (considering years below 100)
+  //   const fullYear = year < 50 ? 2000 + year : 1900 + year;
   
-    // Calculate the full year (considering years below 100)
-    const fullYear = year < 50 ? 2000 + year : 1900 + year;
+  //   // Create a date object with the extracted values
+  //   const date = new Date(fullYear, month, day);
   
-    // Create a date object with the extracted values
-    const date = new Date(fullYear, month, day);
+  //   // Format the date as "YYYY-MM-DD"
+  //   const formattedDate = date.toISOString().split('T')[0];
   
-    // Format the date as "YYYY-MM-DD"
-    const formattedDate = date.toISOString().split('T')[0];
-  
-    return formattedDate;
-  }
+  //   return formattedDate;
+  // }
   
 
-  importTradesFromETrade(csvData) {
-    if (this.userLoggedIn && this.userMode) {
+  // importTradesFromETrade(csvData) {
+  //   if (this.userLoggedIn && this.userMode) {
 
-      // Create a new entry in the database for this user's trade
-      var userDocRef = this.firestore_db.collection("users").doc(firebase.auth().currentUser.email);
-      var tradesCollection = userDocRef.collection('trades');
+  //     // Create a new entry in the database for this user's trade
+  //     var userDocRef = this.firestore_db.collection("users").doc(firebase.auth().currentUser.email);
+  //     var tradesCollection = userDocRef.collection('trades');
 
-      // Split the CSV data into lines
-      const lines = csvData.split('\n');
+  //     // Split the CSV data into lines
+  //     const lines = csvData.split('\n');
   
-      // Define regular expressions to extract relevant data
-      const symbolPattern = /"Symbol","(.+?)"/;
-      const timePattern = /"Time","(.+?)"/;
-      const fillPattern = /"Fill","(.+?)"/;
-      const descriptionPattern = /"Description","(.+?)"/;
-      const statusPattern = /"Status","(.+?)"/;
-      const accountPattern = /"Account","(.+?)"/;
-      const idPattern = /"ID","(.+?)"/;
+  //     // Define regular expressions to extract relevant data
+  //     const symbolPattern = /"Symbol","(.+?)"/;
+  //     const timePattern = /"Time","(.+?)"/;
+  //     const fillPattern = /"Fill","(.+?)"/;
+  //     const descriptionPattern = /"Description","(.+?)"/;
+  //     const statusPattern = /"Status","(.+?)"/;
+  //     const accountPattern = /"Account","(.+?)"/;
+  //     const idPattern = /"ID","(.+?)"/;
   
-      const trades = [];
+  //     const trades = [];
   
-      // Loop through each line of CSV data (excluding header)
-      for (let i = 1; i < lines.length; i++) {
-        const line = lines[i].trim();
-        if (line) {
-          // Extract trade details using regular expressions
-          const symbolMatch = line.match(symbolPattern);
-          const timeMatch = line.match(timePattern);
-          const fillMatch = line.match(fillPattern);
-          const descriptionMatch = line.match(descriptionPattern);
-          const statusMatch = line.match(statusPattern);
-          const accountMatch = line.match(accountPattern);
-          const idMatch = line.match(idPattern);
+  //     // Loop through each line of CSV data (excluding header)
+  //     for (let i = 1; i < lines.length; i++) {
+  //       const line = lines[i].trim();
+  //       if (line) {
+  //         // Extract trade details using regular expressions
+  //         const symbolMatch = line.match(symbolPattern);
+  //         const timeMatch = line.match(timePattern);
+  //         const fillMatch = line.match(fillPattern);
+  //         const descriptionMatch = line.match(descriptionPattern);
+  //         const statusMatch = line.match(statusPattern);
+  //         const accountMatch = line.match(accountPattern);
+  //         const idMatch = line.match(idPattern);
   
-          if (symbolMatch && timeMatch && fillMatch && descriptionMatch && statusMatch) {
-            // Extract relevant trade details
-            const tradeTicker = symbolMatch[1];
-            const tradeDatetime = new Date(timeMatch[1]);
-            const tradeNumCons = fillMatch[1].split(" @ ")[0]; // '7 @ 2.12'
-            const tradePrice = fillMatch[1].split(" @ ")[1]; // '7 @ 2.12'
-            const description = descriptionMatch[1].split(" "); // "Sell 7 Sep-22-23 415 Puts @ 2.12 Stop to Close"
-            const tradeStrikePrice = description[3] 
-            const tradeExp = this.formatETradeDate(description[2])
+  //         if (symbolMatch && timeMatch && fillMatch && descriptionMatch && statusMatch) {
+  //           // Extract relevant trade details
+  //           const tradeTicker = symbolMatch[1];
+  //           const tradeDatetime = new Date(timeMatch[1]);
+  //           const tradeNumCons = fillMatch[1].split(" @ ")[0]; // '7 @ 2.12'
+  //           const tradePrice = fillMatch[1].split(" @ ")[1]; // '7 @ 2.12'
+  //           const description = descriptionMatch[1].split(" "); // "Sell 7 Sep-22-23 415 Puts @ 2.12 Stop to Close"
+  //           const tradeStrikePrice = description[3] 
+  //           const tradeExp = this.formatETradeDate(description[2])
             
-            var tradeStrikeDirection = ""
-            if (description[4] == "Puts"){
-              tradeStrikeDirection = "P"
-            }
-            else if (description[4] == "Calls"){
-              tradeStrikeDirection = "C"
-            }
+  //           var tradeStrikeDirection = ""
+  //           if (description[4] == "Puts"){
+  //             tradeStrikeDirection = "P"
+  //           }
+  //           else if (description[4] == "Calls"){
+  //             tradeStrikeDirection = "C"
+  //           }
 
-            const tradeStrike = tradeStrikePrice + tradeStrikeDirection
-            const tradeNotes = description
-            const tradeStatus = statusMatch[1]; // "Filled"
+  //           const tradeStrike = tradeStrikePrice + tradeStrikeDirection
+  //           const tradeNotes = description
+  //           const tradeStatus = statusMatch[1]; // "Filled"
   
-            if (tradeStatus == "Filled" &&  description[0] == "Buy"){
-                // Create a trade entry object
-                var tradeData = {
-                  "entry_date": tradeDatetime,
-                  "num_contracts": tradeNumCons,
-                  "entry_price": tradePrice,
-                  "exit_date_max": null,
-                  "exit_price_max": null,
-                  "expiration": tradeExp,
-                  "notes": tradeNotes,
-                  "strike": tradeStrike,
-                  "ticker": tradeTicker,
-                  "userid":  firebase.auth().currentUser.uid,
-                  "username": firebase.auth().currentUser.email,
-                };
+  //           if (tradeStatus == "Filled" &&  description[0] == "Buy"){
+  //               // Create a trade entry object
+  //               var tradeData = {
+  //                 "entry_date": tradeDatetime,
+  //                 "num_contracts": tradeNumCons,
+  //                 "entry_price": tradePrice,
+  //                 "exit_date_max": null,
+  //                 "exit_price_max": null,
+  //                 "expiration": tradeExp,
+  //                 "notes": tradeNotes,
+  //                 "strike": tradeStrike,
+  //                 "ticker": tradeTicker,
+  //                 "userid":  firebase.auth().currentUser.uid,
+  //                 "username": firebase.auth().currentUser.email,
+  //               };
 
-                var entryData = {
-                  "date_time": tradeDatetime,
-                  "notes": tradeNotes,
-                  "price": tradePrice,
-                  "num_contracts": tradeNumCons
-                }
+  //               var entryData = {
+  //                 "date_time": tradeDatetime,
+  //                 "notes": tradeNotes,
+  //                 "price": tradePrice,
+  //                 "num_contracts": tradeNumCons
+  //               }
 
-                // Add a new document to the "trades" subcollection
-                tradesCollection.add(tradeData)
-                .then(function(docRef){
-                  var trade_id = docRef.id
+  //               // Add a new document to the "trades" subcollection
+  //               tradesCollection.add(tradeData)
+  //               .then(function(docRef){
+  //                 var trade_id = docRef.id
 
-                  // create the trade entry record
-                  tradesCollection.doc(trade_id).collection("entries").add(entryData)
-                })
+  //                 // create the trade entry record
+  //                 tradesCollection.doc(trade_id).collection("entries").add(entryData)
+  //               })
         
-              }
-            }
+  //             }
+  //           }
 
-            if (tradeStatus == "Filled" &&  description[0] == "Sell"){
-              // this is an exit.  Match it to an existing entry trade
+  //           if (tradeStatus == "Filled" &&  description[0] == "Sell"){
+  //             // this is an exit.  Match it to an existing entry trade
               
-            }
-          }
-        }
-      }
-  }
+  //           }
+  //         }
+  //       }
+  //     }
+  // }
   
 
  
 
-  async deleteTrade(){
-    if (this.userLoggedIn && this.userMode) {
-      var tradeID = $("#txtTradeExecutionID").val();
-
+  async deleteTrade(tradeID){
+    if (this.isUserMode()) {
       var tradeDocRef = this.tradesCollection.doc(tradeID);
+
 
       // Add the trade exit data
       await tradeDocRef.delete()
       .then(() => {
+        this.invalidateCache();
+        window.location = window.location
         return true;
       })
 
@@ -2610,7 +2177,6 @@ class TradeSocial {
 
                 var followingList = this.authenticatedMember["following"];
                 var followBtn = profileCard.find(".follow_button")
-                console.log(user.uid, followingList, user.uid in followingList)
                 if (this.authenticatedMember !== null && followingList.includes(user.uid)){
                   followBtn.click((e) => {
                     e.preventDefault();  
@@ -2679,9 +2245,6 @@ class TradeSocial {
 
   async follow_member(uid) {
     try {
-        console.log("Authenticated Member", this.authenticatedMember);
-        console.log("Follow Member", uid);
-
         // Add the UID to the following list
         this.authenticatedMember.following.push(uid);
 
@@ -2703,7 +2266,6 @@ class TradeSocial {
 
   async unfollow_member(uid) {
       try {
-          console.log("Unfollow Member", uid);
 
           // Remove the UID from the following list
           this.authenticatedMember.following = this.authenticatedMember.following.filter(followingUid => followingUid !== uid);
@@ -2716,7 +2278,6 @@ class TradeSocial {
               });
 
           await this.list_users()
-          console.log(`Successfully unfollowed ${uid}`);
 
       } catch (error) {
           console.error("Error unfollowing member:", error);

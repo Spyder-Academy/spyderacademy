@@ -1035,7 +1035,7 @@ class TradePlanner {
                             const tradeRow = this.renderTrade(trade);
                             const tradePost = $("<div class='post border-0'>").append(tradeRow);
 
-                            if (trade.entry_date.toDate() > this.pageLoadTimestamp) {
+                            if (trade.entry_date > this.pageLoadTimestamp) {
                                 $("#WL_Following").prepend(tradePost);
 
                                 // Play sound when a new trade is added
@@ -1100,7 +1100,7 @@ class TradePlanner {
     tradeCardRow.removeClass("d-none")
     tradeCardRow.removeClass("template")
     tradeCardRow.removeClass("trade-card-template")
-    tradeCardRow.find(".traderName").text(trade.username + " - " + moment((trade.entry_date).toDate()).fromNow())
+    tradeCardRow.find(".traderName").text(trade.username + " - " + moment((trade.entry_date)).fromNow())
     tradeCardRow.find(".tradeContract").text(trade.ticker + " " + trade.strike + " " + trade.expiration)
     tradeCardRow.find(".tradeGain").text(trade.gainsString)
     tradeCardRow.find(".tradeNotes").text(trade.notes)
@@ -2719,7 +2719,6 @@ class TradePlanner {
     try {
       const jsonData = await this._fetchGEXData(ticker, idx, historicals);
       if (jsonData && jsonData["data"].length > 0) {
-        console.log(jsonData["data"])
         this._renderGEXByStrike(ticker, jsonData, chartid);
       } else {
         // console.log("No data to render.");

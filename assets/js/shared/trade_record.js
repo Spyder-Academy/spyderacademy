@@ -1,6 +1,7 @@
 class TradeRecord {
-    constructor(tradeid, userid, username, ticker, strike, expiration, entry_price, entry_date, notes, exit_price_max, exit_date_max, drawdown_max) {
+    constructor(tradeid, uid, userid, username, ticker, strike, expiration, entry_price, entry_date, notes, exit_price_max, exit_date_max, drawdown_max) {
       this.tradeid = tradeid;
+      this.uid = uid;
       this.userid = userid;
       this.username = username;
       this.ticker = ticker;
@@ -22,6 +23,7 @@ class TradeRecord {
     static from_dict(id, source) {
         const trade = new TradeRecord(
             id,
+            source["uid"],
             source["userid"],
             source["username"],
             source["ticker"],
@@ -37,6 +39,10 @@ class TradeRecord {
 
         trade.tradeid = id;
   
+        if ("uid" in source) {
+          trade.uid = source["uid"];
+        }
+
         if ("userid" in source) {
             trade.userid = source["userid"];
         }
@@ -62,7 +68,7 @@ class TradeRecord {
         }
     
         if ("entry_date" in source) {
-            trade.entry_date = source["entry_date"];
+            trade.entry_date = source["entry_date"].toDate();
         }
     
         if ("notes" in source) {
@@ -126,8 +132,8 @@ class TradeRecord {
         }
       
   
-        if ("exit_date_max" in source) {
-            trade.exit_date_max = source["exit_date_max"];
+        if ("exit_date_max" in source && source["exit_date_max"] !== null) {
+            trade.exit_date_max = source["exit_date_max"]
         }
     
         return trade;
@@ -136,6 +142,7 @@ class TradeRecord {
     to_dict() {
       const dest = {
         tradeid: this.tradeid,
+        uid: this.uid,
         userid: this.userid,
         username: this.username,
         ticker: this.ticker,
@@ -151,6 +158,10 @@ class TradeRecord {
   
       if (this.tradeid) {
         dest.tradeid = this.tradeid;
+      }
+
+      if (this.uid) {
+        dest.uid = this.uid;
       }
 
       if (this.userid) {
@@ -224,6 +235,7 @@ class TradeRecord {
     toString() {
       return `TradeRecord(
         tradeid=${this.tradeid},
+        uid=${this.uid},
         userid=${this.userid},
         username=${this.username},
         ticker=${this.ticker},
