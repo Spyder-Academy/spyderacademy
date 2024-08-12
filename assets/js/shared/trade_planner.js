@@ -2856,7 +2856,13 @@ class TradePlanner {
     // Determine the sentiment based on the sign of the GEX and the current spot price
     let bearbull = netGEX > 0 ? "Bullish" : netGEX < 0 ? "Bearish" : "Neutral";
 
-    $(".largestGammaLevelText").text("$" + largestGEX.Strike.toFixed(2));
+    if (largestGEX.GEX !== 0){
+      $(".largestGammaLevelText").text("attracted to $" + largestGEX.Strike.toFixed(2));
+    }
+    else{
+      $(".largestGammaLevelText").text("unavailable");
+    }
+
     $(".gammaOutlook").text(bearbull);
     if (bearbull == "Bullish")
       $("#signalGammaOutlook").attr("style", "color: #29741D")
