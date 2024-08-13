@@ -1721,7 +1721,8 @@ class TradeSocial {
         if (!expiration) {
             if (["SPY", "SPX", "QQQ"].includes(symbol)) {
                 expiration = todayStr;
-            } else if (["ES", "MES", "NQ", "MNQ", "RTY", "MCL"].includes(symbol)) {
+            // } else if (["ES", "MES", "NQ", "MNQ", "RTY", "MCL"].includes(symbol)) {
+            } else if (option.toUpperCase() == "LONG" || option.toUpperCase() == "SHORT") {
                 expiration = "";
             } else {
                 expiration = fridayStr;
