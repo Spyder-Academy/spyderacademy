@@ -1186,16 +1186,46 @@ class TradeSocial {
                 entryNotesEl.append("<h4>TRADE HISTORY</h4>")
                 entryExitNotes.forEach((t) => {
                     var direction = t["action"]
-                    var entryNotes = "<strong>" + t["date_time"].toDate().toLocaleString() + "</strong><br/>" + direction + " at $" + parseFloat(t.price).toFixed(2)
                     var entryReason = " | " + t.notes
                     if (t.notes == null){
                       entryReason = ""
                     }
 
-                    var entryNotesP = $("<p>")
-                    entryNotesP.append(entryNotes)
-                    entryNotesP.append(entryReason)
-                    entryNotesEl.append(entryNotesP)
+                    console.log(t)
+
+                    // Create the paragraph element with the trade info and a hidden trashcan icon
+                    var entryNotesP = $(`
+                      <div class="d-flex justify-content-between align-items-center trade-entry mb-2">
+                          <div>
+                              <p class="mb-0">
+                                  <strong>${t["date_time"].toDate().toLocaleString()}</strong><br/>
+                                  ${direction} at $${parseFloat(t.price).toFixed(2)} ${entryReason}
+                              </p>
+                          </div>
+                          <span class="delete-icon" style="display: none; cursor: pointer;" title="Delete">&#128465;</span>
+                      </div>
+                    `);
+
+                    // Append the paragraph to the entry notes element
+                    entryNotesEl.append(entryNotesP);
+
+                    // Show the trashcan icon on hover
+                    if (direction == "TRIMMED" && this.isUserMode() && tradeEntry.uid == this.authenticatedMember.uid){
+                      entryNotesP.hover(
+                          function() {
+                              $(this).find('.delete-icon').show();
+                          },
+                          function() {
+                              $(this).find('.delete-icon').hide();
+                          }
+                      );
+                      
+
+                      // Bind the click event to the trashcan icon
+                      entryNotesP.find('.delete-icon').on('click', () => {
+                        this.deleteTradeExit(tradeEntry.tradeid, t["date_time"]);  // Call the delete function with the trade exit ID
+                      });
+                    }
                 })
 
                 // append a line for max drawdown informaton
@@ -1259,9 +1289,55 @@ class TradeSocial {
               });
           });
       })
-  }
+    }
     
+    async deleteTradeExit(exitTradeId, exitTimestamp) {
+      console.log("delete trade exit", exitTradeId, exitTimestamp);
+  
+      try {
+          // Step 1: Get the exits subcollection for this trade
+          const tradeDocRef = this.firestore_db.collection('trades').doc(exitTradeId);
+          const exitsRef = tradeDocRef.collection('exits');
+  
+          // Step 2: Find and delete the exit with the matching timestamp
+          const exitQuerySnapshot = await exitsRef.where('date_time', '==', exitTimestamp).get();
+  
+          if (exitQuerySnapshot.empty) {
+              console.error("No matching exit found for timestamp:", exitTimestamp);
+              return;
+          }
+  
+          // Assuming there's only one exit with this timestamp
+          const exitDoc = exitQuerySnapshot.docs[0];
+          await exitDoc.ref.delete();
+  
+          // Step 3: Recalculate the max exit
+          // Query the exits subcollection to find the maximum exit price
+          const exitQuery = exitsRef.orderBy('price', 'desc').limit(1);
+          const querySnapshot = await exitQuery.get();
+      
+          let maxExitPrice = null;
+          let maxExitDate = null;
+      
+          querySnapshot.forEach((exitDoc) => {
+            maxExitPrice = exitDoc.get('price');
+            maxExitDate = exitDoc.get('date_time');
+          });
+      
+          // Update the parent document with the max exit price and date
+          await tradeDocRef.update({
+            exit_price_max: maxExitPrice,
+            exit_date_max: maxExitDate
+          });
+      
 
+          this.invalidateCache()
+          window.location = window.location
+      } catch (error) {
+          console.error("Error deleting trade exit:", error);
+      }
+    }
+  
 
     renderWinsVsLossesChart(tradesData) {
 
