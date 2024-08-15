@@ -20,8 +20,8 @@ enableRobotsTXT: false
 summaryLength: 20
 paginate: 1000
 params:
-  title: "Spyder Academy | Transforming Trading Through Collective Intelligence"
-  description: "Spyder Academy provides education and AI tools to help traders get an edge trading the stock market."
+  title: "Spyder Academy | Beat The Market with AI Insights"
+  description: "Spyder Academy provides education, data driven tools utilizing AI, and a social trading platform to help traders gain an edge trading the stock market."
   images: 
     - "images/whitelogo.png"
 
