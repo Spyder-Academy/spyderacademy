@@ -1103,3 +1103,138 @@ body.navbar-open {
   justify-content: center;
   align-items: center;
 }
+
+
+
+.title{
+  font-size: 72px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.title strong{
+  
+  background: -webkit-linear-gradient(#0cc0df, #ffde59);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  overflow: hidden; /* Ensure the shimmer stays within the text bounds */
+}
+
+.subtitle{
+  font-size: 72px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.gradient-text-red,
+.subtitle strong{
+  
+  background: -webkit-linear-gradient(#0cc0df, #ffde59);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  overflow: hidden; /* Ensure the shimmer stays within the text bounds */
+}
+
+
+
+/* Typewriter Effect */
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: white; }
+}
+
+
+.home-gradient {
+  background: linear-gradient(
+      180deg,
+      #000000 0%,              /* Start with black at the top */
+      #0b1a29 10%,             /* Deep blue */
+      #205072 20%,             /* Dark cyan */
+      #33808b 30%,             /* Teal */
+      #47a690 40%,             /* Sea green */
+      #6edc82 50%,             /* Light green */
+      #9fff70 60%,             /* Lime green */
+      #c2ff70 70%,             /* Yellow-green */
+      #ffd047 80%,             /* Yellow-orange */
+      #ff9e47 90%,             /* Orange */
+      #ff5b7b 100%             /* Red-pink at the bottom */
+  );
+  background-size: 100% 100%;
+  // animation: homepage_gradient 16s ease-in-out infinite;
+}
+
+@keyframes homepage_gradient {
+  0% {
+      background-position: 0% 50%;
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
+}
+
+.dark-gradient{
+  border-radius: 50px;
+  background: radial-gradient(
+    54.1% 75% at 0% 44.2%,          /* Shape and position of the gradient */
+    rgba(27, 66, 60, 0.48) 0%,      /* Starting color: semi-transparent green */
+    rgb(0, 0, 0) 100%               /* Ending color: solid black */
+);
+}
+
+
+.accordion-button {
+  background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important; /* Black background */
+  color: #fff; /* White text */
+  font-size: 1.2rem; /* Increase font size for visibility */
+  padding: 0.75rem 1.25rem; /* Adjust padding for spacing */
+  border: none;
+  border-radius: 0;
+  box-shadow: none; /* Remove focus outline */
+}
+
+.accordion-button:focus {
+  box-shadow: none; /* Remove focus outline */
+}
+
+.accordion-button::after {
+  filter: invert(1); /* Invert the color of the icon */
+}
+
+.accordion-button.collapsed {
+  color: #aaa; /* Lighter text color when collapsed */
+}
+
+.accordion-button:not(.collapsed) {
+  color: #aaa; /* Lighter text color when collapsed */
+}
+
+.accordion-item {
+  border: none; /* Remove the border around each item */
+  margin-bottom: 2em;
+}
+
+.accordion-item:last-of-type .accordion-button.collapsed {
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.accordion-flush .accordion-item {
+  border: none;
+}
+
+.accordion-body {
+  color: #ddd; /* Light text color for content */
+  background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important; /* Black background */
+  text-align: left;
+  border: none;
+}

@@ -20,8 +20,8 @@ enableRobotsTXT: false
 summaryLength: 20
 paginate: 1000
 params:
-  title: "Spyder Academy | Learn How To Invest in Stocks and Options"
-  description: "Spyder Academy specializes in providing education and training to beginner traders learning how to trade in the Stock Market. Work from Home or Learn a side hustle with our trading strategies and investment tips to help you gain financial freedom."
+  title: "Spyder Academy | Transforming Trading Through Collective Intelligence"
+  description: "Spyder Academy provides education and AI tools to help traders get an edge trading the stock market."
   images: 
     - "images/whitelogo.png"
 
@@ -53,7 +53,7 @@ params:
 menus:
   main:
     - name: "Home"
-      url: "/#hero"
+      url: "/"
       weight: 1
 
     - name: "Education"
@@ -98,26 +98,19 @@ menus:
 
   footer:
     - name: "Home"
-      url: "/#hero"
+      url: "/"
       weight: 1
 
-    - name: "How We Teach"
-      url: "/#mission"
-      weight: 2
-
     - name: "Pricing"
-      url: "/#services"
+      url: "/#pricing"
       weight: 4
 
-    - name: "Education"
-      url: "/education/"
+    - name: "Learn"
+      url: "/courses/"
       weight: 5
 
-    - name: "Online Courses"
-      url: "/courses/"
-      weight: 6
 
-    - name: "Trade Social"
+    - name: "Timeline"
       url: "/tradesocial/"
       weight: 7
 
@@ -125,17 +118,17 @@ menus:
       url: "/profile/"
       weight: 8
 
-    - name: "Other Trading Tools"
+    - name: "Other Tools"
       url: "/tools/"
       weight: 9
 
     - name: "Terms of Use"
       url: "/termsofuse/"
-      weight: 9
+      weight: 10
 
     - name: "Privacy Policy"
       url: "/privacy/"
-      weight: 10
+      weight: 11
 
 
 taxonomies:

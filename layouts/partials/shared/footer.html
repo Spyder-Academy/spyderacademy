@@ -1,20 +1,17 @@
 
 
-<footer class="shared footer bg-blue-light py-5 {{ if .Page.Params.isAppMode }}d-none d-lg-block{{ end }}">
-  <div class="container-fluid">
+<footer class="shared footer bg-dark text-white-50 p-5 {{ if .Page.Params.isAppMode }}d-none d-lg-block{{ end }}">
+  <div class="container-fluid ">
     <div class="row pb-5">
       <div class="col-12 col-xl-6 text-center text-xl-start pb-4">
-        <h4 class="fs-4 fw-semibold text-uppercase text-primary">{{ .Site.Title }}</h4>
-        <p class="small text-black-61">{{ .Site.Params.description }}</p>
+        <h4 class="fs-4 fw-semibold text-uppercase text-white-50">{{ .Site.Title }}</h4>
+        <p class="small text-white-50">{{ .Site.Params.description }}</p>
 
         {{ with .Site.Params.social }}
         <ul class="d-flex justify-content-center justify-content-xl-start list-unstyled">
-          {{ with .dribbble }}<li class="rounded-circle bg-blue-63 me-2 p-2"><a class="d-flex align-items-center justify-content-center size-16" href="{{ . }}" title="Dribble" target="_blank">{{ partial "icons/dribbble.html" }}</a></li>{{ end }}
-          {{ with .facebook }}<li class="rounded-circle bg-blue-63 me-2 p-2"><a class="d-flex align-items-center justify-content-center size-16" href="{{ . }}" title="Facebook" target="_blank">{{ partial "icons/facebook.html" }}</a></li>{{ end }}
-          {{ with .twitter }}<li class="rounded-circle bg-blue-63 me-2 p-2"><a class="d-flex align-items-center justify-content-center size-16" href="{{ . }}" title="Twitter" target="_blank">{{ partial "icons/x.html" }}</a></li>{{ end }}
-          {{ with .pinterest }}<li class="rounded-circle bg-blue-63 me-2 p-2"><a class="d-flex align-items-center justify-content-center size-16" href="{{ . }}" title="Pinterest" target="_blank">{{ partial "icons/pinterest.html" }}</a></li>{{ end }}
-          {{ with .instagram }}<li class="rounded-circle bg-blue-63 me-2 p-2"><a class="d-flex align-items-center justify-content-center size-16" href="{{ . }}" title="Instagram" target="_blank">{{ partial "icons/instagram.html" }}</a></li>{{ end }}
-          {{ with .substack }}<li class="rounded-circle bg-blue-63 me-2 p-2"><a class="d-flex align-items-center justify-content-center size-16" href="{{ . }}" title="Substack" target="_blank">{{ partial "icons/substack.html" }}</a></li>{{ end }}
+          {{ with .twitter }}<li class="rounded-circle bg-dark me-2 p-2"><a class="d-flex align-items-center justify-content-center size-16 text-muted" href="{{ . }}" title="Twitter" target="_blank">{{ partial "icons/x.html" }}</a></li>{{ end }}
+          {{ with .pinterest }}<li class="rounded-circle bg-dark me-2 p-2"><a class="d-flex align-items-center justify-content-center size-16 text-muted" href="{{ . }}" title="Pinterest" target="_blank">{{ partial "icons/pinterest.html" }}</a></li>{{ end }}
+          {{ with .instagram }}<li class="rounded-circle bg-dark me-2 p-2"><a class="d-flex align-items-center justify-content-center size-16 text-muted" href="{{ . }}" title="Instagram" target="_blank">{{ partial "icons/instagram.html" }}</a></li>{{ end }}
         </ul>
         {{ end }}
 
@@ -22,27 +19,27 @@
       </div>
       <div class="col-12 col-xl-2 text-center text-xl-start pb-4">
         <ul class="list-unstyled">
-          {{ range first 4 .Site.Menus.footer }}
+          {{ range first 3 .Site.Menus.footer }}
             <li class="">
-              <a class="small text-black-61 text-decoration-none" href="{{ .URL }}">{{ .Name }}</a>
+              <a class="small text-muted text-decoration-none" href="{{ .URL }}">{{ .Name }}</a>
             </li>
           {{ end }}
         </ul>
       </div>
       <div class="col-12 col-xl-2 text-center text-xl-start pb-4">
         <ul class="list-unstyled">
-          {{ range first 3 (after 4 .Site.Menus.footer) }}
+          {{ range first 3 (after 3 .Site.Menus.footer) }}
             <li class="">
-              <a class="small text-black-61 text-decoration-none" href="{{ .URL }}">{{ .Name }}</a>
+              <a class="small text-muted text-decoration-none" href="{{ .URL }}">{{ .Name }}</a>
             </li>
           {{ end }}
         </ul>
       </div>
       <div class="col-12 col-xl-2 text-center text-xl-start pb-4">
         <ul class="list-unstyled">
-          {{ range first 3 (after 7 .Site.Menus.footer) }}
+          {{ range first 3 (after 6 .Site.Menus.footer) }}
             <li class="">
-              <a class="small text-black-61 text-decoration-none" href="{{ .URL }}">{{ .Name }}</a>
+              <a class="small text-muted text-decoration-none" href="{{ .URL }}">{{ .Name }}</a>
             </li>
           {{ end }}
         </ul>
@@ -51,7 +48,7 @@
     <div class="row">
       <div class="col-12">
         {{ with .Site.Params.copyright }}
-          <p class="small text-black-61 text-center">{{ . }}</p>
+          <p class="small text-muted text-center">{{ . }}</p>
         {{ end }}
       </div>
     </div>
