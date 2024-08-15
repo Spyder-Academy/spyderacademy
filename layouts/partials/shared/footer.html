@@ -5,7 +5,16 @@
     <div class="row pb-5">
       <div class="col-12 col-xl-6 text-center text-xl-start pb-4">
         <h4 class="fs-4 fw-semibold text-uppercase text-white-50">{{ .Site.Title }}</h4>
-        <p class="small text-white-50">{{ .Site.Params.description }}</p>
+        <p class="small text-white-50">
+          {{ .Site.Params.description }}
+        </p>
+        <p class="small text-white-50">
+          <strong>Financial and Risk Disclaimer:</strong> All content on our website and from our services is intended to be used for educational purposes only.<br/> 
+          We are an education platform providing tools to help get an edge when evaluating investments. <br/>
+          Past performance is not a guarantee for future performance or success. You are responsible for any decisions you make and always manage your own risk.<br/><br/>
+
+          Investing and trading in securities, options, and crypto comes with a high level of risk involving potentially losing all of your money. We are not a broker/dealer, or an investment advisor.
+        </p>
 
         {{ with .Site.Params.social }}
         <ul class="d-flex justify-content-center justify-content-xl-start list-unstyled">
