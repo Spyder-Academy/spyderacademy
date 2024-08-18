@@ -2140,7 +2140,7 @@ class TradePlanner {
 
   // Function to fetch data from the API
   async fetchFinancialData(ticker) {
-    var url = `https://api.spyderacademy.com/v1/earnings/financials/?ticker=${ticker}`;
+    var url = `https://api.spyderacademy.com/v1/earnings/income-statements/?ticker=${ticker}`;
     const response = await fetch(url);
     const data = await response.json();
 
