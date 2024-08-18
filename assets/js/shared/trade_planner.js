@@ -58,7 +58,7 @@ class TradePlanner {
 
 
   async renderEarningsCalendar(){
-    var url = "https://us-central1-spyder-academy.cloudfunctions.net/earnings_calendar";
+    var url = "https://api.spyderacademy.com/v1/earnings/calendar/";
 
     try {
       let response = await $.ajax({ url: url, method: 'GET' });
@@ -120,7 +120,7 @@ class TradePlanner {
   }
 
   async renderEconomicCalendar(){
-    var url = "https://us-central1-spyder-academy.cloudfunctions.net/economic_calendar";
+    var url = "https://api.spyderacademy.com/v1/macro/calendar/";
 
     try {
       let response = await $.ajax({ url: url, method: 'GET' });
@@ -245,7 +245,7 @@ class TradePlanner {
 
   async fetchXPosts() {
     $(".stock_tweets").empty()
-    var url = `https://us-central1-spyder-academy.cloudfunctions.net/stock_tweets/`;
+    var url = `https://api.spyderacademy.com/v1/stock/tweets/`;
 
     try {
       let response = await $.ajax({ url: url, method: 'GET' });
@@ -373,7 +373,7 @@ class TradePlanner {
 
   async showStockTweets(symbol) {
     $("#stock_social_row").empty()
-    var url = `https://us-central1-spyder-academy.cloudfunctions.net/stock_tweets?ticker=${symbol}`;
+    var url = `https://api.spyderacademy.com/v1/stock/tweets/?ticker=${symbol}`;
     try {
       let response = await $.ajax({ url: url, method: 'GET' });
       if (response && response.length > 0) {
@@ -486,7 +486,7 @@ class TradePlanner {
   }
 
   async fetchAllFlow() {
-    var url = `https://us-central1-spyder-academy.cloudfunctions.net/flow`;
+    var url = `https://api.spyderacademy.com/v1/stock/flow/`;
 
     try {
       let response = await $.ajax({ url: url, method: 'GET' });
@@ -523,7 +523,7 @@ class TradePlanner {
       })
     });
 
-    var url = `https://us-central1-spyder-academy.cloudfunctions.net/options_price`;
+    var url = `https://api.spyderacademy.com/v1/stock/options_price/`;
 
     try {
       let response = await $.ajax({
@@ -609,7 +609,7 @@ class TradePlanner {
   }
 
   async fetchFlow(ticker) {
-    var url = `https://us-central1-spyder-academy.cloudfunctions.net/flow?ticker=${ticker.toUpperCase()}`;
+    var url = `https://api.spyderacademy.com/v1/stock/flow/?ticker=${ticker.toUpperCase()}`;
 
     try {
       let response = await $.ajax({ url: url, method: 'GET' });
@@ -902,7 +902,7 @@ class TradePlanner {
 
 
     var sentTicker = ticker.toUpperCase();
-    var url = `https://us-central1-spyder-academy.cloudfunctions.net/implied_move?ticker=${sentTicker}`;
+    var url = `https://api.spyderacademy.com/v1/stock/implied_move/?ticker=${sentTicker}`;
 
     try {
       let response = await $.ajax({ url: url, method: 'GET' });
@@ -1185,7 +1185,7 @@ class TradePlanner {
 
 
   async fetchEarningsCalendar(numDays = 5) {
-    const apiUrl = "https://us-central1-spyder-academy.cloudfunctions.net/earnings_calendar";
+    const apiUrl = "https://api.spyderacademy.com/v1/earnings/calendar/";
     let earningsData = await $.ajax({ url: apiUrl, method: 'GET' });
     this.displayEarningsData(earningsData);
   }
@@ -1582,7 +1582,7 @@ class TradePlanner {
   }
 
   async fetchScreener() {
-    var url = `https://us-central1-spyder-academy.cloudfunctions.net/screener`;
+    var url = `https://api.spyderacademy.com/v1/stock/screener/`;
 
     fetch(url)
       .then(response => response.json())
@@ -1931,7 +1931,7 @@ class TradePlanner {
 
   async fetchEMASignals(ticker) {
     ticker = ticker.toUpperCase();
-    var url = `https://us-central1-spyder-academy.cloudfunctions.net/emas?ticker=${ticker}`;
+    var url = `https://api.spyderacademy.com/v1/stock/strategies/emas/?ticker=${ticker}`;
 
     fetch(url)
       .then(response => response.json())
@@ -1975,7 +1975,7 @@ class TradePlanner {
 
   async fetchTheStratSignals(ticker) {
     ticker = ticker.toUpperCase();
-    var url = `https://us-central1-spyder-academy.cloudfunctions.net/thestrat?ticker=${ticker}`;
+    var url = `https://api.spyderacademy.com/v1/stock/strategies/thestrat/?ticker=${ticker}`;
 
     fetch(url)
       .then(response => response.json())
@@ -2140,7 +2140,7 @@ class TradePlanner {
 
   // Function to fetch data from the API
   async fetchFinancialData(ticker) {
-    var url = `https://us-central1-spyder-academy.cloudfunctions.net/stock_financials?ticker=${ticker}`;
+    var url = `https://api.spyderacademy.com/v1/earnings/financials/?ticker=${ticker}`;
     const response = await fetch(url);
     const data = await response.json();
 
@@ -2734,7 +2734,7 @@ class TradePlanner {
 
   isFetchingSnapshotData = false;
   async _fetchGEXData(ticker, idx = 0, historicals = false) {
-    var url = `https://us-central1-spyder-academy.cloudfunctions.net/gex_snapshots?ticker=${ticker}`;
+    var url = `https://api.spyderacademy.com/v1/stock/gamma/snapshots/?ticker=${ticker}`;
     try {
       if (this.snapshotGexData == null && !this.isFetchingSnapshotData) {
         this.isFetchingSnapshotData = true;
@@ -3034,7 +3034,7 @@ class TradePlanner {
   }
 
   async _fetchGEXOverlayData(ticker) {
-    const url = `https://us-central1-spyder-academy.cloudfunctions.net/gex_overlay?ticker=${ticker}`;
+    const url = `https://api.spyderacademy.com/v1/stock/gamma/walls/?ticker=${ticker}`;
     try {
       const response = await fetch(url);
       if (!response.ok) {
@@ -3273,7 +3273,7 @@ class TradePlanner {
 
 
   async render_favorites() {
-    var url = `https://us-central1-spyder-academy.cloudfunctions.net/tradeplanner_favorites/`;
+    var url = `https://api.spyderacademy.com/v1/users/watchlist/`;
 
     try {
       let response = await $.ajax({ url: url, method: 'GET' });

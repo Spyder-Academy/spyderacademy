@@ -12,7 +12,7 @@
 <script>
     $(document).ready(function () {
         $.ajax({
-            url: "https://us-central1-spyder-academy.cloudfunctions.net/economic_calendar",
+            url: "https://api.spyderacademy.com/v1/macro/calendar/",
             method: "GET",
             success: function (data) {
                 renderCalendar(data);

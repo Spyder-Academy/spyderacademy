@@ -64,7 +64,7 @@ class TradeSocial {
     async getMemberDetails(handle){
 
       if (handle){
-        var url = `https://us-central1-spyder-academy.cloudfunctions.net/user/?handle=${handle}`;
+        var url = `https://api.spyderacademy.com/v1/users/search?handle=${handle}`;
 
         try {
           let response = await $.ajax({url: url, method: 'GET'});
@@ -103,9 +103,9 @@ class TradeSocial {
   //     }
   
   //     // If not cached or expired, fetch from API
-  //     let url = `https://us-central1-spyder-academy.cloudfunctions.net/user_trades/`;
+  //     let url = `https://api.spyderacademy.com/v1//user_trades/`;
   //     if (handle) {
-  //         url = `https://us-central1-spyder-academy.cloudfunctions.net/user_trades/?handle=${handle}`;
+  //         url = `https://api.spyderacademy.com/v1//user_trades/?handle=${handle}`;
   //     }
   
   //     try {
@@ -147,7 +147,7 @@ class TradeSocial {
         // const userDoc = userSnapshot.docs[0];
         // const userId = userDoc.id;
 
-        let url = `https://us-central1-spyder-academy.cloudfunctions.net/user?handle=${handle}`;
+        let url = `https://api.spyderacademy.com/v1/users/search?handle=${handle}`;
         
         try {
           let response = await $.ajax({ url: url, method: 'GET' });
@@ -2224,7 +2224,7 @@ class TradeSocial {
 
   async list_users() {
     // $(".discover_cards").empty();
-    var url = `https://us-central1-spyder-academy.cloudfunctions.net/user_recommendations/`;
+    var url = `https://api.spyderacademy.com/v1/users/recommendations/`;
 
     try {
         let response = await $.ajax({ url: url, method: 'GET' });
