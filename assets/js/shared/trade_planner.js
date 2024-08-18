@@ -523,7 +523,7 @@ class TradePlanner {
       })
     });
 
-    var url = `https://api.spyderacademy.com/v1/stock/options_price/`;
+    var url = `https://api.spyderacademy.com/v1/stock/options/price/`;
 
     try {
       let response = await $.ajax({
