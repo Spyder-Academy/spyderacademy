@@ -1990,7 +1990,7 @@ class TradePlanner {
                 <div class="card-header">
                     <div class="day-title text-uppercase">Options Leaderboard</div>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-0 p-lg-3">
                     <div class="card bg-transparent text-center p-0 w-100" >
                         <div class="card-body p-0">
                             <div id='leaderboardRows' class="container p-0 m-0">
