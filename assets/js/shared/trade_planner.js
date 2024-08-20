@@ -2044,12 +2044,15 @@ class TradePlanner {
         optionsData["top_contracts"].forEach(data => {
 
           var highlight = ""
-          if (data["volume"] > 100000 ){
-            highlight = "gradient-red"
+          if (data["volume_rank"] == 1){
+            if (data["volume"] > 100000){
+              highlight = "gradient-red"
+            }
+            else {
+              highlight = "gradient-green"
+            }
           }
-          else if (data["volume_rank"] == 1 &&  data["volume"] < 100000 ){
-            highlight = "gradient-green"
-          }
+          
 
           var con = parseContract(data["contract"])
           var con_type = con["type"] == "call" ? `<span class=''>${con["type"].toUpperCase()}</span>` : `<span class=''>${con["type"].toUpperCase()}</span>`
