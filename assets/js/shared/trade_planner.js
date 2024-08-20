@@ -1973,6 +1973,105 @@ class TradePlanner {
       });
   }
 
+  async fetchLeaderboardSignals(ticker) {
+    ticker = ticker.toUpperCase();
+    var url = `https://api.spyderacademy.com/v1/stock/options/leaderboard/?ticker=${ticker}`;
+
+    fetch(url)
+      .then(response => response.json())
+      .then(optionsData => {
+        const leaderboard = $('#leaderboardSignals');
+
+        
+        const item = $("<div class='tweet-body'>")
+        var itemHtml = `
+          <div class="col-12 p-0 earnings_calendar">
+            <div class="card earnings-day lg-rounded" id="day-2">
+                <div class="card-header">
+                    <div class="day-title text-uppercase">Options Leaderboard</div>
+                </div>
+                <div class="card-body">
+                    <div class="card bg-transparent text-center p-0 w-100" >
+                        <div class="card-body p-0">
+                            <div id='leaderboardRows' class="container p-0 m-0">
+                              <div class="row mb-1">
+                                <div class="col-6">CONTRACT</div>
+                                <div class="col-3">VOLUME</div>
+                                <div class="col-3">OI</div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+          `
+        item.append(itemHtml)
+        leaderboard.append(item)
+
+      
+        function parseContract(contractString) {
+          // Split the string into parts
+          let parts = contractString.split('_');
+          let ticker = parts[0];
+          let rest = parts[1];
+      
+          // Extract date, type, and strike price
+          let year = rest.substring(0, 2);
+          let month = rest.substring(2, 4);
+          let day = rest.substring(4, 6);
+          let type = rest.substring(6, 7).toLowerCase();
+          let strikePrice = rest.substring(7);
+      
+          // Format the result string
+          let formattedDate = `${month}/${day}/${year}`;
+      
+          return {
+            "ticker": ticker,
+            "type": type == "c" ? "call" : "put",
+            "strike": strikePrice,
+            "exp": formattedDate
+          };
+        }
+
+
+        optionsData["top_contracts"].sort(function(a, b) {
+          let strikePriceA = parseContract(a.contract)["strike"];
+          let strikePriceB = parseContract(b.contract)["strike"];
+          return strikePriceB - strikePriceA; // Sort from largest to smallest strike price
+        });
+        
+        optionsData["top_contracts"].forEach(data => {
+
+          var highlight = ""
+          if (data["volume"] > 100000 ){
+            highlight = "gradient-red"
+          }
+          else if (data["volume_rank"] == 1 &&  data["volume"] < 100000 ){
+            highlight = "gradient-green"
+          }
+
+          var con = parseContract(data["contract"])
+          var con_type = con["type"] == "call" ? `<span class=''>${con["type"].toUpperCase()}</span>` : `<span class=''>${con["type"].toUpperCase()}</span>`
+
+          var row = `
+          <div class="row mb-1 ${highlight} lg-rounded">
+            <div class="col-6">${con["ticker"]} ${con["strike"]} ${con_type} ${con["exp"]}</div>
+            <div class="col-3">${data["volume"].toLocaleString()}</div>
+            <div class="col-3">${data["open_interest"]}</div>
+          </div>
+          `
+          
+          // append rows for each con
+          $("#leaderboardRows").append(row);
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching leaderboard data:', error)
+        // $("#leaderboard_signal_card").hide()
+      });
+  }
+
   async fetchTheStratSignals(ticker) {
     ticker = ticker.toUpperCase();
     var url = `https://api.spyderacademy.com/v1/stock/strategies/thestrat/?ticker=${ticker}`;

@@ -4,7 +4,7 @@
 
 <section class="section pt-1 pb-2 bg-dark">
         <div class="container-fluid p-0 bg-dark">
-          <div class="row p-lg-3 p-0 m-1 justify-content-evenly row-flex-nowrap-sm" style="overflow-x: scroll">
+          <div class="row p-lg-3 p-0 m-1 justify-content-evenly row-flex-nowrap-sm" style="overflow-x: scroll;">
 
             <div class="col-lg-3 col-12 boot_column d-none d-lg-block bg-white border-0 mb-lg-3 m-0 p-0 lg-rounded h-100 mh-100">
               <div class="post m-1" style="border-radius: 0; box-shadow: none;">
@@ -88,8 +88,6 @@
                 <h4 id="header_technicalanalysis" class="text-white p-3" >Technical Analysis</h4>
                 {{ partial "shared/stock-signals" (dict "symbol" .Page.Params.ticker "tvSymbol" $tvSymbol  "Site" .Site) }}
             </div>
-
-            
 
             <div class="col-lg-3 boot_column lg-rounded mb-lg-3 m-0 p-0">
               <h4 class="gradient-blue text-white p-3">Tracked Flow</h4>

@@ -12,10 +12,18 @@
                 </div>
             </div>
         </div>
-        <div id="strat_signal_row" class="row m-0">
+        <div id="ma_signal_row" class="row m-0">
             <div class="col-12 p-0" id="ema_signal_card">
                 <div class="card">
                     <div class="card-body tweet-card post" id="emaSignals">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="leaderboard_signal_row" class="row m-0">
+            <div class="col-12 p-0" id="leaderboard_signal_card">
+                <div class="card">
+                    <div class="card-body tweet-card post" id="leaderboardSignals">
                     </div>
                 </div>
             </div>
@@ -52,6 +60,7 @@
         tradePlanner = new TradePlanner();
         tradePlanner.fetchEMASignals(ticker);
         tradePlanner.fetchTheStratSignals(ticker)
+        tradePlanner.fetchLeaderboardSignals(ticker)
 
         
     });
