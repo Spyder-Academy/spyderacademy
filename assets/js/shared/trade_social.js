@@ -1029,6 +1029,7 @@ class TradeSocial {
           wickDownColor: 'rgb(255,82,82)',
           borderVisible: false,
           overlay: true,
+          priceLineVisible: false, // Remove the horizontal line for the current close price
       });
 
       var optionsSeries = chart.addCandlestickSeries({
@@ -1107,13 +1108,15 @@ class TradeSocial {
           });
 
           // Add options series to the chart
-          optionsSeries.setData(optionsSeriesData);
+          // optionsSeries.setData(optionsSeriesData);
 
       });
 
       var markers = [];
       var entryExitNotes = [];
       var offset = 0;
+      var firstEntryTime = null;
+      var lastExitTime = null;
 
       // Fetch entries data
       entriesRef.get().then((querySnapshot) => {
@@ -1129,13 +1132,17 @@ class TradeSocial {
               // Convert to EDT
               entryTime = Math.floor(entryTime + (offset * 60 * 60 * 1000) / 1000);
 
+              if (firstEntryTime === null || entryTime < firstEntryTime) {
+                firstEntryTime = entryTime;
+              }
+
               // Create entry marker object
               var entryMarker = {
                   time: entryTime,
                   position: 'belowBar',
                   color: '#2196F3',
                   shape: 'arrowUp',
-                  text: parseFloat(entryPrice).toFixed(2)
+                  text: "$" + parseFloat(entryPrice).toFixed(2)
               };
               markers.push(entryMarker);
               entryExitNotes.push(entryData)
@@ -1156,22 +1163,30 @@ class TradeSocial {
                   // Convert to EDT
                   exitTime = Math.floor(exitTime + (offset * 60 * 60 * 1000) / 1000);
 
+                  if (lastExitTime === null || exitTime > lastExitTime) {
+                    lastExitTime = exitTime;
+                  }
+
                   // Create exit marker object
                   var exitMarker = {
                       time: exitTime,
                       position: 'aboveBar',
                       color: '#e91e63',
                       shape: 'arrowDown',
-                      text: parseFloat(exitPrice).toFixed(2) 
+                      text: "$" + parseFloat(exitPrice).toFixed(2) 
                   };
 
                   markers.push(exitMarker);
                   entryExitNotes.push(exitData)
               });
           }).then(() => {
-              optionsSeries.setMarkers(markers);
+              candleStickSeries.setMarkers(markers);
 
-              chart.timeScale().fitContent();
+              // chart.timeScale().fitContent();
+              // Set the initial zoom to cover the first entry and last exit
+              if (firstEntryTime !== null && lastExitTime !== null) {
+                  chart.timeScale().setVisibleRange({ from: firstEntryTime - 10 * 60, to: lastExitTime + 10 * 60 });
+              }
 
               var entryNotesEl = $(".entryExitNotes")
 
@@ -1260,12 +1275,15 @@ class TradeSocial {
                   const tradeId = tradeEntry.tradeid;
               
                   const actionButtons = $(`
-                      <div class="">
+                      <div class="hideDuringCapture">
                           <a class='btn gradient-green' href='#' id='exitTradeBtn'>
                               <i class='fas fa-plus'></i> Exit Trade
                           </a>
                           <a class='btn gradient-red' href='#' id='deleteTradeBtn'>
                               <i class='fas fa-trash'></i> Delete Trade
+                          </a>
+                          <a class='btn btn-warning' href='#' id='shareBtn'>
+                              <i class='fas fa-share'></i> Share
                           </a>
                       </div>
                   `);
@@ -1283,12 +1301,55 @@ class TradeSocial {
                       event.preventDefault();
                       this.deleteTrade(tradeId);
                   });
+
+                  $("#shareBtn").on('click', (event) => {
+                    event.preventDefault();
+                    this.shareElement("cardElement");
+                });
                 }
-              
-                
               });
           });
       })
+    }
+
+    async shareElement(element_id){
+      // Select the HTML element you want to capture
+      var elementsToHide = document.querySelectorAll('.hideDuringCapture'); // Add a class or use specific IDs
+      // Hide the elements
+      elementsToHide.forEach(function(element) {
+        element.style.visibility = 'hidden';
+      });
+    
+      var elementToCapture = document.getElementById(element_id); // Replace 'elementId' with the ID of your element
+
+      // Use html2canvas to capture the element as an image
+      html2canvas(elementToCapture).then(function(canvas) {
+        // Convert the canvas to a Blob
+        canvas.toBlob(function(blob) {
+            // Create a new ClipboardItem
+            var item = new ClipboardItem({ "image/png": blob });
+
+            // Copy the item to the clipboard
+            const originalText = $("#shareBtn").html();
+
+            navigator.clipboard.write([item]).then(function() {
+                $("#shareBtn").html("<i class='fa fa-check'></i> Copied")
+                
+                // Set a timer to reset the button text after 3 seconds
+                setTimeout(function() {
+                  $("#shareBtn").html(originalText);
+                }, 3000); // 3000 milliseconds = 3 seconds
+              
+            }).catch(function(error) {
+                console.error('Error copying image to clipboard: ', error);
+            });
+
+            // Revert the visibility of the hidden elements
+            elementsToHide.forEach(function(element) {
+              element.style.visibility = '';
+            });
+        }, 'image/png');
+      });
     }
     
     async deleteTradeExit(exitTradeId, exitTimestamp) {
