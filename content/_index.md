@@ -1,6 +1,6 @@
 +++
-title = "Spyder Academy - Options Trading Education"
+title = "Spyder Academy - Beat the market with our game-changer trading and social platform"
 author = "Spyder Academy"
-description = "Spyder Academy specializes in providing education and training to beginner traders learning how to trade in the Stock Market. Break your 9 - 5 with our trading strategies and investment tips to help you gain financial freedom."
+description = "Spyder Academy provides education and tools to help traders get a smarter edge in the stock market."
 firebase = true
 +++

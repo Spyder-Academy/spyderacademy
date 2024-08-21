@@ -12,7 +12,7 @@ content:
 
   buttonSecondary:
     label: "Start Learning"
-    url: "https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_2qHRKoIbGU6NN&pass=prod_45GZIGs1lRCGs&a=spyderacademy"
+    url: "https://whop.com/checkout/plan_bCMjkbQ9TJsN2?d2c=true"
 
 trades:
     - ticker: "QQQ"
