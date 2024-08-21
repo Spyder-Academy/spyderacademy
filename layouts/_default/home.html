@@ -44,7 +44,7 @@
                               </div>
                             </div>
                             <div class="col-12 col-lg-6 order-2 order-lg-1">
-                              show clip of gamma exposure, gamma walls, and eventually leaderboard
+                              <video class="autoplay-video" src="/videos/gamma.mp4" style="width: 100%; height: 100%; object-fit: cover;" muted playsinline loop></video>
                             </div>
                           </div>
                         </div>
@@ -65,7 +65,7 @@
                               </div>
                             </div>
                             <div class="col-12 col-lg-6 order-2 order-lg-2">
-                              show clip of technical analysis column
+                              <video class="autoplay-video" src="/videos/tradeplan.mp4" style="width: 100%; height: 100%; object-fit: cover;" muted playsinline loop></video>
                             </div>
                           </div>
                         </div>
@@ -86,7 +86,7 @@
                             </div>
                             
                             <div class="col-12 col-lg-6 order-2 order-lg-1">
-                              show clip of various AI bots (Gamma Bot, Flow Bot, etc) - Coming Soon
+                              <video class="autoplay-video" src="/videos/ai.mp4" style="width: 100%; height: 100%; object-fit: cover;" muted playsinline loop></video>
                             </div>
 
                           </div>
@@ -101,14 +101,15 @@
                             
 
                             <div class="col-12 col-lg-6 text-start  order-1 order-lg-1">
-                              <h3 class="subtitle fs-1"><strong> ✨ Open Interest Tracking</strong></h3>
+                              <h3 class="subtitle fs-1"><strong> ✨ Flow Analysis and Tracking</strong></h3>
                               <div class="fs-1 ">
+                                Is this flow good?<br/>
                                 I followed this unusual whale flow.<br/>
                                 Are they still in it?
                               </div>
                             </div>
                             <div class="col-12 col-lg-6 order-2 order-lg-2">
-                              show clip of OI tracker
+                              <video class="autoplay-video" src="/videos/OI.mp4" style="width: 100%; height: 100%; object-fit: cover;" muted playsinline loop></video>
                             </div>
 
                           </div>
@@ -135,7 +136,7 @@
                               </div>
                             </div>
                             <div class="col-12 col-lg-6 order-2 order-lg-2">
-                              show clip of trade alerts and sharing a trade and discovery tab
+                              <video class="autoplay-video" src="/videos/connect.mp4" style="width: 100%; height: 100%; object-fit: cover;" muted playsinline loop></video>
                             </div>
                             
                           </div>
@@ -155,7 +156,7 @@
                               </div>
                             </div>
                             <div class="col-12 col-lg-6 order-2 order-lg-1">
-                              show clip of trade alerts and sharing a trade and discovery tab
+                              <video class="autoplay-video" src="/videos/community.mp4" style="width: 100%; height: 100%; object-fit: cover;" muted playsinline loop></video>
                             </div>
 
                           </div>
@@ -175,7 +176,7 @@
                               </div>
                             </div>
                             <div class="col-12 col-lg-6 order-2 order-lg-2">
-                              show clip of trade profile analytics
+                              <video class="autoplay-video" src="/videos/analytics.mp4" style="width: 100%; height: 100%; object-fit: cover;" muted playsinline loop></video>
                             </div>
 
                           </div>
@@ -195,7 +196,7 @@
                               </div>
                             </div>
                             <div class="col-12 col-lg-6 order-2 order-lg-1">
-                              show clip of trade profile card
+                              <video class="autoplay-video" src="/videos/badges.mp4" style="width: 100%; height: 100%; object-fit: cover;" muted playsinline loop></video>
                             </div>
 
                           </div>
@@ -226,7 +227,7 @@
                               </div>
                             </div>
                             <div class="col-12 col-lg-6 order-2 order-lg-2">
-                              show clip of stock financials, quarterly earnings,<br/>sankey charts, and  article
+                              <video class="autoplay-video" src="/videos/research.mp4" style="width: 100%; height: 100%; object-fit: cover;" muted playsinline loop></video>
                             </div>
                           </div>
                         </div>
@@ -246,7 +247,7 @@
                               </div>
                             </div>
                             <div class="col-12 col-lg-6 order-2 order-lg-1">
-                              show clip of the X timeline columns
+                              <video class="autoplay-video" src="/videos/finX.mp4" style="width: 100%; height: 100%; object-fit: cover;" muted playsinline loop></video>
                             </div>
 
                           </div>
@@ -271,7 +272,7 @@
                             </div>
                             
                             <div class="col-12 col-lg-6 order-2 order-lg-2">
-                              show clip of Earnings Hub and Economic Calendar
+                              <video class="autoplay-video" src="/videos/important_events.mp4" style="width: 100%; height: 100%; object-fit: cover;" muted playsinline loop></video>
                             </div>
 
                           </div>
@@ -414,6 +415,27 @@
           </div>
         </div>
       </div>
+
+      <script>
+        // JavaScript to autoplay video when it comes into view
+        document.addEventListener("DOMContentLoaded", function () {
+          const videos = document.querySelectorAll(".autoplay-video");
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              const video = entry.target;
+              if (entry.isIntersecting) {
+                video.play();
+              } else {
+                video.pause();
+              }
+            });
+          }, { threshold: 0.5 }); // Adjust threshold as needed
+
+          videos.forEach(video => {
+            observer.observe(video);
+          });
+        });
+      </script>
 
 </section>
 {{ end }}

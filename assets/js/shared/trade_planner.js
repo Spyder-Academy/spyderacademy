@@ -1988,7 +1988,7 @@ class TradePlanner {
           <div class="col-12 p-0 earnings_calendar">
             <div class="card earnings-day lg-rounded" id="day-2">
                 <div class="card-header">
-                    <div class="day-title text-uppercase">Options Leaderboard</div>
+                    <div class="day-title text-uppercase">Most Actively Traded Contracts</div>
                 </div>
                 <div class="card-body p-0 p-lg-3">
                     <div class="card bg-transparent text-center p-0 w-100" >
@@ -2040,6 +2040,9 @@ class TradePlanner {
           let strikePriceB = parseContract(b.contract)["strike"];
           return strikePriceB - strikePriceA; // Sort from largest to smallest strike price
         });
+
+        let highestVolumeContract = null;
+        let mostLikelyWorthlessContract = null;
         
         optionsData["top_contracts"].forEach(data => {
 
@@ -2067,7 +2070,29 @@ class TradePlanner {
           
           // append rows for each con
           $("#leaderboardRows").append(row);
+
+          if (!highestVolumeContract && data["volume"] > 100000) {
+            highestVolumeContract = con;
+          } 
+          // if (data["volume"] < 100000 && (!mostLikelyWorthlessContract || data["volume"] > mostLikelyWorthlessContract.volume)) {
+          //   mostLikelyWorthlessContract = con;
+          // }
+
         });
+
+        let explanation = "";
+        if (highestVolumeContract) {
+          explanation = `The ${highestVolumeContract.ticker} ${highestVolumeContract.strike}${highestVolumeContract.type.toUpperCase()} expiring on ${highestVolumeContract.exp} has the highest volume > 100k and is likely to close ITM.`;
+        }
+
+        else if (mostLikelyWorthlessContract) {
+          explanation += ` The ${mostLikelyWorthlessContract.ticker} ${mostLikelyWorthlessContract.strike} ${mostLikelyWorthlessContract.type.toUpperCase()} is the highest out-of-the-money strike with low volume and is likely to expire worthless, along with all further OTM strikes.`;
+        }
+
+        // Append the explanation text to the leaderboard or wherever appropriate
+        var explanationDiv = `<div class="mt-3 p-2 explanation-text">${explanation}</div>`;
+        leaderboard.append(explanationDiv);
+
       })
       .catch(error => {
         console.error('Error fetching leaderboard data:', error)
