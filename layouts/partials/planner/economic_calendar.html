@@ -1,6 +1,6 @@
 
 
-<div class="row earnings_calendar ">
+<div class="row earnings_calendar economic-container">
     <!-- Column for Monday -->
     <div class="col-md-2 col-12 p-md-3 p-0">
         <div class="card earnings-day lg-rounded" id="day-1">
@@ -93,7 +93,9 @@
 
     $(document).ready(function() {
         tradePlanner = new TradePlanner();
-        tradePlanner.renderEconomicCalendar();
+        tradePlanner.renderEconomicCalendar().then(() => {
+            $(".economic-container").addClass("economic-container-ready")
+        });
     });
 
 </script>
