@@ -16,7 +16,7 @@
                                 <div class="row p-0 m-0 justify-content-center ">
                                     {{ partial "planner/navbar" }}
                                 </div>
-                                <div class="container-fluid px-3">
+                                <div class="container-fluid px-3 earnings-container">
                                     <div class="row">
                                         <div class="col-12"><h1 class="gradient-text text-uppercase p-lg-3">Upcoming Earnings</h1></div>
                                     </div>
@@ -208,7 +208,9 @@
 
         $(document).ready(function() {
             tradePlanner = new TradePlanner();
-            tradePlanner.renderEarningsCalendar();
+            tradePlanner.renderEarningsCalendar().then(() => {
+                $(".earnings-container").addClass("earnings-container-ready")
+            })
 
             // Function to handle the card click and hide on outside click
             $(document).on('click', function(event) {
