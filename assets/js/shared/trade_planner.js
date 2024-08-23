@@ -3120,6 +3120,7 @@ class TradePlanner {
       document.querySelectorAll(chartid).forEach((element) => {
         this.chartGEX = new ApexCharts(element, options);
         this.chartGEX.render();
+        $("#gammaChartContainer").addClass("ready")
       });
 
     }
@@ -3394,6 +3395,7 @@ class TradePlanner {
     document.querySelectorAll('.gammaChartOverlay').forEach((element) => {
       const chart = new ApexCharts(element, options);
       chart.render();
+      $("#gammaOverlayContainer").addClass("ready")
     });
 
   }
