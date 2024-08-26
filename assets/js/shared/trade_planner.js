@@ -3178,7 +3178,7 @@ class TradePlanner {
 
   _prepareGEXOverlayChartData(data) {
     // Define the offset for EST (UTC-5 hours)
-    const estOffset = 5 * 60 * 60 * 1000; // 5 hours in milliseconds
+    const estOffset = 4 * 60 * 60 * 1000; // 5 hours in milliseconds
 
     // Prepare stock price series
     var stockSeries = {}
@@ -3191,6 +3191,24 @@ class TradePlanner {
     gammaSeries = data.stock_price.map(item => ({
       x: new Date(new Date(item.begins_at).getTime() - estOffset).getTime(),
       y: parseFloat(item.max_gamma)
+    }));
+
+    var netGammaSeries = {}
+    netGammaSeries = data.stock_price.map(item => ({
+      x: new Date(new Date(item.begins_at).getTime() - estOffset).getTime(),
+      y: parseFloat(item.net_gamma),
+    }));
+
+    var callGammaSeries = {}
+    callGammaSeries = data.stock_price.map(item => ({
+      x: new Date(new Date(item.begins_at).getTime() - estOffset).getTime(),
+      y: parseFloat(item.net_call_gamma)
+    }));
+
+    var putGammaSeries = {}
+    putGammaSeries = data.stock_price.map(item => ({
+      x: new Date(new Date(item.begins_at).getTime() - estOffset).getTime(),
+      y: parseFloat(item.net_put_gamma)
     }));
 
     // Prepare GEX data series
@@ -3213,12 +3231,12 @@ class TradePlanner {
       };
     });
 
-    return { stockSeries, gammaSeries, gexAnnotations };
+    return { stockSeries, gammaSeries, gexAnnotations, netGammaSeries, callGammaSeries, putGammaSeries};
   }
 
   async _renderGEXOverlay(ticker, jsonData, expectedMove = null) {
 
-    const { stockSeries, gammaSeries, gexAnnotations } = this._prepareGEXOverlayChartData(jsonData);
+    const { stockSeries, gammaSeries, gexAnnotations, netGammaSeries, callGammaSeries, putGammaSeries } = this._prepareGEXOverlayChartData(jsonData);
     const forecastPoints = 0 // chart prediction (not using right now)
 
     let lastDataPoint = stockSeries[stockSeries.length - forecastPoints - 1];
@@ -3247,11 +3265,12 @@ class TradePlanner {
       }
     }
 
+    console.log(expectedMove)
     // Proceed to use lastCloseDataPoint for your calculations
     if (expectedMove === null) nextTimestamp = lastCloseDataPoint.x;
     expectedMove = expectedMove || { "bears": lastCloseDataPoint.y, "bulls": lastCloseDataPoint.y }; // Adjust to use lastCloseDataPoint
 
-
+    const fourPM = new Date(lastDataPoint.x).setUTCHours(16)
 
     var nextTimestamp = lastDataPoint.x + (120 * 60 * 1000); // Adding 120 minutes (2hr)
 
@@ -3300,7 +3319,8 @@ class TradePlanner {
       previousTimestamp = point.x;
     });
 
-    // console.log(gammaSeriesWithBreaks, stockSeries)
+    // console.log(gammaSeries)
+    // console.log(netGammaSeries)
 
     var options = {
       chart: {
@@ -3314,58 +3334,97 @@ class TradePlanner {
           autoScaleYaxis: true
         },
       },
-      series: [{
-        name: 'Stock Price',
-        type: 'area',
-        data: stockSeries
-      },
-      {
-        name: 'Bull Projection',
-        type: 'line',
-        data: bullSeries,
-        dashArray: 5, // Dotted line for projection
-      }, {
-        name: 'Bear Projection',
-        type: 'line',
-        data: bearSeries,
-        dashArray: 5, // Dotted line for projection
-      },
-      {
-        name: 'Market Pressure',
-        type: 'line',
-        data: gammaSeriesWithBreaks,
-      },
+      series: [
+        {
+          name: 'Stock Price',
+          type: 'area',
+          data: stockSeries,
+        },
+        {
+          name: 'Bull Projection',
+          type: 'line',
+          data: bullSeries,
+          dashArray: 5, // Dotted line for projection
+        }, 
+        {
+          name: 'Bear Projection',
+          type: 'line',
+          data: bearSeries,
+          dashArray: 5, // Dotted line for projection
+        },
+        {
+          name: 'Net Gamma',
+          type: 'line',
+          data: netGammaSeries,
+        },
+        {
+          name: 'Call Gamma',
+          type: 'line',
+          data: callGammaSeries,
+        },
+        {
+          name: 'Put Gamma',
+          type: 'line',
+          data: putGammaSeries,
+        },
+        {
+          name: 'Market Pressure',
+          type: 'line',
+          data: gammaSeriesWithBreaks,
+        },
       ],
       markers: {
-        size: [0, 0, 0, 8], // Hide markers for projection lines
+        size: [0, 0, 0, 0, 0, 0, 8], // Hide markers for projection lines
         shape: "square",
         strokeWidth: 0,
       },
       stroke: {
-        width: [4, 4, 4, 1], // Set stroke width for each series
-        dashArray: [0, 5, 5, 1], // Solid line for actual data, dotted lines for projections
-        curve: ["smooth", "smooth", "smooth", "straight"],
+        width: [4, 4, 4, 1, 3, 3, 1], // Set stroke width for each series
+        dashArray: [0, 5, 5, 0, 0, 0, 1], // Solid line for actual data, dotted lines for projections
+        curve: ["smooth", "smooth", "smooth", "smooth", "smooth", "smooth", "straight"],
       },
-      colors: ['#008FFB', '#00E396', '#FF4560', '#000000'],
+      colors: ['#008FFB', '#00E396', '#FF4560', "#000000", "#00E396", "#FF4560", '#000000'],
       dataLabels: {
         enabled: false
       },
       // title: { text: ticker.toUpperCase() + " (5min) Market Pressure Walls" },
       xaxis: {
         type: 'datetime',
-        tickPlacement: 'on'
+        tickPlacement: 'on',
+        max: fourPM, // Set the max x-axis value to 4 PM
       },
-      yaxis: [{
-        title: {
-          text: 'Price',
-        },
-        forceNiceScale: true,
-        labels: {
-          formatter: function (val) {
-            return (val).toFixed(2);
+      yaxis: [
+        {
+          seriesName: "Stock Price", // stock price
+          title: {
+            text: 'Price',
+          },
+          forceNiceScale: true,
+          labels: {
+            formatter: function (val) {
+              return (val).toFixed(2) ;
+            },
           },
         },
-      }],
+        { seriesName: "Stock Price" }, // bull projection
+        { seriesName: "Stock Price" }, // bear projection
+        {
+          seriesName: "Net Gamma", // net gamma
+          opposite: true, // Display on the right side
+          show: false,
+          labels: {
+            formatter: function (val) {
+              return (val).toFixed(2);
+            },
+          },
+          min: Math.min(...putGammaSeries.map(item => item.y)) * 0.9, // Scale min to 90% of the lowest value
+          max: Math.max(...callGammaSeries.map(item => item.y)) * 1.1  // Scale max to 110% of the highest value
+
+        },
+        { seriesName: "Net Gamma" }, // call gamma
+        { seriesName: "Net Gamma" }, // put gamma
+        { seriesName: "Stock Price" } // gamma walls
+      ],
       forecastDataPoints: {
         count: forecastPoints
       },
@@ -3376,6 +3435,11 @@ class TradePlanner {
       tooltip: {
         shared: true,
         intersect: false,
+        x: {
+          show: true,
+          format: 'dd MMM yyyy HH:mm TT',
+          formatter: undefined,
+        },
         y: {
           formatter: function (val) {
             return (val).toFixed(2)
