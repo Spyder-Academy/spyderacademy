@@ -80,7 +80,9 @@ If you don't have access to Gamma Exposure at Spyder Academy, dont fret! Just [b
 #### Black Box Stocks
 Check out [Black Box Stocks](http://staygreen.blackboxstocks.com/SHJG)!  They have a great video on Gamma Exposure too!  
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/w2UiOck37_A?si=DsUSfGVSuHAQWBWe" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<div class="video-container">
+  <iframe width="100%" height="315" src="https://www.youtube.com/embed/w2UiOck37_A?si=DsUSfGVSuHAQWBWe" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 
 #### Unusual Whales
 [Unusual Whales](https://www.unusualwhales.com) is another trader favorite and lets you slice and dice Gamma Exposure in different ways!
