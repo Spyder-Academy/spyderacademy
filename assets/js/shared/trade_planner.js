@@ -3417,8 +3417,8 @@ class TradePlanner {
               return (val).toFixed(2);
             },
           },
-          min: Math.min(...putGammaSeries.map(item => item.y)) * 0.9, // Scale min to 90% of the lowest value
-          max: Math.max(...callGammaSeries.map(item => item.y)) * 1.1  // Scale max to 110% of the highest value
+          min: Math.min(...putGammaSeries.map(item => item.y)) * 1.3, // Scale min to 90% of the lowest value
+          max: Math.max(...callGammaSeries.map(item => item.y)) * 1.3  // Scale max to 110% of the highest value
 
         },
         { seriesName: "Net Gamma" }, // call gamma
