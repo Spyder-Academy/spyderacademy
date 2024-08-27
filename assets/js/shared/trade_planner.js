@@ -909,6 +909,11 @@ class TradePlanner {
 
       if (response) {
         var item = response;
+        if (item == null){
+          $(".gammaExpectedRange").hide()
+          return
+        }
+
         var movePercent = (item.movePercent * 100).toFixed(2) + '%';
         var moveAmount = '$' + item.moveAmount.toFixed(2);
         var rangeTop = '$' + item.moveUpper.toFixed(2);

@@ -7,14 +7,15 @@
                 The Gamma for <a href="/stocks/{{ lower $symbol }}/" class="text-white">{{ upper $symbol }}</a> is currently <span class="largestGammaLevelText"></span>, and the overall sentiment is <span class="gammaOutlook"></span>. 
                 <br/>
                 <br/>
+                <div class="gammaExpectedRange">
+                  Bulls want to see <span class="bullRange"></span>. <span class="bullRangeHit d-none"> 🎯</span><br/>
+                  Bears are betting on <span class="bearRange"></span>. <span class="bearRangeHit d-none"> 🎯</span><br/>
+                  
+                  <br/>
+                  The expected range today is about <span class="moveAmount"></span>.
 
-                Bulls want to see <span class="bullRange"></span>. <span class="bullRangeHit d-none"> 🎯</span><br/>
-                Bears are betting on <span class="bearRange"></span>. <span class="bearRangeHit d-none"> 🎯</span><br/>
-                
-                <br/>
-                The expected range today is about <span class="moveAmount"></span>.
-
-                <span class="d-none lowRangeDayWarning">Today may be a low range day for {{ upper $symbol }}, so take quick scalps, or you may want to go touch grass instead.</span>
+                  <span class="d-none lowRangeDayWarning">Today may be a low range day for {{ upper $symbol }}, so take quick scalps, or you may want to go touch grass instead.</span>
+                </div>
             </div>
             <div class="col-1 p-1 text-start align-bottom">
               ✨ 
