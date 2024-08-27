@@ -1,0 +1,110 @@
+{{ define "main" }}
+
+
+<section class="section  bg-light">
+    
+    <div class="login-container">
+        <div class="card login-card">
+            <div class="row g-0">
+                <div class="col-lg-12 d-flex align-items-center">
+                    <div class="login-form">
+                        <div class="text-center mb-4">
+                            <img src="/images/logo.png" alt="Logo" width="100">
+                            <h2 class="gradient-text fs-1">Welcome to Trade Social!</h2>
+                            <p>Enter the email address you used with whop.com, and we will email you your password!</p>
+                        </div>
+                        <!-- <div class="d-grid mb-3">
+                            <button class="btn btn-google btn-block">
+                                <i class="fab fa-google"></i> Log in with Google
+                            </button>
+                        </div>
+                        <div class="text-center mb-3">Or sign in with</div> -->
+                        <form>
+                            <div id="loginErrorMessage" class="alert alert-danger small" role="alert" style="display: none">
+                                Invalid Credentials!
+                            </div>
+                            <div class="mb-3">
+                                <input id="txtEmail" type="email" class="form-control" placeholder="Email" autocomplete="email">
+                            </div>
+                           
+                            <div class="d-grid mb-3">
+                                <button id="submitLoginBtn" class="btn btn-dark gradient-green p-3 btn-block" type="button">Get Password</button>
+                            </div>
+                            <div class="text-center">
+                                <a href="https://whop.com/checkout/plan_bCMjkbQ9TJsN2?d2c=true" target="_blank" class="d-block">Sign Up</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Load Shared JS -->
+
+    <script>
+        let tradeSocial = null;
+
+        // Sign in with email and password when the submit button is clicked
+        const submitLoginBtn = document.getElementById('submitLoginBtn');
+        submitLoginBtn.addEventListener('click', async () => {
+            sendPasswordResetEmail();
+        });
+
+        function sendPasswordResetEmail() {
+            var email = $("#txtEmail").val();
+
+            if (email == ""){
+                $('#loginErrorMessage').text("Please enter the email address you signed up with on Whop.com");
+                $('#loginErrorMessage').show();
+            }
+            else
+            {
+                firebase.auth().sendPasswordResetEmail(email)
+                    .then(() => {
+                        // Password reset email sent successfully
+                        console.log("Password reset email sent to", email);
+                        // Display a success message to the user
+                        $('#loginErrorMessage').text("Password reset email sent to " + email + ". Please follow the instructions in the email to get set up!");
+                        $('#loginErrorMessage').show();
+                    })
+                    .catch((error) => {
+                        // An error occurred
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        console.error("Password reset email error:", errorCode, errorMessage);
+
+                        // Display an error message to the user
+                        var displayErrorMessage = "Failed to send password reset email"
+                        if (errorCode == "auth/user-not-found"){
+                            displayErrorMessage = "The email address entered is not a verified member."
+                        }
+                        else if (errorCode == "auth/invalid-email"){
+                            displayErrorMessage = "Please enter a valid email address."
+                        }
+
+                        $('#loginErrorMessage').text(displayErrorMessage);
+                        $('#loginErrorMessage').show();
+                    });
+            }
+        }
+
+        
+
+
+        $(document).ready(function() {
+            tradeSocial = new TradeSocial();
+
+            // check log in status, if already logged in then go back.
+            firebase.auth().onAuthStateChanged((user) => {
+                if (user) {
+                    window.location.href = "/profile/";
+                }
+            });
+
+        });
+
+    </script>
+</section>
+{{ end }}
