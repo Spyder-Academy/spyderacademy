@@ -1081,10 +1081,11 @@ class TradeSocial {
       });
   
       // Fetch options prices
+      var optionsSeriesData = [];
+
       optionsRef.get().then((querySnapshot) => {
           // var optionsData = optionsDoc.data().candles;
 
-          var optionsSeriesData = [];
 
           querySnapshot.forEach((doc) => {
               // Parse the string into a Date object
@@ -1098,6 +1099,7 @@ class TradeSocial {
 
               optionsSeriesData.push({
                   time: timestampInSeconds,
+                  utc: time,
                   open: c.o,
                   high: c.h,
                   low: c.l,
@@ -1244,9 +1246,59 @@ class TradeSocial {
                 })
 
                 // append a line for max drawdown informaton
-                if (tradeEntry.drawdownValue != ""){
-                  entryNotesEl.append("<p><strong>" + "Max Drawdown" + "</strong><br/>" + tradeEntry.drawdownValue + "</p>")
-                }
+                // if (tradeEntry.drawdownValue != ""){
+                //   entryNotesEl.append("<p><strong>" + "Max Drawdown" + "</strong><br/>" + tradeEntry.drawdownValue + "</p>")
+                // }
+
+                // append the summary of drawdown/bounds etc
+                var price_when_posted = tradeEntry.entry_price;
+                var entry_date = new Date(tradeEntry.entry_date);
+                var exit_date = tradeEntry.exit_date_max ? tradeEntry.exit_date_max.toDate() : new Date();
+
+
+                // Find the maximum price between entry and exit, ignore prices outside of this range
+                var max_price = optionsSeriesData.reduce((max, dataPoint) => {
+                    var dataPointDate = new Date(dataPoint.utc); // Assuming time is in seconds
+                    // console.log(entry_date, exit_date, dataPoint)
+
+                    if (dataPointDate >= entry_date && dataPointDate <= exit_date) {
+                        // console.log("in range", dataPointDate, dataPoint.high, max)
+                        return Math.max(max, dataPoint.high);
+                    } 
+                   
+                    return max;
+                }, price_when_posted);
+
+                // Find the minimum price between entry and exit, ignore prices outside of this range
+                var min_price = optionsSeriesData.reduce((min, dataPoint) => {
+                  var dataPointDate = new Date(dataPoint.utc); // Assuming time is in seconds
+                  // console.log(entry_date, exit_date, dataPoint)
+
+                  if (dataPointDate >= entry_date && dataPointDate <= exit_date) {
+                      // console.log("in range", dataPointDate, dataPoint.high, max)
+                      return Math.min(min, dataPoint.low);
+                  } 
+                 
+                  return min;
+              }, price_when_posted);
+
+                var max_gain = ((max_price - price_when_posted) / price_when_posted) * 100;
+                var max_loss = ((min_price - price_when_posted) / price_when_posted) * 100;
+
+                // var current_price = tradeEntry.exit_price_max || optionsSeriesData[optionsSeriesData.length - 1].close;
+                // var price_difference = ((current_price - price_when_posted) / price_when_posted) * 100;
+                // var updown = price_difference >= 0 ? "up" : "down";
+
+                var flow_pricing_div = `
+                    <div class="tweet-footer text-muted ${price_when_posted == undefined ? 'd-none' : ''}">
+                        <div class="row w-100 ">
+                          <div class="col-6 p-0 text-center" title="This Highest Price this contract has seen is ${max_gain.toFixed(0)}% before the last trim.">Upsurge: <i class="fa fa-money-bill-trend-up text-success"></i> ${max_gain.toFixed(0)}%</div>
+                          <div class="col-6 p-0 text-center" title="The Lowest Price this contract has seen is ${max_loss.toFixed(0)}% before the last trim.">Drawdown:<i class="fa fa-sack-xmark pl-3 text-danger"></i> ${max_loss.toFixed(0)}%</div>
+                        </div>
+                    </div>
+                  `
+                $(entryNotesEl).append(flow_pricing_div)
+
 
                 // fill in the trade details
                 var tradeCardRow = $('#contractDetailsCard')

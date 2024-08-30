@@ -87,9 +87,7 @@ class TradePlanner {
                         </div>
                         <!--<a href="/stocks/${symbol.toLowerCase()}/" class="stretched-link"></a>-->
                     </div>
-                    <div class="card-footer">
-                      ${symbol}
-                    </div>
+                    <div class="card-footer px-0 m-0">${symbol}</div>
                 </div>
               </div>
           `;
@@ -141,7 +139,7 @@ class TradePlanner {
 
             const event_row = `
               <div class="row p-2 ${highlightClass} lg-rounded mb-1">
-                  <div class="col-4 px-2 m-0 text-start text-nowrap">${event.Time}</div>
+                  <div class="col-4 p-0 m-0 text-start text-nowrap" style="min-width: 80px;">${event.Time}</div>
                   <div class="col-8 p-0 m-0 text-start">${event.Release}</div>
               </div>
             `;
