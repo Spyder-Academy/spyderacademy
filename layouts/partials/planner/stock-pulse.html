@@ -1,0 +1,16 @@
+{{ $symbol := .symbol }}
+{{ $limit := .limit | default 10 }}
+
+<div class="container-fluid p-0">
+    <div id="stock_social_row" class="row p-0 m-0" data-masonry='{"percentPosition": true }'>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+
+        var symbol = {{ $symbol }};
+        var tradePlanner = new TradePlanner();
+        tradePlanner.showStockPulse(ticker=symbol, limit={{ $limit }});
+    });
+</script>

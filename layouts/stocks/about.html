@@ -1,0 +1,121 @@
+{{ define "main" }}
+{{ $ticker := .Params.ticker | upper }}
+{{ $stock := index site.Data.stocks $ticker }}
+
+<section class="section pt-1 pb-2 bg-dark">
+  <div class="container-fluid p-0 bg-dark">
+    <div class="row p-0 m-0 justify-content-center ">
+      {{ partial "planner/stocks_navbar" (dict "symbol" .Page.Params.ticker) }}
+    </div>
+    <div class="row p-lg-3 p-0 m-1 justify-content-evenly" >
+      <div class="col-12 bg-white lg-rounded mb-lg-3 m-0 p-0">
+        <div class="blog-content justify-content-center p-0 p-lg-5 fs-5" style="max-width: 100%;">
+          <div class="col-12">
+            {{ with .Title }}
+              <h1 class="gradient-text text-center text-uppercase px-lg-4">{{ . }}</h1>
+            {{ end }}
+            {{ with .Params.description }}
+              <p class="text-black-61 text-center pb-3">{{ . }}</p>
+            {{ end }}
+          </div>
+
+          {{ if $stock.ceo }}
+          
+          <div class="col-12">
+            <div class="row justify-content-center text-center">
+              <div  style="width: 250px;">
+                <div class="card trade_card border-1 p-2 mx-0 my-1 lg-rounded gradient-green text-white" >
+                    <div class="card-body p-0 tradeRow">
+                        <div class="container p-0">
+                            <div class="row align-items-center">
+                                <div class="col-12">
+                                  <div class="row p-1">
+                                    <div class="col-12 p-0 px-2 tradeContract text-nowrap ">{{$stock.ceo}}</div>
+                                  </div>
+                                  <div class="row px-1">
+                                    <div class="col-12 text-muted fs-6 p-0 px-2 text-nowrap ">CEO</div>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+
+              <div  style="width: 250px;">
+                <div class="card trade_card border-1 p-2 mx-0 my-1 lg-rounded gradient-green text-white" >
+                    <div class="card-body p-0 tradeRow">
+                        <div class="container p-0">
+                            <div class="row align-items-center">
+                                <div class="col-12">
+                                  <div class="row p-1">
+                                    <div class="col-12 p-0 px-2 tradeContract text-nowrap ">{{$stock.founded}}</div>
+                                  </div>
+                                  <div class="row px-1">
+                                    <div class="col-12 text-muted fs-6 p-0 px-2 text-nowrap ">Founded</div>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+
+              <div  style="width: 250px;">
+                <div class="card trade_card border-1 p-2 mx-0 my-1 lg-rounded gradient-green text-white" >
+                    <div class="card-body p-0 tradeRow">
+                        <div class="container p-0">
+                            <div class="row align-items-center">
+                                <div class="col-12">
+                                  <div class="row p-1">
+                                    <div class="col-12 p-0 px-2 tradeContract text-nowrap ">{{$stock.employees}}</div>
+                                  </div>
+                                  <div class="row px-1">
+                                    <div class="col-12 text-muted fs-6 p-0 px-2 text-nowrap ">Employees</div>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+
+              <div  style="width: 250px;">
+                <div class="card trade_card border-1 p-2 mx-0 my-1 lg-rounded gradient-green text-white" >
+                    <div class="card-body p-0 tradeRow">
+                        <div class="container p-0">
+                            <div class="row align-items-center">
+                                <div class="col-12">
+                                  <div class="row p-1">
+                                    <div class="col-12 p-0 px-2 tradeContract text-nowrap ">{{upper $stock.headquarters}}</div>
+                                  </div>
+                                  <div class="row px-1">
+                                    <div class="col-12 text-muted fs-6 p-0 px-2 text-nowrap ">Headquarters</div>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{ end }}
+          <div class="col-12 py-2">
+            <p>
+              <i>
+                {{ if $stock.ceo }}
+                  {{ $stock.company_name }}, operating in the {{ $stock.industry }} industry, trades under the symbol ${{ $stock.ticker }}. 
+                  Founded in {{ $stock.founded }}, the company is headquartered in {{ upper $stock.headquarters }}. 
+                  The CEO of {{ $stock.company_name }} is {{ $stock.ceo }}, and the company currently employs {{ $stock.employees }} people.
+                {{ end }}
+              </i>
+            </p>
+
+            {{ .Content }}
+          </div>
+        </div>
+    </div>
+  </div> <!-- end row -->
+</section>
+{{ end }}

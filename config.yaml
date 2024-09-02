@@ -50,6 +50,7 @@ params:
   whop: "https://whop.com/checkout/plan_bCMjkbQ9TJsN2?d2c=true"
   postProcess: false
 
+
 menus:
   main:
     - name: "Home"

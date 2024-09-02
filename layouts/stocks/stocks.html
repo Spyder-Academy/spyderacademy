@@ -1,0 +1,271 @@
+{{ define "main" }}
+
+{{ $ticker := .Params.ticker | upper }}
+{{ $stock := index site.Data.stocks $ticker }}
+
+{{ $tvSymbol := default .Page.Params.ticker }}
+<!-- {{ $tvSymbol := .Page.Params.tv_override | default .Page.Params.ticker }} -->
+
+<section class="section pt-1 pb-2 bg-dark">
+        <div class="container-fluid p-0 bg-dark">
+          <div class="row p-0 m-0 justify-content-center ">
+            {{ partial "planner/stocks_navbar" (dict "symbol" .Page.Params.ticker) }}
+          </div>
+
+          <div class="row p-lg-3 p-0 m-1 justify-content-evenly" style="overflow-x: none;">
+            <div class="col-xl-9  col-12 boot_column  bg-white border-0 mb-lg-3 m-0 p-0 lg-rounded h-100 mh-100" style="box-shadow: none;">
+              <div class="post p-0 bg-dark" style="border:0; box-shadow:none;">
+                <div id="priceWidget" class="col-lg-12 col-sm-12 trade-card-template  ">
+                  
+                </div>
+
+                {{ partial "shared/stock-chart" (dict "symbol" $tvSymbol "Site" .Site) }}
+              </div>
+            </div>
+
+            <!-- Watchlist -->
+            <div class="col-xl-3 col-12 border-0 mb-lg-3 m-0 p-0 h-100 mh-100">
+              <div class="post mx-xl-3 bg-white lg-rounded ">
+                <div class="px-3">{{ partial "planner/search_ticker"}}</div>
+                {{ partial "planner/watchlist" }}
+              </div>
+            </div>
+
+            <!-- Market Trends -->
+            <div class="col-12 bg-white border-0 mb-lg-3 m-0 p-0 lg-rounded h-100 mh-100">
+              <h4 class="gradient-text px-3 pt-3" >Market Trends</h4>
+              <h6 class="px-3 text-muted">This is not investment advice</h6>
+
+              <!-- Market Trends - EMA Signals -->
+              <div class="post">
+                {{ partial "planner/ema_signals" (dict "symbol" .Page.Params.ticker) }}
+              </div>
+
+              <!-- Market Trends - Strat Signals -->
+              <div class="post">
+                <div class="row ">
+                  <div class="col-xl-6 col-12 d-flex">
+                    {{ partial "planner/gamma_explanation" (dict "symbol" .Page.Params.ticker) }}
+                  </div>
+
+                  <div class="col-xl-6 col-12 d-flex">
+                    <div class="container-fluid bg-dark m-0 mb-3 lg-rounded">
+                    <div id="strat_signal_row" class="row tweet-body text-white py-3 ">
+                      <div class="col-12 p-0" id="strat_signal_card">
+                        <div class="card border-0">
+                            <div class="card-body tweet-card post text-white bg-dark border-0 py-0" id="theStratSignals">
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Market Trends - Gamma Levels -->
+              <div class="post " style="box-shadow: none;">
+                <div class="row">
+                  <div id="gammaChartContainer" class="p-0 m-0 col-xl-6 col-12 ">
+                    <div class="card border-0 p-3 mr-2 h-100 d-flex">
+                      <div class="px-2 px-lg-0 fw-bold text-uppercase gradient-text fs-4">{{ .Page.Params.ticker }} Market Pressure (GAMMA)</div>
+                      <div class="w-100 gammaChart"  id="mobileGammaChart">Loading Market Exposure...</div>
+                      <input type="range" class="form-range" id="gex_slider" min="0" max="40" step="1" value="40" disabled="true" />
+                    </div>
+                  </div>
+
+                  <div id="gammaOverlayContainer" class="p-0 m-0  col-xl-6 col-12">
+                    <div class="card border-0 p-3 m-0 h-100 d-flex">
+                      <div class="px-2 px-lg-0 fw-bold text-uppercase gradient-text fs-4">{{ .Page.Params.ticker }} Market Gamma Walls</div>
+                      <div class="w-100 gammaChartOverlay"  id="mobileGammaChartOverlay">Loading Gamma Overlay...</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- About -->
+            <div class="col-12 bg-white border-0 mb-lg-3 m-0 p-0 lg-rounded h-100 mh-100">
+              <h4 class="gradient-text px-3 pt-3" >About</h4>
+
+              <div class="post">
+                <div class="col-12 mb-3">
+                  <div class="card border-0 lg-rounded">
+                      <div class="card-body">
+                        {{ if $stock.ceo }}
+                          {{ $stock.company_name }}, operating in the {{ $stock.industry }} industry, trades under the symbol ${{ $stock.ticker }}. 
+                          Founded in {{ $stock.founded }}, the company is headquartered in {{ upper $stock.headquarters }}. 
+                          The CEO of {{ $stock.company_name }} is {{ $stock.ceo }}, and the company currently employs {{ $stock.employees }} people.
+                        {{ end }}
+                          <a href="/stocks/{{lower .Page.Params.ticker}}/about/" title="Learn more about {{ .Page.Params.ticker }}">Show More</a>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Market Pulse -->
+
+
+            {{ $excludedTickers := slice "SPY" "QQQ" "IWM" "SPX" "ES" "MES" "MNQ" }}
+            {{ if not (in $excludedTickers .Page.Params.ticker) }}
+            <!-- Financials -->
+            <div class="col-12 bg-white border-0 mb-lg-3 m-0 p-0 lg-rounded h-100 mh-100">
+              <h4 class="gradient-text px-3 pt-3" >Financials</h4>
+              <h6 class="px-3"><a href="/stocks/{{lower .Page.Params.ticker}}/financials/" title="Show More Financials for {{ .Page.Params.ticker }}">Show More</a></h6>
+
+              <div class="post">
+                <div class="col-12 mb-3">
+                  <div class="card border-0 lg-rounded">
+                      <div class="card-body">
+                          <div id="revenueChart"></div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{ end }}
+            <!-- Market Pulse -->
+            <div class="col-12 bg-white border-0 mb-lg-3 m-0 p-0 lg-rounded h-100 mh-100">
+              <h4 class="gradient-text px-3 pt-3" >Market Pulse</h4>
+              <h6 class="px-3"><a href="/stocks/{{lower .Page.Params.ticker}}/news/" title="Show More News and Social Pulse for {{ .Page.Params.ticker }}">Show More</a></h6>
+
+              <div class="post">
+                <div class="col-12 mb-3">
+                  <div class="card border -0 lg-rounded">
+                      <div class="card-body">
+                        {{ partial "planner/stock-pulse" (dict "symbol" .Page.Params.ticker) }}
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- Options Activity -->
+            <div class="col-12 bg-white border-0 mb-lg-3 m-0 p-0 lg-rounded">
+              <h4 class="gradient-text px-3 pt-3" >Options Activity</h4>
+
+              <div class="row m-3 flow_tracker_row" data-masonry="{percentPosition: true}">
+                <div class="col-xl-3 col-12 p-0" id="leaderboard_signal_card">
+                  <div class="card border-0 lg-rounded">
+                    <div class="card-body p-0" id="leaderboardSignals"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+        </div> <!-- end row -->
+
+
+           <!-- Sliding Card -->
+          <!-- {{ partial "social/trade_card_panel"}} -->
+      </div>
+
+     
+
+
+
+ 
+    
+
+    <!-- Load Shared JS -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script type="text/javascript" src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+
+    <script>
+
+        let tradePlanner = null;
+
+        // function showFinancials(symbol){
+        //     event.stopPropagation();
+        //     // const symbol = $(el).attr("symbol")
+        //     tradePlanner.renderEarningsDetails(symbol);
+
+        //     // Scroll to the top of the page
+        //     window.scrollTo({
+        //         top: 0,
+        //         behavior: 'smooth' // Optional: adds a smooth scrolling effect
+        //     });
+        // }
+          
+        $(document).ready(function() {
+
+            // // Function to handle the card click and hide on outside click
+            // $(document).on('click', function(event) {
+            //     var earningsDetailsCard = $('#earningsDetailsCard');
+                
+            //     // If the card is visible and the click is outside of it
+            //     if (earningsDetailsCard.hasClass('show') && !$(event.target).closest('#earningsDetailsCard').length) {
+            //         earningsDetailsCard.removeClass('show');
+            //         earningsDetailsCard.addClass('d-none');
+
+            //     }
+            // });
+
+            // // Prevent the click inside the card from closing it
+            // $('#earningsDetailsCard').on('click', function(event) {
+            //     event.stopPropagation(); // Stop the click event from bubbling up to the document
+            // });
+
+            tradePlanner = new TradePlanner();
+
+            var ticker = {{ .Page.Params.ticker }};
+
+
+            // Trades
+            // tradePlanner.getAuthenticatedMemberDetails((memberProfile) => {
+            //     tradePlanner.fetchTradesFromPeopleIFollow(ticker);
+            // });
+
+            // Gamma Generated Market Recommendation
+            tradePlanner.fetchGEXByStrike(ticker, ".gammaChart", idx=0, historicals = true);
+            tradePlanner.fetchGEXOverlay(ticker);
+
+            // The Strat Signals
+            tradePlanner.fetchTheStratSignals(ticker); 
+            tradePlanner.fetchLeaderboardSignals(ticker)
+            tradePlanner.fetchFlow(ticker);
+
+            // Earnings
+            tradePlanner.renderEarningsDetails(ticker); 
+            
+            tradePlanner.render_price_widget(ticker);
+            // Set a timer to render price widget every 1 minute (60,000 milliseconds)
+            setInterval(function() {
+                tradePlanner.render_price_widget(ticker);
+            }, 60 * 1 * 1000); 
+            
+
+            // Get a reference to the range input element
+            const slider = document.getElementById('gex_slider');
+            slider.addEventListener('input', function() {
+                const selectedIndex = parseInt(slider.max) - parseInt(slider.value);
+                tradePlanner.fetchGEXByStrike(ticker, ".gammaChart", idx=selectedIndex, historicals=true);
+            });
+
+            // Function to handle the card click and hide on outside click
+            // $(document).on('click', function(event) {
+            //     var contractCard = $('#contractDetailsCard');
+                
+            //     // If the card is visible and the click is outside of it
+            //     if (contractCard.hasClass('show') ) {
+            //         contractCard.removeClass('show');
+            //         contractCard.removeClass('d-none');
+            //     }
+            // });
+            
+
+
+            
+
+            
+
+
+        });
+
+    </script>
+</section>
+{{ end }}

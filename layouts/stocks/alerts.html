@@ -1,0 +1,38 @@
+{{ define "main" }}
+{{ $tvSymbol := .Page.Params.tv_override | default .Page.Params.ticker }}
+
+<section class="section pt-1 pb-2 bg-dark">
+  <div class="container-fluid p-0 bg-white">
+    <div class="row p-0 m-0 justify-content-center ">
+      {{ partial "planner/stocks_navbar" (dict "symbol" .Page.Params.ticker) }}
+    </div>
+    <div class="row p-lg-3 p-0 m-1 " >
+        <h4 class="gradient-text px-3 pt-3" >{{.Page.Params.ticker}} - Trade Social Alerts</h4>
+
+        <div class="col-xl-4 col-12  lg-rounded mb-lg-3 m-0 p-0">
+          {{ partial "planner/trade_alerts" (dict "symbol" .Page.Params.ticker ) }}
+        </div>
+
+       
+  </div> <!-- end row -->
+
+   <!-- Sliding Card -->
+   {{ partial "social/trade_card_panel"}}
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script type="text/javascript" src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    var ticker = {{ .Page.Params.ticker }};
+    let tradePlanner = new TradePlanner();
+
+    // Trades
+    tradePlanner.getAuthenticatedMemberDetails((memberProfile) => {
+        tradePlanner.fetchTradesFromPeopleIFollow(ticker);
+    });
+  });
+</script>
+{{ end }}

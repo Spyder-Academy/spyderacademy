@@ -28,14 +28,14 @@
 
 
 <script type="text/javascript">
-  // List of tickers and their corresponding logos
+  // List of tickers and their corresponding logos/
+  // use the data stocks.yaml file to get the tickers
   const tickers = [
-      {{- $first := true -}}
-      {{- range $element := (where .Site.RegularPages "Type" "stocks") -}}
-          {{- if not $first -}},{{ end -}}
-          "{{ $element.Params.ticker }}"
-          {{- $first = false -}}
-      {{- end -}}
+    {{ range $key, $value := site.Data.stocks }}
+    "{{ $key }}",
+  {{ end }}
   ];
+
+
 
 </script>

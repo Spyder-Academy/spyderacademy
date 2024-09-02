@@ -44,3 +44,19 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    $(document).ready(function() {
+     // Function to handle the card click and hide on outside click
+     $(document).on('click', function(event) {
+        var contractCard = $('#contractDetailsCard');
+        
+        // If the card is visible and the click is outside of it
+        if (contractCard.hasClass('show') ) {
+            contractCard.removeClass('show');
+            contractCard.removeClass('d-none');
+            }
+        });
+    });
+</script>

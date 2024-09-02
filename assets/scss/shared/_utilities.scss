@@ -789,9 +789,24 @@ body.navbar-open {
   // flex-wrap: nowrap;
 }
 
+#stock_social_row .card{
+  border-radius: 15px;
+
+}
+#stock_social_row .post {
+  border: 1;
+  border-radius: 15px;
+  box-shadow: none;
+}
+#stock_social_row .twitter {
+  background-color: #F6FBFF;
+}
+.flow_tracker_row .social-card{
+  font-size: 0.8em;
+}
 
 /* Responsive adjustments for small screen */
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
  
 
   .timeline-container {
@@ -844,8 +859,7 @@ body.navbar-open {
   display: block;
 }
 
-.rightpanel-details-card .nav-link.active{
-  background-color: #000 !important;
+.nav-tabs .nav-link.active{
   border-radius: 10px;
 }
 .rightpanel-details-card .nav-link:hover{

@@ -308,10 +308,13 @@ class TradePlanner {
     var symbol = tweet["symbol"]
     var message = tweet["message"].replace(/\n/g, "<br/>");
     var tweet_link = tweet["url"] ? tweet["url"] : ""
+    var source = tweet["source"] ? tweet["source"] : "𝕏"
+    var sourceClass = source == "𝕏" ? "twitter": "news"
 
     var price_difference = ""
     var price_difference_detail = ""
     var price_class = ""
+
 
     if (tweet["current_price"] && tweet["price_when_posted"]) {
       var current_price = tweet["current_price"]
@@ -350,10 +353,10 @@ class TradePlanner {
     var easternTime = timestamp.tz("America/New_York").format('MMMM Do YYYY, h:mm:ss a');
 
     var tweet_template = `
-                <div class="card-body tweet-card post">
+                <div class="card-body tweet-card post ${sourceClass}">
                     <div class="tweet-header">
                         <div>
-                            <a href="${tweet_link}" target="_blank" class="text-decoration-none">𝕏 <strong>${author}</strong></a> <span class="text-muted"> - <span title="${easternTime}">${relativeTime}</span></span>
+                            <a href="${tweet_link}" target="_blank" class="text-decoration-none">${source} <strong>${author}</strong></a> <span class="text-muted"> - <span title="${easternTime}">${relativeTime}</span></span>
                         </div>
                     </div>
                     <div class="tweet-body">
@@ -367,6 +370,132 @@ class TradePlanner {
             `;
 
     return tweet_template
+  }
+
+
+  async  fetchRSSFeed(url) {
+    const CORS_PROXY = 'https://api.allorigins.win/get?url=';
+    const RSS_URL = encodeURIComponent(url);
+    const response = await fetch(CORS_PROXY + RSS_URL);
+    const data = await response.json();
+    const parser = new RSSParser();
+    const feed = await parser.parseString(data.contents);
+    return feed;
+  }
+
+  async  displayRSSFeed() {
+      const RSS_URL = 'https://news.google.com/rss/search?q={{ $symbol }}+stock&hl=en-US&gl=US&ceid=US:en';
+      try {
+          const feed = await fetchRSSFeed(RSS_URL);
+          const feedContainer = document.getElementById('news-feed');
+          feedContainer.replaceChildren();
+
+
+          // Sort feed items by pubDate in descending order
+          feed.items.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+
+          feed.items.forEach(item => {
+              var title = item.title.split(" - ")[0]
+              var source = item.title.split(" - ")[1]
+              
+              // var formattedTimestampStr = new Date(item.pubDate).toLocaleDateString()
+              
+              var timestamp = moment(item.pubDate)
+              var relativeTime = timestamp.fromNow();
+              var easternTime = timestamp.tz("America/New_York").format('MMMM Do YYYY, h:mm:ss a');
+              
+              const itemElement = document.createElement('div');
+              itemElement.className = 'col-12 ';
+              itemElement.innerHTML = `
+                  <div class="card-body tweet-card post h-100">
+                      <div class="tweet-header">
+                          <div>
+                              <strong>${source}</strong> <span class="text-muted"> - <span title="${easternTime}" >${relativeTime}</span></span>
+                          </div>
+                      </div>
+                      <div class="tweet-body">
+                      <p>
+                          <a href="${item.link}" target="_blank">${title}</a>
+                      </p>
+                      </div>
+                  </div>
+              `
+              
+              feedContainer.appendChild(itemElement);
+          });
+      } catch (error) {
+          console.error('Error fetching RSS feed:', error);
+      }
+  }
+
+
+  async showStockPulse(symbol, limit = 10) {
+    // Clear the existing content
+    $("#stock_social_row").empty();
+  
+    // Define the URLs for the API calls
+    const tweets_url = `https://api.spyderacademy.com/v1/stock/tweets/?ticker=${symbol}`;
+    const RSS_URL = `https://news.google.com/rss/search?q=${symbol}+stock&hl=en-US&gl=US&ceid=US:en`;
+  
+    // Fetch tweets and show them first
+    let tweets_response = await $.ajax({ url: tweets_url, method: 'GET' });
+  
+    // Render the tweets
+    this.renderPosts(tweets_response, limit);
+  
+    // Fetch RSS news feed
+    let news_response = await this.fetchRSSFeed(RSS_URL);
+  
+    // Once news feed is ready, create the posts and splice them into the display
+    let news_posts = [];
+    news_response.items.forEach(item => {
+      var post = {
+        "author": item["title"],
+        "symbol": symbol,
+        "message": item["contentSnippet"],
+        "url": item["link"],
+        "timestamp": item["isoDate"],
+        "source": "📰"
+      };
+      news_posts.push(post);
+    });
+  
+    // Combine with tweets
+    let combined_response = tweets_response.concat(news_posts);
+  
+    // Sort by timestamp in descending order
+    // combined_response.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  
+    // Limit the number of posts
+    // combined_response = combined_response.slice(0, limit);
+  
+    // Update the display by rendering the new combined response
+    this.renderPosts(combined_response, limit);
+  }
+
+  // Function to render posts
+  async renderPosts(posts, limit) {
+    $("#stock_social_row").empty(); // Optionally, clear existing posts first
+
+    posts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    posts = posts.slice(0, limit);
+
+
+    posts.forEach(item => {
+      var post_template = this.createTweetTemplate(item);
+      var post_div = $("<div class='col-xl-3 col-md-6 col-12 p-0'><div class='card m-2'>" + post_template + "</div></div>");
+      $("#stock_social_row").append(post_div);
+    });
+
+    // Initialize or re-layout Masonry
+    var msnry = new Masonry('#stock_social_row', {
+      percentPosition: true
+    });
+
+    // Layout Masonry after each image loads
+    imagesLoaded('#stock_social_row').on('progress', function () {
+      msnry.layout();
+    });
   }
 
   async showStockTweets(symbol) {
@@ -718,8 +847,9 @@ class TradePlanner {
 
           // create the flow card
           var flow_card = `
-                    <div class="col-12 social-card">
-                      <div class="card-body tweet-card post">
+                  <div class="col-xl-3 col-12 p-0 m-0">
+                    <div class="social-card card m-1 border-1 lg-rounded">
+                      <div class="card-body">
                           <div class="tweet-header">
                               <div>
                                   <strong>${parsedContract}</strong> <span class="text-muted"> - <span title="${easternTime}" >${relativeTime}</span></span>
@@ -745,11 +875,12 @@ class TradePlanner {
                           </div>
                       </div>
                     </div>
+                  </div>
                   `
 
 
           //  append the flow card
-          $("#flow_tracker_row").append(flow_card);
+          $(".flow_tracker_row").append(flow_card);
           $(".flow_tracker_row").removeClass("d-none");
 
           this.init_tradingview_popovers()
@@ -798,7 +929,7 @@ class TradePlanner {
               }
             },
             stroke: {
-              curve: 'straight',
+              curve: 'smooth',
               width: [0, 4]
             },
             fill: {
@@ -849,6 +980,16 @@ class TradePlanner {
 
           var chart = new ApexCharts(document.querySelector("#flow_chart_" + contract.replace(".", "")), options);
           chart.render();
+
+          // Initialize Masonry
+          var msnry = new Masonry('.flow_tracker_row', {
+            percentPosition: true
+          });
+
+          // Layout Masonry after each image loads
+          imagesLoaded('.flow_tracker_row').on('progress', function() {
+            msnry.layout();
+          });
         });
       }
 
@@ -1939,7 +2080,7 @@ class TradePlanner {
     fetch(url)
       .then(response => response.json())
       .then(emaData => {
-        const emaList = $('#emaSignals');
+        const emaList = $('#ema_signals .row');
 
         // if (emaData.length > 0) {
         //   $("#currentPriceWidget").html("$" + emaData[0].latest_price.toFixed(2))
@@ -1950,23 +2091,42 @@ class TradePlanner {
         //   $("#ema_signal_card").hide()
         // }
 
-        const emaItemHeader = $("<div class='tweet-header'><strong>Moving Averages</strong></div>")
-        emaList.append(emaItemHeader);
+        // const emaItemHeader = $("<div class='tweet-header'><strong>Moving Averages</strong></div>")
+        // emaList.append(emaItemHeader);
 
         emaData.forEach(data => {
-          const status = data.latest_price > data.value ? 'Bullish' : 'Bearish';
-          const statusClass = data.latest_price > data.value ? '#29741D' : '#a30000';
+            // const status = data.latest_price > data.value ? 'Bullish' : 'Bearish';
+            const statusClass = data.latest_price > data.value ? 'gradient-green' : 'gradient-red';
 
-          const emaItem = $("<div class='tweet-body'>")
-          var emaItemHTML = ""
+            // const emaItem = $("<div class='tweet-body'>")
+            // var emaItemHTML = ""
 
-          if (status == "Bullish") {
-            emaItemHTML = $(`<p>${data.ema}: <span style='color: ${statusClass}'>${status}</span> while above <span class='${statusClass}'>$${data.value.toFixed(2)}</span> </p>`);
-          }
-          else {
-            emaItemHTML = $(`<p>${data.ema}: <span style='color: ${statusClass}'>${status}</span> while below <span class='${statusClass}'>$${data.value.toFixed(2)}</span> </p>`);
-          }
-          emaItem.html(emaItemHTML);
+            // if (status == "Bullish") {
+            //   emaItemHTML = $(`<p>${data.ema}: <span style='color: ${statusClass}'>${status}</span> while above <span class='${statusClass}'>$${data.value.toFixed(2)}</span> </p>`);
+            // }
+            // else {
+            //   emaItemHTML = $(`<p>${data.ema}: <span style='color: ${statusClass}'>${status}</span> while below <span class='${statusClass}'>$${data.value.toFixed(2)}</span> </p>`);
+            // }
+            // emaItem.html(emaItemHTML);
+
+            var emaItem = $(`
+              <div class="" style="width: 250px;">
+                <div class="card trade_card border-1 p-2 mx-0 my-1 lg-rounded ${statusClass} text-white" >
+                    <div class="card-body p-0 tradeRow">
+                        <div class="container p-0">
+                            <div class="row align-items-center">
+                                <div class="col-12">
+                                    <div class="row p-1">
+                                        <div class="col-8 p-0 px-2 tradeContract text-nowrap ">${data.ema}</div>
+                                        <div class="col-4 p-0 tradeGain text-nowrap text-center">$${data.value.toFixed(2)}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          `)
           emaList.append(emaItem);
         });
       })
@@ -2083,18 +2243,18 @@ class TradePlanner {
 
         });
 
-        let explanation = "";
-        if (highestVolumeContract) {
-          explanation = `The ${highestVolumeContract.ticker} ${highestVolumeContract.strike}${highestVolumeContract.type.toUpperCase()} expiring on ${highestVolumeContract.exp} has the highest volume > 100k and is likely to close ITM.`;
-        }
+        // let explanation = "";
+        // if (highestVolumeContract) {
+        //   explanation = `The ${highestVolumeContract.ticker} ${highestVolumeContract.strike}${highestVolumeContract.type.toUpperCase()} expiring on ${highestVolumeContract.exp} has the highest volume > 100k and is likely to close ITM.`;
+        // }
 
-        else if (mostLikelyWorthlessContract) {
-          explanation += ` The ${mostLikelyWorthlessContract.ticker} ${mostLikelyWorthlessContract.strike} ${mostLikelyWorthlessContract.type.toUpperCase()} is the highest out-of-the-money strike with low volume and is likely to expire worthless, along with all further OTM strikes.`;
-        }
+        // else if (mostLikelyWorthlessContract) {
+        //   explanation += ` The ${mostLikelyWorthlessContract.ticker} ${mostLikelyWorthlessContract.strike} ${mostLikelyWorthlessContract.type.toUpperCase()} is the highest out-of-the-money strike with low volume and is likely to expire worthless, along with all further OTM strikes.`;
+        // }
 
-        // Append the explanation text to the leaderboard or wherever appropriate
-        var explanationDiv = `<div class="mt-3 p-2 explanation-text">${explanation}</div>`;
-        leaderboard.append(explanationDiv);
+        // // Append the explanation text to the leaderboard or wherever appropriate
+        // var explanationDiv = `<div class="mt-3 p-2 explanation-text">${explanation}</div>`;
+        // leaderboard.append(explanationDiv);
 
       })
       .catch(error => {
@@ -2162,12 +2322,18 @@ class TradePlanner {
         }
 
 
-        thestrat.append($(`<div class="tweet-header"><strong>Potential Daily Setup</strong></div>`));
-        thestrat.append($(`<div data-toggle="popover" data-ticker="${ticker}"><p>Daily Candle:<br/>${candleType}</p></div>`));
-        thestrat.append($(`<div data-toggle="strat_popover" data-img="${comboImg}"><p><strong>Potential Combo</strong>:<br/>${stratData.thestrat_combo}</p></div>`));
+        // thestrat.append($(`<div class="tweet-header"><strong>Potential Daily Setup</strong></div>`));
+        // thestrat.append($(`<div data-toggle="popover" data-ticker="${ticker}"><p>Daily Candle:<br/>${candleType}</p></div>`));
+        // thestrat.append($(`<div data-toggle="strat_popover" data-img="${comboImg}"><p><strong>Potential Combo</strong>:<br/>${stratData.thestrat_combo}</p></div>`));
+        var strategyExplanation = `
+          <p>Yesterday's daily candle for ${ticker} was a <span class="fw-bold" data-toggle="popover" data-ticker="${ticker}">${candleType}</span>, setting up a potential <span class="fw-bold" data-toggle="strat_popover" data-img="${comboImg}">${stratData.thestrat_combo}</span> strategy.<br/><br/>
+          
+          Look for a long entry above yesterdays high at $${stratData.long_trigger}, or a short entry below yesterdays low at $${stratData.short_trigger}.</p>
+          `
 
+        thestrat.append($(strategyExplanation))
 
-        var triggersTable = $(`<table class="table text-center">`);
+        var triggersTable = $(`<table class="table text-center text-white">`);
         var triggersHeader = $(`<thead class="thead-dark">`);
         var triggersHeaderRow = $(`<tr>`);
         var triggersTargetsHeader = $(`<th scope="col"></th>`);
@@ -2200,7 +2366,7 @@ class TradePlanner {
         thestrat.append(triggersTable)
 
         // append the FTFC continuity table
-        var ftfcTable = $(`<table class="table text-center">`)
+        var ftfcTable = $(`<table class="table text-center text-white">`)
         var ftfcHeader = $(`<thead class="thead-dark">`);
         var ftfcHeaderRow = $(`<tr>`);
         var ftfcHeaderC = $(`<th scope="col">Timeframe Continuity</th>`);
@@ -2260,6 +2426,7 @@ class TradePlanner {
         }
 
         // show the Chart Combos
+        this.init_tradingview_popovers()
        
       })
       .catch(error => {
@@ -3023,8 +3190,11 @@ class TradePlanner {
         toolbar: {
           show: false,
         },
+        zoom: {
+          enabled: false,
+        },
         animations: {
-          enabled: true,
+          enabled: false,
           easing: 'easeinout',
           speed: 300,
           animateGradually: {
@@ -3333,7 +3503,7 @@ class TradePlanner {
         toolbar: false,
         zoom: {
           type: 'x',
-          enabled: true,
+          enabled: false,
           autoScaleYaxis: true
         },
       },
@@ -3467,24 +3637,84 @@ class TradePlanner {
 
   }
 
+  async render_price_widget(ticker) {
+    var url = `https://api.spyderacademy.com/v1/stock/stock_price/?ticker=${ticker}`;
+    let response = await $.ajax({ url: url, method: 'GET' });
+
+    if (response) {
+      console.log("response", response)
+      // get the price from the response dictionary 
+    //   {
+    //     "AAPL": {
+    //       "change": -0.68,
+    //       "pct": -0.3,
+    //       "previous_day_close": 229.79,
+    //       "price": 229.11,
+    //       "symbol": "AAPL",
+    //       "timestamp": "Mon, 02 Sep 2024 16:24:08 GMT"
+    //     }
+    //  }
+      
+      var current_price = response[ticker].price.toFixed(2)
+      // var change = response.change.toFixed(2)
+      // var pct = response.pct.toFixed(2) // TODO: make this a percentage 
+      // var directionArrowClass = change < 0 ? "fa-arrow-down" : "fa-arrow-up";
+      var directionGradientClass = response[ticker].change < 0 ? "gradient-red" : "gradient-green";
+      var timestamp = new Date(response[ticker].timestamp).toLocaleTimeString()
+      var directionArrowClass = response[ticker].change < 0 ? "fa-arrow-down" : "fa-arrow-up";
+      
+
+      $("#priceWidget").empty()
+      $("#priceWidget").append(`
+        <div class="card trade_card border-1 p-2 mx-0 my-1 lg-rounded ${directionGradientClass}" >
+            <div class="card-body p-1 tradeRow">
+                <div class="container p-0">
+                    <div class="row align-items-center">
+                        <div class="col-lg-1 col-2 m-0">
+                            <img class="tradeLogo" src="/images/logos/${ticker}.png" style="width: 3em; border-radius: 2em; border: 3px solid white;" />
+                        </div>
+                        <div class="col-lg-11 col-10 px-3">
+                            <div class="row ">
+                                <div class="col-8 small lh-1 fw-bold text-uppercase traderName text-nowrap"></div>
+                                <div class="col-4"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8 fs-3 lh-1 tradeContract text-nowrap ">${ticker}</div>
+                                <div class="col-4 fs-3 lh-1 tradeGain text-end">$${current_price}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8 text-muted lh-1 priceTime text-uppercase " style="font-size: 0.6em;">as of ${timestamp}</div>
+                                <div class="col-4 small lh-1 priceChange text-end"><i class='fa ${directionArrowClass}'></i> ${Math.abs(response[ticker].change.toFixed(2))} (${Math.abs(response[ticker].pct)}%)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `)
+    }
+
+  }
 
   async render_favorites() {
     var url = `https://api.spyderacademy.com/v1/users/watchlist/`;
 
     try {
       let response = await $.ajax({ url: url, method: 'GET' });
-      if (response && response.length > 0) {
-        response.forEach(stock => {
+      console.log("Favorites:", response)
+      if (response) {
+        // iterate the response dictionary
+        for (const [key, stock] of Object.entries(response)) {
           // Check if the card for this stock already exists
-          let existingCard = $(`#favorites_card-${stock["symbol"]}`);
+          let existingCard = $(`#favorites_card-${stock.symbol}`);
 
           if (existingCard.length > 0) {
             // Update existing card content
-            existingCard.find(".symbol_price").text(stock["price"].toFixed(2));
+            existingCard.find(".symbol_price").text(stock.price.toFixed(2));
 
             var directionArrowClass = stock["change"] < 0 ? "fa-arrow-down" : "fa-arrow-up";
-            existingCard.find(".symbol_change").html(`<i class='fa ${directionArrowClass}'></i> ${Math.abs(stock["change"].toFixed(2))} (${Math.abs(stock["pct"])}%)`);
-            existingCard.find(".card").removeClass("gradient-red gradient-green").addClass(stock["change"] < 0 ? "gradient-red" : "gradient-green");
+            existingCard.find(".symbol_change").html(`<i class='fa ${directionArrowClass}'></i> ${Math.abs(stock.change.toFixed(2))} (${Math.abs(stock.pct)}%)`);
+            existingCard.find(".card").removeClass("gradient-red gradient-green").addClass(stock.change < 0 ? "gradient-red" : "gradient-green");
           } else {
             // Clone the template
             let card = $(".favorite_stocks_template").clone();
@@ -3493,19 +3723,19 @@ class TradePlanner {
             card.attr('id', `favorites_card-${stock["symbol"]}`);
 
             // Set the properties
-            card.find(".tradeLogo").attr("src", `/images/logos/${stock["symbol"]}.png`);
-            card.find(".symbol_link").text(stock["symbol"]);
+            card.find(".tradeLogo").attr("src", `/images/logos/${stock.symbol}.png`);
+            card.find(".symbol_link").text(stock.symbol);
             card.find(".symbol_link").attr("href", `/stocks/${stock["symbol"].toLowerCase()}/`);
-            card.find(".symbol_price").text(stock["price"].toFixed(2));
+            card.find(".symbol_price").text(stock.price.toFixed(2));
 
             var directionArrowClass = stock["change"] < 0 ? "fa-arrow-down" : "fa-arrow-up";
-            card.find(".symbol_change").html(`<i class='fa ${directionArrowClass}'></i> ${Math.abs(stock["change"].toFixed(2))} (${Math.abs(stock["pct"])}%)`);
-            card.find(".card").addClass(stock["change"] < 0 ? "gradient-red" : "gradient-green");
+            card.find(".symbol_change").html(`<i class='fa ${directionArrowClass}'></i> ${Math.abs(stock.change.toFixed(2))} (${Math.abs(stock.pct)}%)`);
+            card.find(".card").addClass(stock.change < 0 ? "gradient-red" : "gradient-green");
 
             // Append the filled card to the container
             $("#favorite_stocks").append(card);
           }
-        });
+        }
       }
     } catch (error) {
       console.error("Error rendering favorites:", error);
