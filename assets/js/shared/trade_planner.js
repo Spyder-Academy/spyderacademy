@@ -489,7 +489,7 @@ class TradePlanner {
 
     // Initialize or re-layout Masonry
     var msnry = new Masonry('#stock_social_row', {
-      percentPosition: true
+      percentPosition: false
     });
 
     // Layout Masonry after each image loads
@@ -983,7 +983,7 @@ class TradePlanner {
 
           // Initialize Masonry
           var msnry = new Masonry('.flow_tracker_row', {
-            percentPosition: true
+            percentPosition: false
           });
 
           // Layout Masonry after each image loads
@@ -1014,8 +1014,8 @@ class TradePlanner {
 
 
         //  append the flow card
-        $("#flow_tracker_row").append(flow_card);
         $(".flow_tracker_row").removeClass("d-none");
+        $("#flow_tracker_row").append(flow_card);
       }
     }
     catch (error) {
@@ -2655,15 +2655,24 @@ class TradePlanner {
       },
     };
 
-    var epsChart = new ApexCharts(document.querySelector("#epsChart"), optionsEPS);
-    epsChart.render();
+    var epsElement = document.querySelector("#epsChart")
+    if (epsElement !== null) {
+      var epsChart = new ApexCharts(epsElement, optionsEPS);
+      epsChart.render();
+    }
 
     return financial_data
   }
 
   // Function to process data and set chart options
   async renderSankeyChart(financial_data, qtrIndex = 0) {
-    var chart = echarts.init(document.getElementById('sankey_chart'));
+    var chartElement = document.getElementById('sankey_chart')
+
+    if (chartElement == undefined) {
+      return
+    }
+
+    var chart = echarts.init(chartElement);
 
     const quarterlyEarningsList = financial_data;
     const quarterlyEarnings = quarterlyEarningsList[qtrIndex]
@@ -3285,7 +3294,6 @@ class TradePlanner {
 
 
     if (this.chartGEX == null) {
-      console.log("create the chart")
       $(chartid).removeClass("d-none")
       $(chartid).empty()
 
@@ -3438,7 +3446,6 @@ class TradePlanner {
       }
     }
 
-    console.log(expectedMove)
     // Proceed to use lastCloseDataPoint for your calculations
     if (expectedMove === null) nextTimestamp = lastCloseDataPoint.x;
     expectedMove = expectedMove || { "bears": lastCloseDataPoint.y, "bulls": lastCloseDataPoint.y }; // Adjust to use lastCloseDataPoint
@@ -3460,7 +3467,6 @@ class TradePlanner {
       y: expectedMove.bears,
     };
 
-    console.log("Exp Move", expectedMove)
 
     // Assume that the last actual stock price will be the starting point for projections
 
@@ -3638,32 +3644,67 @@ class TradePlanner {
   }
 
   async render_price_widget(ticker) {
-    var url = `https://api.spyderacademy.com/v1/stock/stock_price/?ticker=${ticker}`;
-    let response = await $.ajax({ url: url, method: 'GET' });
+    var current_price = "-"
+    var directionGradientClass = "gradient-green";
+    var timestamp = new Date()
+    var directionArrowClass = ""
+    var change = "-"
+    var pct = "-"
+    
+    // try to get the price from the API, if it fails, set the price to "-" then render the widget
+    try {
+      var url = `https://api.spyderacademy.com/v1/stock/stock_price/?ticker=${ticker}`;
+      let response = await $.ajax({ url: url, method: 'GET' });
 
-    if (response) {
-      console.log("response", response)
-      // get the price from the response dictionary 
-    //   {
-    //     "AAPL": {
-    //       "change": -0.68,
-    //       "pct": -0.3,
-    //       "previous_day_close": 229.79,
-    //       "price": 229.11,
-    //       "symbol": "AAPL",
-    //       "timestamp": "Mon, 02 Sep 2024 16:24:08 GMT"
-    //     }
-    //  }
-      
-      var current_price = response[ticker].price.toFixed(2)
-      // var change = response.change.toFixed(2)
-      // var pct = response.pct.toFixed(2) // TODO: make this a percentage 
-      // var directionArrowClass = change < 0 ? "fa-arrow-down" : "fa-arrow-up";
-      var directionGradientClass = response[ticker].change < 0 ? "gradient-red" : "gradient-green";
-      var timestamp = new Date(response[ticker].timestamp).toLocaleTimeString()
-      var directionArrowClass = response[ticker].change < 0 ? "fa-arrow-down" : "fa-arrow-up";
-      
+      if (response) {
+        current_price = response[ticker].price.toFixed(2)
 
+        directionGradientClass = response[ticker].change < 0 ? "gradient-red" : "gradient-green";
+        timestamp = new Date(response[ticker].timestamp).toLocaleTimeString()
+        directionArrowClass = response[ticker].change < 0 ? "fa-arrow-down" : "fa-arrow-up";
+        change = Math.abs(response[ticker].change.toFixed(2))
+        pct = Math.abs(response[ticker].pct)
+
+        // render the widget
+        $("#priceWidget").empty()
+        $("#priceWidget").append(`
+          <div class="card trade_card border-1 p-2 mx-0 my-1 lg-rounded ${directionGradientClass}" >
+              <div class="card-body p-1 tradeRow">
+                  <div class="container p-0">
+                      <div class="row align-items-center">
+                          <div class="col-lg-1 col-2 m-0">
+                              <img class="tradeLogo" src="/images/logos/${ticker}.png" style="width: 3em; border-radius: 2em; border: 3px solid white;" />
+                          </div>
+                          <div class="col-lg-11 col-10 px-3">
+                              <div class="row ">
+                                  <div class="col-8 small lh-1 fw-bold text-uppercase traderName text-nowrap"></div>
+                                  <div class="col-4"></div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-8 fs-3 lh-1 tradeContract text-nowrap ">${ticker}</div>
+                                  <div class="col-4 fs-3 lh-1 tradeGain text-end">$${current_price}</div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-8 text-muted lh-1 priceTime text-uppercase " style="font-size: 0.6em;">as of ${timestamp}</div>
+                                  <div class="col-4 small lh-1 priceChange text-end"><i class='fa ${directionArrowClass}'></i> ${change} (${pct}%)</div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          `)
+      }
+    } 
+    catch (error) {
+      current_price = "-"
+      directionGradientClass = "gradient-green";
+      timestamp = new Date().toLocaleTimeString()
+      directionArrowClass = ""
+      change = "-"
+      pct = "-"
+
+      // render the empty widget without price info
       $("#priceWidget").empty()
       $("#priceWidget").append(`
         <div class="card trade_card border-1 p-2 mx-0 my-1 lg-rounded ${directionGradientClass}" >
@@ -3680,11 +3721,7 @@ class TradePlanner {
                             </div>
                             <div class="row">
                                 <div class="col-8 fs-3 lh-1 tradeContract text-nowrap ">${ticker}</div>
-                                <div class="col-4 fs-3 lh-1 tradeGain text-end">$${current_price}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-8 text-muted lh-1 priceTime text-uppercase " style="font-size: 0.6em;">as of ${timestamp}</div>
-                                <div class="col-4 small lh-1 priceChange text-end"><i class='fa ${directionArrowClass}'></i> ${Math.abs(response[ticker].change.toFixed(2))} (${Math.abs(response[ticker].pct)}%)</div>
+                                <div class="col-4 fs-3 lh-1 tradeGain text-end"></div>
                             </div>
                         </div>
                     </div>
@@ -3693,6 +3730,8 @@ class TradePlanner {
         </div>
         `)
     }
+    
+    
 
   }
 
@@ -3701,7 +3740,6 @@ class TradePlanner {
 
     try {
       let response = await $.ajax({ url: url, method: 'GET' });
-      console.log("Favorites:", response)
       if (response) {
         // iterate the response dictionary
         for (const [key, stock] of Object.entries(response)) {
