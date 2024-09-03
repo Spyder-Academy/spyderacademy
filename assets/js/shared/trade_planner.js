@@ -3668,7 +3668,7 @@ class TradePlanner {
         // render the widget
         $("#priceWidget").empty()
         $("#priceWidget").append(`
-          <div class="card trade_card border-1 p-2 mx-0 my-1 lg-rounded ${directionGradientClass}" >
+          <div class="card trade_card border-1 p-2 mx-0 my-0 lg-rounded ${directionGradientClass}" >
               <div class="card-body p-1 tradeRow">
                   <div class="container p-0">
                       <div class="row align-items-center">
@@ -3707,7 +3707,7 @@ class TradePlanner {
       // render the empty widget without price info
       $("#priceWidget").empty()
       $("#priceWidget").append(`
-        <div class="card trade_card border-1 p-2 mx-0 my-1 lg-rounded ${directionGradientClass}" >
+        <div class="card trade_card border-1 p-2 mx-0 my-0 lg-rounded ${directionGradientClass}" >
             <div class="card-body p-1 tradeRow">
                 <div class="container p-0">
                     <div class="row align-items-center">
