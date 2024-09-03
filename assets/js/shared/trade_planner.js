@@ -2458,6 +2458,7 @@ class TradePlanner {
       $(".tenq").empty()
     }
 
+    this.renderIncomeStatement(financial_data["income_statements"], 0)  
     this.renderSankeyChart(financial_data["income_statements"], 0)
 
     // update the summaries row
@@ -2505,6 +2506,7 @@ class TradePlanner {
           dataPointSelection: (event, chartContext, { dataPointIndex }) => {
             const index = dataPointIndex;
             this.renderSankeyChart(financial_data["income_statements"], index);
+            this.renderIncomeStatement(financial_data["income_statements"], index);
           }
         }
       },
@@ -2610,6 +2612,7 @@ class TradePlanner {
           dataPointSelection: (event, chartContext, { dataPointIndex }) => {
             const index = dataPointIndex;
             this.renderSankeyChart(financial_data["income_statements"], index);
+            this.renderIncomeStatement(financial_data["income_statements"], index);
           }
         }
       },
@@ -2663,6 +2666,182 @@ class TradePlanner {
 
     return financial_data
   }
+
+  async renderIncomeStatement(financial_data, qtrIndex = 0) {
+    var incomeStatementElement = $('#income_statement')
+    if (incomeStatementElement == undefined) {
+      return
+    }
+
+    function monetize(v, t = 0) {
+      var pv = v
+      v = Math.abs(parseFloat(v) || 0)
+      if (v >= 1e6) {
+        // millions, with commas
+        pv = `${(parseFloat(v) / 1e6).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`
+      }
+      
+      return pv
+    }
+
+    function calc_yoy(thisQuarter, lastYearQuarter) {
+      var yoy = ((thisQuarter - lastYearQuarter) / lastYearQuarter) * 100
+      if (lastYearQuarter == 0 || isNaN(lastYearQuarter)) {
+        return "-"
+      }
+      return yoy.toFixed(1) + "%"
+    }
+
+    function calc_qoq(thisQuarter, lastQuarter) {
+      var qoq = ((thisQuarter - lastQuarter) / lastQuarter) * 100
+      if (lastQuarter == 0 || isNaN(lastQuarter)) {
+        return "-"
+      }
+      return qoq.toFixed(1) + "%"
+    }
+
+    // clear the table
+    incomeStatementElement.empty()
+
+    // add the header
+    var headerRow = $('<tr>').append($('<th class="border-0 fs-4">').text('Key Financials'))
+    incomeStatementElement.append(headerRow)
+
+    // add the subheader
+    var thisQuarter = financial_data[qtrIndex]
+    var lastQuarter = financial_data[qtrIndex + 1]
+    var lastYearQuarter = financial_data[qtrIndex + 4]
+
+    var subheaderRow = $('<tr>')
+    subheaderRow.append($('<th>').text('$ million unless stated otherwise'))
+    subheaderRow.append($('<th>').text(lastYearQuarter.report_period))
+    subheaderRow.append($('<th>').text(lastQuarter.report_period))
+    subheaderRow.append($('<th class="highlight">').text(thisQuarter.report_period))
+    subheaderRow.append($('<th>').text('YoY'))
+    subheaderRow.append($('<th>').text('QoQ'))
+
+    incomeStatementElement.append(subheaderRow)
+
+    // add the data, formatted in the millions
+    // revenue
+    var revenueRow = $('<tr class="incoming">').append($('<td>').text('Total Revenue'))
+    revenueRow.append($('<td>').text(monetize(lastYearQuarter.revenue)))
+    revenueRow.append($('<td>').text(monetize(lastQuarter.revenue)))
+    revenueRow.append($('<td class="highlight">>').text(monetize(thisQuarter.revenue)))
+    revenueRow.append($('<td>').text(calc_yoy(thisQuarter.revenue, lastYearQuarter.revenue)))
+    revenueRow.append($('<td>').text(calc_qoq(thisQuarter.revenue, lastQuarter.revenue)))
+
+    // cost of revenue
+    var costOfRevenueRow = $('<tr class="outgoing">').append($('<td>').text('Cost of Goods Sold'))
+    costOfRevenueRow.append($('<td>').text(monetize(lastYearQuarter.cost_of_revenue)))
+    costOfRevenueRow.append($('<td>').text(monetize(lastQuarter.cost_of_revenue)))
+    costOfRevenueRow.append($('<td class="highlight">').text(monetize(thisQuarter.cost_of_revenue)))
+    costOfRevenueRow.append($('<td>').text(calc_yoy(thisQuarter.cost_of_revenue, lastYearQuarter.cost_of_revenue)))
+    costOfRevenueRow.append($('<td>').text(calc_qoq(thisQuarter.cost_of_revenue, lastQuarter.cost_of_revenue)))
+
+    // gross profit 
+    var grossProfitRow = $('<tr class="incoming">').append($('<td>').text('Gross Profit'))
+    grossProfitRow.append($('<td>').text(monetize(lastYearQuarter.gross_profit)))
+    grossProfitRow.append($('<td>').text(monetize(lastQuarter.gross_profit)))
+    grossProfitRow.append($('<td class="highlight">').text(monetize(thisQuarter.gross_profit)))
+    grossProfitRow.append($('<td>').text(calc_yoy(thisQuarter.gross_profit, lastYearQuarter.gross_profit)))
+    grossProfitRow.append($('<td>').text(calc_qoq(thisQuarter.gross_profit, lastQuarter.gross_profit)))
+
+      
+    // operating expenses
+    var operatingExpensesRow = $('<tr class="outgoing">').append($('<td>').text('Operating Expenses'))
+    operatingExpensesRow.append($('<td>').text(monetize(lastYearQuarter.operating_expense)))
+    operatingExpensesRow.append($('<td>').text(monetize(lastQuarter.operating_expense)))
+    operatingExpensesRow.append($('<td class="highlight">').text(monetize(thisQuarter.operating_expense)))
+    operatingExpensesRow.append($('<td>').text(calc_yoy(thisQuarter.operating_expense, lastYearQuarter.operating_expense)))
+    operatingExpensesRow.append($('<td>').text(calc_qoq(thisQuarter.operating_expense, lastQuarter.operating_expense))) 
+
+    
+      
+    // SG&A
+    var sgaRow = $('<tr class="sub_row">').append($('<td>').text('SG&A'))
+    sgaRow.append($('<td>').text(monetize(lastYearQuarter.selling_general_and_administrative_expenses)))
+    sgaRow.append($('<td>').text(monetize(lastQuarter.selling_general_and_administrative_expenses)))
+    sgaRow.append($('<td class="highlight">').text(monetize(thisQuarter.selling_general_and_administrative_expenses)))
+    sgaRow.append($('<td>').text(calc_yoy(thisQuarter.selling_general_and_administrative_expenses, lastYearQuarter.selling_general_and_administrative_expenses)))
+    sgaRow.append($('<td>').text(calc_qoq(thisQuarter.selling_general_and_administrative_expenses, lastQuarter.selling_general_and_administrative_expenses)))
+      
+    // R&D
+    var rdRow = $('<tr class="sub_row">').append($('<td>').text('R&D'))
+    rdRow.append($('<td>').text(monetize(lastYearQuarter.research_and_development)))
+    rdRow.append($('<td>').text(monetize(lastQuarter.research_and_development)))
+    rdRow.append($('<td class="highlight">').text(monetize(thisQuarter.research_and_development)))
+    rdRow.append($('<td>').text(calc_yoy(thisQuarter.research_and_development, lastYearQuarter.research_and_development)))
+    rdRow.append($('<td>').text(calc_qoq(thisQuarter.research_and_development, lastQuarter.research_and_development)))
+      
+    // Other Expenses
+    var otherExpensesRow = $('<tr class="sub_row">').append($('<td>').text('Other Expenses'))
+    otherExpensesRow.append($('<td>').text(monetize(lastYearQuarter.other_expenses)))
+    otherExpensesRow.append($('<td>').text(monetize(lastQuarter.other_expenses)))
+    otherExpensesRow.append($('<td class="highlight">').text(monetize(thisQuarter.other_expenses)))
+    otherExpensesRow.append($('<td>').text(calc_yoy(thisQuarter.other_expenses, lastYearQuarter.other_expenses)))
+    otherExpensesRow.append($('<td>').text(calc_qoq(thisQuarter.other_expenses, lastQuarter.other_expenses)))
+
+
+    // operating income
+    var operatingIncomeRow = $('<tr class="incoming">').append($('<td>').text('Operating Profit'))
+    operatingIncomeRow.append($('<td>').text(monetize(lastYearQuarter.operating_income)))
+    operatingIncomeRow.append($('<td>').text(monetize(lastQuarter.operating_income)))
+    operatingIncomeRow.append($('<td class="highlight">').text(monetize(thisQuarter.operating_income)))
+    operatingIncomeRow.append($('<td>').text(calc_yoy(thisQuarter.operating_income, lastYearQuarter.operating_income)))
+    operatingIncomeRow.append($('<td>').text(calc_qoq(thisQuarter.operating_income, lastQuarter.operating_income)))
+
+    // pretax income
+    var pretaxIncomeRow = $('<tr class="incoming">').append($('<td>').text('Profit Before Tax (EBIT)'))
+    pretaxIncomeRow.append($('<td>').text(monetize(lastYearQuarter.ebit)))
+    pretaxIncomeRow.append($('<td>').text(monetize(lastQuarter.ebit)))
+    pretaxIncomeRow.append($('<td class="highlight">').text(monetize(thisQuarter.ebit)))
+    pretaxIncomeRow.append($('<td>').text(calc_yoy(thisQuarter.ebit, lastYearQuarter.ebit)))
+    pretaxIncomeRow.append($('<td>').text(calc_qoq(thisQuarter.ebit, lastQuarter.ebit)))
+
+    // tax
+    var taxRow = $('<tr class="sub_row">').append($('<td>').text('Tax'))
+    taxRow.append($('<td>').text(monetize(lastYearQuarter.income_tax_expense)))
+    taxRow.append($('<td>').text(monetize(lastQuarter.income_tax_expense)))
+    taxRow.append($('<td class="highlight">').text(monetize(thisQuarter.income_tax_expense)))
+    taxRow.append($('<td>').text(calc_yoy(thisQuarter.income_tax_expense, lastYearQuarter.income_tax_expense)))
+    taxRow.append($('<td>').text(calc_qoq(thisQuarter.income_tax_expense, lastQuarter.income_tax_expense))) 
+
+    // interest expense
+    var interestExpenseRow = $('<tr class="sub_row">').append($('<td>').text('Interest Expense'))
+    interestExpenseRow.append($('<td>').text(monetize(lastYearQuarter.interest_expense)))
+    interestExpenseRow.append($('<td>').text(monetize(lastQuarter.interest_expense)))
+    interestExpenseRow.append($('<td class="highlight">').text(monetize(thisQuarter.interest_expense)))
+    interestExpenseRow.append($('<td>').text(calc_yoy(thisQuarter.interest_expense, lastYearQuarter.interest_expense)))
+    interestExpenseRow.append($('<td>').text(calc_qoq(thisQuarter.interest_expense, lastQuarter.interest_expense)))  
+      
+    // net income
+    var netIncomeRow = $('<tr class="incoming">').append($('<td>').text('Profit After Tax (Net Income)'))
+    netIncomeRow.append($('<td>').text(monetize(lastYearQuarter.net_income)))
+    netIncomeRow.append($('<td>').text(monetize(lastQuarter.net_income)))
+    netIncomeRow.append($('<td class="highlight">').text(monetize(thisQuarter.net_income)))
+    netIncomeRow.append($('<td>').text(calc_yoy(thisQuarter.net_income, lastYearQuarter.net_income)))
+    netIncomeRow.append($('<td>').text(calc_qoq(thisQuarter.net_income, lastQuarter.net_income))) 
+    
+    incomeStatementElement.append(revenueRow)
+    incomeStatementElement.append(costOfRevenueRow)
+    incomeStatementElement.append(grossProfitRow)
+    incomeStatementElement.append(operatingExpensesRow)
+    
+    incomeStatementElement.append(sgaRow)
+    incomeStatementElement.append(rdRow)
+    incomeStatementElement.append(otherExpensesRow)
+
+    incomeStatementElement.append(operatingIncomeRow)
+    incomeStatementElement.append(pretaxIncomeRow)
+    incomeStatementElement.append(taxRow)
+    incomeStatementElement.append(interestExpenseRow)
+
+    incomeStatementElement.append(netIncomeRow)
+    
+  } 
+
+  
 
   // Function to process data and set chart options
   async renderSankeyChart(financial_data, qtrIndex = 0) {

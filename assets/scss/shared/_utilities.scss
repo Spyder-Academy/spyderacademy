@@ -805,6 +805,61 @@ body.navbar-open {
   font-size: 0.8em;
 }
 
+.financial-summary {
+  font-size: 0.9rem;
+}
+
+.financial-summary th,
+.financial-summary td {
+  padding: 0.5rem;
+  text-align: right;
+  border: 0;
+}
+
+.financial-summary .incoming {
+  color: green;
+}
+.financial-summary .outgoing {
+  color: red;
+}
+
+.financial-summary .sub_row{
+  border: 0;
+}
+
+.financial-summary .sub_row:first-child {
+  color: #000;
+} 
+.financial-summary th:first-child,
+.financial-summary td:first-child {
+  text-align: left;
+  font-weight: bold;
+}
+.financial-summary .sub_row td:first-child {
+  font-weight: normal;
+  padding-left: 2em;
+}
+
+.financial-summary .highlight {
+  background-color: #e6f3ff;
+}
+
+.financial-summary .total-revenue {
+  // background-color: #f0f0f0;
+}
+
+.financial-summary .gross-profit {
+  // background-color: #f8f8f8;
+}
+
+.financial-summary .positive {
+  color: green;
+}
+
+.financial-summary .negative {
+  color: red;
+}
+
 /* Responsive adjustments for small screen */
 @media (max-width: 1200px) {
  
