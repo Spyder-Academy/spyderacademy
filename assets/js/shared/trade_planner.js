@@ -1048,9 +1048,13 @@ class TradePlanner {
 
       if (response) {
         var item = response;
+        console.log("item", item)
         if (item == null){
           $(".gammaExpectedRange").hide()
           return
+        }
+        else{
+          $(".gammaExpectedRange").removeClass("d-none")
         }
 
         var movePercent = (item.movePercent * 100).toFixed(2) + '%';
