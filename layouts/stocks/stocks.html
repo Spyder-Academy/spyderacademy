@@ -64,6 +64,7 @@
               
               <!-- Market Trends - Gamma Levels -->
               <div class="post " style="box-shadow: none;">
+
                 <div class="row">
                   <div id="gammaChartContainer" class="p-0 m-0 col-xl-6 col-12 ">
                     <div class="card border-0 p-3 mr-2 h-100 d-flex">
@@ -76,7 +77,10 @@
                   <div id="gammaOverlayContainer" class="p-0 m-0  col-xl-6 col-12">
                     <div class="card border-0 p-3 m-0 h-100 d-flex">
                       <div class="px-2 px-lg-0 fw-bold text-uppercase gradient-text fs-4">{{ .Page.Params.ticker }} Market Gamma Walls</div>
+
                       <div class="w-100 gammaChartOverlay"  id="mobileGammaChartOverlay">Loading Gamma Overlay...</div>
+                    <h6 class="p-3 text-end"><a href="/stocks/{{lower .Page.Params.ticker}}/options_activity/" title="Show More Gamma Activity for {{ .Page.Params.ticker }}">Show More</a></h6>
+
                     </div>
                   </div>
                 </div>
@@ -142,17 +146,17 @@
 
 
             <!-- Options Activity -->
-            <div class="col-12 bg-white border-0 mb-lg-3 m-0 p-0 lg-rounded">
+            <!-- <div class="col-12 bg-white border-0 mb-lg-3 m-0 p-0 lg-rounded">
               <h4 class="gradient-text px-3 pt-3" >Options Activity</h4>
 
-              <div class="row m-3 flow_tracker_row" data-masonry="{percentPosition: true}">
+              <div id="flow_tracker_row" class="row m-3 flow_tracker_row" data-masonry="{percentPosition: true}">
                 <div class="col-xl-3 col-12 p-0" id="leaderboard_signal_card">
                   <div class="card border-0 lg-rounded">
                     <div class="card-body p-0" id="leaderboardSignals"></div>
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
 
         </div> <!-- end row -->
@@ -214,6 +218,9 @@
 
             var ticker = {{ .Page.Params.ticker }};
 
+            if (ticker == null) {
+              window.location = "/tradesocial/"
+            }
 
             // Trades
             // tradePlanner.getAuthenticatedMemberDetails((memberProfile) => {

@@ -304,6 +304,7 @@ class TradePlanner {
   }
 
   createTweetTemplate(tweet) {
+    console.log("tweet", tweet)
     var author = tweet["author"]
     var symbol = tweet["symbol"]
     var message = tweet["message"].replace(/\n/g, "<br/>");
@@ -982,12 +983,12 @@ class TradePlanner {
           chart.render();
 
           // Initialize Masonry
-          var msnry = new Masonry('.flow_tracker_row', {
+          var msnry = new Masonry('#flow_tracker_row', {
             percentPosition: false
           });
 
           // Layout Masonry after each image loads
-          imagesLoaded('.flow_tracker_row').on('progress', function() {
+          imagesLoaded('#flow_tracker_row').on('progress', function() {
             msnry.layout();
           });
         });
@@ -1023,6 +1024,248 @@ class TradePlanner {
       throw error
     }
   }
+
+  async renderLiveGammaChart(ticker) {
+    console.log("render live chart for ", ticker)
+
+    // Show the card by adding the 'show' class
+    var tvChartEl = $(".tvChartHeader")[0]
+    $(".tvChartHeader").empty()
+
+    var chart = LightweightCharts.createChart(tvChartEl, {
+        height: 600,
+        rightPriceScale: {
+            visible: true,
+            borderVisible: false,
+        },
+        leftPriceScale: {
+            visible: true,
+            borderColor: '#0000000',
+        },
+        timeScale: {
+            timeVisible: true,
+            borderVisible: false,
+        },
+        rightPriceScale: {
+            borderVisible: false,
+        },
+        layout: {
+            background: {
+                type: 'solid',
+                color: 'black',
+            },
+            textColor: 'white',
+        },
+        crosshair: {
+            horzLine: {
+                visible: true,
+                labelVisible: true,
+            },
+            vertLine: {
+                visible: true,
+                style: 0,
+                width: 2,
+                color: 'rgba(32, 38, 46, 0.1)',
+                labelVisible: true,
+            },
+        },
+        // hide the grid lines
+        grid: {
+            vertLines: {
+                visible: false,
+            },
+            horzLines: {
+                visible: false,
+            },
+        },
+    });
+
+    var priceSeries = chart.addCandlestickSeries({
+        priceScaleId: 'left',
+        overlay: true,
+        lineWidth: 6,
+        priceLineVisible: true, // Remove the horizontal line for the current close price
+    });
+
+
+    // Get the gamma data
+    var jsonData = await this._fetchGEXOverlayData(ticker, 'week');
+
+    const { stockSeries, gammaSeries, gexAnnotations, netGammaSeries, callGammaSeries, putGammaSeries } = this._prepareGEXOverlayChartData(jsonData);
+    
+    // add the price data to the chart
+    var priceData = [];
+    stockSeries.forEach((item) => {
+      // convert a UTC date from firebase to a timestamp for Tradingview lightweight charts, and present in Eastern Time  
+      var localTime = new Date(new Date(item.x).toLocaleString('en-US', { timeZone: 'America/New_York' }));
+      var timestampInSeconds = Math.floor(localTime.getTime() / 1000);
+      
+      priceData.push({
+          time: timestampInSeconds,
+          open: item.o,
+          high: item.h,
+          low: item.l,
+          close: item.c
+      });
+
+    });
+    priceSeries.setData(priceData);
+
+    // add the net gamma series with a different y axis
+    var netGammaSeriesData = [];
+    netGammaSeries.forEach((item) => {  
+      var localTime = new Date(new Date(item.x).toLocaleString('en-US', { timeZone: 'America/New_York' }));
+      var timestampInSeconds = Math.floor(localTime.getTime() / 1000);
+      var price = item.y  
+
+      netGammaSeriesData.push({
+        time: timestampInSeconds, 
+        value: price
+      });
+    });
+
+    var netGammaSeriesChart = chart.addLineSeries({
+      color: 'rgba(255, 255, 255, 0.7)',  // White color
+      priceScaleId: 'right',
+      overlay: true,
+      priceLineVisible: false,
+      lastValueVisible: true,
+      lineWidth: 2,
+      title: 'Net Gamma',
+    });
+
+    netGammaSeriesChart.setData(netGammaSeriesData);  
+
+    // draw a horizontal line at 0
+    const zeroLine = {
+        price: 0,
+        color: 'rgba(255, 255, 255, 0.7)',
+        lineWidth: 2,
+        lineStyle: 2, // LineStyle.Dashed
+        axisLabelVisible: true,
+        title: 'Gamma Zero Line',
+    };
+    
+    netGammaSeriesChart.createPriceLine(zeroLine);
+    
+
+    // add the net call gamma series with a different y axis
+    var netCallGammaSeriesData = [];
+    callGammaSeries.forEach((item) => {  
+      var localTime = new Date(new Date(item.x).toLocaleString('en-US', { timeZone: 'America/New_York' }));
+      var timestampInSeconds = Math.floor(localTime.getTime() / 1000);
+      var price = item.y  
+
+      netCallGammaSeriesData.push({
+        time: timestampInSeconds, 
+        value: price
+      });
+    });
+
+    var netCallGammaSeriesChart = chart.addLineSeries({
+      color: 'rgba(0, 255, 0, 0.7)',  // Green color
+      priceScaleId: 'right',
+      overlay: true,
+      priceLineVisible: false,
+      lastValueVisible: true,
+      title: 'Net Call Gamma',
+    });
+
+    netCallGammaSeriesChart.setData(netCallGammaSeriesData);  
+
+    // add the net put gamma series with a different y axis
+    var netPutGammaSeriesData = [];
+    putGammaSeries.forEach((item) => {  
+      var localTime = new Date(new Date(item.x).toLocaleString('en-US', { timeZone: 'America/New_York' }));
+      var timestampInSeconds = Math.floor(localTime.getTime() / 1000);
+      var price = item.y  
+
+      netPutGammaSeriesData.push({
+        time: timestampInSeconds, 
+        value: price
+      });
+    });
+
+    var netPutGammaSeriesChart = chart.addLineSeries({
+      color: 'rgba(255, 0, 0, 0.7)',  //  Red color
+      priceScaleId: 'right',
+      overlay: true,
+      priceLineVisible: false,
+      lastValueVisible: true,
+      title: 'Net Put Gamma',
+    });
+
+    netPutGammaSeriesChart.setData(netPutGammaSeriesData); 
+
+    // gamma series
+    var gammaSeriesData = [];
+    gammaSeries.forEach((item) => {  
+      var localTime = new Date(new Date(item.x).toLocaleString('en-US', { timeZone: 'America/New_York' }));
+      var timestampInSeconds = Math.floor(localTime.getTime() / 1000);
+      var price = item.y  
+
+      gammaSeriesData.push({
+        time: timestampInSeconds, 
+        value: price  
+      });
+    });
+
+    var gammaSeriesChart = chart.addLineSeries({
+      color: 'rgba(255, 165, 0, 0.7)',  // Orange color
+      priceScaleId: 'left',
+      overlay: true,
+      priceLineVisible: false,  
+      lastValueVisible: true,
+      lineWidth: 20,  // Make the line thicker
+      lineType: window.LightweightCharts.LineType.WithGaps,
+      title: 'Max Gamma',
+    });
+
+    // gammaSeriesChart.setData(gammaSeriesData);
+
+    // make the point transparent if the next value changes
+    gammaSeriesChart.setData(gammaSeriesData.map((point, index) => {
+      if (index < gammaSeriesData.length - 1 && point.value != gammaSeriesData[index + 1].value) {
+        return { time: point.time, value: point.value, color: 'transparent' };
+      }
+      return point;
+    }));  
+
+    chart.timeScale().fitContent();
+
+    // add a firebase listener to update the chart when new gamma data is available
+    var gammaRef = this.firestore_db.collection("gamma").doc(ticker).collection("snapshots").orderBy("created_date", "desc").limit(1);
+    
+    gammaRef.onSnapshot((snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        if (change.type === "added") {
+          var gammaData = change.doc.data();
+          var maxGamma = gammaData["max_gamma"]
+
+          const estOffset = 4 * 60 * 60 * 1000; 
+          var created_date = new Date((new Date(change.doc.id)).getTime() - estOffset);
+          var timestampInSeconds = Math.floor(created_date.getTime() / 1000);
+
+          // console.log("new gamma data", maxGamma, created_date)
+
+          // update the chart with the new data
+          gammaSeriesChart.update({time: timestampInSeconds, value: maxGamma["Strike"]})
+          netGammaSeriesChart.update({time: timestampInSeconds, value: maxGamma["net_gamma"]})
+          netCallGammaSeriesChart.update({time: timestampInSeconds, value: maxGamma["call_gamma"]})
+          netPutGammaSeriesChart.update({time: timestampInSeconds, value: maxGamma["put_gamma"]})
+          // use the last price from the price series
+          var currentData = priceSeries.data()
+          var lastClose = currentData[currentData.length - 1].close;
+          priceSeries.update({time: timestampInSeconds, open: lastClose, high: maxGamma["Spot"], low: maxGamma["Spot"], close: maxGamma["Spot"]})
+          
+        }
+      });
+    });
+
+
+
+  }
+  
 
   isMarketOpen() {
     const now = new Date();
@@ -2175,6 +2418,13 @@ class TradePlanner {
           `
         item.append(itemHtml)
         leaderboard.append(item)
+
+        // run masonry
+        var msnry = new Masonry('#flow_tracker_row', {
+          percentPosition: false
+        });
+        msnry.layout();
+    
 
       
         function parseContract(contractString) {
@@ -3525,8 +3775,8 @@ class TradePlanner {
     }
   }
 
-  async _fetchGEXOverlayData(ticker) {
-    const url = `https://api.spyderacademy.com/v1/stock/gamma/walls/?ticker=${ticker}`;
+  async _fetchGEXOverlayData(ticker, span='day') {
+    const url = `https://api.spyderacademy.com/v1/stock/gamma/walls/?ticker=${ticker}&span=${span}`;
     try {
       const response = await fetch(url);
       if (!response.ok) {
@@ -3548,7 +3798,11 @@ class TradePlanner {
     var stockSeries = {}
     stockSeries = data.stock_price.map(item => ({
       x: new Date(new Date(item.begins_at).getTime() - estOffset).getTime(),
-      y: parseFloat(item.close_price)
+      y: parseFloat(item.close_price),
+      o: parseFloat(item.open_price),
+      h: parseFloat(item.high_price),
+      l: parseFloat(item.low_price),
+      c: parseFloat(item.close_price)
     }));
 
     var gammaSeries = {}
