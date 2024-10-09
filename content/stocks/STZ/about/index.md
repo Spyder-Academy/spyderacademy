@@ -18,7 +18,7 @@ You know them, you love them - Corona, Modelo, Robert Mondavi wines, and even so
 
 **Making Money From Your Thirst**
 
-Constellation Brands is a master of the three-drink-cocktail:  beer, wine, and spirits. 
+Constellation Brands is a master of the three-drink-cocktail:  beer, wine, and spirits. Check out the [cocktail recipes]("https://www.puredrinkology.com") you can make with their brands!
 
 * **Beer:  The Heart of the Party**
 
