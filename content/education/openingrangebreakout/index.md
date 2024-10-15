@@ -53,7 +53,7 @@ If you use [TradingView](https://www.tradingview.com/gopro/?share_your_love=amit
 {{% quote %}}
   Don't Trade ORB Alone.<br/>
   Join us at Spyder Academy where we teach how to trade the ORB every day!<br/>
-  <a class="btn btn-lg btn-block btn-secondary mt-1" style="border-radius: 0.5em; max-width: 250px" href="https://whop.com/spyder-academy/?d2c=true&directPlanId=plan_2qHRKoIbGU6NN&pass=prod_45GZIGs1lRCGs&a=spyderacademy">Trade Together</a>
+  <a class="btn btn-lg btn-block btn-secondary mt-1" style="border-radius: 0.5em; max-width: 250px" href="https://whop.com/checkout/plan_bCMjkbQ9TJsN2?d2c=true">Trade Together</a>
 {{% /quote %}}
 
 #### Case studies and examples of successful opening range trades
