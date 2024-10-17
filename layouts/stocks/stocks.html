@@ -33,8 +33,8 @@
 
             <!-- Market Trends -->
             <div class="col-12 bg-white border-0 mb-lg-3 m-0 p-0 lg-rounded h-100 mh-100">
-              <h4 class="gradient-text px-3 pt-3" >Market Trends</h4>
-              <h6 class="px-3 text-muted">This is not investment advice</h6>
+              <h1 class="gradient-text px-3 pt-3" >{{ .Params.ticker }} Market Trends</h1>
+              <p class="px-3 text-muted">This is not investment advice</p>
 
               <!-- Market Trends - EMA Signals -->
               <div class="post">
@@ -90,7 +90,7 @@
 
             <!-- About -->
             <div class="col-12 bg-white border-0 mb-lg-3 m-0 p-0 lg-rounded h-100 mh-100">
-              <h4 class="gradient-text px-3 pt-3" >About</h4>
+              <h2 class="gradient-text px-3 pt-3" >About {{ .Params.ticker }}</h2>
 
               <div class="post">
                 <div class="col-12 mb-3">
@@ -114,8 +114,8 @@
             {{ if not (in $excludedTickers .Page.Params.ticker) }}
             <!-- Financials -->
             <div class="col-12 bg-white border-0 mb-lg-3 m-0 p-0 lg-rounded h-100 mh-100">
-              <h4 class="gradient-text px-3 pt-3" >Financials</h4>
-              <h6 class="px-3"><a href="/stocks/{{lower .Page.Params.ticker}}/financials/" title="Show More Financials for {{ .Page.Params.ticker }}">Show More</a></h6>
+              <h2 class="gradient-text px-3 pt-3" >{{.Params.ticker }} Financials</h2>
+              <p class="px-3"><a href="/stocks/{{lower .Page.Params.ticker}}/financials/" title="Show More Financials for {{ .Page.Params.ticker }}">Show More</a></p>
 
               <div class="post">
                 <div class="col-12 mb-3">
@@ -130,8 +130,8 @@
             {{ end }}
             <!-- Market Pulse -->
             <div class="col-12 bg-white border-0 mb-lg-3 m-0 p-0 lg-rounded h-100 mh-100">
-              <h4 class="gradient-text px-3 pt-3" >Market Pulse</h4>
-              <h6 class="px-3"><a href="/stocks/{{lower .Page.Params.ticker}}/news/" title="Show More News and Social Pulse for {{ .Page.Params.ticker }}">Show More</a></h6>
+              <h2 class="gradient-text px-3 pt-3" >{{.Params.ticker }} Social Media Discussions</h2>
+              <p class="px-3"><a href="/stocks/{{lower .Page.Params.ticker}}/news/" title="Show More News and Social Pulse for {{ .Page.Params.ticker }}">Show More</a></p>
 
               <div class="post">
                 <div class="col-12 mb-3">

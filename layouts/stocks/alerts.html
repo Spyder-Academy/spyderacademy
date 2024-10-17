@@ -7,7 +7,7 @@
       {{ partial "planner/stocks_navbar" (dict "symbol" .Page.Params.ticker) }}
     </div>
     <div class="row p-lg-3 p-0 m-1 " >
-        <h4 class="gradient-text px-3 pt-3" >{{.Page.Params.ticker}} - Trade Social Alerts</h4>
+        <h1 class="gradient-text px-3 pt-3" >{{.Page.Params.ticker}} - Trade Social Alerts</h1>
 
         <div class="col-xl-4 col-12  lg-rounded mb-lg-3 m-0 p-0">
           {{ partial "planner/trade_alerts" (dict "symbol" .Page.Params.ticker ) }}
