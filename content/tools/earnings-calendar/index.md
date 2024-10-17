@@ -32,17 +32,10 @@ Compare the actual move in premarket/after hours with the implied move, then tra
 <div class="container p-0 m-0 fs-6">
    <div class="col-12 justify-content-center">
       <div class="row">
-         <div class="my-3 col-lg-6 col-sm-12 pr-3" >
+         <div class="my-3 col-lg-12 col-sm-12 pr-3" >
          <div class="card shadow" style="border-radius: 15px">
             <div class="card-title bg-success text-white fw-bold p-3" style="border-radius:10px 10px 0px 0px">Earnings This Week</div>
             <div id="WL_Earnings" class="stock_tweets" style="height: 800px; overflow-y: scroll;">
-            </div>
-         </div>
-         </div>
-         <div class="my-3 col-lg-6 col-sm-12 pr-3">
-         <div class="card shadow" style="border-radius: 15px">
-            <div class="card-title bg-primary text-white fw-bold p-3" style="border-radius:10px 10px 0px 0px">Post Earning Moves</div>
-            <div id="WL_IVFlush" class="stock_tweets" style="height: 800px; overflow-y: scroll;">
             </div>
          </div>
          </div>
@@ -53,7 +46,7 @@ Compare the actual move in premarket/after hours with the implied move, then tra
 <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 <script>
    $(document).ready(function() {
-      userTrades = new Trades();
+      userTrades = new TradePlanner();
       userTrades.fetchEarningsCalendar();
    });
 </script>

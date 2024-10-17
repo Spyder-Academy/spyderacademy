@@ -29,8 +29,9 @@ In our comprehensive educational section, we delved into [How to Trade using Gam
             </div>
          </div>
       </div>
-      <div class="card shadow p-3 mb-5 w-100 d-none" id="gammaChart"></div>
-      <div class="card shadow p-3 mb-5 w-100 d-none" id="gammaChartOverlay"></div>
+      <div class="card shadow p-3 mb-5 w-100 d-none gammaChart" id="gammaChart"></div>
+      <div class="card shadow p-3 mb-5 w-100 d-none gammaChartOverlay" id="gammaChartOverlay"></div>
+      <p class="p-3 text-end d-none gammaSeeMore"><a id="gammaShowMoreLink"  title="Show More Gamma Activity">Show More</a></p>
    </div>
 </div>
 
@@ -38,9 +39,12 @@ In our comprehensive educational section, we delved into [How to Trade using Gam
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
    function getGEX(){
-      userTrades = new Trades();
-      userTrades.fetchGEXByStrike($("#ticker").val());
-      userTrades.fetchGEXOverlay($("#ticker").val());
+      var tradePlanner = new TradePlanner()
+      var ticker = $("#ticker").val().toLowerCase();
+      tradePlanner.fetchGEXByStrike(ticker, "#gammaChart", idx=0, historicals = true);
+      tradePlanner.fetchGEXOverlay(ticker);
+      $(".gammaSeeMore").removeClass("d-none");
+      $("#gammaShowMoreLink").attr("href", "/stocks/" + ticker + "/options_activity/");
    }
 </script>
 

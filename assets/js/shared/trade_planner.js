@@ -4067,7 +4067,7 @@ class TradePlanner {
       },
     };
 
-    // $("#gammaChartOverlay").removeClass("d-none")
+    $(".gammaChartOverlay").removeClass("d-none")
     $(".gammaChartOverlay").empty()
 
     if (this.chartGEXOverlay != null) this.chartGEXOverlay.destroy();

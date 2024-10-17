@@ -27,7 +27,7 @@ Are you ready to take your trading game to the next level? Discover the Spyder A
          </div>
       </div>
    </div>
-   <div class="card shadow p-3 mb-5 justify-content-center d-none" id="iv_results">
+   <div class="card shadow p-3 mb-5 justify-content-center d-none lg-rounded" id="iv_results">
       <div class="row">
          <div class="col-lg-4 col-6">
             <div id="movePercentTitle fw-bold">Expected Move</div>
@@ -47,7 +47,7 @@ Are you ready to take your trading game to the next level? Discover the Spyder A
 
 <script>
    function getIV(){
-      userTrades = new Trades();
+      userTrades = new TradePlanner();
       userTrades.fetchIVData($("#ticker").val());
    }
 </script>
