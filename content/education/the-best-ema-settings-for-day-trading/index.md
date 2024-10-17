@@ -37,6 +37,14 @@ The Exponential Moving Average is a type of moving average that gives more weigh
 
 By understanding the basics of EMAs, and particularly the functionality of the 9 EMA, traders can enhance their day trading strategy to be more responsive and effective.
 
+
+{{% quote %}}
+  Don't Trade the 9EMA Moving Average Alone.<br/>
+  Join us at Spyder Academy where we trade the 9 EMA every day!<br/>
+  <a class="btn btn-lg btn-block btn-secondary mt-1" style="border-radius: 0.5em; max-width: 250px" href="https://whop.com/checkout/plan_bCMjkbQ9TJsN2?d2c=true">Let's Trade Together</a>
+{{% /quote %}}
+
+
 ## The Role of EMAs in Day Trading Strategies
 
 Understanding the role of Exponential Moving Averages (EMAs) in day trading strategies is crucial for effective market analysis and decision-making. The 9 EMA, in particular, plays a significant role in these strategies.
