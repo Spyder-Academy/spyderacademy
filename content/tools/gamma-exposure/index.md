@@ -22,10 +22,10 @@ In our comprehensive educational section, we delved into [How to Trade using Gam
       <div class="card shadow border-0 p-3 mb-3 w-100" style="border-radius: 15px; background-color: #BFE1CF;">
          <div class="row p-0 m-0 align-items-center">
             <div class="col-6 p-0 m-0">
-               <input id="ticker" class="form-control no-border-transparent-bg" type="text" placeholder="Enter Ticker" autocomplete="off" style="text-transform:uppercase">
+               <input id="ticker" class="form-control no-border-transparent-bg" type="text" value="SPY" placeholder="Enter Ticker" autocomplete="off" style="text-transform:uppercase">
             </div>
-            <div class="col-6 text-md-right text-center mt-md-0">
-               <button type="button" class="btn btn-lg btn-success" onclick="getGEX(); return false;">Get GEX</button>
+            <div class="col-6 text-md-right text-end mt-md-0">
+               <button type="button" class="btn btn-lg lg-rounded btn-success" onclick="getGEX(); return false;">Get GEX</button>
             </div>
          </div>
       </div>
@@ -46,6 +46,10 @@ In our comprehensive educational section, we delved into [How to Trade using Gam
       $(".gammaSeeMore").removeClass("d-none");
       $("#gammaShowMoreLink").attr("href", "/stocks/" + ticker + "/options_activity/");
    }
+
+   $(document).ready(function() {
+      getGEX();
+   });
 </script>
 
 {{% quote %}}
