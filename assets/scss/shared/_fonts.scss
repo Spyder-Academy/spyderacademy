@@ -1,17 +1,26 @@
 @font-face {
+  // font-display: swap;
   font-family: 'SF Pro Display';
-  src: url('{{ site.BaseURL }}/fonts/SF-Pro-Display-Regular.otf') format('opentype');
+  src:
+       url('{{ site.BaseURL }}/fonts/SF-Pro-Display-Regular.woff') format('woff'),
+       url('{{ site.BaseURL }}/fonts/SF-Pro-Display-Regular.otf') format('opentype'); /* Fallback */
   font-weight: normal;
 }
 
 @font-face {
+  // font-display: swap;
   font-family: 'SF Pro Display';
-  src: url('{{ site.BaseURL }}/fonts/SF-Pro-Display-Semibold.otf') format('opentype');
+  src:
+    url('{{ site.BaseURL }}/fonts/SF-Pro-Display-Semibold.woff') format('woff'),
+    url('{{ site.BaseURL }}/fonts/SF-Pro-Display-Semibold.otf') format('opentype'); /* Fallback */
   font-weight: 600;
 }
 
 @font-face {
+  // font-display: swap;
   font-family: 'SF Pro Display';
-  src: url('{{ site.BaseURL }}/fonts/SF-Pro-Display-Bold.otf') format('opentype');
+  src:
+    url('{{ site.BaseURL }}/fonts/SF-Pro-Display-Bold.woff') format('woff'),
+    url('{{ site.BaseURL }}/fonts/SF-Pro-Display-Bold.otf') format('opentype'); /* Fallback */
   font-weight: bold;
 }
