@@ -9,8 +9,7 @@ content:
     pretitle: "Find Clarity With Better"
     title: "Education"
     text: "
-          <i class='fas fa-users'></i> <a href='#teachers'>7 Amazing Instructors</a><br/>
-          <i class='fas fa-laptop'></i> <a href='#services'>Screen Sharing</a><br/>
+          <i class='fas fa-users'></i> <a href='#teachers'>Amazing Instructors</a><br/>
           <i class='fas fa-chart-line'></i> <a href='/members/'>Trade Recaps</a></br/>
           <i class='fas fa-bell'></i> <a href='/members/'>Instructor Trade Alerts</a><br/>
           <i class='fas fa-book'></i> <a href='/members/'>Detailed Reasons for Entries and Exits</a><br/>
@@ -26,7 +25,7 @@ content:
           <i class='fas fa-atom'></i> <a href='/stocks/'>Spot Gamma and Expected Moves</a><br/>
           <i class='fas fa-binoculars'></i> <a href='/education/stocks-watchlists/'>Stock Watchlists</a><br/>
           <i class='fas fa-robot'></i> <a href='#services'>Algo Alerts</a><br/>
-          <i class='fas fa-spider'></i> <a href='/members/'>Trade Analytics (SpyderWeb)</a><br/>
+          <i class='fas fa-spider'></i> <a href='/members/'>Trade Analytics</a><br/>
           <i class='fas fa-chess-rook'></i> <a href='/courses/trading-strategies/'>Backtested Strategies</a><br/>
           <i class='fas fa-chart-line'></i> <a href='/tools/'>TradingView Indicators</a><br/>
           <i class='fas fa-robot'></i> <a href='/tools/'>Options Trading Tools and AI</a><br/>
